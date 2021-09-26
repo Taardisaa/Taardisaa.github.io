@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <script type="text/javascript" src="/js/dytitle.js"></script>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"taardisaa.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="上次祥云杯遇到了利用WinCrypt库模拟勒索病毒加密的程序。虽然这个库被微软官方认为已经过时了，但还是大致来了解一下。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WinCrypt库使用">
+<meta property="og:url" content="https://taardisaa.github.io/2021/09/26/WinCrypt%E5%8A%A0%E5%AF%86%E5%BA%93/index.html">
+<meta property="og:site_name" content="Tardis&#39;s blog">
+<meta property="og:description" content="上次祥云杯遇到了利用WinCrypt库模拟勒索病毒加密的程序。虽然这个库被微软官方认为已经过时了，但还是大致来了解一下。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-09-26T04:24:01.000Z">
+<meta property="article:modified_time" content="2021-09-26T11:25:10.049Z">
+<meta property="article:author" content="Tardis">
+<meta property="article:tag" content="Windows">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://taardisaa.github.io/2021/09/26/WinCrypt%E5%8A%A0%E5%AF%86%E5%BA%93/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>WinCrypt库使用 | Tardis's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="Tardis's blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Tardis's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">摸鱼用博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://taardisaa.github.io/2021/09/26/WinCrypt%E5%8A%A0%E5%AF%86%E5%BA%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/spongebob.jpg">
+      <meta itemprop="name" content="Tardis">
+      <meta itemprop="description" content="学点好玩的逆向知识">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Tardis's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          WinCrypt库使用
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-09-26 12:24:01 / 修改时间：19:25:10" itemprop="dateCreated datePublished" datetime="2021-09-26T12:24:01+08:00">2021-09-26</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Windows/" itemprop="url" rel="index"><span itemprop="name">Windows</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>16k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>15 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>上次祥云杯遇到了利用WinCrypt库模拟勒索病毒加密的程序。虽然这个库被微软官方认为已经过时了，但还是大致来了解一下。</p>
+<span id="more"></span>
+<h1 id="WinCrypt库使用"><a href="#WinCrypt库使用" class="headerlink" title="WinCrypt库使用"></a>WinCrypt库使用</h1><h2 id="0x00-简介"><a href="#0x00-简介" class="headerlink" title="0x00 简介"></a>0x00 简介</h2><p><code>wincrypt</code>库是微软推出的加密库，里面由几个内置的加密API，能够比较方便的加密文件，而不需要去探索加密算法的内核。</p>
+<p>当然这个库已经开始要被微软淘汰了，不过现在大部分的病毒，勒索软件，或者是一些老软件用的还是这个库，所以还是了解一下吧。</p>
+<p>关于新一代加密API，详见：</p>
+<p><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/win32/seccng/cng-portal">Cryptography API: Next Generation - Win32 apps | Microsoft Docs</a></p>
+<p>本文通过研究一个别人写的Demo，稍微探讨一下这个加密库。</p>
+<h2 id="0x01-举例分析"><a href="#0x01-举例分析" class="headerlink" title="0x01 举例分析"></a>0x01 举例分析</h2><p>我选择直接从一个别人已经写好的C++源码中分析加密流程。</p>
+<p>原链接在最后的参考部分给出了。</p>
+<h2 id="0x02-成员体"><a href="#0x02-成员体" class="headerlink" title="0x02 成员体"></a>0x02 成员体</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CMyCryptOpt</span>&#123;</span></span><br><span class="line"><span class="comment">/*---成员元素---*/</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	FILE* m_hSource;</span><br><span class="line">	FILE* m_hDestination;</span><br><span class="line"></span><br><span class="line">	HCRYPTPROV m_hCryptProv;</span><br><span class="line">	HCRYPTKEY  m_hKey;</span><br><span class="line">	HCRYPTHASH m_hHash;</span><br><span class="line"></span><br><span class="line">	PBYTE	m_pbBuffer;</span><br><span class="line">	DWORD   m_dwBlockLen;</span><br><span class="line">	DWORD   m_dwBufferLen;</span><br><span class="line">	DWORD   m_dwCount;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>private域的成员元素保存了实现文件加密的所有必要变量。</p>
+<h3 id="文件指针"><a href="#文件指针" class="headerlink" title="文件指针"></a>文件指针</h3><p>首先声明了两个<code>FILE*</code>指针，这是两个文件指针。</p>
+<figure class="highlight sas"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">FILE</span><span class="comment">* m_hSource;</span></span><br><span class="line"><span class="meta">FILE</span><span class="comment">* m_hDestination;</span></span><br></pre></td></tr></table></figure>
+<p>一个指向源文件，一个指向目标文件。</p>
+<p>对这两个文件指针进行初始化，读取，写入，关闭等操作，由</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 打开/创建/覆写/读取文件（取决于_Mode类型）</span></span><br><span class="line"><span class="function">FILE* <span class="title">fopen</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* _FileName, <span class="keyword">const</span> <span class="keyword">char</span>* _Mode)</span></span>;</span><br><span class="line"><span class="comment">// 关闭文件流</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">fclose</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* _Stream)</span></span>;</span><br><span class="line"><span class="comment">// 检测文件流是否有错误</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">ferror</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* _Stream)</span></span>;</span><br><span class="line"><span class="comment">// 检测文件指针是否指向末尾</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">feof</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* _Stream)</span></span>;</span><br><span class="line"><span class="comment">// 从文件流中读取_ElementCount个数据元素</span></span><br><span class="line"><span class="function"><span class="keyword">size_t</span> <span class="title">fread</span><span class="params">(<span class="keyword">void</span>*  _Buffer, <span class="keyword">size_t</span> _ElementSize, <span class="keyword">size_t</span> _ElementCount, FILE*  _Stream)</span></span>;</span><br><span class="line"><span class="comment">// 向文件流中写入_ElementCount个数据元素</span></span><br><span class="line"><span class="function"><span class="keyword">size_t</span> <span class="title">fwrite</span><span class="params">(<span class="keyword">void</span>*  _Buffer, <span class="keyword">size_t</span> _ElementSize, <span class="keyword">size_t</span> _ElementCount, FILE*  _Stream)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>这些函数进行。</p>
+<p>当然在Windows平台上，这些C语言库函数，实际上最后调用的都是Windows API。</p>
+<p>比如<code>fopen(), fread()</code>，最后还是会调用<code>CreateFile(), ReadFile()</code>函数等。</p>
+<h3 id="加密提供者句柄（HCRYPTPROV"><a href="#加密提供者句柄（HCRYPTPROV" class="headerlink" title="加密提供者句柄（HCRYPTPROV)"></a>加密提供者句柄（HCRYPTPROV)</h3><figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HCRYPTPROV	m_hCryptProv<span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<p>这个<code>HCRYPTPROV</code>我暂且解释成<code>Crypt Provider Handle</code>，也就是一个加密提供者句柄。</p>
+<hr>
+<p>翻了一下MSDN，<code>HCRYPTPROV</code>实际上叫做<code>Cryptography Service Provider(CSP)</code>，定义是：</p>
+<blockquote>
+<p>(CSP) An independent software module that actually performs cryptography algorithms for authentication, encoding, and encryption.</p>
+</blockquote>
+<p>也就是对一个加密模块的抽象与包装。</p>
+<p>当然实际上，</p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">typedef ULONG_PTR HCRYPTPROV<span class="comment">;</span></span><br><span class="line">typedef ULONG_PTR HCRYPTKEY<span class="comment">;</span></span><br><span class="line">typedef ULONG_PTR HCRYPTHASH<span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<p>这些句柄都仅仅是一个长指针罢了，核心是它指向的区域里面塞了什么玩意，也就是没有<code>H</code>的<code>CRYPTPROV</code>，即具体的结构体。</p>
+<p>不过似乎微软并没有具体公开这个结构体，只给了一个句柄让我们用。</p>
+<hr>
+<p>不过我翻到了一个有关Windows栈溢出漏洞，这个文章上似乎搞到了其中一个，<code>HCRYPTKEY</code>结构体的信息。</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 而HCRYPTKEY指向的是一个包含有多个函数地址的结构体，该结构体内容如下：</span></span><br><span class="line"><span class="selector-tag">typedef</span> <span class="selector-tag">struct</span> <span class="selector-tag">_CRYPTKEY</span>&#123;</span><br><span class="line">    <span class="selector-tag">int</span> (*p_fun_0x00_CPGenKey)();</span><br><span class="line">    <span class="selector-tag">int</span> (*p_fun_0x04_CPDeriveKey)();</span><br><span class="line">    <span class="selector-tag">int</span> (*p_fun_0x08_CPDestroyKey)();</span><br><span class="line">    <span class="selector-tag">int</span> (*p_fun_0x0C_CPSetKeyParam)();</span><br><span class="line">    <span class="selector-tag">int</span> (*p_fun_0x10_CPGetKeyParam)();</span><br><span class="line">    <span class="selector-tag">int</span> (*p_fun_0x14_CPExportKey)();</span><br><span class="line">    <span class="selector-tag">int</span> (*p_fun_0x18_CPImportKey)();</span><br><span class="line">    <span class="selector-tag">int</span> (*p_fun_0x1C_CPEncrypt)();</span><br><span class="line">    <span class="selector-tag">int</span> (*p_fun_0x20_CPDecrypt)();</span><br><span class="line">    <span class="selector-tag">int</span> (*p_fun_0x24_CPDuplicateKey)();</span><br><span class="line">    <span class="selector-tag">CRYPTPROV</span> <span class="selector-tag">m_0x28_CRYPTPROV</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="selector-tag">int</span> <span class="selector-tag">m_0x2C</span>;</span><br><span class="line">    <span class="selector-tag">int</span> <span class="selector-tag">m_0x30_status</span>;</span><br><span class="line">    <span class="selector-tag">int</span> <span class="selector-tag">m_0x34_index</span>;</span><br><span class="line">&#125;<span class="selector-tag">CRYPTKEY</span>, <span class="selector-tag">HCRYPTKEY</span>;</span><br></pre></td></tr></table></figure>
+<p>不得不说这个结构体和我调试的时候，点入<code>HCRYPTKEY</code>变量时发现一大堆函数指针的事实是一致的。</p>
+<p><a target="_blank" rel="noopener" href="https://forums.codeguru.com/showthread.php?79163-Structure-of-HCRYPTKEY-Data">Structure of HCRYPTKEY Data (codeguru.com)</a></p>
+<p>这个帖子里面也说了，这些结构是逆向工程师将<code>cryptsp.dll</code>进行逆向工程后得到的。</p>
+<hr>
+<p>这个句柄是加密流程中<strong>最开始需要初始化</strong>的。</p>
+<p>此句柄使用<code>CryptAcquireContext</code>函数获取。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">BOOL</span></span><br><span class="line"><span class="function">WINAPI</span></span><br><span class="line"><span class="function"><span class="title">CryptAcquireContextW</span><span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">    _Out_       HCRYPTPROV  *phProv,</span></span></span><br><span class="line"><span class="params"><span class="function">    _In_opt_    LPCWSTR    szContainer,</span></span></span><br><span class="line"><span class="params"><span class="function">    _In_opt_    LPCWSTR    szProvider,</span></span></span><br><span class="line"><span class="params"><span class="function">    _In_        DWORD       dwProvType,</span></span></span><br><span class="line"><span class="params"><span class="function">    _In_        DWORD       dwFlags</span></span></span><br><span class="line"><span class="params"><span class="function">    )</span></span>;</span><br></pre></td></tr></table></figure>
+<p>这个函数，以及其他重要API，待会儿再阐述。</p>
+<h3 id="密钥句柄（HCRYPTKEY）"><a href="#密钥句柄（HCRYPTKEY）" class="headerlink" title="密钥句柄（HCRYPTKEY）"></a>密钥句柄（HCRYPTKEY）</h3><figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HCRYPTKEY	m_hKey<span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<p>上面刚刚放出了逆向出来的结构体。</p>
+<p>MSDN上对于<code>HCRYPTKEY</code>的解释：</p>
+<blockquote>
+<p>The <strong>HCRYPTKEY</strong> data type is used to represent handles to <a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/win32/secgloss/c-gly"><em>cryptographic keys</em></a>. These handles are used to indicate to the CSP module which key is being used in a specific operation. The CSP module does not enable direct access to the key values. Instead, the user performs functions by using the key value through the key handle.</p>
+<p><strong>HCRYPTKEY</strong>数据类型用于表示<a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/win32/secgloss/c-gly"><em>加密密钥</em></a>的句柄。<strong>这些句柄用于向CSP模块指示在一个特定的操作中使用哪个密钥。</strong>CSP模块不直接访问密钥值。相反，用户通过密钥句柄使用密钥值来执行功能。</p>
+</blockquote>
+<h4 id="生成密钥"><a href="#生成密钥" class="headerlink" title="生成密钥"></a>生成密钥</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">BOOL</span></span><br><span class="line"><span class="function">WINAPI</span></span><br><span class="line"><span class="function"><span class="title">CryptGenKey</span><span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">    _In_    HCRYPTPROV  hProv,</span></span></span><br><span class="line"><span class="params"><span class="function">    _In_    ALG_ID      Algid,</span></span></span><br><span class="line"><span class="params"><span class="function">    _In_    DWORD       dwFlags,</span></span></span><br><span class="line"><span class="params"><span class="function">    _Out_   HCRYPTKEY   *phKey</span></span></span><br><span class="line"><span class="params"><span class="function">    )</span></span>;</span><br><span class="line">    </span><br><span class="line"><span class="function">BOOL</span></span><br><span class="line"><span class="function">WINAPI</span></span><br><span class="line"><span class="function"><span class="title">CryptDeriveKey</span><span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">    _In_    HCRYPTPROV  hProv,</span></span></span><br><span class="line"><span class="params"><span class="function">    _In_    ALG_ID      Algid,</span></span></span><br><span class="line"><span class="params"><span class="function">    _In_    HCRYPTHASH  hBaseData,</span></span></span><br><span class="line"><span class="params"><span class="function">    _In_    DWORD       dwFlags,</span></span></span><br><span class="line"><span class="params"><span class="function">    _Out_   HCRYPTKEY   *phKey</span></span></span><br><span class="line"><span class="params"><span class="function">    )</span></span>;</span><br></pre></td></tr></table></figure>
+<p>可以使用这些函数（没列举完），根据哈希对象（或者不用），生成会话密钥。</p>
+<h4 id="销毁密钥"><a href="#销毁密钥" class="headerlink" title="销毁密钥"></a>销毁密钥</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">WINADVAPI</span></span><br><span class="line"><span class="function">BOOL</span></span><br><span class="line"><span class="function">WINAPI</span></span><br><span class="line"><span class="function"><span class="title">CryptDestroyKey</span><span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">    _In_    HCRYPTKEY   hKey</span></span></span><br><span class="line"><span class="params"><span class="function">    )</span></span>;</span><br></pre></td></tr></table></figure>
+<h4 id="使用密钥进行加密"><a href="#使用密钥进行加密" class="headerlink" title="使用密钥进行加密"></a>使用密钥进行加密</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">WINADVAPI</span><br><span class="line">_Success_(<span class="number">0</span> != <span class="keyword">return</span>) <span class="function">BOOL</span></span><br><span class="line"><span class="function">WINAPI</span></span><br><span class="line"><span class="function"><span class="title">CryptEncrypt</span><span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">    _In_                                            	 HCRYPTKEY   hKey,</span></span></span><br><span class="line"><span class="params"><span class="function">    _In_                                            	 HCRYPTHASH  hHash,</span></span></span><br><span class="line"><span class="params"><span class="function">    _In_                                            	 BOOL    Final,</span></span></span><br><span class="line"><span class="params"><span class="function">    _In_                                            	 DWORD   dwFlags,</span></span></span><br><span class="line"><span class="params"><span class="function">    _Inout_updates_bytes_to_opt_(dwBufLen, *pdwDataLen)  BYTE    *pbData,</span></span></span><br><span class="line"><span class="params"><span class="function">    _Inout_                                         	 DWORD   *pdwDataLen,</span></span></span><br><span class="line"><span class="params"><span class="function">    _In_                                            	 DWORD   dwBufLen</span></span></span><br><span class="line"><span class="params"><span class="function">    )</span></span>;</span><br></pre></td></tr></table></figure>
+<h3 id="哈希对象句柄（HCRYPTHASH"><a href="#哈希对象句柄（HCRYPTHASH" class="headerlink" title="哈希对象句柄（HCRYPTHASH)"></a>哈希对象句柄（HCRYPTHASH)</h3><figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HCRYPTHASH m_hHash<span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<p>MSDN解释：</p>
+<blockquote>
+<p>The <strong>HCRYPTHASH</strong> data type is used to represent handles to <a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/win32/secgloss/h-gly"><em>hash objects</em></a>. These handles indicate to the CSP module which hash is being used in a particular operation. The CSP module does not enable direct manipulation of the hash values. Instead, the user manipulates the hash values through the hash handle.</p>
+<p>HCRYPTHASH数据类型是用来表示<em>哈希对象</em>的句柄。这些句柄向CSP模块表明在一个特定的操作中使用的是哪个哈希值。CSP模块不直接操作哈希值。相反，用户通过哈希句柄来操作哈希值。</p>
+</blockquote>
+<p>对于<code>Hash Objects</code>的解释</p>
+<blockquote>
+<p>An object used to hash messages or session keys. The hash object is created by a call to <code>CryptCreateHash()</code>. The definition of the object is defined by the CSP specified in the call.</p>
+</blockquote>
+<h4 id="创建哈希对象"><a href="#创建哈希对象" class="headerlink" title="创建哈希对象"></a>创建哈希对象</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">WINADVAPI</span></span><br><span class="line"><span class="function">BOOL</span></span><br><span class="line"><span class="function">WINAPI</span></span><br><span class="line"><span class="function"><span class="title">CryptCreateHash</span><span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">    _In_    HCRYPTPROV  hProv,</span></span></span><br><span class="line"><span class="params"><span class="function">    _In_    ALG_ID      Algid,</span></span></span><br><span class="line"><span class="params"><span class="function">    _In_    HCRYPTKEY   hKey,</span></span></span><br><span class="line"><span class="params"><span class="function">    _In_    DWORD       dwFlags,</span></span></span><br><span class="line"><span class="params"><span class="function">    _Out_   HCRYPTHASH  *phHash</span></span></span><br><span class="line"><span class="params"><span class="function">    )</span></span>;</span><br></pre></td></tr></table></figure>
+<h4 id="利用哈希对象"><a href="#利用哈希对象" class="headerlink" title="利用哈希对象"></a>利用哈希对象</h4><p><strong>使用输入数据（比如一个密码）产生哈希值</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">CryptHashData</span>(</span><br><span class="line">		m_hHash,</span><br><span class="line">		(BYTE*)lpPassword,</span><br><span class="line">		<span class="built_in">strlen</span>(lpPassword),</span><br><span class="line">		<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">WINADVAPI</span></span><br><span class="line"><span class="function">BOOL</span></span><br><span class="line"><span class="function">WINAPI</span></span><br><span class="line"><span class="function"><span class="title">CryptHashData</span><span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">    _In_                    HCRYPTHASH  hHash,</span></span></span><br><span class="line"><span class="params"><span class="function">    _In_reads_bytes_(dwDataLen)  CONST BYTE  *pbData,</span></span></span><br><span class="line"><span class="params"><span class="function">    _In_                    DWORD   dwDataLen,</span></span></span><br><span class="line"><span class="params"><span class="function">    _In_                    DWORD   dwFlags</span></span></span><br><span class="line"><span class="params"><span class="function">    )</span></span>;</span><br></pre></td></tr></table></figure>
+<p><strong>使用哈希对象获得会话密钥</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">CryptDeriveKey</span>(</span><br><span class="line">		m_hCryptProv,</span><br><span class="line">		ENCRYPT_ALGORITHM,</span><br><span class="line">		m_hHash,</span><br><span class="line">		KEYLENGTH,</span><br><span class="line">		&amp;m_hKey)</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">WINADVAPI</span></span><br><span class="line"><span class="function">BOOL</span></span><br><span class="line"><span class="function">WINAPI</span></span><br><span class="line"><span class="function"><span class="title">CryptDeriveKey</span><span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">    _In_    HCRYPTPROV  hProv,</span></span></span><br><span class="line"><span class="params"><span class="function">    _In_    ALG_ID      Algid,</span></span></span><br><span class="line"><span class="params"><span class="function">    _In_    HCRYPTHASH  hBaseData,</span></span></span><br><span class="line"><span class="params"><span class="function">    _In_    DWORD       dwFlags,</span></span></span><br><span class="line"><span class="params"><span class="function">    _Out_   HCRYPTKEY   *phKey</span></span></span><br><span class="line"><span class="params"><span class="function">    )</span></span>;</span><br></pre></td></tr></table></figure>
+<h4 id="销毁哈希对象"><a href="#销毁哈希对象" class="headerlink" title="销毁哈希对象"></a>销毁哈希对象</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">WINADVAPI</span></span><br><span class="line"><span class="function">BOOL</span></span><br><span class="line"><span class="function">WINAPI</span></span><br><span class="line"><span class="function"><span class="title">CryptDestroyHash</span><span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">    _In_    HCRYPTHASH  hHash</span></span></span><br><span class="line"><span class="params"><span class="function">    )</span></span>;</span><br></pre></td></tr></table></figure>
+<h3 id="其他对象"><a href="#其他对象" class="headerlink" title="其他对象"></a>其他对象</h3><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">PBYTE	m_pbBuffer;			<span class="regexp">//</span> 缓冲区，临时存放区</span><br><span class="line">DWORD   m_dwBlockLen;		<span class="regexp">//</span> 存放加密块长度</span><br><span class="line">DWORD   m_dwBufferLen;		<span class="regexp">//</span> 缓冲区长度</span><br><span class="line">DWORD   m_dwCount;			<span class="regexp">//</span> 成功读取或加密文件的字节数</span><br></pre></td></tr></table></figure>
+<h2 id="0x03-Demo函数分析"><a href="#0x03-Demo函数分析" class="headerlink" title="0x03 Demo函数分析"></a>0x03 Demo函数分析</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CMyCryptOpt</span> </span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="comment">// 构造函数和析构函数</span></span><br><span class="line">	<span class="built_in">CMyCryptOpt</span>(<span class="keyword">void</span>);</span><br><span class="line">	~<span class="built_in">CMyCryptOpt</span>(<span class="keyword">void</span>);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 初始化加密函数</span></span><br><span class="line">	<span class="function">BOOL <span class="title">InitCrypt</span><span class="params">(VOID)</span></span>;</span><br><span class="line">	<span class="comment">// 销毁加密函数</span></span><br><span class="line">	<span class="function">VOID <span class="title">DestroyCrypt</span><span class="params">(VOID)</span></span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 对文件加密</span></span><br><span class="line">	<span class="comment">// 源文件，加密后文件，密码</span></span><br><span class="line">	<span class="comment">// 主加密函数</span></span><br><span class="line">	<span class="function">BOOL <span class="title">MyEncryptFile</span><span class="params">(LPSTR lpSourceFile, LPSTR lpDestFile, LPSTR lpPassword)</span></span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 对文件解密</span></span><br><span class="line">	<span class="comment">// 加密后文件，加密前文件，密码</span></span><br><span class="line">	<span class="comment">// 主解密函数</span></span><br><span class="line">	<span class="function">BOOL <span class="title">MyDecryptFile</span><span class="params">(LPSTR lpSourceFile, LPSTR lpDestFile, LPSTR lpPassword)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">protected</span>:</span><br><span class="line">	<span class="comment">// 加密过程</span></span><br><span class="line">	<span class="function">BOOL <span class="title">CryptProcess</span><span class="params">(LPSTR lpSourceFile, LPSTR lpDestFile, LPSTR lpPassword)</span></span>;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="构造函数和析构函数"><a href="#构造函数和析构函数" class="headerlink" title="构造函数和析构函数"></a>构造函数和析构函数</h3><p>构造函数没啥好讲的，我由于受不了VS的恶俗警告信息，所以迫真初始化了一下变量，全部设置成了NULL。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">CMyCryptOpt::<span class="built_in">CMyCryptOpt</span>(VOID) </span><br><span class="line">&#123;</span><br><span class="line">	m_hSource = <span class="literal">NULL</span>;</span><br><span class="line">	m_hDestination = <span class="literal">NULL</span>;</span><br><span class="line"></span><br><span class="line">	m_hCryptProv = <span class="literal">NULL</span>;</span><br><span class="line">	m_hKey = <span class="literal">NULL</span>;</span><br><span class="line">	m_hHash = <span class="literal">NULL</span>;</span><br><span class="line"></span><br><span class="line">	m_pbBuffer = <span class="literal">NULL</span>;</span><br><span class="line">	m_dwBlockLen = <span class="literal">NULL</span>;</span><br><span class="line">	m_dwBufferLen = <span class="literal">NULL</span>;</span><br><span class="line">	m_dwCount = <span class="literal">NULL</span>;</span><br><span class="line">	<span class="built_in">OutputDebugString</span>(<span class="string">L&quot;Constructing Cryptor...&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>析构函数啥也没干，调用默认销毁。</p>
+<h3 id="初始化加密函数和销毁加密函数"><a href="#初始化加密函数和销毁加密函数" class="headerlink" title="初始化加密函数和销毁加密函数"></a>初始化加密函数和销毁加密函数</h3><p><code>InitCrypt</code>函数调用<code>CryptAcquireContext</code>和<code>CryptCreateHash</code>来初始化<code>HCRYPTPROV</code>和<code>HCRYPTHASH</code>对象。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获得HCRYPTPROV和HCRYPTHASH句柄</span></span><br><span class="line"><span class="function">BOOL <span class="title">CMyCryptOpt::InitCrypt</span><span class="params">(VOID)</span></span>&#123;</span><br><span class="line">	<span class="comment">// 获得HCRYPTPROV句柄</span></span><br><span class="line">    <span class="comment">// 不知道搞两个是干啥的</span></span><br><span class="line">	<span class="keyword">if</span> (!<span class="built_in">CryptAcquireContext</span>(&amp;m_hCryptProv, <span class="literal">NULL</span>, <span class="literal">NULL</span>, PROV_RSA_FULL, <span class="number">0</span>)) </span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (!<span class="built_in">CryptAcquireContext</span>(&amp;m_hCryptProv, <span class="literal">NULL</span>, <span class="literal">NULL</span>, PROV_RSA_FULL, CRYPT_NEWKEYSET)) &#123;</span><br><span class="line">			<span class="built_in">OutputDebugString</span>(<span class="string">L&quot;CryptAcquireContext() Error!&quot;</span>);</span><br><span class="line">			<span class="keyword">return</span> FALSE;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// 若成功获得PROV句柄</span></span><br><span class="line">	<span class="comment">// 则创建一个哈希对象</span></span><br><span class="line">	<span class="keyword">if</span> (!<span class="built_in">CryptCreateHash</span>(m_hCryptProv, CALG_MD5, <span class="number">0</span>, <span class="number">0</span>, &amp;m_hHash)) &#123;</span><br><span class="line">		<span class="built_in">OutputDebugString</span>(<span class="string">L&quot;CrytpCreateHash() Error!&quot;</span>);</span><br><span class="line">		<span class="keyword">return</span> FALSE;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> TRUE;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>DestroyCrypt</code>函数调用了<code>wincrypt</code>的几个销毁函数，来关闭<code>HCRYPTPROV</code>，<code>HCRYPTKEY</code>，<code>HCRYPTHASH</code>句柄。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">VOID <span class="title">CMyCryptOpt::DestroyCrypt</span><span class="params">(VOID)</span> </span>&#123;</span><br><span class="line">	<span class="comment">// 关闭文件指针</span></span><br><span class="line">	<span class="keyword">if</span> (m_hSource) &#123;</span><br><span class="line">		<span class="built_in">fclose</span>(m_hSource);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (m_hDestination) &#123;</span><br><span class="line">		<span class="built_in">fclose</span>(m_hDestination);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 释放缓冲区</span></span><br><span class="line">	<span class="keyword">if</span> (m_pbBuffer) &#123;</span><br><span class="line">		<span class="built_in">free</span>(m_pbBuffer);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 销毁Session Key</span></span><br><span class="line">	<span class="keyword">if</span> (m_hKey) &#123;</span><br><span class="line">		<span class="built_in">CryptDestroyKey</span>(m_hKey);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 销毁哈希对象</span></span><br><span class="line">	<span class="keyword">if</span> (m_hHash) &#123;</span><br><span class="line">		<span class="built_in">CryptDestroyHash</span>(m_hHash);</span><br><span class="line">		m_hHash = <span class="literal">NULL</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 释放Provider句柄</span></span><br><span class="line">	<span class="keyword">if</span> (m_hCryptProv) &#123;</span><br><span class="line">		<span class="built_in">CryptReleaseContext</span>(m_hCryptProv, <span class="number">0</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="加密过程函数"><a href="#加密过程函数" class="headerlink" title="加密过程函数"></a>加密过程函数</h3><p><strong>流程</strong></p>
+<ol>
+<li>打开要加密的源文件</li>
+<li>创建目标文件用于写入加密数据</li>
+<li>用输入的密码和md5哈希对象产生一个散列</li>
+<li>通过散列获得会话密钥</li>
+<li>计算块大小</li>
+<li>分配临时缓冲区</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">BOOL <span class="title">CMyCryptOpt::CryptProcess</span><span class="params">(LPSTR lpSourceFile, LPSTR lpDestFile, LPSTR lpPassword)</span> </span>&#123;</span><br><span class="line">	<span class="comment">// 打开要加密的源文件</span></span><br><span class="line">	m_hSource = <span class="built_in">fopen</span>(lpSourceFile, <span class="string">&quot;rb&quot;</span>);</span><br><span class="line">	<span class="keyword">if</span> (!m_hSource)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">OutputDebugString</span>(<span class="string">L&quot;open source file failed!&quot;</span>);</span><br><span class="line">		<span class="keyword">return</span> FALSE;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 创建目标文件用于写入数据</span></span><br><span class="line">	m_hDestination = <span class="built_in">fopen</span>(lpDestFile, <span class="string">&quot;wb&quot;</span>);</span><br><span class="line">	<span class="keyword">if</span> (!m_hDestination)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">OutputDebugString</span>(<span class="string">L&quot;open destination file failed!&quot;</span>);</span><br><span class="line">		<span class="keyword">return</span> FALSE;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 用输入的密码产生一个散列</span></span><br><span class="line">	<span class="keyword">if</span> (!<span class="built_in">CryptHashData</span>(</span><br><span class="line">		m_hHash,</span><br><span class="line">		(BYTE*)lpPassword,</span><br><span class="line">		<span class="built_in">strlen</span>(lpPassword),</span><br><span class="line">		<span class="number">0</span>))</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">OutputDebugString</span>(<span class="string">L&quot;CryptHashData() failed!&quot;</span>);</span><br><span class="line">		<span class="keyword">return</span> FALSE;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 通过散列生成会话密钥</span></span><br><span class="line">	<span class="keyword">if</span> (!<span class="built_in">CryptDeriveKey</span>(</span><br><span class="line">		m_hCryptProv,</span><br><span class="line">		ENCRYPT_ALGORITHM,</span><br><span class="line">		m_hHash,</span><br><span class="line">		KEYLENGTH,</span><br><span class="line">		&amp;m_hKey))</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">OutputDebugString</span>(<span class="string">L&quot;CryptDeriveKey() failed!&quot;</span>);</span><br><span class="line">		<span class="keyword">return</span> FALSE;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 因为加密算法是按ENCRYPT_BLOCK_SIZE 大小的块加密的，所以被加密的</span></span><br><span class="line">	<span class="comment">// 数据长度必须是ENCRYPT_BLOCK_SIZE 的整数倍。下面计算一次加密的</span></span><br><span class="line">	<span class="comment">// 数据长度。</span></span><br><span class="line">	m_dwBlockLen = <span class="number">1000</span> - <span class="number">1000</span> % ENCRYPT_BLOCK_SIZE;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Determine the block size. If a block cipher is used,</span></span><br><span class="line">	<span class="comment">// it must have room for an extra block.</span></span><br><span class="line">	<span class="keyword">if</span> (ENCRYPT_BLOCK_SIZE &gt; <span class="number">1</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		m_dwBufferLen = m_dwBlockLen + ENCRYPT_BLOCK_SIZE;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		m_dwBufferLen = m_dwBlockLen;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 为缓冲区分配内存</span></span><br><span class="line">	m_pbBuffer = (BYTE*)<span class="built_in">malloc</span>(m_dwBufferLen);</span><br><span class="line">	<span class="keyword">if</span> (!m_pbBuffer)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">OutputDebugString</span>(<span class="string">L&quot;分配内存错误!&quot;</span>);</span><br><span class="line">		<span class="keyword">return</span> FALSE;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> TRUE;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="文件加密函数和解密函数"><a href="#文件加密函数和解密函数" class="headerlink" title="文件加密函数和解密函数"></a>文件加密函数和解密函数</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 对文件加密</span></span><br><span class="line"><span class="comment">// 源文件，加密后文件，密码</span></span><br><span class="line"><span class="function">BOOL <span class="title">CMyCryptOpt::MyEncryptFile</span><span class="params">(LPSTR lpSourceFile, LPSTR lpDestFile, LPSTR lpPassword)</span> </span>&#123;</span><br><span class="line">	<span class="comment">// 加密过程:</span></span><br><span class="line">    <span class="comment">// 获得密钥；分配缓冲区</span></span><br><span class="line">	<span class="keyword">if</span> (!<span class="built_in">CryptProcess</span>(lpSourceFile, lpDestFile, lpPassword)) &#123;</span><br><span class="line">		<span class="keyword">return</span> FALSE;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 加密源文件，并将加密后数据写入目标文件</span></span><br><span class="line">	<span class="keyword">do</span> &#123;</span><br><span class="line">		<span class="comment">// 读源文件</span></span><br><span class="line">         <span class="comment">// </span></span><br><span class="line">		m_dwCount = <span class="built_in">fread</span>(m_pbBuffer, <span class="number">1</span>, m_dwBlockLen, m_hSource);</span><br><span class="line">		<span class="keyword">if</span> (<span class="built_in">ferror</span>(m_hSource)) &#123;</span><br><span class="line">			<span class="built_in">OutputDebugString</span>(<span class="string">L&quot;读写源文件错误！&quot;</span>);</span><br><span class="line">			<span class="keyword">return</span> FALSE;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 加密数据</span></span><br><span class="line">		<span class="keyword">if</span> (!<span class="built_in">CryptEncrypt</span>(</span><br><span class="line">			m_hKey,</span><br><span class="line">			<span class="number">0</span>,</span><br><span class="line">			<span class="built_in">feof</span>(m_hSource),</span><br><span class="line">			<span class="number">0</span>,</span><br><span class="line">			m_pbBuffer,</span><br><span class="line">			&amp;m_dwCount,</span><br><span class="line">			m_dwBufferLen</span><br><span class="line">		)) &#123;</span><br><span class="line">			<span class="built_in">OutputDebugString</span>(<span class="string">L&quot;CryptEncrypt() Failed!&quot;</span>);</span><br><span class="line">			<span class="keyword">return</span> FALSE;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 将数据写入文件</span></span><br><span class="line">		<span class="built_in">fwrite</span>(m_pbBuffer, <span class="number">1</span>, m_dwCount, m_hDestination);</span><br><span class="line">		<span class="keyword">if</span> (<span class="built_in">ferror</span>(m_hDestination)) &#123;</span><br><span class="line">			<span class="built_in">OutputDebugString</span>(<span class="string">L&quot;WriteFile Error!&quot;</span>);</span><br><span class="line">			<span class="keyword">return</span> FALSE;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125; <span class="keyword">while</span> (!<span class="built_in">feof</span>(m_hSource));</span><br><span class="line">	<span class="keyword">return</span> TRUE;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 对文件解密</span></span><br><span class="line"><span class="comment">// 加密后文件，加密前文件，密码</span></span><br><span class="line"><span class="function">BOOL <span class="title">CMyCryptOpt::MyDecryptFile</span><span class="params">(LPSTR lpSourceFile, LPSTR lpDestFile, LPSTR lpPassword)</span> </span>&#123;</span><br><span class="line">	<span class="comment">// 解密流程</span></span><br><span class="line">	<span class="keyword">if</span> (!<span class="built_in">CryptProcess</span>(lpSourceFile, lpDestFile, lpPassword)) &#123;</span><br><span class="line">		<span class="keyword">return</span> FALSE;</span><br><span class="line">	&#125;</span><br><span class="line">		</span><br><span class="line">	<span class="comment">// 解密源文件，并将解密后数据写入目标文件</span></span><br><span class="line">	<span class="keyword">do</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">// read source file</span></span><br><span class="line">         <span class="comment">// 读取m_dwBlockLen个字节型数据从m_hSource至m_pbBuffer中</span></span><br><span class="line">		m_dwCount = <span class="built_in">fread</span>(m_pbBuffer, <span class="number">1</span>, m_dwBlockLen, m_hSource);</span><br><span class="line">		<span class="keyword">if</span> (<span class="built_in">ferror</span>(m_hSource))</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">OutputDebugString</span>(<span class="string">L&quot;读写源文件错误!&quot;</span>);</span><br><span class="line">			<span class="keyword">return</span> FALSE;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="comment">// decrypt data</span></span><br><span class="line">         <span class="comment">// 解密</span></span><br><span class="line">		<span class="keyword">if</span> (!<span class="built_in">CryptDecrypt</span>(</span><br><span class="line">			m_hKey,</span><br><span class="line">			<span class="number">0</span>,</span><br><span class="line">			<span class="built_in">feof</span>(m_hSource),</span><br><span class="line">			<span class="number">0</span>,</span><br><span class="line">			m_pbBuffer,</span><br><span class="line">			&amp;m_dwCount))</span><br><span class="line">		&#123;	</span><br><span class="line">			<span class="built_in">OutputDebugString</span>(<span class="string">L&quot;CryptEncrypt() failed!&quot;</span>);</span><br><span class="line">			<span class="keyword">return</span> FALSE;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="comment">// write data to file</span></span><br><span class="line">		<span class="built_in">fwrite</span>(m_pbBuffer, <span class="number">1</span>, m_dwCount, m_hDestination);</span><br><span class="line">		<span class="keyword">if</span> (<span class="built_in">ferror</span>(m_hDestination))</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">OutputDebugString</span>(<span class="string">L&quot;write file error!&quot;</span>);</span><br><span class="line">			<span class="keyword">return</span> FALSE;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125; <span class="keyword">while</span> (!<span class="built_in">feof</span>(m_hSource));</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> TRUE;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="0x04-API函数原型"><a href="#0x04-API函数原型" class="headerlink" title="0x04 API函数原型"></a>0x04 API函数原型</h2><p>从MSDN上面记录几个遇到的API。</p>
+<h3 id="CryptAcquireContext"><a href="#CryptAcquireContext" class="headerlink" title="CryptAcquireContext"></a><code>CryptAcquireContext</code></h3><p>初始化<code>HCRYPTPROV</code>句柄。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">BOOL</span></span><br><span class="line"><span class="function">WINAPI</span></span><br><span class="line"><span class="function"><span class="title">CryptAcquireContextW</span><span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">    _Out_       HCRYPTPROV  *phProv,</span></span></span><br><span class="line"><span class="params"><span class="function">    _In_opt_    LPCWSTR    szContainer,</span></span></span><br><span class="line"><span class="params"><span class="function">    _In_opt_    LPCWSTR    szProvider,</span></span></span><br><span class="line"><span class="params"><span class="function">    _In_        DWORD       dwProvType,</span></span></span><br><span class="line"><span class="params"><span class="function">    _In_        DWORD       dwFlags</span></span></span><br><span class="line"><span class="params"><span class="function">)</span></span>;</span><br></pre></td></tr></table></figure>
+<h4 id="HCRYPTPROV-phProv"><a href="#HCRYPTPROV-phProv" class="headerlink" title="HCRYPTPROV* phProv"></a>HCRYPTPROV* phProv</h4><p>传出<code>HCRYPTPROV</code>对象。</p>
+<p>结束后，释放句柄，使用<code>CryptReleaseContext</code>函数。</p>
+<h4 id="LPCWSTR-szContainer"><a href="#LPCWSTR-szContainer" class="headerlink" title="LPCWSTR szContainer"></a>LPCWSTR szContainer</h4><p>可选项。</p>
+<p>密钥容器的名称。这是一个空字符结尾的字符串，用于为CSP标识密钥容器。</p>
+<p>如果<code>dwFlags</code>被设置为<code>CRYPT_VERIFYCONTEXT</code>，该选项必须设置为NULL。</p>
+<h4 id="LPCWSTR-szProvider"><a href="#LPCWSTR-szProvider" class="headerlink" title="LPCWSTR szProvider"></a>LPCWSTR szProvider</h4><p>可选项。</p>
+<p>标识CSP用的名称。这是一个空字符结尾的字符串。</p>
+<p>如果传入了NULL，则调用了一个默认的Provider。</p>
+<p>更多信息，见<a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/desktop/SecCrypto/cryptographic-service-provider-contexts">Cryptographic Service Provider Contexts</a>. </p>
+<p>For a list of available cryptographic providers, see <a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/desktop/SecCrypto/cryptographic-provider-names">Cryptographic Provider Names</a>.</p>
+<p>一个应用可以通过<code>CryptGetProvParam</code>函数来读取<code>dwParam</code>参数的PP_NAME CSP值，以获取现在使用的CSP的名称。</p>
+<p>CSP名称应该被妥当的设置，而不是使用默认CSP。</p>
+<h4 id="dwProvType"><a href="#dwProvType" class="headerlink" title="dwProvType"></a>dwProvType</h4><p>明确了需要使用的CSP。</p>
+<p><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/desktop/SecCrypto/cryptographic-provider-types">Cryptographic Provider Types</a></p>
+<h4 id="dwFlags"><a href="#dwFlags" class="headerlink" title="dwFlags"></a>dwFlags</h4><h2 id="0xFE-源码"><a href="#0xFE-源码" class="headerlink" title="0xFE 源码"></a>0xFE 源码</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// rhsEncrypt.h</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> once</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;Windows.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;wincrypt.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 自定义编码模式</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MY_ENCODING_TYPE (PKCS_7_ASN_ENCODING | X509_ASN_ENCODING)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 密钥长度（？这么长？）</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> KEYLENGTH 0x00800000</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 加密算法：RC4</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ENCRYPT_ALGORITHM CALG_RC4</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 加密块大小</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ENCRYPT_BLOCK_SIZE 8</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CMyCryptOpt</span> </span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="comment">// 构造函数和析构函数</span></span><br><span class="line">	<span class="built_in">CMyCryptOpt</span>(<span class="keyword">void</span>);</span><br><span class="line">	~<span class="built_in">CMyCryptOpt</span>(<span class="keyword">void</span>);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 初始化加密函数</span></span><br><span class="line">	<span class="function">BOOL <span class="title">InitCrypt</span><span class="params">(VOID)</span></span>;</span><br><span class="line">	<span class="comment">// 销毁加密函数</span></span><br><span class="line">	<span class="function">VOID <span class="title">DestroyCrypt</span><span class="params">(VOID)</span></span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 对文件加密</span></span><br><span class="line">	<span class="comment">// 源文件，加密后文件，密码</span></span><br><span class="line">	<span class="function">BOOL <span class="title">MyEncryptFile</span><span class="params">(LPSTR lpSourceFile, LPSTR lpDestFile, LPSTR lpPassword)</span></span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 对文件解密</span></span><br><span class="line">	<span class="comment">// 加密后文件，加密前文件，密码</span></span><br><span class="line">	<span class="function">BOOL <span class="title">MyDecryptFile</span><span class="params">(LPSTR lpSourceFile, LPSTR lpDestFile, LPSTR lpPassword)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">protected</span>:</span><br><span class="line">	<span class="comment">// 加密过程</span></span><br><span class="line">	<span class="function">BOOL <span class="title">CryptProcess</span><span class="params">(LPSTR lpSourceFile, LPSTR lpDestFile, LPSTR lpPassword)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	FILE* m_hSource;</span><br><span class="line">	FILE* m_hDestination;</span><br><span class="line"></span><br><span class="line">	HCRYPTPROV m_hCryptProv;</span><br><span class="line">	HCRYPTKEY  m_hKey;</span><br><span class="line">	HCRYPTHASH m_hHash;</span><br><span class="line"></span><br><span class="line">	PBYTE	m_pbBuffer;</span><br><span class="line">	DWORD   m_dwBlockLen;</span><br><span class="line">	DWORD   m_dwBufferLen;</span><br><span class="line">	DWORD   m_dwCount;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// rhsEncrypt.cpp</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;rhsEncrypt.h&quot;</span></span></span><br><span class="line"></span><br><span class="line">CMyCryptOpt::<span class="built_in">CMyCryptOpt</span>(VOID) </span><br><span class="line">&#123;</span><br><span class="line">	m_hSource = <span class="literal">NULL</span>;</span><br><span class="line">	m_hDestination = <span class="literal">NULL</span>;</span><br><span class="line"></span><br><span class="line">	m_hCryptProv = <span class="literal">NULL</span>;</span><br><span class="line">	m_hKey = <span class="literal">NULL</span>;</span><br><span class="line">	m_hHash = <span class="literal">NULL</span>;</span><br><span class="line"></span><br><span class="line">	m_pbBuffer = <span class="literal">NULL</span>;</span><br><span class="line">	m_dwBlockLen = <span class="literal">NULL</span>;</span><br><span class="line">	m_dwBufferLen = <span class="literal">NULL</span>;</span><br><span class="line">	m_dwCount = <span class="literal">NULL</span>;</span><br><span class="line">	<span class="built_in">OutputDebugString</span>(<span class="string">L&quot;Constructing Cryptor...&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">CMyCryptOpt::~<span class="built_in">CMyCryptOpt</span>(VOID) &#123;</span><br><span class="line">	<span class="built_in">puts</span>(<span class="string">&quot;Destroying Cryptor...&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获得HCRYPTPROV和HCRYPTHASH句柄</span></span><br><span class="line"><span class="function">BOOL <span class="title">CMyCryptOpt::InitCrypt</span><span class="params">(VOID)</span></span>&#123;</span><br><span class="line">	<span class="comment">// 获得HCRYPTPROV句柄</span></span><br><span class="line">	<span class="keyword">if</span> (!<span class="built_in">CryptAcquireContext</span>(&amp;m_hCryptProv, <span class="literal">NULL</span>, <span class="literal">NULL</span>, PROV_RSA_FULL, <span class="number">0</span>)) </span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (!<span class="built_in">CryptAcquireContext</span>(&amp;m_hCryptProv, <span class="literal">NULL</span>, <span class="literal">NULL</span>, PROV_RSA_FULL, CRYPT_NEWKEYSET)) &#123;</span><br><span class="line">			<span class="built_in">OutputDebugString</span>(<span class="string">L&quot;CryptAcquireContext() Error!&quot;</span>);</span><br><span class="line">			<span class="keyword">return</span> FALSE;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// 若成功获得PROV句柄</span></span><br><span class="line">	<span class="comment">// 则创建一个会话密钥</span></span><br><span class="line">	<span class="keyword">if</span> (!<span class="built_in">CryptCreateHash</span>(m_hCryptProv, CALG_MD5, <span class="number">0</span>, <span class="number">0</span>, &amp;m_hHash)) &#123;</span><br><span class="line">		<span class="built_in">OutputDebugString</span>(<span class="string">L&quot;CrytpCreateHash() Error!&quot;</span>);</span><br><span class="line">		<span class="keyword">return</span> FALSE;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> TRUE;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">VOID <span class="title">CMyCryptOpt::DestroyCrypt</span><span class="params">(VOID)</span> </span>&#123;</span><br><span class="line">	<span class="comment">// 关闭文件指针</span></span><br><span class="line">	<span class="keyword">if</span> (m_hSource) &#123;</span><br><span class="line">		<span class="built_in">fclose</span>(m_hSource);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (m_hDestination) &#123;</span><br><span class="line">		<span class="built_in">fclose</span>(m_hDestination);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 释放内存</span></span><br><span class="line">	<span class="keyword">if</span> (m_pbBuffer) &#123;</span><br><span class="line">		<span class="built_in">free</span>(m_pbBuffer);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 销毁Session Key</span></span><br><span class="line">	<span class="keyword">if</span> (m_hKey) &#123;</span><br><span class="line">		<span class="built_in">CryptDestroyKey</span>(m_hKey);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 销毁哈希对象</span></span><br><span class="line">	<span class="keyword">if</span> (m_hHash) &#123;</span><br><span class="line">		<span class="built_in">CryptDestroyHash</span>(m_hHash);</span><br><span class="line">		m_hHash = <span class="literal">NULL</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 释放Provider句柄</span></span><br><span class="line">	<span class="keyword">if</span> (m_hCryptProv) &#123;</span><br><span class="line">		<span class="built_in">CryptReleaseContext</span>(m_hCryptProv, <span class="number">0</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 对文件加密</span></span><br><span class="line"><span class="comment">// 源文件，加密后文件，密码</span></span><br><span class="line"><span class="function">BOOL <span class="title">CMyCryptOpt::MyEncryptFile</span><span class="params">(LPSTR lpSourceFile, LPSTR lpDestFile, LPSTR lpPassword)</span> </span>&#123;</span><br><span class="line">	<span class="comment">// 加密过程</span></span><br><span class="line">	<span class="keyword">if</span> (!<span class="built_in">CryptProcess</span>(lpSourceFile, lpDestFile, lpPassword)) &#123;</span><br><span class="line">		<span class="keyword">return</span> FALSE;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 加密源文件，并将加密后数据写入目标文件</span></span><br><span class="line">	<span class="keyword">do</span> &#123;</span><br><span class="line">		<span class="comment">// 读源文件</span></span><br><span class="line">		m_dwCount = <span class="built_in">fread</span>(m_pbBuffer, <span class="number">1</span>, m_dwBlockLen, m_hSource);</span><br><span class="line">		<span class="keyword">if</span> (<span class="built_in">ferror</span>(m_hSource)) &#123;</span><br><span class="line">			<span class="built_in">OutputDebugString</span>(<span class="string">L&quot;读写源文件错误！&quot;</span>);</span><br><span class="line">			<span class="keyword">return</span> FALSE;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 加密数据</span></span><br><span class="line">		<span class="keyword">if</span> (!<span class="built_in">CryptEncrypt</span>(</span><br><span class="line">			m_hKey,</span><br><span class="line">			<span class="number">0</span>,</span><br><span class="line">			<span class="built_in">feof</span>(m_hSource),</span><br><span class="line">			<span class="number">0</span>,</span><br><span class="line">			m_pbBuffer,</span><br><span class="line">			&amp;m_dwCount,</span><br><span class="line">			m_dwBufferLen</span><br><span class="line">		)) &#123;</span><br><span class="line">			<span class="built_in">OutputDebugString</span>(<span class="string">L&quot;CryptEncrypt() Failed!&quot;</span>);</span><br><span class="line">			<span class="keyword">return</span> FALSE;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 将数据写入文件</span></span><br><span class="line">		<span class="built_in">fwrite</span>(m_pbBuffer, <span class="number">1</span>, m_dwCount, m_hDestination);</span><br><span class="line">		<span class="keyword">if</span> (<span class="built_in">ferror</span>(m_hDestination)) &#123;</span><br><span class="line">			<span class="built_in">OutputDebugString</span>(<span class="string">L&quot;WriteFile Error!&quot;</span>);</span><br><span class="line">			<span class="keyword">return</span> FALSE;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125; <span class="keyword">while</span> (!<span class="built_in">feof</span>(m_hSource));</span><br><span class="line">	<span class="keyword">return</span> TRUE;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 对文件解密</span></span><br><span class="line"><span class="comment">// 加密后文件，加密前文件，密码</span></span><br><span class="line"><span class="function">BOOL <span class="title">CMyCryptOpt::MyDecryptFile</span><span class="params">(LPSTR lpSourceFile, LPSTR lpDestFile, LPSTR lpPassword)</span> </span>&#123;</span><br><span class="line">	<span class="comment">// 解密流程</span></span><br><span class="line">	<span class="keyword">if</span> (!<span class="built_in">CryptProcess</span>(lpSourceFile, lpDestFile, lpPassword)) &#123;</span><br><span class="line">		<span class="keyword">return</span> FALSE;</span><br><span class="line">	&#125;</span><br><span class="line">		</span><br><span class="line">	<span class="comment">// 解密源文件，并将解密后数据写入目标文件</span></span><br><span class="line">	<span class="keyword">do</span></span><br><span class="line">	&#123;</span><br><span class="line"></span><br><span class="line">		<span class="comment">// read source file</span></span><br><span class="line">		m_dwCount = <span class="built_in">fread</span>(m_pbBuffer, <span class="number">1</span>, m_dwBlockLen, m_hSource);</span><br><span class="line">		<span class="keyword">if</span> (<span class="built_in">ferror</span>(m_hSource))</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">OutputDebugString</span>(<span class="string">L&quot;读写源文件错误!&quot;</span>);</span><br><span class="line">			<span class="keyword">return</span> FALSE;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="comment">// decrypt data</span></span><br><span class="line">		<span class="keyword">if</span> (!<span class="built_in">CryptDecrypt</span>(</span><br><span class="line">			m_hKey,</span><br><span class="line">			<span class="number">0</span>,</span><br><span class="line">			<span class="built_in">feof</span>(m_hSource),</span><br><span class="line">			<span class="number">0</span>,</span><br><span class="line">			m_pbBuffer,</span><br><span class="line">			&amp;m_dwCount))</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">OutputDebugString</span>(<span class="string">L&quot;CryptEncrypt() failed!&quot;</span>);</span><br><span class="line">			<span class="keyword">return</span> FALSE;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="comment">// write data to file</span></span><br><span class="line">		<span class="built_in">fwrite</span>(m_pbBuffer, <span class="number">1</span>, m_dwCount, m_hDestination);</span><br><span class="line">		<span class="keyword">if</span> (<span class="built_in">ferror</span>(m_hDestination))</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">OutputDebugString</span>(<span class="string">L&quot;write file error!&quot;</span>);</span><br><span class="line">			<span class="keyword">return</span> FALSE;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;<span class="keyword">while</span> (!<span class="built_in">feof</span>(m_hSource));</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> TRUE;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 加密过程</span></span><br><span class="line"><span class="function">BOOL <span class="title">CMyCryptOpt::CryptProcess</span><span class="params">(LPSTR lpSourceFile, LPSTR lpDestFile, LPSTR lpPassword)</span> </span>&#123;</span><br><span class="line">	<span class="comment">// 打开要加密的源文件</span></span><br><span class="line"></span><br><span class="line">	m_hSource = <span class="built_in">fopen</span>(lpSourceFile, <span class="string">&quot;rb&quot;</span>);</span><br><span class="line">	<span class="keyword">if</span> (!m_hSource)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">OutputDebugString</span>(<span class="string">L&quot;open source file failed!&quot;</span>);</span><br><span class="line">		<span class="keyword">return</span> FALSE;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="comment">// 打开加密后产生的目标文件</span></span><br><span class="line">	m_hDestination = <span class="built_in">fopen</span>(lpDestFile, <span class="string">&quot;wb&quot;</span>);</span><br><span class="line">	<span class="keyword">if</span> (!m_hDestination)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">OutputDebugString</span>(<span class="string">L&quot;open destination file failed!&quot;</span>);</span><br><span class="line">		<span class="keyword">return</span> FALSE;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 用输入的密码产生一个散列</span></span><br><span class="line">	<span class="keyword">if</span> (!<span class="built_in">CryptHashData</span>(</span><br><span class="line">		m_hHash,</span><br><span class="line">		(BYTE*)lpPassword,</span><br><span class="line">		<span class="built_in">strlen</span>(lpPassword),</span><br><span class="line">		<span class="number">0</span>))</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">OutputDebugString</span>(<span class="string">L&quot;CryptHashData() failed!&quot;</span>);</span><br><span class="line">		<span class="keyword">return</span> FALSE;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 通过散列生成会话密钥</span></span><br><span class="line">	<span class="keyword">if</span> (!<span class="built_in">CryptDeriveKey</span>(</span><br><span class="line">		m_hCryptProv,</span><br><span class="line">		ENCRYPT_ALGORITHM,</span><br><span class="line">		m_hHash,</span><br><span class="line">		KEYLENGTH,</span><br><span class="line">		&amp;m_hKey))</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">OutputDebugString</span>(<span class="string">L&quot;CryptDeriveKey() failed!&quot;</span>);</span><br><span class="line">		<span class="keyword">return</span> FALSE;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 因为加密算法是按ENCRYPT_BLOCK_SIZE 大小的块加密的，所以被加密的</span></span><br><span class="line">	<span class="comment">// 数据长度必须是ENCRYPT_BLOCK_SIZE 的整数倍。下面计算一次加密的</span></span><br><span class="line">	<span class="comment">// 数据长度。</span></span><br><span class="line">	m_dwBlockLen = <span class="number">1000</span> - <span class="number">1000</span> % ENCRYPT_BLOCK_SIZE;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Determine the block size. If a block cipher is used,</span></span><br><span class="line">	<span class="comment">// it must have room for an extra block.</span></span><br><span class="line">	<span class="keyword">if</span> (ENCRYPT_BLOCK_SIZE &gt; <span class="number">1</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		m_dwBufferLen = m_dwBlockLen + ENCRYPT_BLOCK_SIZE;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		m_dwBufferLen = m_dwBlockLen;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 为缓冲区分配内存</span></span><br><span class="line">	m_pbBuffer = (BYTE*)<span class="built_in">malloc</span>(m_dwBufferLen);</span><br><span class="line">	<span class="keyword">if</span> (!m_pbBuffer)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">OutputDebugString</span>(<span class="string">L&quot;分配内存错误!&quot;</span>);</span><br><span class="line">		<span class="keyword">return</span> FALSE;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> TRUE;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="0xFF-参考"><a href="#0xFF-参考" class="headerlink" title="0xFF 参考"></a>0xFF 参考</h2><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/lixiaomin_235/article/details/3532397">使用WinCrypt进行简单的对称加密实例_lixiaomin_235的博客-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://tav.qq.com/index/newsDetail/266.html">腾讯反病毒实验室 (qq.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://forums.codeguru.com/showthread.php?79163-Structure-of-HCRYPTKEY-Data">Structure of HCRYPTKEY Data (codeguru.com)</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Windows/" rel="tag"><i class="fa fa-tag"></i></a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/09/25/Heaven'sGate/" rel="prev" title="天堂之门技术">
+      <i class="fa fa-chevron-left"></i> 天堂之门技术
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#WinCrypt%E5%BA%93%E4%BD%BF%E7%94%A8"><span class="nav-number">1.</span> <span class="nav-text">WinCrypt库使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#0x00-%E7%AE%80%E4%BB%8B"><span class="nav-number">1.1.</span> <span class="nav-text">0x00 简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x01-%E4%B8%BE%E4%BE%8B%E5%88%86%E6%9E%90"><span class="nav-number">1.2.</span> <span class="nav-text">0x01 举例分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x02-%E6%88%90%E5%91%98%E4%BD%93"><span class="nav-number">1.3.</span> <span class="nav-text">0x02 成员体</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E6%8C%87%E9%92%88"><span class="nav-number">1.3.1.</span> <span class="nav-text">文件指针</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A0%E5%AF%86%E6%8F%90%E4%BE%9B%E8%80%85%E5%8F%A5%E6%9F%84%EF%BC%88HCRYPTPROV"><span class="nav-number">1.3.2.</span> <span class="nav-text">加密提供者句柄（HCRYPTPROV)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%86%E9%92%A5%E5%8F%A5%E6%9F%84%EF%BC%88HCRYPTKEY%EF%BC%89"><span class="nav-number">1.3.3.</span> <span class="nav-text">密钥句柄（HCRYPTKEY）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E5%AF%86%E9%92%A5"><span class="nav-number">1.3.3.1.</span> <span class="nav-text">生成密钥</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%94%80%E6%AF%81%E5%AF%86%E9%92%A5"><span class="nav-number">1.3.3.2.</span> <span class="nav-text">销毁密钥</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%AF%86%E9%92%A5%E8%BF%9B%E8%A1%8C%E5%8A%A0%E5%AF%86"><span class="nav-number">1.3.3.3.</span> <span class="nav-text">使用密钥进行加密</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%93%88%E5%B8%8C%E5%AF%B9%E8%B1%A1%E5%8F%A5%E6%9F%84%EF%BC%88HCRYPTHASH"><span class="nav-number">1.3.4.</span> <span class="nav-text">哈希对象句柄（HCRYPTHASH)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E5%93%88%E5%B8%8C%E5%AF%B9%E8%B1%A1"><span class="nav-number">1.3.4.1.</span> <span class="nav-text">创建哈希对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%A9%E7%94%A8%E5%93%88%E5%B8%8C%E5%AF%B9%E8%B1%A1"><span class="nav-number">1.3.4.2.</span> <span class="nav-text">利用哈希对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%94%80%E6%AF%81%E5%93%88%E5%B8%8C%E5%AF%B9%E8%B1%A1"><span class="nav-number">1.3.4.3.</span> <span class="nav-text">销毁哈希对象</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E5%AF%B9%E8%B1%A1"><span class="nav-number">1.3.5.</span> <span class="nav-text">其他对象</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x03-Demo%E5%87%BD%E6%95%B0%E5%88%86%E6%9E%90"><span class="nav-number">1.4.</span> <span class="nav-text">0x03 Demo函数分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E5%92%8C%E6%9E%90%E6%9E%84%E5%87%BD%E6%95%B0"><span class="nav-number">1.4.1.</span> <span class="nav-text">构造函数和析构函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E5%8A%A0%E5%AF%86%E5%87%BD%E6%95%B0%E5%92%8C%E9%94%80%E6%AF%81%E5%8A%A0%E5%AF%86%E5%87%BD%E6%95%B0"><span class="nav-number">1.4.2.</span> <span class="nav-text">初始化加密函数和销毁加密函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A0%E5%AF%86%E8%BF%87%E7%A8%8B%E5%87%BD%E6%95%B0"><span class="nav-number">1.4.3.</span> <span class="nav-text">加密过程函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E5%8A%A0%E5%AF%86%E5%87%BD%E6%95%B0%E5%92%8C%E8%A7%A3%E5%AF%86%E5%87%BD%E6%95%B0"><span class="nav-number">1.4.4.</span> <span class="nav-text">文件加密函数和解密函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x04-API%E5%87%BD%E6%95%B0%E5%8E%9F%E5%9E%8B"><span class="nav-number">1.5.</span> <span class="nav-text">0x04 API函数原型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CryptAcquireContext"><span class="nav-number">1.5.1.</span> <span class="nav-text">CryptAcquireContext</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#HCRYPTPROV-phProv"><span class="nav-number">1.5.1.1.</span> <span class="nav-text">HCRYPTPROV* phProv</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LPCWSTR-szContainer"><span class="nav-number">1.5.1.2.</span> <span class="nav-text">LPCWSTR szContainer</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LPCWSTR-szProvider"><span class="nav-number">1.5.1.3.</span> <span class="nav-text">LPCWSTR szProvider</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#dwProvType"><span class="nav-number">1.5.1.4.</span> <span class="nav-text">dwProvType</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#dwFlags"><span class="nav-number">1.5.1.5.</span> <span class="nav-text">dwFlags</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0xFE-%E6%BA%90%E7%A0%81"><span class="nav-number">1.6.</span> <span class="nav-text">0xFE 源码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0xFF-%E5%8F%82%E8%80%83"><span class="nav-number">1.7.</span> <span class="nav-text">0xFF 参考</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Tardis"
+      src="/images/spongebob.jpg">
+  <p class="site-author-name" itemprop="name">Tardis</p>
+  <div class="site-description" itemprop="description">学点好玩的逆向知识</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Taardisaa" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Taardisaa" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:136665562@qq.com" title="E-Mail → mailto:136665562@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa-heartbeat"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tardis</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">41k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">37 分钟</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='250' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+   if (typeof MathJax === 'undefined') {
+       window.MathJax = {
+         loader: {
+         source: {
+           '[tex]/amsCd': '[tex]/amscd',
+           '[tex]/AMScd': '[tex]/amscd'
+         }
+       },
+       tex: {
+         inlineMath: {'[+]': [['$', '$']]},
+         tags: 'ams'
+       },
+       options: {
+         renderActions: {
+           findScript: [10, doc => {
+             document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+               const display = !!node.type.match(/; *mode=display/);
+               const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+               const text = document.createTextNode('');
+               node.parentNode.replaceChild(text, node);
+               math.start = {node: text, delim: '', n: 0};
+               math.end = {node: text, delim: '', n: 0};
+               doc.math.push(math);
+             });
+           }, '', false],
+           insertedScript: [200, () => {
+         document.querySelectorAll('mjx-container').forEach(node => {
+           let target = node.parentNode;
+           if (target.nodeName.toLowerCase() === 'li') {
+             target.parentNode.classList.add('has-jax');
+           }
+         });
+       }, '', false]
+     }
+   }
+ };
+	
+
+    (function () {
+      var script = document.createElement('script');
+      script.src = 'https://cdn.jsdelivr.net/npm/mathjax@2.7.8/unpacked/MathJax.js?config=TeX-MML-AM_CHTML';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+
+   <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+   <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+   <script type="text/javascript" src="/js/fireworks.js"></script>
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"right","width":200,"height":400},"mobile":{"show":true},"log":false});</script></body>
+</html>
