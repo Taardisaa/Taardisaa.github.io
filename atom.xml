@@ -121,4 +121,25 @@
     
   </entry>
   
+  <entry>
+    <title>同余2.3——模运算和同余的应用</title>
+    <link href="https://taardisaa.github.io/1970/01/01/%E5%90%8C%E4%BD%993/"/>
+    <id>https://taardisaa.github.io/1970/01/01/%E5%90%8C%E4%BD%993/</id>
+    <published>1970-01-01T00:00:00.000Z</published>
+    <updated>2021-09-27T12:28:54.818Z</updated>
+    
+    <content type="html"><![CDATA[<p>提前预习，模运算和同余的应用</p><span id="more"></span><h1 id="同余2-3——模运算和同余的应用"><a href="#同余2-3——模运算和同余的应用" class="headerlink" title="同余2.3——模运算和同余的应用"></a>同余2.3——模运算和同余的应用</h1><h2 id="密码系统的基本概念模型"><a href="#密码系统的基本概念模型" class="headerlink" title="密码系统的基本概念模型"></a>密码系统的基本概念模型</h2><p>见p24</p><h2 id="移位密码"><a href="#移位密码" class="headerlink" title="移位密码"></a>移位密码</h2><script type="math/tex; mode=display">e_{k}(x)=x+k\ mod\ 26\\d_{k}(y)=y-k\ mod\ 26\\</script><p>比如凯撒密码。</p><h2 id="Vigenere密码"><a href="#Vigenere密码" class="headerlink" title="Vigenere密码"></a><code>Vigenere</code>密码</h2><p>维吉尼亚密码。</p><p>密码空间</p><script type="math/tex; mode=display">P=C=K=(Z_{26})^m</script><p>密钥</p><script type="math/tex; mode=display">k=(k_1,k_2,...,k_m)</script><script type="math/tex; mode=display">e_k(x_1,x_2,...,x_m)=(x_1+k_1,x_2+k_2,...,x_m+k_m)\\d_k(y_1,y_2,...,y_m)=(y_1-k_1,y_2-k_2,...,y_m-k_m)</script><h2 id="Hill密码"><a href="#Hill密码" class="headerlink" title="Hill密码"></a><code>Hill</code>密码</h2><script type="math/tex; mode=display">P=C=(Z_{26})^m</script><script type="math/tex; mode=display">K=(k_{ij})_{m\times m}</script><p><code>m</code>是一次加密的长度。</p><p>希尔密码的本质是矩阵乘法。一次对长度为m的向量进行乘法，需要<code>m*m</code>的矩阵。</p><p>所以密钥<code>K</code>是<code>m*m</code>的方阵。</p><p>解密就是乘以逆矩阵。</p><script type="math/tex; mode=display">e_k(x)=xK\\d_k(y)=yK^{-1}</script>]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;提前预习，模运算和同余的应用&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="Math" scheme="https://taardisaa.github.io/categories/Math/"/>
+    
+    
+    <category term="Math" scheme="https://taardisaa.github.io/tags/Math/"/>
+    
+  </entry>
+  
 </feed>
