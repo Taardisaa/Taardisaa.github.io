@@ -21,20 +21,20 @@
     var CONFIG = {"hostname":"taardisaa.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="记录一下信息安全数学专业课的自学笔记（确确实实是不听课的人捏）">
+  <meta name="description" content="任老师讲的好快捏，要跟不上了捏 :happy:">
 <meta property="og:type" content="article">
-<meta property="og:title" content="同余">
-<meta property="og:url" content="https://taardisaa.github.io/1970/01/01/%E5%90%8C%E4%BD%99/index.html">
+<meta property="og:title" content="同余2.2——简化剩余系，欧拉定理与费马小定理">
+<meta property="og:url" content="https://taardisaa.github.io/1970/01/01/%E5%90%8C%E4%BD%99_%E7%AE%80%E5%8C%96%E5%89%A9%E4%BD%99%E7%B3%BB,%E6%AC%A7%E6%8B%89%E5%AE%9A%E7%90%86%E4%B8%8E%E8%B4%B9%E9%A9%AC%E5%B0%8F%E5%AE%9A%E7%90%86/index.html">
 <meta property="og:site_name" content="Tardis&#39;s blog">
-<meta property="og:description" content="记录一下信息安全数学专业课的自学笔记（确确实实是不听课的人捏）">
+<meta property="og:description" content="任老师讲的好快捏，要跟不上了捏 :happy:">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="1970-01-01T00:00:00.000Z">
-<meta property="article:modified_time" content="2021-09-27T07:33:08.441Z">
+<meta property="article:modified_time" content="2021-09-27T11:40:37.711Z">
 <meta property="article:author" content="Tardis">
 <meta property="article:tag" content="Math">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://taardisaa.github.io/1970/01/01/%E5%90%8C%E4%BD%99/">
+<link rel="canonical" href="https://taardisaa.github.io/1970/01/01/%E5%90%8C%E4%BD%99_%E7%AE%80%E5%8C%96%E5%89%A9%E4%BD%99%E7%B3%BB,%E6%AC%A7%E6%8B%89%E5%AE%9A%E7%90%86%E4%B8%8E%E8%B4%B9%E9%A9%AC%E5%B0%8F%E5%AE%9A%E7%90%86/">
 
 
 <script id="page-configurations">
@@ -47,7 +47,7 @@
   };
 </script>
 
-  <title>同余 | Tardis's blog</title>
+  <title>同余2.2——简化剩余系，欧拉定理与费马小定理 | Tardis's blog</title>
   
 
 
@@ -161,7 +161,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://taardisaa.github.io/1970/01/01/%E5%90%8C%E4%BD%99/">
+    <link itemprop="mainEntityOfPage" href="https://taardisaa.github.io/1970/01/01/%E5%90%8C%E4%BD%99_%E7%AE%80%E5%8C%96%E5%89%A9%E4%BD%99%E7%B3%BB,%E6%AC%A7%E6%8B%89%E5%AE%9A%E7%90%86%E4%B8%8E%E8%B4%B9%E9%A9%AC%E5%B0%8F%E5%AE%9A%E7%90%86/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/spongebob.jpg">
@@ -174,7 +174,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          同余
+          同余2.2——简化剩余系，欧拉定理与费马小定理
         </h1>
 
         <div class="post-meta">
@@ -191,7 +191,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-09-27 15:33:08" itemprop="dateModified" datetime="2021-09-27T15:33:08+08:00">2021-09-27</time>
+                <time title="修改时间：2021-09-27 19:40:37" itemprop="dateModified" datetime="2021-09-27T19:40:37+08:00">2021-09-27</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -209,14 +209,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>2.4k</span>
+              <span>1.6k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
+              <span>1 分钟</span>
             </span>
 
         </div>
@@ -228,102 +228,74 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>记录一下信息安全数学专业课的自学笔记（确确实实是不听课的人捏）</p>
+        <p>任老师讲的好快捏，要跟不上了捏 :happy:</p>
 <span id="more"></span>
-<h1 id="同余式"><a href="#同余式" class="headerlink" title="同余式"></a>同余式</h1><h3 id="定义2-1"><a href="#定义2-1" class="headerlink" title="定义2.1"></a>定义2.1</h3><p>给定正整数m，如果有两个整数a，b，有</p>
-<script type="math/tex; mode=display">
-m|a-b</script><p>则<strong>a，b模m同余</strong>，记作</p>
-<script type="math/tex; mode=display">
-a\equiv b\ (mod\ m)</script><p>否则则为不同余</p>
-<script type="math/tex; mode=display">
-a\not\equiv b\ (mod\ m)</script><p><strong>基本定义，没啥好说的</strong></p>
-<h3 id="定理2-1"><a href="#定理2-1" class="headerlink" title="定理2.1"></a>定理2.1</h3><p>同余充要条件：</p>
-<p>存在一个整数k，有</p>
-<script type="math/tex; mode=display">
-a\ =\ b+km</script><p><strong>比较本质的定义，我觉得</strong></p>
-<p><strong>即一些整数，在同一个域下的本质是一样的</strong></p>
-<h3 id="定理2-2"><a href="#定理2-2" class="headerlink" title="定理2.2"></a>定理2.2</h3><ol>
-<li><p>自反性：对于任意整数a，有：</p>
-<script type="math/tex; mode=display">
-a\ \equiv\ a\ (mod\ m)</script></li>
-<li><p>对称性</p>
-<p>若有</p>
-<script type="math/tex; mode=display">
-a\ \equiv\ b\ (mod\  m)</script><p>则有</p>
-<script type="math/tex; mode=display">
-b\ \equiv\ a\ (mod\ m)</script></li>
-<li><p>传递性</p>
-<p>若有</p>
-<script type="math/tex; mode=display">
-a\ \equiv\ b\ (mod\  m)</script><script type="math/tex; mode=display">
-b\ \equiv\ c\ (mod\  m)</script><p>则有</p>
-<script type="math/tex; mode=display">
-a\ \equiv\ c\ (mod\  m)</script></li>
-</ol>
-<p><strong>经典特性。没啥好说的，可能有点用吧。</strong></p>
-<h3 id="定理2-3"><a href="#定理2-3" class="headerlink" title="定理2.3"></a>定理2.3</h3><p>若</p>
-<script type="math/tex; mode=display">
-a_1\ \equiv\ b_1\ (mod\  m)\\
-a_2\ \equiv\ b_2\ (mod\  m)</script><p>则有</p>
-<script type="math/tex; mode=display">
-a_1+a_2 \equiv\ b_1+b2\ (mod\  m)\\
-a_1*a_2 \equiv\ b_1*b2\ (mod\  m)</script><p>说明同余关系对于<strong>加法</strong>和<strong>乘法</strong>是保持的。</p>
-<p><strong>这是一个很重要的理论，能够引出后面的群环域等东西。</strong></p>
-<h4 id="证明"><a href="#证明" class="headerlink" title="证明"></a>证明</h4><h3 id="思考2-1"><a href="#思考2-1" class="headerlink" title="思考2.1"></a>思考2.1</h3><p>同余关系对于减法和除法还保持嘛？</p>
-<h3 id="定理2-4"><a href="#定理2-4" class="headerlink" title="定理2.4"></a>定理2.4</h3><p>设m是一个正整数，有</p>
-<script type="math/tex; mode=display">
-a*d\ \equiv\ b*d\ (mod\ m)</script><p>若满足<code>(d, m) = 1</code>，则可以推出：</p>
-<script type="math/tex; mode=display">
-a\ \equiv\ b\ (mod\ m)</script><p><strong>也就是，在被除数和模数互质的情况下，才能实现一个除法！！</strong></p>
-<h3 id="定理2-5"><a href="#定理2-5" class="headerlink" title="定理2.5"></a>定理2.5</h3><p>m为正整数，且有</p>
-<script type="math/tex; mode=display">
-a\ \equiv\ b\ (mod\ m)</script><p>如果整数<code>d|(a, b, m)</code></p>
-<p>则有</p>
-<script type="math/tex; mode=display">
-\frac{a}{d}\ \equiv\ \frac{b}{d}(mod\ \frac{m}{d})</script><p><strong>d就是a，b，m的最大公因子嘛，也就相当于约分化简了一下嘛。</strong></p>
-<h3 id="定理2-6"><a href="#定理2-6" class="headerlink" title="定理2.6"></a>定理2.6</h3><p>m正整数，且有</p>
-<script type="math/tex; mode=display">
-a\ \equiv\ b\ (mod\ m)</script><p>如果整数<code>d|m</code>，则有</p>
-<script type="math/tex; mode=display">
-a\ \equiv\ b\ (mod\ d)</script><p><strong>不知道怎么解释，反正这就是m不是素数的缺点了。因数也能满足这个情况，所以还是素数作为模数最好。</strong></p>
+<h1 id="同余2-2——简化剩余系，欧拉定理与费马小定理"><a href="#同余2-2——简化剩余系，欧拉定理与费马小定理" class="headerlink" title="同余2.2——简化剩余系，欧拉定理与费马小定理"></a>同余2.2——简化剩余系，欧拉定理与费马小定理</h1><h2 id="简化剩余系，欧拉定理与费马小定理"><a href="#简化剩余系，欧拉定理与费马小定理" class="headerlink" title="简化剩余系，欧拉定理与费马小定理"></a>简化剩余系，欧拉定理与费马小定理</h2><h3 id="名词"><a href="#名词" class="headerlink" title="名词"></a>名词</h3><p>简化剩余<strong>类</strong></p>
+<p>简化剩余<strong>系</strong></p>
 <hr>
-<p>整数同余是一种<strong>等价</strong>关系，所以全体整数可以按照模m是否同余，划分成若干<strong>两两互不相交的集合</strong>，使得<strong>每一个集合中的</strong>任意两个整数模m<strong>一定同余</strong>，不同集合间的两个任意整数模m<strong>一定不同余</strong>。</p>
-<p>设m是一个正整数，对于任意正整数a，令</p>
+<h3 id="引入"><a href="#引入" class="headerlink" title="引入"></a>引入</h3><p>在模m的一个剩余类中，如果有一个数与m互素，那么该剩余类中所有的数均与m互素。</p>
+<p><strong>很好证明。</strong></p>
+<h3 id="定义2-4"><a href="#定义2-4" class="headerlink" title="定义2.4"></a>定义2.4</h3><p>如果一个模m的剩余类中<strong>存在一个</strong>与m互素的剩余，则叫做<strong>简化剩余类</strong>。</p>
+<p><strong>模m的简化剩余类</strong>：</p>
 <script type="math/tex; mode=display">
-C_a\ =\ \{c\ |\ c\in Z, \ c\ \equiv\ a\ (mod\ m)\ \}</script><p><code>C_a</code>为非空集合，因为恒有<code>a</code>在集合C内。</p>
-<h3 id="定义2-2"><a href="#定义2-2" class="headerlink" title="定义2.2"></a>定义2.2</h3><p><code>C_a</code>叫做模m的a的<strong>剩余类</strong>。一个剩余类中的任意数叫做该类的<strong>剩余</strong>或<strong>代表元</strong>。若<code>r_0</code>，<code>r_1</code>，…，<code>r_&#123;m-1&#125;</code>是m个整数，且其中任何两个数都<strong>不在</strong>同一个<strong>剩余类</strong>内，则<code>r_0</code>，<code>r_1</code>，…，<code>r_&#123;m-1&#125;</code>叫做模m的一个<strong>完全剩余系</strong>。</p>
-<p><strong>完全剩余系</strong>0，1，2，3，，。。。，m-1称为<strong>最小非负完全剩余系</strong>。</p>
-<p>模m的<strong>剩余类</strong>通常写成：</p>
+(Z/mZ)^*\ =\ \{C_a|\ 0\le a\le m-1,\ (a,\ m)=1\}</script><p><strong>根据引入定理，可以的值简化剩余类中的所有元素都与m互素。</strong></p>
+<p><strong>a需要满足的要求，就是要小于m，且与m互素。满足这种a的数量，就引入了下面的φ函数。</strong></p>
+<h3 id="定义2-5"><a href="#定义2-5" class="headerlink" title="定义2.5"></a>定义2.5</h3><p>在模m的所有简化剩余类中，从每一个类中任取一个数，一起组成的一个整数集合，叫做模m的一个<strong>简化剩余系</strong>（Reduced Residue）。</p>
+<p>也可以叫做<strong>既约剩余系</strong>，<strong>缩剩余系</strong>，<strong>缩系</strong>。</p>
+<h3 id="定义2-6"><a href="#定义2-6" class="headerlink" title="定义2.6"></a>定义2.6</h3><p>正整数m，m个整数0，1，。。。，m-1中与m互素的整数的个数，记为<code>φ(m)</code>，叫做<strong>欧拉函数</strong>。</p>
+<p>约定<code>φ(1)=1</code>。</p>
+<p>比如有<code>φ(2)=1</code>。</p>
+<p>模m的<strong>简化剩余类</strong>的个数为<code>φ(m)</code>，即</p>
 <script type="math/tex; mode=display">
-Z/mZ\ =\ \{C_0, C_1, ...,C_{m-1}\}\ =\ \{C_a\ |\ 0\le a\ \le m-1\}</script><p>当<code>m=p</code>为一个素数，则可以写成：</p>
+|(Z/mZ)^*|=\phi(m)</script><p>模m的<strong>简化剩余系</strong>的个数也为<code>φ(m)</code>。</p>
+<h3 id="定理2-9"><a href="#定理2-9" class="headerlink" title="定理2.9"></a>定理2.9</h3><p><code>φ(m)</code>个整数a1，a2，…，a_φm，为模m的一个<strong>简化剩余系</strong>的充要条件是</p>
+<p><strong>它们与m互素，且模m两两不同余。</strong></p>
+<p><strong>互素是满足“简化”，不同余满足“剩余系”</strong></p>
+<h3 id="定理2-10"><a href="#定理2-10" class="headerlink" title="定理2.10"></a>定理2.10</h3><p>设m是正整数，整数a满足<code>(a, m) = 1</code>。若<code>x</code>遍历模m的一个简化剩余系，则<code>ax</code>也遍历模m的一个简化剩余系。</p>
+<hr>
+<h2 id="Euler函数的性质"><a href="#Euler函数的性质" class="headerlink" title="Euler函数的性质"></a>Euler函数的性质</h2><h3 id="性质1"><a href="#性质1" class="headerlink" title="性质1"></a>性质1</h3><p>若<code>p</code>为素数，则<code>φ(p) = p-1</code>。</p>
+<p><strong>即所有小于<code>p</code>的正整数都与它互素。</strong></p>
+<h3 id="性质2"><a href="#性质2" class="headerlink" title="性质2"></a>性质2</h3><p>若<code>p</code>为素数，且整数<code>α ≥ 1</code>，则</p>
 <script type="math/tex; mode=display">
-F_p\ =\ Z/pZ\ =\ \{C_0, C_1, ...,C_{p-1}\}\ =\ \{C_a\ |\ 0\le a\ \le p-1\}</script><p><code>C_i</code>也可以记为</p>
+\phi(p^a)=p^a-p^{a-1}=p^a(1-\frac{1}{p})</script><p><strong>证明</strong></p>
+<p>使用<strong>排除法</strong>。</p>
+<p><code>0</code>，<code>p^a-1</code>中，与<code>p^a</code>不互素的只有<code>p</code>的倍数，一共<code>p^&#123;a-1&#125;</code>个。</p>
+<p>即<code>0</code>，<code>p</code>，<code>2p</code>，…，<code>(p^&#123;a-1&#125;-1)p</code></p>
+<p>互素的比例占<code>1-1/p</code>，不互素的占<code>1/p</code>。</p>
+<h3 id="性质3"><a href="#性质3" class="headerlink" title="性质3"></a>性质3</h3><p>若<code>p</code>，<code>q</code>为不同素数，<code>n=pq</code>，则<code>φ(n) = (p-1)(q-1) = Φ(p)φ(q)</code></p>
+<p><strong>证明</strong></p>
+<p>排除法。详见p22。</p>
+<p><strong>例题</strong></p>
+<p><code>Φ(77) = Φ(7)Φ(11) = 6 * 10 = 60</code></p>
+<h3 id="定理2-11"><a href="#定理2-11" class="headerlink" title="定理2.11"></a>定理2.11</h3><p>正整数n的标准分解式：</p>
 <script type="math/tex; mode=display">
-[\ i\ ]_m</script><h4 id="例题2-3"><a href="#例题2-3" class="headerlink" title="例题2.3"></a>例题2.3</h4><p>取m=7，则模m的剩余类为</p>
+\phi(n)=\prod \limits_{p|n}p^a = p_1^{a_1}p_2^{a_2}...p_k^{a_k}</script><p>所以</p>
 <script type="math/tex; mode=display">
-C_0\ = \ [\ 0\ ]_7\ =\ \{..., -14,-7,0,7,14,...\}\\
-C_1\ = \ [\ 1\ ]_7\ =\ \{..., -13,-6,1,8,15,...\}\\
-C_2\ = \ [\ 2\ ]_7\ =\ \{..., -12,-5,2,9,16,...\}\\
-C_3\ = \ [\ 3\ ]_7\ =\ \{..., -11,-4,3,10,17,...\}\\
-C_4\ = \ [\ 4\ ]_7\ =\ \{..., -10,-3,4,11,18,...\}\\
-C_5\ = \ [\ 5\ ]_7\ =\ \{...,  -9,-2,5,12,19,...\}\\
-C_6\ = \ [\ 6\ ]_7\ =\ \{...,  -8,-1,6,13,20,...\}\\</script><p>其中，-14，-6，2，10，18，19，20是模7的<strong>完全剩余系</strong>。（每行随便取都是）</p>
-<p>0，1，2，3，4，5，6是<strong>最小非负完全剩余系</strong></p>
-<p>通常情况下，可以用<code>Z_m</code>表示m的最小非负完全剩余系。</p>
+\phi(n)=n\prod \limits_{p|n}(1-\frac{1}{p}) = n(1-\frac{1}{p_1})(1-\frac{1}{p_2})...(1-\frac{1}{p_k})</script><p><strong>例题</strong></p>
+<p>求<code>φ(120)</code>。</p>
+<p>因为 <code>120 = 2^3*3*5</code>，所以</p>
+<p><code>φ(120) = 120*(1-1/2)(1-1/3)(1-1/5) = 32</code></p>
+<h3 id="推论2-1"><a href="#推论2-1" class="headerlink" title="推论2.1"></a>推论2.1</h3><p>设<code>m</code>，<code>n</code>是互素的两个正整数，即<code>(a, b) = 1</code>，则</p>
 <script type="math/tex; mode=display">
-Z_m\ =\ \{0,1,2,...,m-1\}</script><h3 id="定理2-7"><a href="#定理2-7" class="headerlink" title="定理2.7"></a>定理2.7</h3><p>m个整数a1,a2,…,am为模m的一个<strong>完全剩余系</strong>的<strong>充要</strong>条件是他们模m两两<strong>不同余</strong></p>
-<h3 id="定理2-8"><a href="#定理2-8" class="headerlink" title="定理2.8"></a>定理2.8</h3><p>m是正整数，整数a满足<code>(a, m) = 1</code>，b是任意整数。若x遍历模m的一个完全剩余系，则<code>ax+b</code>也遍历模m的一个完全剩余系。</p>
-<h4 id="证明-1"><a href="#证明-1" class="headerlink" title="证明"></a>证明</h4><h3 id="定义2-3"><a href="#定义2-3" class="headerlink" title="定义2.3"></a>定义2.3</h3><p>设m是一个正整数，a是一个整数，如果存在整数<code>a&#39;</code>，使得</p>
+\phi(mn)=\phi(m)\phi(n)</script><p>证明详见p22。</p>
+<blockquote>
+<p>注意：Euler函数不是严格的乘性函数，<code>f(xy) = f(x)f(y)</code>只有在互素的情况下才能成立！</p>
+</blockquote>
+<p><strong>互素！！不是素数</strong></p>
+<h3 id="定理2-12（Euler定理）⭐"><a href="#定理2-12（Euler定理）⭐" class="headerlink" title="定理2.12（Euler定理）⭐"></a>定理2.12（Euler定理）⭐</h3><p>设m是大于1的整数，如果a是满足<code>(a, m)=1</code>的整数，则</p>
 <script type="math/tex; mode=display">
-a*a'\ \equiv\ 1\ (mod\ m)</script><p>成立，则a叫做模m的可逆元，<code>a&#39;</code>叫做<code>a</code>的模m<strong>逆元</strong></p>
-<p>根据<strong>定理2.8</strong>，在模m的意义下（即在m的完全剩余系中），<code>a&#39;</code>是存在且唯一的。</p>
-<h3 id="抽屉原理（鸽巢原理）"><a href="#抽屉原理（鸽巢原理）" class="headerlink" title="抽屉原理（鸽巢原理）"></a>抽屉原理（鸽巢原理）</h3><h4 id="第一抽屉原理"><a href="#第一抽屉原理" class="headerlink" title="第一抽屉原理"></a>第一抽屉原理</h4><p><strong>原理1</strong>： 把多于n个的物体放到n个抽屉里，则至少有一个抽屉里的东西不少于两件。</p>
-<p>证明<strong>（反证法）</strong>：如果每个抽屉至多只能放进一个物体，那么物体的总数至多是<code>n</code>，而不是题设的<code>n+k(k≥1)</code>，故不可能。</p>
-<p><strong>原理2</strong>：把多于<code>m*n+1</code>（n不为0）个的物体放到n个抽屉里，则至少有一个抽屉里有不少于<code>m+1</code>的物体。</p>
-<p>证明<strong>（反证法）</strong>：若每个抽屉至多放进m个物体,那么n个抽屉至多放进mn个物体,与题设不符，故不可能。</p>
-<p><strong>原理3</strong>：把无数多件物体放入n个抽屉，则至少有一个抽屉里有无数个物体。</p>
-<p>原理1 、2 、3都是第一抽屉原理的表述。</p>
-<h4 id="第二抽屉原理"><a href="#第二抽屉原理" class="headerlink" title="第二抽屉原理"></a>第二抽屉原理</h4><p>把<code>mn－1</code>个物体放入n个抽屉中，其中必有一个抽屉中至多有<code>m—1</code>个物体（例如，将<code>3×5-1=14</code>个物体放入5个抽屉中，则必定有一个抽屉中的物体数少于等于<code>3-1=2</code>）。</p>
+a^{\phi(m)}\equiv\ (mod\ m)</script><p>证明见p23。主要使用定理2.10和定理2.4。</p>
+<p>由此还可以推出以下定理：</p>
+<h3 id="推论2-2（Fermat定理）⭐"><a href="#推论2-2（Fermat定理）⭐" class="headerlink" title="推论2.2（Fermat定理）⭐"></a>推论2.2（Fermat定理）⭐</h3><p>设p是一个素数，则对于任意整数a，均有</p>
+<script type="math/tex; mode=display">
+a^p\equiv a\ (mod\ p)</script><h3 id="推论2-3⭐"><a href="#推论2-3⭐" class="headerlink" title="推论2.3⭐"></a>推论2.3⭐</h3><p>若p是一个素数，a是整数，且</p>
+<script type="math/tex; mode=display">
+p \nmid a</script><p>则有</p>
+<script type="math/tex; mode=display">
+a*a^{p-2}=1\ (mod\ p)</script><p>即<code>a_&#123;p-2&#125;</code>是a模p的逆元。</p>
+<h3 id="定理2-13（Wilson定理）⭐"><a href="#定理2-13（Wilson定理）⭐" class="headerlink" title="定理2.13（Wilson定理）⭐"></a>定理2.13（Wilson定理）⭐</h3><p>p是素数，则</p>
+<script type="math/tex; mode=display">
+(p-1)!\equiv -1\ (mod\ p)</script><p>证明见p24</p>
 
     </div>
 
@@ -341,13 +313,10 @@ a*a'\ \equiv\ 1\ (mod\ m)</script><p>成立，则a叫做模m的可逆元，<code
 
         
     <div class="post-nav">
+      <div class="post-nav-item"></div>
       <div class="post-nav-item">
-    <a href="/1970/01/01/%E5%90%8C%E4%BD%99_%E7%AE%80%E5%8C%96%E5%89%A9%E4%BD%99%E7%B3%BB,%E6%AC%A7%E6%8B%89%E5%AE%9A%E7%90%86%E4%B8%8E%E8%B4%B9%E9%A9%AC%E5%B0%8F%E5%AE%9A%E7%90%86/" rel="prev" title="同余2.2——简化剩余系，欧拉定理与费马小定理">
-      <i class="fa fa-chevron-left"></i> 同余2.2——简化剩余系，欧拉定理与费马小定理
-    </a></div>
-      <div class="post-nav-item">
-    <a href="/2021/09/24/TEA/" rel="next" title="TEA，XTEA，XXTEA加密算法概要">
-      TEA，XTEA，XXTEA加密算法概要 <i class="fa fa-chevron-right"></i>
+    <a href="/1970/01/01/%E5%90%8C%E4%BD%99/" rel="next" title="同余">
+      同余 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -407,7 +376,7 @@ a*a'\ \equiv\ 1\ (mod\ m)</script><p>成立，则a叫做模m的可逆元，<code
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%90%8C%E4%BD%99%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">同余式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E4%B9%892-1"><span class="nav-number">1.0.1.</span> <span class="nav-text">定义2.1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E7%90%862-1"><span class="nav-number">1.0.2.</span> <span class="nav-text">定理2.1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E7%90%862-2"><span class="nav-number">1.0.3.</span> <span class="nav-text">定理2.2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E7%90%862-3"><span class="nav-number">1.0.4.</span> <span class="nav-text">定理2.3</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AF%81%E6%98%8E"><span class="nav-number">1.0.4.1.</span> <span class="nav-text">证明</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%9D%E8%80%832-1"><span class="nav-number">1.0.5.</span> <span class="nav-text">思考2.1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E7%90%862-4"><span class="nav-number">1.0.6.</span> <span class="nav-text">定理2.4</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E7%90%862-5"><span class="nav-number">1.0.7.</span> <span class="nav-text">定理2.5</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E7%90%862-6"><span class="nav-number">1.0.8.</span> <span class="nav-text">定理2.6</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E4%B9%892-2"><span class="nav-number">1.0.9.</span> <span class="nav-text">定义2.2</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BE%8B%E9%A2%982-3"><span class="nav-number">1.0.9.1.</span> <span class="nav-text">例题2.3</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E7%90%862-7"><span class="nav-number">1.0.10.</span> <span class="nav-text">定理2.7</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E7%90%862-8"><span class="nav-number">1.0.11.</span> <span class="nav-text">定理2.8</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AF%81%E6%98%8E-1"><span class="nav-number">1.0.11.1.</span> <span class="nav-text">证明</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E4%B9%892-3"><span class="nav-number">1.0.12.</span> <span class="nav-text">定义2.3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8A%BD%E5%B1%89%E5%8E%9F%E7%90%86%EF%BC%88%E9%B8%BD%E5%B7%A2%E5%8E%9F%E7%90%86%EF%BC%89"><span class="nav-number">1.0.13.</span> <span class="nav-text">抽屉原理（鸽巢原理）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E6%8A%BD%E5%B1%89%E5%8E%9F%E7%90%86"><span class="nav-number">1.0.13.1.</span> <span class="nav-text">第一抽屉原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E6%8A%BD%E5%B1%89%E5%8E%9F%E7%90%86"><span class="nav-number">1.0.13.2.</span> <span class="nav-text">第二抽屉原理</span></a></li></ol></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%90%8C%E4%BD%992-2%E2%80%94%E2%80%94%E7%AE%80%E5%8C%96%E5%89%A9%E4%BD%99%E7%B3%BB%EF%BC%8C%E6%AC%A7%E6%8B%89%E5%AE%9A%E7%90%86%E4%B8%8E%E8%B4%B9%E9%A9%AC%E5%B0%8F%E5%AE%9A%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">同余2.2——简化剩余系，欧拉定理与费马小定理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E5%8C%96%E5%89%A9%E4%BD%99%E7%B3%BB%EF%BC%8C%E6%AC%A7%E6%8B%89%E5%AE%9A%E7%90%86%E4%B8%8E%E8%B4%B9%E9%A9%AC%E5%B0%8F%E5%AE%9A%E7%90%86"><span class="nav-number">1.1.</span> <span class="nav-text">简化剩余系，欧拉定理与费马小定理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%8D%E8%AF%8D"><span class="nav-number">1.1.1.</span> <span class="nav-text">名词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%95%E5%85%A5"><span class="nav-number">1.1.2.</span> <span class="nav-text">引入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E4%B9%892-4"><span class="nav-number">1.1.3.</span> <span class="nav-text">定义2.4</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E4%B9%892-5"><span class="nav-number">1.1.4.</span> <span class="nav-text">定义2.5</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E4%B9%892-6"><span class="nav-number">1.1.5.</span> <span class="nav-text">定义2.6</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E7%90%862-9"><span class="nav-number">1.1.6.</span> <span class="nav-text">定理2.9</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E7%90%862-10"><span class="nav-number">1.1.7.</span> <span class="nav-text">定理2.10</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Euler%E5%87%BD%E6%95%B0%E7%9A%84%E6%80%A7%E8%B4%A8"><span class="nav-number">1.2.</span> <span class="nav-text">Euler函数的性质</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%A7%E8%B4%A81"><span class="nav-number">1.2.1.</span> <span class="nav-text">性质1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%A7%E8%B4%A82"><span class="nav-number">1.2.2.</span> <span class="nav-text">性质2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%A7%E8%B4%A83"><span class="nav-number">1.2.3.</span> <span class="nav-text">性质3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E7%90%862-11"><span class="nav-number">1.2.4.</span> <span class="nav-text">定理2.11</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%A8%E8%AE%BA2-1"><span class="nav-number">1.2.5.</span> <span class="nav-text">推论2.1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E7%90%862-12%EF%BC%88Euler%E5%AE%9A%E7%90%86%EF%BC%89%E2%AD%90"><span class="nav-number">1.2.6.</span> <span class="nav-text">定理2.12（Euler定理）⭐</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%A8%E8%AE%BA2-2%EF%BC%88Fermat%E5%AE%9A%E7%90%86%EF%BC%89%E2%AD%90"><span class="nav-number">1.2.7.</span> <span class="nav-text">推论2.2（Fermat定理）⭐</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%A8%E8%AE%BA2-3%E2%AD%90"><span class="nav-number">1.2.8.</span> <span class="nav-text">推论2.3⭐</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E7%90%862-13%EF%BC%88Wilson%E5%AE%9A%E7%90%86%EF%BC%89%E2%AD%90"><span class="nav-number">1.2.9.</span> <span class="nav-text">定理2.13（Wilson定理）⭐</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
