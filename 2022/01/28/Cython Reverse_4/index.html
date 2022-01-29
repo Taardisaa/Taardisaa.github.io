@@ -21,30 +21,33 @@
     var CONFIG = {"hostname":"taardisaa.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="学点好玩的逆向知识">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Tardis&#39;s blog">
-<meta property="og:url" content="https://taardisaa.github.io/index.html">
+  <meta name="description" content="补充上次的元组等，同时继续往下。 Cython程序分析_4代码1继续使用博客3编译的文件来分析。 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849def func_Tuple():    tuple1 &#x3D; ( &amp;#x27;abcd&amp;#x27;, 786 , 2.23,">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Cython程序分析_4">
+<meta property="og:url" content="https://taardisaa.github.io/2022/01/28/Cython%20Reverse_4/index.html">
 <meta property="og:site_name" content="Tardis&#39;s blog">
-<meta property="og:description" content="学点好玩的逆向知识">
+<meta property="og:description" content="补充上次的元组等，同时继续往下。 Cython程序分析_4代码1继续使用博客3编译的文件来分析。 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849def func_Tuple():    tuple1 &#x3D; ( &amp;#x27;abcd&amp;#x27;, 786 , 2.23,">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-01-28T10:14:00.000Z">
+<meta property="article:modified_time" content="2022-01-29T11:44:24.981Z">
 <meta property="article:author" content="Tardis">
+<meta property="article:tag" content="cython">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://taardisaa.github.io/">
+<link rel="canonical" href="https://taardisaa.github.io/2022/01/28/Cython%20Reverse_4/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : true,
-    isPost : false,
+    isHome : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>Tardis's blog</title>
+  <title>Cython程序分析_4 | Tardis's blog</title>
   
 
 
@@ -151,9 +154,10 @@
         <div class="content-wrap">
           
 
-          <div class="content index posts-expand">
+          <div class="content post posts-expand">
             
-      
+
+    
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
@@ -169,10 +173,9 @@
       <meta itemprop="name" content="Tardis's blog">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/01/28/Cython%20Reverse_4/" class="post-title-link" itemprop="url">Cython程序分析_4</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          Cython程序分析_4
+        </h1>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -225,7 +228,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>补充上次的元组等，同时继续往下。</p>
+        <p>补充上次的元组等，同时继续往下。</p>
 <h1 id="Cython程序分析-4"><a href="#Cython程序分析-4" class="headerlink" title="Cython程序分析_4"></a>Cython程序分析_4</h1><h2 id="代码1"><a href="#代码1" class="headerlink" title="代码1"></a>代码1</h2><p>继续使用博客3编译的文件来分析。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func_Tuple</span>():</span></span><br><span class="line">    tuple1 = ( <span class="string">&#x27;abcd&#x27;</span>, <span class="number">786</span> , <span class="number">2.23</span>, <span class="string">&#x27;runoob&#x27;</span>, <span class="number">70.2</span>  )</span><br><span class="line">    tinytuple = (<span class="number">123</span>, <span class="string">&#x27;runoob&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span> (tuple1)             <span class="comment"># 输出完整元组</span></span><br><span class="line">    <span class="built_in">print</span> (tuple1[<span class="number">0</span>])          <span class="comment"># 输出元组的第一个元素</span></span><br><span class="line">    <span class="built_in">print</span> (tuple1[<span class="number">1</span>:<span class="number">3</span>])        <span class="comment"># 输出从第二个元素开始到第三个元素</span></span><br><span class="line">    <span class="built_in">print</span> (tuple1[<span class="number">2</span>:])         <span class="comment"># 输出从第三个元素开始的所有元素</span></span><br><span class="line">    <span class="built_in">print</span> (tinytuple * <span class="number">2</span>)     <span class="comment"># 输出两次元组</span></span><br><span class="line">    <span class="built_in">print</span> (tuple1 + tinytuple) <span class="comment"># 连接元组</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func_Set</span>():</span></span><br><span class="line">    sites = &#123;<span class="string">&#x27;Google&#x27;</span>, <span class="string">&#x27;Taobao&#x27;</span>, <span class="string">&#x27;Runoob&#x27;</span>, <span class="string">&#x27;Facebook&#x27;</span>, <span class="string">&#x27;Zhihu&#x27;</span>, <span class="string">&#x27;Baidu&#x27;</span>&#125;</span><br><span class="line">    <span class="built_in">print</span>(sites)   <span class="comment"># 输出集合，重复的元素被自动去掉 </span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 成员测试</span></span><br><span class="line">    <span class="keyword">if</span> <span class="string">&#x27;Runoob&#x27;</span> <span class="keyword">in</span> sites :</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;Runoob In set&#x27;</span>)</span><br><span class="line">    <span class="keyword">else</span> :</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;Runoob Not in set&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment"># set可以进行集合运算</span></span><br><span class="line">    a = <span class="built_in">set</span>(<span class="string">&#x27;abracadabra&#x27;</span>)</span><br><span class="line">    b = <span class="built_in">set</span>(<span class="string">&#x27;alacazam&#x27;</span>)</span><br><span class="line">    <span class="built_in">print</span>(a)</span><br><span class="line">    <span class="built_in">print</span>(a - b)     <span class="comment"># a 和 b 的差集</span></span><br><span class="line">    <span class="built_in">print</span>(a | b)     <span class="comment"># a 和 b 的并集</span></span><br><span class="line">    <span class="built_in">print</span>(a &amp; b)     <span class="comment"># a 和 b 的交集</span></span><br><span class="line">    <span class="built_in">print</span>(a ^ b)     <span class="comment"># a 和 b 中不同时存在的元素</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func_Dictionary</span>():</span></span><br><span class="line">    mydict = &#123;&#125;</span><br><span class="line">    mydict[<span class="string">&#x27;one&#x27;</span>] = <span class="string">&quot;1elem&quot;</span></span><br><span class="line">    mydict[<span class="number">2</span>]     = <span class="string">&quot;2elem&quot;</span></span><br><span class="line"></span><br><span class="line">    tinydict = &#123;<span class="string">&#x27;name&#x27;</span>: <span class="string">&#x27;runoob&#x27;</span>,<span class="string">&#x27;code&#x27;</span>:<span class="number">1</span>, <span class="string">&#x27;site&#x27;</span>: <span class="string">&#x27;www.runoob.com&#x27;</span>&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span> (mydict[<span class="string">&#x27;one&#x27;</span>])       <span class="comment"># 输出键为 &#x27;one&#x27; 的值</span></span><br><span class="line">    <span class="built_in">print</span> (mydict[<span class="number">2</span>])           <span class="comment"># 输出键为 2 的值</span></span><br><span class="line">    <span class="built_in">print</span> (tinydict)          <span class="comment"># 输出完整的字典</span></span><br><span class="line">    <span class="built_in">print</span> (tinydict.keys())   <span class="comment"># 输出所有键</span></span><br><span class="line">    <span class="built_in">print</span> (tinydict.values()) <span class="comment"># 输出所有值</span></span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">func_Tuple()</span><br><span class="line">func_Set()</span><br><span class="line">func_Dictionary()</span><br></pre></td></tr></table></figure>
 <h3 id="func-Tuple"><a href="#func-Tuple" class="headerlink" title="func_Tuple()"></a><code>func_Tuple()</code></h3><h4 id="C文件"><a href="#C文件" class="headerlink" title="C文件"></a>C文件</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">+<span class="number">029</span>: <span class="function">def <span class="title">func_Tuple</span><span class="params">()</span>:</span></span><br><span class="line"><span class="function">+030:     tuple1 </span>= ( <span class="string">&#x27;abcd&#x27;</span>, <span class="number">786</span> , <span class="number">2.23</span>, <span class="string">&#x27;runoob&#x27;</span>, <span class="number">70.2</span>  )</span><br><span class="line">  __pyx_v_tuple1 = __pyx_tuple__4;</span><br><span class="line"><span class="comment">// InitCachedConstants()</span></span><br><span class="line">  __pyx_tuple__4 = PyTuple_Pack(<span class="number">5</span>, __pyx_n_u_abcd, __pyx_int_786, __pyx_float_2_23, __pyx_n_u_runoob, __pyx_float_70_2);</span><br><span class="line">+<span class="number">031</span>:     tinytuple = (<span class="number">123</span>, <span class="string">&#x27;runoob&#x27;</span>)</span><br><span class="line">  __pyx_v_tinytuple = __pyx_tuple__5;</span><br><span class="line"><span class="comment">// InitCachedConstants()</span></span><br><span class="line">  __pyx_tuple__5 = PyTuple_Pack(<span class="number">2</span>, __pyx_int_123, __pyx_n_u_runoob);</span><br><span class="line"> <span class="number">032</span>: </span><br><span class="line">+<span class="number">033</span>:     print (tuple1)             # 输出完整元组</span><br><span class="line">  __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_builtin_print, __pyx_v_tuple1);</span><br><span class="line">+<span class="number">034</span>:     print (tuple1[<span class="number">0</span>])          # 输出元组的第一个元素</span><br><span class="line">  __pyx_t_1 = __Pyx_GetItemInt_Tuple(__pyx_v_tuple1, <span class="number">0</span>, <span class="keyword">long</span>, <span class="number">1</span>, __Pyx_PyInt_From_long, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>);</span><br><span class="line">  __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_builtin_print, __pyx_t_1);</span><br><span class="line">+<span class="number">035</span>:     print (tuple1[<span class="number">1</span>:<span class="number">3</span>])        # 输出从第二个元素开始到第三个元素</span><br><span class="line">  __pyx_t_2 = __Pyx_PyTuple_GetSlice(__pyx_v_tuple1, <span class="number">1</span>, <span class="number">3</span>);</span><br><span class="line">  __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_builtin_print, __pyx_t_2);</span><br><span class="line">+<span class="number">036</span>:     print (tuple1[<span class="number">2</span>:])         # 输出从第三个元素开始的所有元素</span><br><span class="line">  __pyx_t_1 = __Pyx_PyTuple_GetSlice(__pyx_v_tuple1, <span class="number">2</span>, PY_SSIZE_T_MAX);</span><br><span class="line">  __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_builtin_print, __pyx_t_1);</span><br><span class="line">+<span class="number">037</span>:     print (tinytuple * <span class="number">2</span>)     # 输出两次元组</span><br><span class="line">  __pyx_t_2 = PyNumber_Multiply(__pyx_v_tinytuple, __pyx_int_2);</span><br><span class="line">  __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_builtin_print, __pyx_t_2); </span><br><span class="line">+<span class="number">038</span>:     print (tuple1 + tinytuple) # 连接元组</span><br><span class="line">  __pyx_t_1 = PyNumber_Add(__pyx_v_tuple1, __pyx_v_tinytuple);</span><br><span class="line">  __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_builtin_print, __pyx_t_1);</span><br></pre></td></tr></table></figure>
@@ -275,662 +278,33 @@
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">+<span class="number">1</span>: <span class="function">def <span class="title">test_ord</span><span class="params">(input)</span>:</span></span><br><span class="line"><span class="function">+2: 	a </span>= ord(input)</span><br><span class="line">  __pyx_t_1 = __Pyx_PyObject_Ord(__pyx_v_input);</span><br><span class="line">  __pyx_v_a = __pyx_t_1;</span><br><span class="line"></span><br><span class="line">+<span class="number">3</span>: 	print(a)</span><br><span class="line">  __pyx_t_2 = __Pyx_PyInt_From_long(__pyx_v_a);</span><br><span class="line">  __pyx_t_3 = __Pyx_PyObject_CallOneArg(__pyx_builtin_print, __pyx_t_2);</span><br></pre></td></tr></table></figure>
 <h4 id="IDA-11"><a href="#IDA-11" class="headerlink" title="IDA"></a>IDA</h4><figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br></pre></td><td class="code"><pre><span class="line">// write access to<span class="built_in"> const </span>memory has been detected, the output may be wrong!</span><br><span class="line">__int64 __fastcall test_ord(__int64 a1, __int64 a2)</span><br><span class="line">&#123;</span><br><span class="line">  __int64 v2; // rcx</span><br><span class="line"> <span class="built_in"> int </span>v4; // eax</span><br><span class="line">  __int64 v5; // r8</span><br><span class="line"> <span class="built_in"> int </span>v6; // edx</span><br><span class="line"> <span class="built_in"> int </span>v7; // ecx</span><br><span class="line">  __int64 v8; // rax</span><br><span class="line">  unsigned __int8 *v9; // rax</span><br><span class="line">  __int64 v10; // rax</span><br><span class="line">  __int64 __pyx_v_a; // rcx</span><br><span class="line">  __int64 v12; // rax</span><br><span class="line">  __int64 v13; // r8</span><br><span class="line">  __int64 a; // rax</span><br><span class="line">  __int64 v15; // rcx</span><br><span class="line">  _QWORD *v16; // rbx</span><br><span class="line">  unsigned<span class="built_in"> int </span>v17; // edi</span><br><span class="line">  unsigned<span class="built_in"> int </span>v18; // ebp</span><br><span class="line">  _QWORD *v19; // rdi</span><br><span class="line">  __int64 v20; // rax</span><br><span class="line"></span><br><span class="line">  v2 = *(_QWORD *)(a2 + 8);</span><br><span class="line">  v4 = *(_DWORD *)(v2 + 168);</span><br><span class="line"> <span class="built_in"> if </span>( !_bittest(&amp;v4, 0x1Cu) )</span><br><span class="line">  &#123;</span><br><span class="line">   <span class="built_in"> if </span>( _bittest(&amp;v4, 0x1Bu) )</span><br><span class="line">    &#123;</span><br><span class="line">      v13 = *(_QWORD *)(a2 + 16);</span><br><span class="line">     <span class="built_in"> if </span>( v13 == 1 )</span><br><span class="line">      &#123;</span><br><span class="line">        __pyx_v_a = *(unsigned __int8 *)(a2 + 32);</span><br><span class="line">       <span class="built_in"> goto </span><span class="class">LABEL_30;</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    else</span><br><span class="line">    &#123;</span><br><span class="line">     <span class="built_in"> if </span>( v2 != PyByteArray_Type &amp;&amp; !(unsigned int)PyType_IsSubtype() )</span><br><span class="line">      &#123;</span><br><span class="line">        PyErr_Format(</span><br><span class="line">          PyExc_TypeError,</span><br><span class="line">          <span class="string">&quot;ord() expected string of length 1, but %.200s found&quot;</span>,</span><br><span class="line">          *(_QWORD *)(*(_QWORD *)(a2 + 8) + 24i64));</span><br><span class="line">LABEL_42:</span><br><span class="line">        v17 = 2;</span><br><span class="line">        v18 = 1228;</span><br><span class="line">       <span class="built_in"> goto </span><span class="class">LABEL_43;</span></span><br><span class="line">      &#125;</span><br><span class="line">      v13 = *(_QWORD *)(a2 + 16);</span><br><span class="line">     <span class="built_in"> if </span>( v13 == 1 )</span><br><span class="line">      &#123;</span><br><span class="line">        v9 = *(unsigned __int8 **)(a2 + 40);</span><br><span class="line">LABEL_29:</span><br><span class="line">        __pyx_v_a = *v9;</span><br><span class="line">       <span class="built_in"> goto </span><span class="class">LABEL_30;</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    PyErr_Format(PyExc_TypeError, <span class="string">&quot;ord() expected a character, but string of length %zd found&quot;</span>, v13);// 错误提示暗示了这一块是ord()</span><br><span class="line">   <span class="built_in"> goto </span><span class="class">LABEL_42;</span></span><br><span class="line">  &#125;</span><br><span class="line">  v5 = *(_QWORD *)(a2 + 16);</span><br><span class="line"> <span class="built_in"> if </span>( v5 != 1 )</span><br><span class="line">  &#123;</span><br><span class="line">    PyErr_Format(</span><br><span class="line">      PyExc_ValueError,</span><br><span class="line">      <span class="string">&quot;only single character unicode strings can be converted to Py_UCS4, got length %zd&quot;</span>,</span><br><span class="line">      v5);</span><br><span class="line">    __pyx_v_a = 0xFFFFFFFFi64;</span><br><span class="line">   <span class="built_in"> goto </span><span class="class">LABEL_30;</span></span><br><span class="line">  &#125;</span><br><span class="line">  v6 = *(_DWORD *)(a2 + 32);</span><br><span class="line">  v7 = v6 &amp; 0x1C;</span><br><span class="line"> <span class="built_in"> if </span>( v7 == 4 )</span><br><span class="line">  &#123;</span><br><span class="line">   <span class="built_in"> if </span>( (v6 &amp; 0x20) != 0 )</span><br><span class="line">    &#123;</span><br><span class="line">      v8 = 48i64;</span><br><span class="line">     <span class="built_in"> if </span>( (v6 &amp; 0x40) == 0 )</span><br><span class="line">        v8 = 72i64;</span><br><span class="line">      v9 = (unsigned __int8 *)(a2 + v8);</span><br><span class="line">    &#125;</span><br><span class="line">    else</span><br><span class="line">    &#123;</span><br><span class="line">      v9 = *(unsigned __int8 **)(a2 + 72);</span><br><span class="line">    &#125;</span><br><span class="line">   <span class="built_in"> goto </span><span class="class">LABEL_29;</span></span><br><span class="line">  &#125;</span><br><span class="line"> <span class="built_in"> if </span>( v7 == 8 )</span><br><span class="line">  &#123;</span><br><span class="line">   <span class="built_in"> if </span>( (v6 &amp; 0x20) != 0 )</span><br><span class="line">    &#123;</span><br><span class="line">      v10 = 48i64;</span><br><span class="line">     <span class="built_in"> if </span>( (v6 &amp; 0x40) == 0 )</span><br><span class="line">        v10 = 72i64;</span><br><span class="line">      __pyx_v_a = *(unsigned __int16 *)(a2 + v10);</span><br><span class="line">    &#125;</span><br><span class="line">    else</span><br><span class="line">    &#123;</span><br><span class="line">      __pyx_v_a = **(unsigned __int16 **)(a2 + 72);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  else<span class="built_in"> if </span>( (v6 &amp; 0x20) != 0 )</span><br><span class="line">  &#123;</span><br><span class="line">    v12 = 48i64;</span><br><span class="line">   <span class="built_in"> if </span>( (v6 &amp; 0x40) == 0 )</span><br><span class="line">      v12 = 72i64;</span><br><span class="line">    __pyx_v_a = *(unsigned<span class="built_in"> int </span>*)(a2 + v12);</span><br><span class="line">  &#125;</span><br><span class="line">  else</span><br><span class="line">  &#123;</span><br><span class="line">    __pyx_v_a = **(unsigned<span class="built_in"> int </span>**)(a2 + 72);</span><br><span class="line">  &#125;</span><br><span class="line">LABEL_30:</span><br><span class="line"> <span class="built_in"> if </span>( (_DWORD)__pyx_v_a == -1 )</span><br><span class="line">   <span class="built_in"> goto </span><span class="class">LABEL_42;</span></span><br><span class="line">  a = PyLong_FromLong(__pyx_v_a);               // __pyx_t_2 = __Pyx_PyInt_From_long(__pyx_v_a);</span><br><span class="line">  v16 = (_QWORD *)a;</span><br><span class="line"> <span class="built_in"> if </span>( !a )</span><br><span class="line">  &#123;</span><br><span class="line">    v17 = 3;</span><br><span class="line">    v18 = 1236;</span><br><span class="line">LABEL_43:</span><br><span class="line">    AddTraceback(aTest4plusplusT, v18, v17, aTest4plusplusP);</span><br><span class="line">   <span class="built_in"> return </span>0i64;</span><br><span class="line">  &#125;</span><br><span class="line">  v19 = (_QWORD *)print(v15, a);                // print(a)</span><br><span class="line">  v20 = *v16 - 1i64;</span><br><span class="line">  *v16 = v20;</span><br><span class="line"> <span class="built_in"> if </span>( !v19 )</span><br><span class="line">  &#123;</span><br><span class="line">    v17 = 3;</span><br><span class="line">    v18 = 1238;</span><br><span class="line">   <span class="built_in"> if </span>( !v20 )</span><br><span class="line">      (*(void (__fastcall **)(_QWORD *))(v16[1] + 48i64))(v16);</span><br><span class="line">   <span class="built_in"> goto </span><span class="class">LABEL_43;</span></span><br><span class="line">  &#125;</span><br><span class="line"> <span class="built_in"> if </span>( !v20 )</span><br><span class="line">    (*(void (__fastcall **)(_QWORD *))(v16[1] + 48i64))(v16);</span><br><span class="line"> <span class="built_in"> if </span>( (*v19)-- == 1i64 )</span><br><span class="line">    (*(void (__fastcall **)(_QWORD *))(v19[1] + 48i64))(v19);</span><br><span class="line"> <span class="built_in"> return </span>Py_NoneStruct++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-      
     </div>
 
     
     
     
+
       <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
+          <div class="post-tags">
+              <a href="/tags/cython/" rel="tag"><i class="fa fa-tag"></i></a>
+          </div>
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://taardisaa.github.io/2022/01/27/Cython%20Reverse%203/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/spongebob.jpg">
-      <meta itemprop="name" content="Tardis">
-      <meta itemprop="description" content="学点好玩的逆向知识">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Tardis's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/01/27/Cython%20Reverse%203/" class="post-title-link" itemprop="url">Cython程序分析_3</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-01-27 11:29:00 / 修改时间：18:32:08" itemprop="dateCreated datePublished" datetime="2022-01-27T11:29:00+08:00">2022-01-27</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/cython/" itemprop="url" rel="index"><span itemprop="name">cython</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>37k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>33 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>模块导入，大整数，大浮点数等</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/01/27/Cython%20Reverse%203/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
         
-      
-    </div>
 
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://taardisaa.github.io/2022/01/27/Cython%20Reverse%202/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/spongebob.jpg">
-      <meta itemprop="name" content="Tardis">
-      <meta itemprop="description" content="学点好玩的逆向知识">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Tardis's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/01/27/Cython%20Reverse%202/" class="post-title-link" itemprop="url">Cython程序分析_2</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-01-27 10:51:00 / 修改时间：18:31:59" itemprop="dateCreated datePublished" datetime="2022-01-27T10:51:00+08:00">2022-01-27</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/cython/" itemprop="url" rel="index"><span itemprop="name">cython</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>83k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1:16</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>下面从一些python的基本操作开始进行分析。总体流程准备跟着菜鸟教程上教的顺序走。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/01/27/Cython%20Reverse%202/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
         
-      
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/01/27/Cython%20Reverse%203/" rel="prev" title="Cython程序分析_3">
+      <i class="fa fa-chevron-left"></i> Cython程序分析_3
+    </a></div>
+      <div class="post-nav-item"></div>
     </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
       </footer>
+    
   </article>
   
   
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://taardisaa.github.io/2022/01/25/Cython%20Reverse/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/spongebob.jpg">
-      <meta itemprop="name" content="Tardis">
-      <meta itemprop="description" content="学点好玩的逆向知识">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Tardis's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/01/25/Cython%20Reverse/" class="post-title-link" itemprop="url">Cython程序分析_1</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-01-25 20:28:00 / 修改时间：20:52:29" itemprop="dateCreated datePublished" datetime="2022-01-25T20:28:00+08:00">2022-01-25</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/cython/" itemprop="url" rel="index"><span itemprop="name">cython</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>43k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>39 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>隔了几个月，新年第一个blog。重新整整最恶俗的cython逆向。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/01/25/Cython%20Reverse/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://taardisaa.github.io/2021/09/29/%E9%80%86%E5%90%91%E5%85%A5%E9%97%A8%E7%AE%80%E4%BB%8BbyRh/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/spongebob.jpg">
-      <meta itemprop="name" content="Tardis">
-      <meta itemprop="description" content="学点好玩的逆向知识">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Tardis's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/09/29/%E9%80%86%E5%90%91%E5%85%A5%E9%97%A8%E7%AE%80%E4%BB%8BbyRh/" class="post-title-link" itemprop="url">逆向入门简介byRh</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-09-29 15:19:00" itemprop="dateCreated datePublished" datetime="2021-09-29T15:19:00+08:00">2021-09-29</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-01-25 20:52:11" itemprop="dateModified" datetime="2022-01-25T20:52:11+08:00">2022-01-25</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Reverse/" itemprop="url" rel="index"><span itemprop="name">Reverse</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>6.4k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>6 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>简简单单以我的理解写一下逆向工程的入门方法。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/09/29/%E9%80%86%E5%90%91%E5%85%A5%E9%97%A8%E7%AE%80%E4%BB%8BbyRh/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://taardisaa.github.io/2021/09/26/WinCrypt%E5%8A%A0%E5%AF%86%E5%BA%93/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/spongebob.jpg">
-      <meta itemprop="name" content="Tardis">
-      <meta itemprop="description" content="学点好玩的逆向知识">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Tardis's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/09/26/WinCrypt%E5%8A%A0%E5%AF%86%E5%BA%93/" class="post-title-link" itemprop="url">WinCrypt库使用</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-09-26 12:24:01 / 修改时间：19:25:10" itemprop="dateCreated datePublished" datetime="2021-09-26T12:24:01+08:00">2021-09-26</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Windows/" itemprop="url" rel="index"><span itemprop="name">Windows</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>16k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>15 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>上次祥云杯遇到了利用WinCrypt库模拟勒索病毒加密的程序。虽然这个库被微软官方认为已经过时了，但还是大致来了解一下。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/09/26/WinCrypt%E5%8A%A0%E5%AF%86%E5%BA%93/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://taardisaa.github.io/2021/09/25/Heaven'sGate/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/spongebob.jpg">
-      <meta itemprop="name" content="Tardis">
-      <meta itemprop="description" content="学点好玩的逆向知识">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Tardis's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/09/25/Heaven'sGate/" class="post-title-link" itemprop="url">天堂之门技术</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-09-25 17:01:01" itemprop="dateCreated datePublished" datetime="2021-09-25T17:01:01+08:00">2021-09-25</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-01-25 20:45:06" itemprop="dateModified" datetime="2022-01-25T20:45:06+08:00">2022-01-25</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Windows/" itemprop="url" rel="index"><span itemprop="name">Windows</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>17k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>15 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>记录一下天堂之门技术。还在补充</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/09/25/Heaven'sGate/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://taardisaa.github.io/2021/09/24/TEA/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/spongebob.jpg">
-      <meta itemprop="name" content="Tardis">
-      <meta itemprop="description" content="学点好玩的逆向知识">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Tardis's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/09/24/TEA/" class="post-title-link" itemprop="url">TEA，XTEA，XXTEA加密算法概要</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-09-24 19:19:37" itemprop="dateCreated datePublished" datetime="2021-09-24T19:19:37+08:00">2021-09-24</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-01-25 20:44:57" itemprop="dateModified" datetime="2022-01-25T20:44:57+08:00">2022-01-25</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Crypto/" itemprop="url" rel="index"><span itemprop="name">Crypto</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>7.6k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>7 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>记录一下TEA加密算法</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/09/24/TEA/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-
   
 
 
@@ -983,6 +357,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Cython%E7%A8%8B%E5%BA%8F%E5%88%86%E6%9E%90-4"><span class="nav-number">1.</span> <span class="nav-text">Cython程序分析_4</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%811"><span class="nav-number">1.1.</span> <span class="nav-text">代码1</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#func-Tuple"><span class="nav-number">1.1.1.</span> <span class="nav-text">func_Tuple()</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#C%E6%96%87%E4%BB%B6"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">C文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#IDA"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">IDA</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A1%A5%E5%85%85"><span class="nav-number">1.1.1.3.</span> <span class="nav-text">补充</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Pyx-PyTuple-GetSlice"><span class="nav-number">1.1.1.3.1.</span> <span class="nav-text">__Pyx_PyTuple_GetSlice()</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#tuple1-0-5-2"><span class="nav-number">1.1.1.3.2.</span> <span class="nav-text">tuple1[0:5:2]</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#func-Set"><span class="nav-number">1.1.2.</span> <span class="nav-text">func_Set()</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#IDA-1"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">IDA</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#func-Dictionary"><span class="nav-number">1.1.3.</span> <span class="nav-text">func_Dictionary()</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#IDA-2"><span class="nav-number">1.1.3.1.</span> <span class="nav-text">IDA</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A1%A5%E5%85%85-1"><span class="nav-number">1.1.3.2.</span> <span class="nav-text">补充</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E6%96%B9%E6%B3%95%E7%9A%84%E8%B0%83%E7%94%A8"><span class="nav-number">1.1.3.3.</span> <span class="nav-text">关于方法的调用</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%812"><span class="nav-number">1.2.</span> <span class="nav-text">代码2</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#dict-plus"><span class="nav-number">1.2.1.</span> <span class="nav-text">dict_plus()</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#IDA-3"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">IDA</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#to-int"><span class="nav-number">1.2.2.</span> <span class="nav-text">to_int()</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#IDA-4"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">IDA</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#to-float"><span class="nav-number">1.2.3.</span> <span class="nav-text">to_float()</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#IDA-5"><span class="nav-number">1.2.3.1.</span> <span class="nav-text">IDA</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#to-str"><span class="nav-number">1.2.4.</span> <span class="nav-text">to_str()</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#IDA-6"><span class="nav-number">1.2.4.1.</span> <span class="nav-text">IDA</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#test-repr-and-list"><span class="nav-number">1.2.5.</span> <span class="nav-text">test_repr_and_list()</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#IDA-7"><span class="nav-number">1.2.5.1.</span> <span class="nav-text">IDA</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A1%A5%E5%85%85-2"><span class="nav-number">1.2.5.2.</span> <span class="nav-text">补充</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#test-eval"><span class="nav-number">1.2.6.</span> <span class="nav-text">test_eval()</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Pyx-Globals"><span class="nav-number">1.2.6.1.</span> <span class="nav-text">__Pyx_Globals()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#IDA-8"><span class="nav-number">1.2.6.2.</span> <span class="nav-text">IDA</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#test-hex-oct"><span class="nav-number">1.2.7.</span> <span class="nav-text">test_hex_oct()</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#IDA-9"><span class="nav-number">1.2.7.1.</span> <span class="nav-text">IDA</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#test-ord-chr"><span class="nav-number">1.2.8.</span> <span class="nav-text">test_ord_chr()</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#IDA-10"><span class="nav-number">1.2.8.1.</span> <span class="nav-text">IDA</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A1%A5%E5%85%85-3"><span class="nav-number">1.2.8.2.</span> <span class="nav-text">补充</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#IDA-11"><span class="nav-number">1.2.8.3.</span> <span class="nav-text">IDA</span></a></li></ol></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
