@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <script type="text/javascript" src="/js/dytitle.js"></script>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"taardisaa.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="主要是在分析if-else判断。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Cython程序分析_5">
+<meta property="og:url" content="https://taardisaa.github.io/2022/02/09/Cython%20Reverse%205/index.html">
+<meta property="og:site_name" content="Tardis&#39;s blog">
+<meta property="og:description" content="主要是在分析if-else判断。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-02-09T12:04:00.000Z">
+<meta property="article:modified_time" content="2022-02-09T12:04:42.075Z">
+<meta property="article:author" content="Tardis">
+<meta property="article:tag" content="cython">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://taardisaa.github.io/2022/02/09/Cython%20Reverse%205/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Cython程序分析_5 | Tardis's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="Tardis's blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Tardis's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">摸鱼用博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://taardisaa.github.io/2022/02/09/Cython%20Reverse%205/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/spongebob.jpg">
+      <meta itemprop="name" content="Tardis">
+      <meta itemprop="description" content="学点好玩的逆向知识">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Tardis's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Cython程序分析_5
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-02-09 20:04:00 / 修改时间：20:04:42" itemprop="dateCreated datePublished" datetime="2022-02-09T20:04:00+08:00">2022-02-09</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/cython/" itemprop="url" rel="index"><span itemprop="name">cython</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>13k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>12 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>主要是在分析<code>if-else</code>判断。</p>
+<span id="more"></span>
+<h1 id="Cython程序分析-5"><a href="#Cython程序分析-5" class="headerlink" title="Cython程序分析_5"></a>Cython程序分析_5</h1><h2 id="代码1"><a href="#代码1" class="headerlink" title="代码1"></a>代码1</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test_del</span>():</span></span><br><span class="line">    var_int = <span class="number">1</span></span><br><span class="line">    <span class="keyword">del</span> var_int</span><br><span class="line">    var_tup = (<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line">    <span class="keyword">del</span> var_tup</span><br><span class="line">    var_str = <span class="string">&quot;114514&quot;</span></span><br><span class="line">    <span class="keyword">del</span> var_str</span><br></pre></td></tr></table></figure>
+<h3 id="C文件"><a href="#C文件" class="headerlink" title="C文件"></a>C文件</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">+<span class="number">1</span>: <span class="function">def <span class="title">test_del</span><span class="params">()</span>:</span></span><br><span class="line"><span class="function">+2:     var_int </span>= <span class="number">1</span></span><br><span class="line">+<span class="number">3</span>:     del var_int</span><br><span class="line">  __Pyx_DECREF(__pyx_v_var_int);</span><br><span class="line">  __pyx_v_var_int = <span class="literal">NULL</span>;</span><br><span class="line">+<span class="number">4</span>:     var_tup = (<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line">+<span class="number">5</span>:     del var_tup</span><br><span class="line">  __Pyx_DECREF(__pyx_v_var_tup);</span><br><span class="line">  __pyx_v_var_tup = <span class="literal">NULL</span>;</span><br><span class="line">+<span class="number">6</span>:     var_str = <span class="string">&quot;114514&quot;</span></span><br><span class="line">+<span class="number">7</span>:     del var_str</span><br><span class="line">  __Pyx_DECREF(__pyx_v_var_str);</span><br><span class="line">  __pyx_v_var_str = <span class="literal">NULL</span>;</span><br></pre></td></tr></table></figure>
+<p>可见<code>del</code>仅仅就是将指针置空。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// write access to const memory has been detected, the output may be wrong!</span></span><br><span class="line"><span class="function">__int64 <span class="title">sub_180005100</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  __int64 v0; <span class="comment">// rcx</span></span><br><span class="line">  __int64 v1; <span class="comment">// rax</span></span><br><span class="line">  __int64 v2; <span class="comment">// rcx</span></span><br><span class="line">  __int64 v3; <span class="comment">// rax</span></span><br><span class="line">  __int64 v4; <span class="comment">// rcx</span></span><br><span class="line"></span><br><span class="line">  v0 = int1;</span><br><span class="line">  v1 = *(_QWORD *)int1;</span><br><span class="line">  *(_QWORD *)int1 = *(_QWORD *)int1;</span><br><span class="line">  <span class="keyword">if</span> ( !v1 )</span><br><span class="line">    (*(<span class="keyword">void</span> (**)(<span class="keyword">void</span>))(*(_QWORD *)(v0 + <span class="number">8</span>) + <span class="number">48</span>i64))();</span><br><span class="line">  v2 = tup_1_2_3;</span><br><span class="line">  v3 = *(_QWORD *)tup_1_2_3;</span><br><span class="line">  *(_QWORD *)tup_1_2_3 = *(_QWORD *)tup_1_2_3;</span><br><span class="line">  <span class="keyword">if</span> ( !v3 )</span><br><span class="line">    (*(<span class="keyword">void</span> (**)(<span class="keyword">void</span>))(*(_QWORD *)(v2 + <span class="number">8</span>) + <span class="number">48</span>i64))();</span><br><span class="line">  ++*(_QWORD *)qword_180009560;</span><br><span class="line">  v4 = qword_180009560;</span><br><span class="line">  <span class="keyword">if</span> ( (*(_QWORD *)qword_180009560)-- == <span class="number">1</span>i64 )</span><br><span class="line">    (*(<span class="keyword">void</span> (**)(<span class="keyword">void</span>))(*(_QWORD *)(v4 + <span class="number">8</span>) + <span class="number">48</span>i64))();</span><br><span class="line">  <span class="keyword">return</span> Py_NoneStruct++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>显然<code>del</code>指令完全被优化掉了。</p>
+<h2 id="代码2"><a href="#代码2" class="headerlink" title="代码2"></a>代码2</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 外部逻辑</span></span><br><span class="line">var1 = <span class="number">100</span></span><br><span class="line">var2 = <span class="string">&quot;Str&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 字符串相等比较</span></span><br><span class="line"><span class="comment"># if双层</span></span><br><span class="line"><span class="keyword">if</span> var2 == <span class="string">&quot;Str&quot;</span>:</span><br><span class="line">    <span class="comment"># int类型比较</span></span><br><span class="line">    <span class="keyword">if</span> var1 &lt;= <span class="number">50</span>:</span><br><span class="line">        <span class="built_in">print</span> (<span class="string">&quot;50&quot;</span>)</span><br><span class="line">    <span class="keyword">elif</span> var1 &lt; <span class="number">95</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;lt 95&quot;</span>)</span><br><span class="line">    <span class="keyword">elif</span> var1 == <span class="number">100</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;100&quot;</span>)</span><br><span class="line">    <span class="keyword">elif</span> var1 != <span class="number">101</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;not 101&quot;</span>)</span><br><span class="line">    <span class="keyword">elif</span> var1 &gt; <span class="number">135</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;gt 135&quot;</span>)</span><br><span class="line">    <span class="keyword">elif</span> var1 &gt;= <span class="number">150</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;ge 150&quot;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;out&quot;</span>)</span><br><span class="line"></span><br><span class="line">    var3 = <span class="string">&quot;abc&quot;</span></span><br><span class="line">    <span class="comment"># in关键字</span></span><br><span class="line">    <span class="keyword">if</span> var3 <span class="keyword">in</span> <span class="string">&quot;abc&quot;</span>:</span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 函数内逻辑</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test_if</span>():</span></span><br><span class="line">    var1 = <span class="number">100</span></span><br><span class="line">    var2 = <span class="string">&quot;Str&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 字符串相等比较</span></span><br><span class="line">    <span class="comment"># if双层</span></span><br><span class="line">    <span class="keyword">if</span> var2 == <span class="string">&quot;Str&quot;</span>:</span><br><span class="line">        <span class="comment"># int类型比较</span></span><br><span class="line">        <span class="keyword">if</span> var1 &lt;= <span class="number">50</span>:</span><br><span class="line">            <span class="built_in">print</span> (<span class="string">&quot;50&quot;</span>)</span><br><span class="line">        <span class="keyword">elif</span> var1 &lt; <span class="number">95</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;lt 95&quot;</span>)</span><br><span class="line">        <span class="keyword">elif</span> var1 == <span class="number">100</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;100&quot;</span>)</span><br><span class="line">        <span class="keyword">elif</span> var1 != <span class="number">101</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;not 101&quot;</span>)</span><br><span class="line">        <span class="keyword">elif</span> var1 &gt; <span class="number">135</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;gt 135&quot;</span>)</span><br><span class="line">        <span class="keyword">elif</span> var1 &gt;= <span class="number">150</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;ge 150&quot;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;out&quot;</span>)</span><br><span class="line"></span><br><span class="line">    var3 = <span class="string">&quot;abc&quot;</span></span><br><span class="line">    <span class="comment"># in关键字</span></span><br><span class="line">    <span class="keyword">if</span> var3 <span class="keyword">in</span> <span class="string">&quot;abc&quot;</span>:</span><br><span class="line">        <span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
+<h3 id="C文件-1"><a href="#C文件-1" class="headerlink" title="C文件"></a>C文件</h3><p>编译后发现，在exec函数和一般函数是不一样的</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br></pre></td><td class="code"><pre><span class="line"> <span class="number">01</span>: # 外部逻辑</span><br><span class="line">+<span class="number">02</span>: var1 = <span class="number">100</span></span><br><span class="line">+<span class="number">03</span>: var2 = <span class="string">&quot;Str&quot;</span></span><br><span class="line"> <span class="number">04</span>: </span><br><span class="line"> <span class="number">05</span>: # 字符串相等比较</span><br><span class="line"> <span class="number">06</span>: <span class="meta"># <span class="meta-keyword">if</span>双层</span></span><br><span class="line">+<span class="number">07</span>: <span class="keyword">if</span> var2 == <span class="string">&quot;Str&quot;</span>:</span><br><span class="line">  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_var2);</span><br><span class="line">  __pyx_t_2 = (__Pyx_PyUnicode_Equals(__pyx_t_1, __pyx_n_u_Str, Py_EQ));</span><br><span class="line">  <span class="keyword">if</span> (__pyx_t_2) &#123;</span><br><span class="line"><span class="comment">/* … */</span></span><br><span class="line">  &#125;</span><br><span class="line"> <span class="number">08</span>:     <span class="meta"># int类型比较</span></span><br><span class="line">+<span class="number">09</span>:     <span class="keyword">if</span> var1 &lt;= <span class="number">50</span>:</span><br><span class="line">    __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_var1);</span><br><span class="line">    __pyx_t_3 = PyObject_RichCompare(__pyx_t_1, __pyx_int_50, Py_LE);</span><br><span class="line">    __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_3);</span><br><span class="line">    <span class="keyword">if</span> (__pyx_t_2) &#123;</span><br><span class="line"><span class="comment">/* … */</span></span><br><span class="line">      <span class="keyword">goto</span> __pyx_L3;</span><br><span class="line">    &#125;</span><br><span class="line">+<span class="number">10</span>:         print (<span class="string">&quot;50&quot;</span>)</span><br><span class="line">    </span><br><span class="line">+<span class="number">11</span>:     elif var1 &lt; <span class="number">95</span>:</span><br><span class="line">    __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_var1);</span><br><span class="line">    __pyx_t_1 = PyObject_RichCompare(__pyx_t_3, __pyx_int_95, Py_LT);</span><br><span class="line">    __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_1);</span><br><span class="line">    <span class="keyword">if</span> (__pyx_t_2) &#123;</span><br><span class="line"><span class="comment">/* … */</span></span><br><span class="line">      <span class="keyword">goto</span> __pyx_L3;</span><br><span class="line">    &#125;</span><br><span class="line">+<span class="number">12</span>:         print(<span class="string">&quot;lt 95&quot;</span>)</span><br><span class="line">    </span><br><span class="line">+<span class="number">13</span>:     elif var1 == <span class="number">100</span>:</span><br><span class="line">    __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_var1);</span><br><span class="line">    __pyx_t_3 = __Pyx_PyInt_EqObjC(__pyx_t_1, __pyx_int_100, <span class="number">0x64</span>, <span class="number">0</span>);</span><br><span class="line">    __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_3);</span><br><span class="line">    <span class="keyword">if</span> (__pyx_t_2) &#123;</span><br><span class="line"><span class="comment">/* … */</span></span><br><span class="line">      <span class="keyword">goto</span> __pyx_L3;</span><br><span class="line">    &#125;</span><br><span class="line">+<span class="number">14</span>:         print(<span class="string">&quot;100&quot;</span>)</span><br><span class="line">+<span class="number">15</span>:     elif var1 != <span class="number">101</span>:</span><br><span class="line">    __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_var1);</span><br><span class="line">    __pyx_t_1 = __Pyx_PyInt_NeObjC(__pyx_t_3, __pyx_int_101, <span class="number">0x65</span>, <span class="number">0</span>);</span><br><span class="line">    __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_1);</span><br><span class="line">    <span class="keyword">if</span> (__pyx_t_2) &#123;</span><br><span class="line"><span class="comment">/* … */</span></span><br><span class="line">      <span class="keyword">goto</span> __pyx_L3;</span><br><span class="line">    &#125;</span><br><span class="line">+<span class="number">16</span>:         print(<span class="string">&quot;not 101&quot;</span>)</span><br><span class="line">    </span><br><span class="line">+<span class="number">17</span>:     elif var1 &gt; <span class="number">135</span>:</span><br><span class="line">    __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_var1); </span><br><span class="line">    __pyx_t_3 = PyObject_RichCompare(__pyx_t_1, __pyx_int_135, Py_GT);</span><br><span class="line">    __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_3);</span><br><span class="line">    <span class="keyword">if</span> (__pyx_t_2) &#123;</span><br><span class="line"><span class="comment">/* … */</span></span><br><span class="line">      <span class="keyword">goto</span> __pyx_L3;</span><br><span class="line">    &#125;</span><br><span class="line">+<span class="number">18</span>:         print(<span class="string">&quot;gt 135&quot;</span>)</span><br><span class="line">    </span><br><span class="line">+<span class="number">19</span>:     elif var1 &gt;= <span class="number">150</span>:</span><br><span class="line">    __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_var1);</span><br><span class="line">    __pyx_t_1 = PyObject_RichCompare(__pyx_t_3, __pyx_int_150, Py_GE);</span><br><span class="line">    __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_1);</span><br><span class="line">    <span class="keyword">if</span> (__pyx_t_2) &#123;</span><br><span class="line"><span class="comment">/* … */</span></span><br><span class="line">      <span class="keyword">goto</span> __pyx_L3;</span><br><span class="line">    &#125;</span><br><span class="line">+<span class="number">20</span>:         print(<span class="string">&quot;ge 150&quot;</span>)</span><br><span class="line">    </span><br><span class="line"> <span class="number">21</span>:     <span class="keyword">else</span>:</span><br><span class="line">+<span class="number">22</span>:         print(<span class="string">&quot;out&quot;</span>)</span><br><span class="line"> <span class="number">23</span>: </span><br><span class="line">+<span class="number">24</span>:     var3 = <span class="string">&quot;abc&quot;</span></span><br><span class="line"> <span class="number">25</span>:     <span class="meta"># in关键字</span></span><br><span class="line">+<span class="number">26</span>:     <span class="keyword">if</span> var3 in <span class="string">&quot;abc&quot;</span>:</span><br><span class="line">    __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_var3);</span><br><span class="line">    __pyx_t_2 = (__Pyx_PyUnicode_ContainsTF(__pyx_t_1, __pyx_n_u_abc, Py_EQ));</span><br><span class="line">    __pyx_t_4 = (__pyx_t_2 != <span class="number">0</span>);</span><br><span class="line">    <span class="keyword">if</span> (__pyx_t_4) &#123;</span><br><span class="line">    &#125;</span><br><span class="line"> <span class="number">27</span>:         pass</span><br><span class="line"> <span class="number">28</span>: </span><br><span class="line"> <span class="number">29</span>: # 函数内逻辑</span><br><span class="line">+<span class="number">30</span>: <span class="function">def <span class="title">test_if</span><span class="params">()</span>:</span></span><br><span class="line"><span class="function">+31:     var1 </span>= <span class="number">100</span></span><br><span class="line">+<span class="number">32</span>:     var2 = <span class="string">&quot;Str&quot;</span></span><br><span class="line"> <span class="number">33</span>: </span><br><span class="line"> <span class="number">34</span>:     # 字符串相等比较</span><br><span class="line"> <span class="number">35</span>:     <span class="meta"># <span class="meta-keyword">if</span>双层</span></span><br><span class="line">+<span class="number">36</span>:     <span class="keyword">if</span> var2 == <span class="string">&quot;Str&quot;</span>:</span><br><span class="line">  __pyx_t_1 = (__Pyx_PyUnicode_Equals(__pyx_v_var2, __pyx_n_u_Str, Py_EQ)); <span class="keyword">if</span> (unlikely(__pyx_t_1 &lt; <span class="number">0</span>)) __PYX_ERR(<span class="number">0</span>, <span class="number">36</span>, __pyx_L1_error)</span><br><span class="line">  __pyx_t_2 = (__pyx_t_1 != <span class="number">0</span>);</span><br><span class="line">  <span class="keyword">if</span> (__pyx_t_2) &#123;</span><br><span class="line"><span class="comment">/* … */</span></span><br><span class="line">    <span class="keyword">goto</span> __pyx_L3;</span><br><span class="line">  &#125;</span><br><span class="line"> <span class="number">37</span>:         <span class="meta"># int类型比较</span></span><br><span class="line">+<span class="number">38</span>:         <span class="keyword">if</span> var1 &lt;= <span class="number">50</span>:</span><br><span class="line">    __pyx_t_2 = ((__pyx_v_var1 &lt;= <span class="number">50</span>) != <span class="number">0</span>);</span><br><span class="line">    <span class="keyword">if</span> (__pyx_t_2) &#123;</span><br><span class="line"><span class="comment">/* … */</span></span><br><span class="line">      <span class="keyword">goto</span> __pyx_L4;</span><br><span class="line">    &#125;</span><br><span class="line">+<span class="number">39</span>:             print (<span class="string">&quot;50&quot;</span>)</span><br><span class="line">+<span class="number">40</span>:         elif var1 &lt; <span class="number">95</span>:</span><br><span class="line">    __pyx_t_2 = ((__pyx_v_var1 &lt; <span class="number">95</span>) != <span class="number">0</span>);</span><br><span class="line">    <span class="keyword">if</span> (__pyx_t_2) &#123;</span><br><span class="line"><span class="comment">/* … */</span></span><br><span class="line">      <span class="keyword">goto</span> __pyx_L4;</span><br><span class="line">    &#125;</span><br><span class="line">+<span class="number">41</span>:             print(<span class="string">&quot;lt 95&quot;</span>)</span><br><span class="line">+<span class="number">42</span>:         elif var1 == <span class="number">100</span>:</span><br><span class="line">    __pyx_t_2 = ((__pyx_v_var1 == <span class="number">0x64</span>) != <span class="number">0</span>);</span><br><span class="line">    <span class="keyword">if</span> (__pyx_t_2) &#123;</span><br><span class="line"><span class="comment">/* … */</span></span><br><span class="line">      <span class="keyword">goto</span> __pyx_L4;</span><br><span class="line">    &#125;</span><br><span class="line">+<span class="number">43</span>:             print(<span class="string">&quot;100&quot;</span>)</span><br><span class="line">+<span class="number">44</span>:         elif var1 != <span class="number">101</span>:</span><br><span class="line">    __pyx_t_2 = ((__pyx_v_var1 != <span class="number">0x65</span>) != <span class="number">0</span>);</span><br><span class="line">    <span class="keyword">if</span> (__pyx_t_2) &#123;</span><br><span class="line"><span class="comment">/* … */</span></span><br><span class="line">      <span class="keyword">goto</span> __pyx_L4;</span><br><span class="line">    &#125;</span><br><span class="line">+<span class="number">45</span>:             print(<span class="string">&quot;not 101&quot;</span>)</span><br><span class="line">+<span class="number">46</span>:         elif var1 &gt; <span class="number">135</span>:</span><br><span class="line">    __pyx_t_2 = ((__pyx_v_var1 &gt; <span class="number">0x87</span>) != <span class="number">0</span>);</span><br><span class="line">    <span class="keyword">if</span> (__pyx_t_2) &#123;</span><br><span class="line"><span class="comment">/* … */</span></span><br><span class="line">      <span class="keyword">goto</span> __pyx_L4;</span><br><span class="line">    &#125;</span><br><span class="line">+<span class="number">47</span>:             print(<span class="string">&quot;gt 135&quot;</span>)</span><br><span class="line">+<span class="number">48</span>:         elif var1 &gt;= <span class="number">150</span>:</span><br><span class="line">    __pyx_t_2 = ((__pyx_v_var1 &gt;= <span class="number">0x96</span>) != <span class="number">0</span>);</span><br><span class="line">    <span class="keyword">if</span> (__pyx_t_2) &#123;</span><br><span class="line"><span class="comment">/* … */</span></span><br><span class="line">    &#125;</span><br><span class="line">    __pyx_L4:;</span><br><span class="line">+<span class="number">49</span>:             print(<span class="string">&quot;ge 150&quot;</span>)</span><br><span class="line"> <span class="number">50</span>:     <span class="keyword">else</span>:</span><br><span class="line">+<span class="number">51</span>:         print(<span class="string">&quot;out&quot;</span>)</span><br><span class="line"> <span class="number">52</span>: </span><br><span class="line">+<span class="number">53</span>:     var3 = <span class="string">&quot;abc&quot;</span></span><br><span class="line">    </span><br><span class="line"> <span class="number">54</span>:     <span class="meta"># in关键字</span></span><br><span class="line">+<span class="number">55</span>:     <span class="keyword">if</span> var3 in <span class="string">&quot;abc&quot;</span>:</span><br><span class="line">  __pyx_t_2 = (__Pyx_PyUnicode_ContainsTF(__pyx_v_var3, __pyx_n_u_abc, Py_EQ));</span><br><span class="line">  <span class="keyword">if</span> (__pyx_t_1) &#123;</span><br><span class="line">  &#125;</span><br><span class="line"> <span class="number">56</span>:         pass</span><br></pre></td></tr></table></figure>
+<p>首先把一些函数贴上来。</p>
+<p>函数的名称应该不准确，因为这次没有对着C文件嗯看，而是直接根据逻辑大致猜测的。但是意思应该是能理解的。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">__int64 __fastcall <span class="title">PyObject_IsTrue_0</span><span class="params">(__int64 a1)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  __int64 result; <span class="comment">// rax</span></span><br><span class="line"></span><br><span class="line">  result = a1 == Py_TrueStruct;</span><br><span class="line">  <span class="keyword">if</span> ( !((<span class="keyword">unsigned</span> <span class="keyword">int</span>)result | (a1 == Py_FalseStruct || a1 == Py_NoneStruct)) )</span><br><span class="line">    result = PyObject_IsTrue();</span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">__int64 __fastcall <span class="title">PyUnicode_ContainsTF</span><span class="params">(__int64 a1)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  __int64 result; <span class="comment">// rax</span></span><br><span class="line"></span><br><span class="line">  result = PyUnicode_Contains(strp_abc, a1);</span><br><span class="line">  <span class="keyword">if</span> ( (<span class="keyword">int</span>)result &gt;= <span class="number">0</span> )</span><br><span class="line">    result = (_DWORD)result == <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>exec函数中</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ( (<span class="keyword">int</span>)PyDict_SetItem(<span class="keyword">dict_t</span>, var1, int100) &lt; <span class="number">0</span> )</span><br><span class="line">&#123;</span><br><span class="line">  err_line = <span class="number">2</span>;</span><br><span class="line">  err_code = <span class="number">1996</span>;</span><br><span class="line">  <span class="keyword">goto</span> ERROR;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> ( (<span class="keyword">int</span>)PyDict_SetItem(<span class="keyword">dict_t</span>, strp_var2, strp_Str) &lt; <span class="number">0</span> )</span><br><span class="line">&#123;</span><br><span class="line">  err_line = <span class="number">3</span>;</span><br><span class="line">  err_code = <span class="number">2005</span>;</span><br><span class="line">  <span class="keyword">goto</span> ERROR;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这两个是</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ...</span></span><br><span class="line">var1 = <span class="number">100</span></span><br><span class="line">var2 = <span class="string">&quot;Str&quot;</span></span><br></pre></td></tr></table></figure>
+<p>根据错误抛出可以得知分别是第二行和第三行代码，且可以发现在exec函数中的变量都是从一个字典里面取出来的。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">          v32 = strp_var2;</span><br><span class="line">          tmp = (_QWORD *)PyDict_GetItem_KnownHash(<span class="keyword">dict_t</span>, strp_var2, *(_QWORD *)(strp_var2 + <span class="number">24</span>));</span><br><span class="line">          v36 = *(_QWORD *)(<span class="keyword">dict_t</span> + <span class="number">24</span>);       <span class="comment">// var2</span></span><br><span class="line">          qword_180009758 = v36;</span><br><span class="line">          var2 = (__int64)tmp;</span><br><span class="line">          <span class="keyword">if</span> ( tmp )</span><br><span class="line">          &#123;</span><br><span class="line">            ++*tmp;</span><br><span class="line">            <span class="keyword">goto</span> LABEL_95;</span><br><span class="line">          &#125;</span><br><span class="line">          <span class="keyword">if</span> ( PyErr_Occurred(v36, v33, v34, v35, <span class="number">3</span>, v96, v97, v98, v99, v100, v101) )</span><br><span class="line">          &#123;</span><br><span class="line">LABEL_273:</span><br><span class="line">            err_line = <span class="number">7</span>;</span><br><span class="line">            err_code = <span class="number">2014</span>;</span><br><span class="line">            <span class="keyword">goto</span> ERROR;</span><br><span class="line">          &#125;</span><br><span class="line">          v31 = v32;</span><br><span class="line">        &#125;</span><br><span class="line">        tmp = (_QWORD *)GetBuiltinName(v31);</span><br><span class="line">LABEL_94:</span><br><span class="line">        <span class="keyword">if</span> ( tmp )</span><br><span class="line">        &#123;</span><br><span class="line">LABEL_95:</span><br><span class="line">          v37 = PyUnicode_Equals(tmp);	<span class="comment">// 比较相等</span></span><br><span class="line">          <span class="keyword">if</span> ( v37 &lt; <span class="number">0</span> )</span><br><span class="line">          &#123;</span><br><span class="line">            err_line = <span class="number">7</span>;</span><br><span class="line">            err_code = <span class="number">2016</span>;</span><br><span class="line">            <span class="keyword">goto</span> LABEL_269;</span><br><span class="line">          &#125;</span><br><span class="line">          v14 = (*tmp)-- == <span class="number">1</span>i64;</span><br><span class="line">          <span class="keyword">if</span> ( v14 )</span><br><span class="line">            (*(<span class="keyword">void</span> (__fastcall **)(_QWORD *))(tmp[<span class="number">1</span>] + <span class="number">48</span>i64))(tmp);</span><br><span class="line">          <span class="keyword">if</span> ( !v37 )	<span class="comment">// 不等，就跳转</span></span><br><span class="line">            <span class="keyword">goto</span> LABEL_248;</span><br></pre></td></tr></table></figure>
+<p>这是<code>if var2 == &quot;Str&quot;</code>。先<code>PyDict_GetItem_KnownHash</code>得到<code>var2</code>，然后<code>PyUnicode_Equals</code>来判断是否和<code>&quot;Str&quot;</code>相等。这个函数已经内联了<code>&quot;Str&quot;</code>，所以看上去只传了一个参数。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">__int64 __fastcall <span class="title">PyUnicode_Equals</span><span class="params">(__int64 a1)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  __int64 v1; <span class="comment">// rbx</span></span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">int</span> v3; <span class="comment">// esi</span></span><br><span class="line">  BOOL v4; <span class="comment">// edx</span></span><br><span class="line">  BOOL v5; <span class="comment">// ecx</span></span><br><span class="line">  __int64 v6; <span class="comment">// r10</span></span><br><span class="line">  __int64 v7; <span class="comment">// rax</span></span><br><span class="line">  __int64 v8; <span class="comment">// rcx</span></span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">int</span> v9; <span class="comment">// ecx</span></span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">int</span> v10; <span class="comment">// er8</span></span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">int</span> v11; <span class="comment">// er9</span></span><br><span class="line">  __int64 v12; <span class="comment">// rdx</span></span><br><span class="line">  <span class="keyword">bool</span> v13; <span class="comment">// zf</span></span><br><span class="line">  __int64 v14; <span class="comment">// rcx</span></span><br><span class="line">  <span class="keyword">unsigned</span> __int8 *v15; <span class="comment">// rcx</span></span><br><span class="line">  <span class="keyword">unsigned</span> __int8 *v16; <span class="comment">// rdx</span></span><br><span class="line">  <span class="keyword">int</span> v17; <span class="comment">// eax</span></span><br><span class="line">  <span class="keyword">int</span> v18; <span class="comment">// er8</span></span><br><span class="line">  __int64 v20; <span class="comment">// rax</span></span><br><span class="line">  _QWORD *v21; <span class="comment">// rbx</span></span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">int</span> v22; <span class="comment">// eax</span></span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">int</span> v23; <span class="comment">// edi</span></span><br><span class="line"></span><br><span class="line">  v1 = strp_Str;	<span class="comment">// 内联到了这里</span></span><br><span class="line">  <span class="keyword">if</span> ( a1 == strp_Str )</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>i64;</span><br><span class="line">  v3 = <span class="number">0</span>;</span><br><span class="line">  v4 = *(_QWORD *)(a1 + <span class="number">8</span>) == PyUnicode_Type;</span><br><span class="line">  v5 = *(_QWORD *)(strp_Str + <span class="number">8</span>) == PyUnicode_Type;</span><br><span class="line">  <span class="keyword">if</span> ( v5 &amp;&amp; v4 )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">if</span> ( *(<span class="keyword">char</span> *)(a1 + <span class="number">32</span>) &gt;= <span class="number">0</span> &amp;&amp; (<span class="keyword">int</span>)PyUnicode_Ready(a1) &lt; <span class="number">0</span></span><br><span class="line">      || *(<span class="keyword">char</span> *)(v1 + <span class="number">32</span>) &gt;= <span class="number">0</span> &amp;&amp; (<span class="keyword">int</span>)PyUnicode_Ready(v1) &lt; <span class="number">0</span> )</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="number">0xFFFFFFFF</span>i64;</span><br><span class="line">    &#125;</span><br><span class="line">    v6 = *(_QWORD *)(a1 + <span class="number">16</span>);</span><br><span class="line">    <span class="keyword">if</span> ( v6 != *(_QWORD *)(v1 + <span class="number">16</span>) )</span><br><span class="line">      <span class="keyword">return</span> <span class="number">0</span>i64;</span><br><span class="line">    v7 = *(_QWORD *)(a1 + <span class="number">24</span>);</span><br><span class="line">    v8 = *(_QWORD *)(v1 + <span class="number">24</span>);</span><br><span class="line">    <span class="keyword">if</span> ( v7 != v8 &amp;&amp; v7 != <span class="number">-1</span> &amp;&amp; v8 != <span class="number">-1</span> )</span><br><span class="line">      <span class="keyword">return</span> <span class="number">0</span>i64;</span><br><span class="line"><span class="comment">/* ... */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后判断</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ( !v37 )</span><br><span class="line">  <span class="keyword">goto</span> LABEL_248;</span><br></pre></td></tr></table></figure>
+<p><code>LABEL_248</code>就是条件为假的位置。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">LABEL_248:</span><br><span class="line">                            v88 = (_QWORD *)qword_1800097D8;</span><br><span class="line">                            v89 = (_QWORD *)<span class="keyword">dict_t</span>;</span><br><span class="line">                            v90 = (_QWORD *)qword_180009698;</span><br><span class="line">                            v91 = (_QWORD *)qword_180009688;</span><br><span class="line">                            v92 = PyObject_GC_New(qword_1800097C0);</span><br><span class="line">                            tmp = (_QWORD *)v92;</span><br><span class="line">                            <span class="keyword">if</span> ( !v92 )</span><br><span class="line">                            &#123;</span><br><span class="line">                              err_line = <span class="number">30</span>;</span><br><span class="line">                              err_code = <span class="number">2292</span>;</span><br><span class="line">                              <span class="keyword">goto</span> ERROR;</span><br><span class="line">                            &#125;</span><br><span class="line">                            *(_DWORD *)(v92 + <span class="number">136</span>) = <span class="number">0</span>;</span><br><span class="line">                            *(_QWORD *)(v92 + <span class="number">40</span>) = <span class="number">0</span>i64;</span><br><span class="line">                            *(_QWORD *)(v92 + <span class="number">16</span>) = &amp;off_180008720;</span><br><span class="line">                            *(_QWORD *)(v92 + <span class="number">24</span>) = v92;</span><br><span class="line">                            *(_QWORD *)(v92 + <span class="number">96</span>) = <span class="number">0</span>i64;</span><br><span class="line">                            <span class="keyword">if</span> ( v90 )</span><br><span class="line">                              ++*v90;</span><br><span class="line">                            *(_QWORD *)(v92 + <span class="number">32</span>) = v90;</span><br><span class="line">                            *(_QWORD *)(v92 + <span class="number">48</span>) = <span class="number">0</span>i64;</span><br><span class="line">                            *(_QWORD *)(v92 + <span class="number">56</span>) = <span class="number">0</span>i64;</span><br><span class="line">                            ++*v91;</span><br><span class="line">                            *(_QWORD *)(v92 + <span class="number">64</span>) = v91;</span><br><span class="line">                            *(_QWORD *)(v92 + <span class="number">72</span>) = <span class="number">0</span>i64;</span><br><span class="line">                            *(_QWORD *)(v92 + <span class="number">104</span>) = <span class="number">0</span>i64;</span><br><span class="line">                            *(_QWORD *)(v92 + <span class="number">80</span>) = v89;</span><br><span class="line">                            ++*v89;</span><br><span class="line">                            <span class="keyword">if</span> ( v88 )</span><br><span class="line">                              ++*v88;</span><br><span class="line">                            *(_QWORD *)(v92 + <span class="number">88</span>) = v88;</span><br><span class="line">                            *(_DWORD *)(v92 + <span class="number">120</span>) = <span class="number">0</span>;</span><br><span class="line">                            *(_QWORD *)(v92 + <span class="number">128</span>) = <span class="number">0</span>i64;</span><br><span class="line">                            *(_QWORD *)(v92 + <span class="number">112</span>) = <span class="number">0</span>i64;</span><br><span class="line">                            *(_QWORD *)(v92 + <span class="number">144</span>) = <span class="number">0</span>i64;</span><br><span class="line">                            *(_QWORD *)(v92 + <span class="number">152</span>) = <span class="number">0</span>i64;</span><br><span class="line">                            *(_QWORD *)(v92 + <span class="number">160</span>) = <span class="number">0</span>i64;</span><br><span class="line">                            *(_QWORD *)(v92 + <span class="number">168</span>) = <span class="number">0</span>i64;</span><br><span class="line">                            PyObject_GC_Track(v92);</span><br><span class="line">                            <span class="keyword">if</span> ( (<span class="keyword">int</span>)PyDict_SetItem(<span class="keyword">dict_t</span>, qword_180009688, tmp) &gt;= <span class="number">0</span> )</span><br><span class="line">                            &#123;</span><br></pre></td></tr></table></figure>
+<p>因为条件为假之后就到了函数声明的位置，所以就是这个模样。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">            tmp = (_QWORD *)PyDict_GetItem_KnownHash(<span class="keyword">dict_t</span>, var1, *(_QWORD *)(var1 + <span class="number">24</span>));</span><br><span class="line">            v43 = *(_QWORD *)(<span class="keyword">dict_t</span> + <span class="number">24</span>);</span><br><span class="line">            qword_1800097B0 = v43;</span><br><span class="line">            qword_180009730 = (__int64)tmp;</span><br><span class="line">            <span class="keyword">if</span> ( tmp )</span><br><span class="line">            &#123;</span><br><span class="line">              ++*tmp;</span><br><span class="line">              <span class="keyword">goto</span> LABEL_110;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> ( PyErr_Occurred(v43, v40, v41, v42, v95, v96, v97, v98, v99, v100, v101) )</span><br><span class="line">            &#123;</span><br><span class="line">LABEL_256:</span><br><span class="line">              err_line = <span class="number">9</span>;</span><br><span class="line">              err_code = <span class="number">2027</span>;</span><br><span class="line">              <span class="keyword">goto</span> ERROR;</span><br><span class="line">            &#125;</span><br><span class="line">            v38 = v39;</span><br><span class="line">          &#125;</span><br><span class="line">          tmp = (_QWORD *)GetBuiltinName(v38);</span><br><span class="line">LABEL_109:</span><br><span class="line">          <span class="keyword">if</span> ( tmp )</span><br><span class="line">          &#123;</span><br><span class="line">LABEL_110:</span><br><span class="line">            v44 = (_QWORD *)PyObject_RichCompare(tmp, int50, <span class="number">1</span>i64);	<span class="comment">//</span></span><br><span class="line">            <span class="keyword">if</span> ( !v44 )</span><br><span class="line">            &#123;</span><br><span class="line">              err_line = <span class="number">9</span>;</span><br><span class="line">              err_code = <span class="number">2029</span>;</span><br><span class="line">              <span class="keyword">goto</span> LABEL_269;</span><br><span class="line">            &#125;</span><br><span class="line">            v14 = (*tmp)-- == <span class="number">1</span>i64;</span><br><span class="line">            <span class="keyword">if</span> ( v14 )</span><br><span class="line">              (*(<span class="keyword">void</span> (__fastcall **)(_QWORD *))(tmp[<span class="number">1</span>] + <span class="number">48</span>i64))(tmp);</span><br><span class="line">            judge = PyObject_IsTrue_0(v44);	<span class="comment">//</span></span><br><span class="line">            <span class="keyword">if</span> ( judge &lt; <span class="number">0</span> )</span><br><span class="line">            &#123;</span><br><span class="line">              err_line = <span class="number">9</span>;</span><br><span class="line">              err_code = <span class="number">2031</span>;</span><br><span class="line">              <span class="keyword">goto</span> LABEL_217;</span><br><span class="line">            &#125;</span><br></pre></td></tr></table></figure>
+<p>这是第九行的<code>if var2 == &quot;Str&quot;:</code>，主要是<code>PyObject_RichCompare</code>函数和<code>PyObject_IsTrue</code>来进行判断。不过第三个参数是个枚举数，是<code>Py_LE</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// object.h</span></span><br><span class="line"><span class="comment">/* Rich comparison opcodes */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> Py_LT 0</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> Py_LE 1</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> Py_EQ 2</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> Py_NE 3</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> Py_GT 4</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> Py_GE 5</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ( judge )</span><br><span class="line">&#123;</span><br><span class="line">  v46 = (<span class="keyword">int</span> *)Print(v6, tup_50);</span><br><span class="line">  v6 = v46;</span><br><span class="line">  <span class="keyword">if</span> ( !v46 )</span><br><span class="line">  &#123;</span><br><span class="line">    err_line = <span class="number">10</span>;</span><br><span class="line">    err_code = <span class="number">2042</span>;</span><br><span class="line">    <span class="keyword">goto</span> ERROR;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">goto</span> LABEL_230;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后第十行，如果是真，则打印”50”。</p>
+<p>后面的总体都差不多，不过是枚举的差异。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ( v81 )</span><br><span class="line">&#123;</span><br><span class="line">  v46 = (<span class="keyword">int</span> *)Print(v6, qword_180009728);</span><br><span class="line">  v6 = v46;</span><br><span class="line">  <span class="keyword">if</span> ( !v46 )</span><br><span class="line">  &#123;</span><br><span class="line">    err_line = <span class="number">20</span>;</span><br><span class="line">    err_code = <span class="number">2224</span>;</span><br><span class="line">    <span class="keyword">goto</span> ERROR;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">  v46 = (<span class="keyword">int</span> *)Print(v6, out);</span><br><span class="line">  v6 = v46;</span><br><span class="line">  <span class="keyword">if</span> ( !v46 )</span><br><span class="line">  &#123;</span><br><span class="line">    err_line = <span class="number">22</span>;</span><br><span class="line">    err_code = <span class="number">2246</span>;</span><br><span class="line">    <span class="keyword">goto</span> ERROR;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>跳到最后一个，<code>else</code>打印<code>&quot;out&quot;</code>。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">LABEL_230:</span><br><span class="line">                        v14 = (*(_QWORD *)v46)-- == <span class="number">1</span>i64;</span><br><span class="line">                        <span class="keyword">if</span> ( v14 )</span><br><span class="line">                          (*(<span class="keyword">void</span> (__fastcall **)(<span class="keyword">int</span> *))(*((_QWORD *)v46 + <span class="number">1</span>) + <span class="number">48</span>i64))(v6);</span><br><span class="line">                        <span class="keyword">if</span> ( (<span class="keyword">int</span>)PyDict_SetItem(<span class="keyword">dict_t</span>, strp_var3, strp_abc) &lt; <span class="number">0</span> )</span><br><span class="line">                        &#123;</span><br><span class="line">                          err_line = <span class="number">24</span>;</span><br><span class="line">                          err_code = <span class="number">2259</span>;</span><br><span class="line">                          <span class="keyword">goto</span> ERROR;</span><br><span class="line">                        &#125;</span><br><span class="line">                        v6 = *(<span class="keyword">int</span> **)(<span class="keyword">dict_t</span> + <span class="number">24</span>);</span><br><span class="line">                        <span class="keyword">if</span> ( (<span class="keyword">int</span> *)qword_180009860 == v6 )</span><br><span class="line">                        &#123;</span><br><span class="line">                          <span class="keyword">if</span> ( qword_180009790 )</span><br><span class="line">                          &#123;</span><br><span class="line">                            ++*(_QWORD *)qword_180009790;</span><br><span class="line">                            tmp = (_QWORD *)qword_180009790;</span><br><span class="line">                            <span class="keyword">goto</span> LABEL_243;</span><br><span class="line">                          &#125;</span><br><span class="line">                          v82 = strp_var3;</span><br><span class="line">                        &#125;</span><br><span class="line">                        <span class="keyword">else</span></span><br><span class="line">                        &#123;</span><br><span class="line">                          v83 = strp_var3;</span><br><span class="line">                          tmp = (_QWORD *)PyDict_GetItem_KnownHash(<span class="keyword">dict_t</span>, strp_var3, *(_QWORD *)(strp_var3 + <span class="number">24</span>));</span><br><span class="line">                          v87 = *(_QWORD *)(<span class="keyword">dict_t</span> + <span class="number">24</span>);</span><br><span class="line">                          qword_180009860 = v87;</span><br><span class="line">                          qword_180009790 = (__int64)tmp;</span><br><span class="line">                          <span class="keyword">if</span> ( tmp )</span><br><span class="line">                          &#123;</span><br><span class="line">                            ++*tmp;</span><br><span class="line">LABEL_244:</span><br><span class="line">                            <span class="keyword">if</span> ( (<span class="keyword">int</span>)PyUnicode_ContainsTF((__int64)tmp) &lt; <span class="number">0</span> )</span><br><span class="line">                            &#123;</span><br><span class="line">                              err_line = <span class="number">26</span>;</span><br><span class="line">                              err_code = <span class="number">2270</span>;</span><br><span class="line">                              <span class="keyword">goto</span> LABEL_269;</span><br><span class="line">                            &#125;</span><br><span class="line">                            v14 = (*tmp)-- == <span class="number">1</span>i64;</span><br><span class="line">                            <span class="keyword">if</span> ( v14 )</span><br><span class="line">                              (*(<span class="keyword">void</span> (__fastcall **)(_QWORD *))(tmp[<span class="number">1</span>] + <span class="number">48</span>i64))(tmp);</span><br></pre></td></tr></table></figure>
+<p>这个便是</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var3 = <span class="string">&quot;abc&quot;</span></span><br><span class="line"><span class="comment"># in关键字</span></span><br><span class="line"><span class="keyword">if</span> var3 <span class="keyword">in</span> <span class="string">&quot;abc&quot;</span>:</span><br><span class="line">    <span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
+<p>首先<code>PyDict_SetItem</code>设置变量，然后<code>PyDict_GetItem_KnownHash</code>取出来，然后<code>PyUnicode_ContainsTF</code>判断（也是内联过”abc”的）。不过由于<code>if</code>内是个<code>pass</code>，所以条件成立后也没什么动作。</p>
+<h3 id="函数内"><a href="#函数内" class="headerlink" title="函数内"></a>函数内</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// write access to const memory has been detected, the output may be wrong!</span></span><br><span class="line"><span class="function">__int64 <span class="title">test_if</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  __int64 v0; <span class="comment">// rdi</span></span><br><span class="line">  _QWORD *v1; <span class="comment">// rbx</span></span><br><span class="line">  _QWORD *v2; <span class="comment">// rsi</span></span><br><span class="line">  <span class="keyword">int</span> v3; <span class="comment">// eax</span></span><br><span class="line">  __int64 v4; <span class="comment">// rcx</span></span><br><span class="line">  __int64 err_code; <span class="comment">// rdx</span></span><br><span class="line">  __int64 line; <span class="comment">// r8</span></span><br><span class="line">  _QWORD *v7; <span class="comment">// rax</span></span><br><span class="line">  _QWORD *v8; <span class="comment">// rcx</span></span><br><span class="line">  <span class="keyword">bool</span> v9; <span class="comment">// zf</span></span><br><span class="line"></span><br><span class="line">  v0 = <span class="number">0</span>i64;</span><br><span class="line">  v1 = <span class="number">0</span>i64;</span><br><span class="line">  ++*(_QWORD *)strp_Str;</span><br><span class="line">  v2 = (_QWORD *)strp_Str;</span><br><span class="line">  v3 = PyUnicode_Equals(strp_Str);              <span class="comment">// if &quot;Str&quot; == &quot;Str&quot;</span></span><br><span class="line">  <span class="keyword">if</span> ( v3 &gt;= <span class="number">0</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">if</span> ( v3 )</span><br><span class="line">    &#123;</span><br><span class="line">      v7 = (_QWORD *)Print(v4, strp_100_0);     <span class="comment">// print(&quot;100&quot;)</span></span><br><span class="line">      v8 = v7;</span><br><span class="line">      <span class="keyword">if</span> ( !v7 )</span><br><span class="line">      &#123;</span><br><span class="line">        err_code = <span class="number">1361</span>i64;</span><br><span class="line">        line = <span class="number">43</span>i64;</span><br><span class="line">        <span class="keyword">goto</span> LABEL_12;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">      v7 = (_QWORD *)Print(v4, out);            <span class="comment">// print(&quot;out&quot;)</span></span><br><span class="line">      v8 = v7;</span><br><span class="line">      <span class="keyword">if</span> ( !v7 )</span><br><span class="line">      &#123;</span><br><span class="line">        err_code = <span class="number">1486</span>i64;</span><br><span class="line">        line = <span class="number">51</span>i64;</span><br><span class="line">        <span class="keyword">goto</span> LABEL_12;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    v9 = (*v7)-- == <span class="number">1</span>i64;</span><br><span class="line">    <span class="keyword">if</span> ( v9 )</span><br><span class="line">      (*(<span class="keyword">void</span> (__fastcall **)(_QWORD *))(v7[<span class="number">1</span>] + <span class="number">48</span>i64))(v8);</span><br><span class="line">    ++*(_QWORD *)strp_abc;</span><br><span class="line">    v1 = (_QWORD *)strp_abc;</span><br><span class="line">    <span class="keyword">if</span> ( (<span class="keyword">int</span>)PyUnicode_Contains(strp_abc, strp_abc) &gt;= <span class="number">0</span> )</span><br><span class="line">    &#123;</span><br><span class="line">      v0 = Py_NoneStruct++;</span><br><span class="line">      <span class="keyword">goto</span> LABEL_14;</span><br><span class="line">    &#125;</span><br><span class="line">    err_code = <span class="number">1508</span>i64;</span><br><span class="line">    line = <span class="number">55</span>i64;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    err_code = <span class="number">1278</span>i64;</span><br><span class="line">    line = <span class="number">36</span>i64;</span><br><span class="line">  &#125;</span><br><span class="line">LABEL_12:</span><br><span class="line">  sub_180001F10(aTest52TestIf, err_code, line, aTest52Py);</span><br><span class="line">LABEL_14:</span><br><span class="line">  <span class="keyword">if</span> ( v2 )</span><br><span class="line">  &#123;</span><br><span class="line">    v9 = (*v2)-- == <span class="number">1</span>i64;</span><br><span class="line">    <span class="keyword">if</span> ( v9 )</span><br><span class="line">      (*(<span class="keyword">void</span> (__fastcall **)(_QWORD *))(v2[<span class="number">1</span>] + <span class="number">48</span>i64))(v2);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> ( !v1 )</span><br><span class="line">    <span class="keyword">return</span> v0;</span><br><span class="line">  v9 = (*v1)-- == <span class="number">1</span>i64;</span><br><span class="line">  <span class="keyword">if</span> ( v9 )</span><br><span class="line">    (*(<span class="keyword">void</span> (__fastcall **)(_QWORD *))(v1[<span class="number">1</span>] + <span class="number">48</span>i64))(v1);</span><br><span class="line">  <span class="keyword">return</span> v0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>由于函数内的判断在编译成C文件的时候已经优化成了C的判断形式，所以再加上优化策略，常量传递和死代码消除，其中的一些判断语句完全消失了。不过逻辑还是很清晰。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/cython/" rel="tag"><i class="fa fa-tag"></i></a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/01/28/Cython%20Reverse%204/" rel="prev" title="Cython程序分析_4">
+      <i class="fa fa-chevron-left"></i> Cython程序分析_4
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Cython%E7%A8%8B%E5%BA%8F%E5%88%86%E6%9E%90-5"><span class="nav-number">1.</span> <span class="nav-text">Cython程序分析_5</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%811"><span class="nav-number">1.1.</span> <span class="nav-text">代码1</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#C%E6%96%87%E4%BB%B6"><span class="nav-number">1.1.1.</span> <span class="nav-text">C文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%812"><span class="nav-number">1.2.</span> <span class="nav-text">代码2</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#C%E6%96%87%E4%BB%B6-1"><span class="nav-number">1.2.1.</span> <span class="nav-text">C文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E5%86%85"><span class="nav-number">1.2.2.</span> <span class="nav-text">函数内</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Tardis"
+      src="/images/spongebob.jpg">
+  <p class="site-author-name" itemprop="name">Tardis</p>
+  <div class="site-description" itemprop="description">学点好玩的逆向知识</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Taardisaa" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Taardisaa" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:136665562@qq.com" title="E-Mail → mailto:136665562@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa-heartbeat"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tardis</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">274k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">4:09</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='250' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+   if (typeof MathJax === 'undefined') {
+       window.MathJax = {
+         loader: {
+         source: {
+           '[tex]/amsCd': '[tex]/amscd',
+           '[tex]/AMScd': '[tex]/amscd'
+         }
+       },
+       tex: {
+         inlineMath: {'[+]': [['$', '$']]},
+         tags: 'ams'
+       },
+       options: {
+         renderActions: {
+           findScript: [10, doc => {
+             document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+               const display = !!node.type.match(/; *mode=display/);
+               const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+               const text = document.createTextNode('');
+               node.parentNode.replaceChild(text, node);
+               math.start = {node: text, delim: '', n: 0};
+               math.end = {node: text, delim: '', n: 0};
+               doc.math.push(math);
+             });
+           }, '', false],
+           insertedScript: [200, () => {
+         document.querySelectorAll('mjx-container').forEach(node => {
+           let target = node.parentNode;
+           if (target.nodeName.toLowerCase() === 'li') {
+             target.parentNode.classList.add('has-jax');
+           }
+         });
+       }, '', false]
+     }
+   }
+ };
+	
+
+    (function () {
+      var script = document.createElement('script');
+      script.src = 'https://cdn.jsdelivr.net/npm/mathjax@2.7.8/unpacked/MathJax.js?config=TeX-MML-AM_CHTML';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+
+   <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+   <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+   <script type="text/javascript" src="/js/fireworks.js"></script>
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"right","width":200,"height":400},"mobile":{"show":true},"log":false});</script></body>
+</html>
