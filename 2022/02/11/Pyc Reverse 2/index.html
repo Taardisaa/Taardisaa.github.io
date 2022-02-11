@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <script type="text/javascript" src="/js/dytitle.js"></script>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"taardisaa.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="基于上篇博客对pyc结构的了解，继续看汇编指令。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Pyc字节码分析 2">
+<meta property="og:url" content="https://taardisaa.github.io/2022/02/11/Pyc%20Reverse%202/index.html">
+<meta property="og:site_name" content="Tardis&#39;s blog">
+<meta property="og:description" content="基于上篇博客对pyc结构的了解，继续看汇编指令。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-02-11T07:42:00.000Z">
+<meta property="article:modified_time" content="2022-02-11T12:30:04.851Z">
+<meta property="article:author" content="Tardis">
+<meta property="article:tag" content="pyc">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://taardisaa.github.io/2022/02/11/Pyc%20Reverse%202/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Pyc字节码分析 2 | Tardis's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="Tardis's blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Tardis's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">摸鱼用博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://taardisaa.github.io/2022/02/11/Pyc%20Reverse%202/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/spongebob.jpg">
+      <meta itemprop="name" content="Tardis">
+      <meta itemprop="description" content="学点好玩的逆向知识">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Tardis's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Pyc字节码分析 2
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-02-11 15:42:00 / 修改时间：20:30:04" itemprop="dateCreated datePublished" datetime="2022-02-11T15:42:00+08:00">2022-02-11</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/pyc/" itemprop="url" rel="index"><span itemprop="name">pyc</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>15k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>14 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>基于上篇博客对pyc结构的了解，继续看汇编指令。</p>
+<span id="more"></span>
+<h1 id="Pyc字节码分析-2"><a href="#Pyc字节码分析-2" class="headerlink" title="Pyc字节码分析 2"></a>Pyc字节码分析 2</h1><h2 id="汇编指令集"><a href="#汇编指令集" class="headerlink" title="汇编指令集"></a>汇编指令集</h2><p><a target="_blank" rel="noopener" href="https://docs.python.org/3/library/dis.html">https://docs.python.org/3/library/dis.html</a> 讲述py3的<code>dis</code>模块，顺带了讲了一下指令含义。</p>
+<p>python的指令集属于是代代更新的。每次都会多几个新指令，同时把一些不常用的旧指令又给抛弃掉。</p>
+<p>先从python36开始，然后每个版本的删增都贴上来。</p>
+<h3 id="python36"><a href="#python36" class="headerlink" title="python36"></a>python36</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// python36</span></span><br><span class="line"><span class="number">1</span>   POP_TOP</span><br><span class="line"><span class="number">2</span>   ROT_TWO</span><br><span class="line"><span class="number">3</span>   ROT_THREE</span><br><span class="line"><span class="number">4</span>   DUP_TOP</span><br><span class="line"><span class="number">5</span>   DUP_TOP_TWO</span><br><span class="line"><span class="number">9</span>   NOP</span><br><span class="line"><span class="number">10</span>  UNARY_POSITIVE</span><br><span class="line"><span class="number">11</span>  UNARY_NEGATIVE</span><br><span class="line"><span class="number">12</span>  UNARY_NOT</span><br><span class="line"><span class="number">15</span>  UNARY_INVERT</span><br><span class="line"><span class="number">16</span>  BINARY_MATRIX_MULTIPLY</span><br><span class="line"><span class="number">17</span>  INPLACE_MATRIX_MULTIPLY</span><br><span class="line"><span class="number">19</span>  BINARY_POWER</span><br><span class="line"><span class="number">20</span>  BINARY_MULTIPLY</span><br><span class="line"><span class="number">22</span>  BINARY_MODULO</span><br><span class="line"><span class="number">23</span>  BINARY_ADD</span><br><span class="line"><span class="number">24</span>  BINARY_SUBTRACT</span><br><span class="line"><span class="number">25</span>  BINARY_SUBSCR</span><br><span class="line"><span class="number">26</span>  BINARY_FLOOR_DIVIDE</span><br><span class="line"><span class="number">27</span>  BINARY_TRUE_DIVIDE</span><br><span class="line"><span class="number">28</span>  INPLACE_FLOOR_DIVIDE</span><br><span class="line"><span class="number">29</span>  INPLACE_TRUE_DIVIDE</span><br><span class="line"><span class="number">50</span>  GET_AITER</span><br><span class="line"><span class="number">51</span>  GET_ANEXT</span><br><span class="line"><span class="number">52</span>  BEFORE_ASYNC_WITH</span><br><span class="line"><span class="number">55</span>  INPLACE_ADD</span><br><span class="line"><span class="number">56</span>  INPLACE_SUBTRACT</span><br><span class="line"><span class="number">57</span>  INPLACE_MULTIPLY</span><br><span class="line"><span class="number">59</span>  INPLACE_MODULO</span><br><span class="line"><span class="number">60</span>  STORE_SUBSCR</span><br><span class="line"><span class="number">61</span>  DELETE_SUBSCR</span><br><span class="line"><span class="number">62</span>  BINARY_LSHIFT</span><br><span class="line"><span class="number">63</span>  BINARY_RSHIFT</span><br><span class="line"><span class="number">64</span>  BINARY_AND</span><br><span class="line"><span class="number">65</span>  BINARY_XOR</span><br><span class="line"><span class="number">66</span>  BINARY_OR</span><br><span class="line"><span class="number">67</span>  INPLACE_POWER</span><br><span class="line"><span class="number">68</span>  GET_ITER</span><br><span class="line"><span class="number">69</span>  GET_YIELD_FROM_ITER</span><br><span class="line"><span class="number">70</span>  PRINT_EXPR</span><br><span class="line"><span class="number">71</span>  LOAD_BUILD_CLASS</span><br><span class="line"><span class="number">72</span>  YIELD_FROM</span><br><span class="line"><span class="number">73</span>  GET_AWAITABLE</span><br><span class="line"><span class="number">75</span>  INPLACE_LSHIFT</span><br><span class="line"><span class="number">76</span>  INPLACE_RSHIFT</span><br><span class="line"><span class="number">77</span>  INPLACE_AND</span><br><span class="line"><span class="number">78</span>  INPLACE_XOR</span><br><span class="line"><span class="number">79</span>  INPLACE_OR</span><br><span class="line"><span class="number">80</span>  BREAK_LOOP</span><br><span class="line"><span class="number">81</span>  WITH_CLEANUP_START</span><br><span class="line"><span class="number">82</span>  WITH_CLEANUP_FINISH</span><br><span class="line"><span class="number">83</span>  RETURN_VALUE</span><br><span class="line"><span class="number">84</span>  IMPORT_STAR</span><br><span class="line"><span class="number">85</span>  SETUP_ANNOTATIONS</span><br><span class="line"><span class="number">86</span>  YIELD_VALUE</span><br><span class="line"><span class="number">87</span>  POP_BLOCK</span><br><span class="line"><span class="number">88</span>  END_FINALLY</span><br><span class="line"><span class="number">89</span>  POP_EXCEPT</span><br><span class="line"><span class="number">90</span>  STORE_NAME_A</span><br><span class="line"><span class="number">91</span>  DELETE_NAME_A</span><br><span class="line"><span class="number">92</span>  UNPACK_SEQUENCE_A</span><br><span class="line"><span class="number">93</span>  FOR_ITER_A</span><br><span class="line"><span class="number">94</span>  UNPACK_EX_A</span><br><span class="line"><span class="number">95</span>  STORE_ATTR_A</span><br><span class="line"><span class="number">96</span>  DELETE_ATTR_A</span><br><span class="line"><span class="number">97</span>  STORE_GLOBAL_A</span><br><span class="line"><span class="number">98</span>  DELETE_GLOBAL_A</span><br><span class="line"><span class="number">100</span> LOAD_CONST_A</span><br><span class="line"><span class="number">101</span> LOAD_NAME_A</span><br><span class="line"><span class="number">102</span> BUILD_TUPLE_A</span><br><span class="line"><span class="number">103</span> BUILD_LIST_A</span><br><span class="line"><span class="number">104</span> BUILD_SET_A</span><br><span class="line"><span class="number">105</span> BUILD_MAP_A</span><br><span class="line"><span class="number">106</span> LOAD_ATTR_A</span><br><span class="line"><span class="number">107</span> COMPARE_OP_A</span><br><span class="line"><span class="number">108</span> IMPORT_NAME_A</span><br><span class="line"><span class="number">109</span> IMPORT_FROM_A</span><br><span class="line"><span class="number">110</span> JUMP_FORWARD_A</span><br><span class="line"><span class="number">111</span> JUMP_IF_FALSE_OR_POP_A</span><br><span class="line"><span class="number">112</span> JUMP_IF_TRUE_OR_POP_A</span><br><span class="line"><span class="number">113</span> JUMP_ABSOLUTE_A</span><br><span class="line"><span class="number">114</span> POP_JUMP_IF_FALSE_A</span><br><span class="line"><span class="number">115</span> POP_JUMP_IF_TRUE_A</span><br><span class="line"><span class="number">116</span> LOAD_GLOBAL_A</span><br><span class="line"><span class="number">119</span> CONTINUE_LOOP_A</span><br><span class="line"><span class="number">120</span> SETUP_LOOP_A</span><br><span class="line"><span class="number">121</span> SETUP_EXCEPT_A</span><br><span class="line"><span class="number">122</span> SETUP_FINALLY_A</span><br><span class="line"><span class="number">124</span> LOAD_FAST_A</span><br><span class="line"><span class="number">125</span> STORE_FAST_A</span><br><span class="line"><span class="number">126</span> DELETE_FAST_A</span><br><span class="line"><span class="number">127</span> STORE_ANNOTATION_A</span><br><span class="line"><span class="number">130</span> RAISE_VARARGS_A</span><br><span class="line"><span class="number">131</span> CALL_FUNCTION_A</span><br><span class="line"><span class="number">132</span> MAKE_FUNCTION_A</span><br><span class="line"><span class="number">133</span> BUILD_SLICE_A</span><br><span class="line"><span class="number">135</span> LOAD_CLOSURE_A</span><br><span class="line"><span class="number">136</span> LOAD_DEREF_A</span><br><span class="line"><span class="number">137</span> STORE_DEREF_A</span><br><span class="line"><span class="number">138</span> DELETE_DEREF_A</span><br><span class="line"><span class="number">141</span> CALL_FUNCTION_KW_A</span><br><span class="line"><span class="number">142</span> CALL_FUNCTION_EX_A</span><br><span class="line"><span class="number">143</span> SETUP_WITH_A</span><br><span class="line"><span class="number">144</span> EXTENDED_ARG_A</span><br><span class="line"><span class="number">145</span> LIST_APPEND_A</span><br><span class="line"><span class="number">146</span> SET_ADD_A</span><br><span class="line"><span class="number">147</span> MAP_ADD_A</span><br><span class="line"><span class="number">148</span> LOAD_CLASSDEREF_A</span><br><span class="line"><span class="number">149</span> BUILD_LIST_UNPACK_A</span><br><span class="line"><span class="number">150</span> BUILD_MAP_UNPACK_A</span><br><span class="line"><span class="number">151</span> BUILD_MAP_UNPACK_WITH_CALL_A</span><br><span class="line"><span class="number">152</span> BUILD_TUPLE_UNPACK_A</span><br><span class="line"><span class="number">153</span> BUILD_SET_UNPACK_A</span><br><span class="line"><span class="number">154</span> SETUP_ASYNC_WITH_A</span><br><span class="line"><span class="number">155</span> FORMAT_VALUE_A</span><br><span class="line"><span class="number">156</span> BUILD_CONST_KEY_MAP_A</span><br><span class="line"><span class="number">157</span> BUILD_STRING_A</span><br><span class="line"><span class="number">158</span> BUILD_TUPLE_UNPACK_WITH_CALL_A</span><br><span class="line">    </span><br><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">cmp_op</span> &#123;</span></span><br><span class="line">    PyCmp_LT=Py_LT, </span><br><span class="line">    PyCmp_LE=Py_LE, </span><br><span class="line">    PyCmp_EQ=Py_EQ, </span><br><span class="line">    PyCmp_NE=Py_NE,</span><br><span class="line">    PyCmp_GT=Py_GT, </span><br><span class="line">    PyCmp_GE=Py_GE, </span><br><span class="line">    PyCmp_IN, </span><br><span class="line">    PyCmp_NOT_IN,</span><br><span class="line">    PyCmp_IS, </span><br><span class="line">    PyCmp_IS_NOT, </span><br><span class="line">    PyCmp_EXC_MATCH, </span><br><span class="line">    PyCmp_BAD</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>汇编指令可在<code>Include/opcode.h</code>中找到。也可以在<code>pycdc</code>主文件夹下的<code>bytes</code>文件夹中找到一大堆<code>.map</code>文件，这里有各个版本的指令。</p>
+<h3 id="python37"><a href="#python37" class="headerlink" title="python37"></a>python37</h3><figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">比对python36：</span><br><span class="line">删除<span class="number"> 127 </span>STORE_ANNOTATION_A</span><br><span class="line">新增<span class="number"> 160 </span>LOAD_METHOD_A</span><br><span class="line">新增<span class="number"> 161 </span>CALL_METHOD_A</span><br></pre></td></tr></table></figure>
+<h3 id="python38"><a href="#python38" class="headerlink" title="python38"></a>python38</h3><figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">diff python_37.map python_38.map</span><br><span class="line"></span><br><span class="line">新增<span class="number"> 6 </span>  ROT_FOUR</span><br><span class="line"></span><br><span class="line">新增<span class="number"> 53 </span> BEGIN_FINALLY</span><br><span class="line">新增<span class="number"> 54 </span> END_ASYNC_FOR</span><br><span class="line"></span><br><span class="line">删除<span class="number"> 80 </span> BREAK_LOOP</span><br><span class="line"></span><br><span class="line">删除<span class="number"> 119 </span>CONTINUE_LOOP_A</span><br><span class="line">删除<span class="number"> 120 </span>SETUP_LOOP_A</span><br><span class="line">删除<span class="number"> 121 </span>SETUP_EXCEPT_A</span><br><span class="line"></span><br><span class="line">新增<span class="number"> 162 </span>CALL_FINALLY_A</span><br><span class="line">新增<span class="number"> 163 </span>POP_FINALLY_A</span><br></pre></td></tr></table></figure>
+<h3 id="python39"><a href="#python39" class="headerlink" title="python39"></a>python39</h3><p><code>&lt;</code>是删除，<code>&gt;</code>是新增</p>
+<figure class="highlight node-repl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">diff python_38.map python_39.map</span><br><span class="line">23a24,25</span><br><span class="line"><span class="meta">&gt;</span> <span class="javascript"><span class="number">48</span>  RERAISE</span></span><br><span class="line"><span class="meta">&gt;</span> <span class="javascript"><span class="number">49</span>  WITH_EXCEPT_START</span></span><br><span class="line">27d28</span><br><span class="line">&lt; 53  BEGIN_FINALLY</span><br><span class="line">46a48</span><br><span class="line"><span class="meta">&gt;</span> <span class="javascript"><span class="number">74</span>  LOAD_ASSERTION_ERROR</span></span><br><span class="line">52,53c54</span><br><span class="line">&lt; 81  WITH_CLEANUP_START</span><br><span class="line">&lt; 82  WITH_CLEANUP_FINISH</span><br><span class="line">---</span><br><span class="line"><span class="meta">&gt;</span> <span class="javascript"><span class="number">82</span>  LIST_TO_TUPLE</span></span><br><span class="line">59d59</span><br><span class="line">&lt; 88  END_FINALLY</span><br><span class="line">86a87,89</span><br><span class="line"><span class="meta">&gt;</span> <span class="javascript"><span class="number">117</span> IS_OP_A</span></span><br><span class="line"><span class="meta">&gt;</span> <span class="javascript"><span class="number">118</span> CONTAINS_OP_A</span></span><br><span class="line"><span class="meta">&gt;</span> <span class="javascript"><span class="number">121</span> JUMP_IF_NOT_EXC_MATCH_A</span></span><br><span class="line">107,111d109</span><br><span class="line">&lt; 149 BUILD_LIST_UNPACK_A</span><br><span class="line">&lt; 150 BUILD_MAP_UNPACK_A</span><br><span class="line">&lt; 151 BUILD_MAP_UNPACK_WITH_CALL_A</span><br><span class="line">&lt; 152 BUILD_TUPLE_UNPACK_A</span><br><span class="line">&lt; 153 BUILD_SET_UNPACK_A</span><br><span class="line">116d113</span><br><span class="line">&lt; 158 BUILD_TUPLE_UNPACK_WITH_CALL_A</span><br><span class="line">119,120c116,119</span><br><span class="line">&lt; 162 CALL_FINALLY_A</span><br><span class="line">&lt; 163 POP_FINALLY_A</span><br><span class="line">---</span><br><span class="line"><span class="meta">&gt;</span> <span class="javascript"><span class="number">162</span> LIST_EXTEND_A</span></span><br><span class="line"><span class="meta">&gt;</span> <span class="javascript"><span class="number">163</span> SET_UPDATE_A</span></span><br><span class="line"><span class="meta">&gt;</span> <span class="javascript"><span class="number">164</span> DICT_MERGE_A</span></span><br><span class="line"><span class="meta">&gt;</span> <span class="javascript"><span class="number">165</span> DICT_UPDATE_A</span></span><br></pre></td></tr></table></figure>
+<h3 id="python310"><a href="#python310" class="headerlink" title="python310"></a>python310</h3><figure class="highlight node-repl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">diff python_39.map python_310.map</span><br><span class="line">24c24,28</span><br><span class="line">&lt; 48  RERAISE</span><br><span class="line">---</span><br><span class="line"><span class="meta">&gt;</span> <span class="javascript"><span class="number">30</span>  GET_LEN</span></span><br><span class="line"><span class="meta">&gt;</span> <span class="javascript"><span class="number">31</span>  MATCH_MAPPING</span></span><br><span class="line"><span class="meta">&gt;</span> <span class="javascript"><span class="number">32</span>  MATCH_SEQUENCE</span></span><br><span class="line"><span class="meta">&gt;</span> <span class="javascript"><span class="number">33</span>  MATCH_KEYS</span></span><br><span class="line"><span class="meta">&gt;</span> <span class="javascript"><span class="number">34</span>  COPY_DICT_WITHOUT_KEYS</span></span><br><span class="line">69a74</span><br><span class="line"><span class="meta">&gt;</span> <span class="javascript"><span class="number">99</span>  ROT_N_A</span></span><br><span class="line">88a94</span><br><span class="line"><span class="meta">&gt;</span> <span class="javascript"><span class="number">119</span> RERAISE_A</span></span><br><span class="line">93a100</span><br><span class="line"><span class="meta">&gt;</span> <span class="javascript"><span class="number">129</span> GEN_START_A</span></span><br><span class="line">109a117</span><br><span class="line"><span class="meta">&gt;</span> <span class="javascript"><span class="number">152</span> MATCH_CLASS_A</span></span><br></pre></td></tr></table></figure>
+<p>这些指令是真的多。</p>
+<h3 id="有参指令"><a href="#有参指令" class="headerlink" title="有参指令"></a>有参指令</h3><p><a target="_blank" rel="noopener" href="https://kdr2.com/tech/python/pyc-format.html">PYC文件格式分析 (kdr2.com)</a></p>
+<blockquote>
+<p>文章较老，格式是py27的，有参指令的规则似乎py3已经变化了。</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Include/opcode.h</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> HAVE_ARGUMENT 90</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> HAS_ARG(op) ((op) &gt;= HAVE_ARGUMENT)</span></span><br></pre></td></tr></table></figure>
+<p>即大于等于90的指令都是有参数的。</p>
+<p><a target="_blank" rel="noopener" href="https://ctf-wiki.org/misc/other/pyc/">pyc文件 - CTF Wiki (ctf-wiki.org)</a></p>
+<p>python3.6 以上参数永远占 1 字节（包括指令本身那就是一共占2个字节）， 如果指令不带参数的话则以<code>0x00</code>代替， 在运行过程中被解释器忽略， 也是 <code>Stegosaurus</code>（一种<code>.pyc</code>文件隐写工具）的技术原理；</p>
+<p>而低于 python3.5 的版本中指令不带参数的话却没有<code>0x00</code>填充。</p>
+<blockquote>
+<p>老版本的python27则是一个指令占用1或3个字节。1就是无参数，3则是有参数，参数占2字节，且第二个一定是0x00。</p>
+</blockquote>
+<h4 id="举例"><a href="#举例" class="headerlink" title="举例"></a>举例</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># py3.7.9</span></span><br><span class="line"><span class="keyword">import</span> dis</span><br><span class="line">dis.dis(<span class="string">b&#x27;\x64\x00&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">           0 LOAD_CONST               0 (0)</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br></pre></td></tr></table></figure>
+<h2 id="Python虚拟机简介"><a href="#Python虚拟机简介" class="headerlink" title="Python虚拟机简介"></a>Python虚拟机简介</h2><p>原本打算自己写点的，但是网上查到了很多分析<code>CPython</code>解释器的文章，所以也就不扯了。精简一下写一下重要的核心架构。</p>
+<p><a target="_blank" rel="noopener" href="https://nanguage.gitbook.io/inside-python-vm-cn/1.-jian-jie">https://nanguage.gitbook.io/inside-python-vm-cn/1.-jian-jie</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/375323851">https://zhuanlan.zhihu.com/p/375323851</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/375323851">https://zhuanlan.zhihu.com/p/375323851</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/G1011/article/details/102908886"> Python虚拟机详解_G1011的博客-CSDN博客_python虚拟机</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/traditional/p/13642194.html">《深度剖析CPython解释器》24. Python运行时环境的初始化、源码分析Python解释器在启动时都做了哪些事情？ - 古明地盆 - 博客园 (cnblogs.com)</a></p>
+<ol>
+<li><code>.pyc</code>文件是<code>PyCodeObject</code>在磁盘上的表现形式，其中包含了字节码指令以及程序的所有静态信息</li>
+<li>执行时的动态环境则由<code>PyFrameObject</code>承担</li>
+<li><code>PyInterpreterState</code>模拟进程</li>
+<li><code>PyThreadState</code>模拟线程</li>
+<li>位于<code>Python/ceval.c</code>的<code>PyEval_EvalFrameEx()</code>函数是核心执行函数。</li>
+</ol>
+<h3 id="PyFrameObject"><a href="#PyFrameObject" class="headerlink" title="PyFrameObject"></a>PyFrameObject</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Include/frameobject.h</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span> b_type;                 <span class="comment">/* what kind of block this is */</span></span><br><span class="line">    <span class="keyword">int</span> b_handler;              <span class="comment">/* where to jump to find handler */</span></span><br><span class="line">    <span class="keyword">int</span> b_level;                <span class="comment">/* value stack level to pop to */</span></span><br><span class="line">&#125; PyTryBlock;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> _<span class="title">frame</span> &#123;</span></span><br><span class="line">    PyObject_VAR_HEAD           <span class="comment">// 运行时栈帧大小不确定，所以加&quot;VAR&quot;表示变量</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> _<span class="title">frame</span> *<span class="title">f_back</span>;</span>      <span class="comment">//执行环境链上的前一个frame，很多个PyFrameObject连接起来形成执行环境链表  </span></span><br><span class="line">    PyCodeObject *f_code;       <span class="comment">// PyCodeObject 对象，这个frame就是这个PyCodeObject对象的上下文环境  </span></span><br><span class="line">    PyObject *f_builtins;       <span class="comment">// builtin命名空间，PyDictObject</span></span><br><span class="line">    PyObject *f_globals;        <span class="comment">// globals命名空间，PyDictObject</span></span><br><span class="line">    PyObject *f_locals;         <span class="comment">// 局部变量的符号表</span></span><br><span class="line">    PyObject **f_valuestack;    <span class="comment">// 栈底指针（指向最后一个局部变量的后面）</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">/* Next free slot in f_valuestack.  Frame creation sets to f_valuestack.</span></span><br><span class="line"><span class="comment">       Frame evaluation usually NULLs it, but a frame that yields sets it</span></span><br><span class="line"><span class="comment">       to the current stack top. */</span></span><br><span class="line">    PyObject **f_stacktop;      <span class="comment">// 栈顶位置</span></span><br><span class="line">    PyObject *f_trace;          <span class="comment">/* Trace function */</span></span><br><span class="line">    <span class="keyword">char</span> f_trace_lines;         <span class="comment">/* Emit per-line trace events? */</span></span><br><span class="line">    <span class="keyword">char</span> f_trace_opcodes;       <span class="comment">/* Emit per-opcode trace events? */</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Borrowed reference to a generator, or NULL */</span></span><br><span class="line">    PyObject *f_gen;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//上一条字节码指令在f_code中的偏移位置  </span></span><br><span class="line">    <span class="keyword">int</span> f_lasti;                <span class="comment">/* Last instruction if called */</span></span><br><span class="line">    <span class="comment">/* Call PyFrame_GetLineNumber() instead of reading this field</span></span><br><span class="line"><span class="comment">       directly.  As of 2.3 f_lineno is only valid when tracing is</span></span><br><span class="line"><span class="comment">       active (i.e. when f_trace is set).  At other times we use</span></span><br><span class="line"><span class="comment">       PyCode_Addr2Line to calculate the line from the current</span></span><br><span class="line"><span class="comment">       bytecode index. */</span></span><br><span class="line">    <span class="comment">// 当前字节码对应的源代码行  </span></span><br><span class="line">    <span class="keyword">int</span> f_lineno;               <span class="comment">/* Current line number */</span></span><br><span class="line">    <span class="keyword">int</span> f_iblock;               <span class="comment">/* index in f_blockstack */</span></span><br><span class="line">    <span class="keyword">char</span> f_executing;           <span class="comment">/* whether the frame is still executing */</span></span><br><span class="line">    PyTryBlock f_blockstack[CO_MAXBLOCKS]; <span class="comment">/* for try and loop blocks */</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">//动态内存，维护(局部变量+cell对象集合+free对象集合+运行时栈)所需要的空间  </span></span><br><span class="line">    PyObject *f_localsplus[<span class="number">1</span>];  <span class="comment">/* locals+stack, dynamically sized */</span></span><br><span class="line">&#125; PyFrameObject;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>每一个 <code>PyFrameObject</code>对象都维护了一个 <code>PyCodeObject</code>对象，这表明每一个 <code>PyFrameObject</code>中的动态内存空间对象都和源代码中的一段代码相对应。</p>
+</blockquote>
+<h3 id="虚拟机简化结构"><a href="#虚拟机简化结构" class="headerlink" title="虚拟机简化结构"></a>虚拟机简化结构</h3><p>根据上面的栈帧结构，简化一下体系。</p>
+<blockquote>
+<p>未经实际代码审计考证，但是能便于理解，且与实际相差不大。</p>
+</blockquote>
+<p>Python虚拟机的核心就是一个<strong>栈</strong>，因为这是一个栈式虚拟机。实际上很多支持多架构的编程语言的虚拟机都是基于虚拟栈的，这样能够简化虚拟汇编指令的复杂度，也能方便移植。</p>
+<p>同时我们也需要其他的一些东西，比如一些<strong>全局变量</strong>，或者一些必要的<strong>默认方法函数</strong>，比如上文所提<code>f_globals</code>或<code>f_builtins</code>都是字典对象，里面维护了函数和全局变量。</p>
+<p>再有的就是<code>PyCodeObject</code>里面自带的一些信息，比如<strong><code>co_names</code></strong>和<strong><code>co_consts</code></strong>。</p>
+<p>当然还有自己的局部变量。<strong><code>co_nlocals</code></strong>显示局部变量（函数栈上的）的个数，<strong><code>co_varnames</code></strong>则存储局部变量名。详见上个博客。</p>
+<hr>
+<h3 id="与指令集的关系"><a href="#与指令集的关系" class="headerlink" title="与指令集的关系"></a>与指令集的关系</h3><p>举几个常见指令</p>
+<p><code>LOAD_CONST</code>会将<code>co_consts</code>中的元素加载进栈</p>
+<p><code>LOAD_NAME</code>会将<code>co_names</code>中的字符串进栈</p>
+<p><code>STORE_NAME</code>会弹出栈顶元素，然后和<code>co_names</code>顶部元素相对应。相当于一个赋值操作。</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">LOAD_CONST</span> <span class="string">&quot;Hello&quot;</span></span><br><span class="line">STORE_NAME <span class="string">&quot;s&quot;</span></span><br></pre></td></tr></table></figure>
+<p>就相当于<code>s = &quot;Hello&quot;</code>。</p>
+<p><code>LOAD_FAST</code>就是加载局部变量进入栈中。</p>
+<h2 id="示例代码"><a href="#示例代码" class="headerlink" title="示例代码"></a>示例代码</h2><p>举个例子</p>
+<h3 id="Py文件"><a href="#Py文件" class="headerlink" title="Py文件"></a>Py文件</h3><p>基于上次的继续：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># test.py</span></span><br><span class="line">s = <span class="string">&quot;Hello&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span>(<span class="params">a, b=<span class="number">3</span>, *args</span>):</span></span><br><span class="line">	c = <span class="number">114514</span></span><br><span class="line">	<span class="built_in">print</span>(a, b)</span><br><span class="line">	<span class="built_in">print</span>(args)</span><br></pre></td></tr></table></figure>
+<h3 id="Pyc文件"><a href="#Pyc文件" class="headerlink" title="Pyc文件"></a>Pyc文件</h3><p>以及手动排版过的二进制代码：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">42</span> <span class="number">0</span>d <span class="number">0</span>d <span class="number">0</span>a 	<span class="regexp">//</span> 版本魔数</span><br><span class="line"><span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> 	<span class="regexp">//</span> 位域（暂时没用）</span><br><span class="line"><span class="number">49</span> a6 <span class="number">04</span> <span class="number">62</span> 	<span class="regexp">//</span> 时间戳</span><br><span class="line"><span class="number">5</span>b <span class="number">00</span> <span class="number">00</span> <span class="number">00</span>		<span class="regexp">//</span> 文件大小</span><br><span class="line"></span><br><span class="line"><span class="regexp">//</span> ===============主PyCodeObject===================</span><br><span class="line"></span><br><span class="line">e3 				<span class="regexp">//</span> TYPE_CODE | FLAG_REF <span class="number">0</span></span><br><span class="line"><span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> 	<span class="regexp">//</span> co_argcount</span><br><span class="line"><span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> 	<span class="regexp">//</span> co_kwonlyargcount</span><br><span class="line"><span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> 	<span class="regexp">//</span> co_nlocals</span><br><span class="line"><span class="number">03</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> 	<span class="regexp">//</span> co_stacksize</span><br><span class="line"><span class="number">40</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> 	<span class="regexp">//</span> co_flags（CO_NOFREE）</span><br><span class="line"></span><br><span class="line"><span class="regexp">//</span> co_code(作为TYPE_STRING存在)</span><br><span class="line"><span class="number">73</span>              <span class="regexp">//</span> TYPE_STRING，字符串对象（其实通常是字节码对象）</span><br><span class="line"><span class="number">12</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> 	<span class="regexp">//</span> 长度<span class="number">12</span></span><br><span class="line"><span class="number">64</span> <span class="number">00</span> <span class="number">5</span>a <span class="number">00</span> <span class="number">64</span> <span class="number">05</span> <span class="number">64</span> <span class="number">02</span> <span class="number">64</span> <span class="number">03</span> <span class="number">84</span> <span class="number">01</span> <span class="number">5</span>a <span class="number">01</span> <span class="number">64</span> <span class="number">04</span> <span class="number">53</span> <span class="number">00</span> </span><br><span class="line"></span><br><span class="line"><span class="regexp">//</span> co_consts</span><br><span class="line"><span class="number">29</span>			   <span class="regexp">//</span> TYPE_SMALLTUPLE，PyTupleObject : PySequenceObject</span><br><span class="line"><span class="number">06</span>			   <span class="regexp">//</span> size</span><br><span class="line">	<span class="regexp">//</span> value[<span class="number">0</span>]</span><br><span class="line">	<span class="number">5</span>a			   <span class="regexp">//</span> TYPE_SHORT_ASCII_INTERNED = <span class="string">&#x27;Z&#x27;</span>,</span><br><span class="line">	<span class="number">05</span>			   <span class="regexp">//</span> length</span><br><span class="line">	<span class="number">48</span> <span class="number">65</span> <span class="number">6</span>c <span class="number">6</span>c <span class="number">6</span>f </span><br><span class="line">	<span class="regexp">//</span> value[<span class="number">1</span>]</span><br><span class="line">	e9 			   <span class="regexp">//</span> TYPE_INT<span class="string">&#x27;i&#x27;</span> | FLAG_REF <span class="number">1</span></span><br><span class="line">	<span class="number">03</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span>     <span class="regexp">//</span> <span class="number">4</span>字节int</span><br><span class="line">	<span class="regexp">//</span> value[<span class="number">2</span>]</span><br><span class="line">	<span class="number">63</span>			   <span class="regexp">//</span> TYPE_CODE</span><br><span class="line">	<span class="number">02</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span>	    <span class="regexp">//</span> co_argcount</span><br><span class="line">	<span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span>     <span class="regexp">//</span> co_kwonlyargcount</span><br><span class="line">	<span class="number">04</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span>     <span class="regexp">//</span> co_nlocals</span><br><span class="line">	<span class="number">03</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span>     <span class="regexp">//</span> co_stacksize</span><br><span class="line">	<span class="number">47</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span>     <span class="regexp">//</span> co_flags (NOFREE | VARARGS | NEWLOCALS | OPTIMIZED)</span><br><span class="line">        <span class="regexp">//</span> co_code</span><br><span class="line">        <span class="number">73</span>              <span class="regexp">//</span> TYPE_STRING</span><br><span class="line">        <span class="number">1</span>a <span class="number">00</span> <span class="number">00</span> <span class="number">00</span>     <span class="regexp">//</span> 长度</span><br><span class="line">        <span class="number">64</span> <span class="number">01</span> <span class="number">7</span>d <span class="number">03</span> <span class="number">74</span> <span class="number">00</span> <span class="number">7</span>c <span class="number">00</span> <span class="number">7</span>c <span class="number">01</span> <span class="number">83</span> <span class="number">02</span> <span class="number">01</span> <span class="number">00</span> <span class="number">74</span> <span class="number">00</span> <span class="number">7</span>c <span class="number">02</span> <span class="number">83</span> <span class="number">01</span> <span class="number">01</span> <span class="number">00</span> <span class="number">64</span> <span class="number">00</span> <span class="number">53</span> <span class="number">00</span> </span><br><span class="line">        <span class="regexp">//</span> co_consts</span><br><span class="line">        <span class="number">29</span>			   <span class="regexp">//</span> TYPE_SMALLTUPLE</span><br><span class="line">        <span class="number">02</span>			   <span class="regexp">//</span> size</span><br><span class="line">        	<span class="regexp">//</span> value[<span class="number">0</span>]</span><br><span class="line">   		    <span class="number">4</span>e		   <span class="regexp">//</span> TYPE_NONE = <span class="string">&#x27;N&#x27;</span>,</span><br><span class="line">   		    <span class="regexp">//</span> value[<span class="number">1</span>]</span><br><span class="line">   		    <span class="number">69</span>		   <span class="regexp">//</span> TYPE_INT</span><br><span class="line">   		    <span class="number">52</span> bf <span class="number">01</span> <span class="number">00</span> <span class="regexp">//</span> <span class="number">114514</span></span><br><span class="line">        <span class="regexp">//</span> co_names</span><br><span class="line">        <span class="number">29</span>              <span class="regexp">//</span> TYPE_SMALLTUPLE</span><br><span class="line">        <span class="number">01</span>              <span class="regexp">//</span> size</span><br><span class="line">        	da              <span class="regexp">//</span> TYPE_SHORT_ASCII_INTERNED | FLAG_REF <span class="number">2</span></span><br><span class="line">        	<span class="number">05</span>              <span class="regexp">//</span> length</span><br><span class="line">        	<span class="number">70</span> <span class="number">72</span> <span class="number">69</span> <span class="number">6</span>e <span class="number">74</span> <span class="regexp">//</span> <span class="string">&#x27;print&#x27;</span></span><br><span class="line">        	</span><br><span class="line">        <span class="regexp">//</span> co_varnames</span><br><span class="line">        <span class="number">29</span>              <span class="regexp">//</span> TYPE_SMALLTUPLE</span><br><span class="line">        <span class="number">04</span>              <span class="regexp">//</span> size </span><br><span class="line">        	<span class="regexp">//</span> value[<span class="number">0</span>]</span><br><span class="line">        	da              <span class="regexp">//</span> TYPE_SHORT_ASCII_INTERNED | FLAG_REF  <span class="number">3</span></span><br><span class="line">        	<span class="number">01</span>              <span class="regexp">//</span> length </span><br><span class="line">        	<span class="number">61</span>              <span class="regexp">//</span> <span class="string">&#x27;a&#x27;</span> </span><br><span class="line">        	<span class="regexp">//</span> value[<span class="number">1</span>]</span><br><span class="line">        	da              <span class="regexp">//</span> TYPE_SHORT_ASCII_INTERNED | FLAG_REF  <span class="number">4</span></span><br><span class="line">        	<span class="number">01</span>              <span class="regexp">//</span> length </span><br><span class="line">        	<span class="number">62</span>              <span class="regexp">//</span> <span class="string">&#x27;b&#x27;</span></span><br><span class="line">        	<span class="regexp">//</span> value[<span class="number">2</span>]</span><br><span class="line">        	da              <span class="regexp">//</span> TYPE_SHORT_ASCII_INTERNED | FLAG_REF  <span class="number">5</span></span><br><span class="line">        	<span class="number">04</span>              <span class="regexp">//</span> length </span><br><span class="line">        	<span class="number">61</span> <span class="number">72</span> <span class="number">67</span> <span class="number">73</span>	    <span class="regexp">//</span> <span class="string">&#x27;args&#x27;</span></span><br><span class="line">        	<span class="regexp">//</span> value[<span class="number">3</span>]</span><br><span class="line">        	da              <span class="regexp">//</span> TYPE_SHORT_ASCII_INTERNED | FLAG_REF  <span class="number">6</span></span><br><span class="line">        	<span class="number">01</span>              <span class="regexp">//</span> length </span><br><span class="line">        	<span class="number">63</span>              <span class="regexp">//</span> <span class="string">&#x27;c&#x27;</span></span><br><span class="line">        <span class="regexp">//</span> co_freevars</span><br><span class="line">        a9              <span class="regexp">//</span> TYPE_SMALLTUPLE | FLAG_REF 	<span class="number">7</span></span><br><span class="line">        <span class="number">00</span> </span><br><span class="line">        <span class="regexp">//</span> co_cellvars</span><br><span class="line">        <span class="number">72</span>              <span class="regexp">//</span> TYPE_OBREF = <span class="string">&#x27;r&#x27;</span>,</span><br><span class="line">        <span class="number">07</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> 	<span class="regexp">//</span> 指向上面的co_freevars，是空的。</span><br><span class="line">        <span class="regexp">//</span> co_filename</span><br><span class="line">        fa              <span class="regexp">//</span> TYPE_SHORT_ASCII | FLAG_REF <span class="number">8</span></span><br><span class="line">        <span class="number">09</span> </span><br><span class="line">        <span class="number">2</span>e <span class="number">5</span>c <span class="number">74</span> <span class="number">65</span> <span class="number">73</span> <span class="number">74</span> <span class="number">2</span>e <span class="number">70</span> <span class="number">79</span> 	<span class="regexp">//</span> <span class="string">r&quot;.\test.py&quot;</span></span><br><span class="line">        <span class="regexp">//</span> co_name</span><br><span class="line">        da              <span class="regexp">//</span> TYPE_SHORT_ASCII_INTERNED | FLAG_REF <span class="number">9</span></span><br><span class="line">        <span class="number">04</span>              <span class="regexp">//</span> length </span><br><span class="line">        <span class="number">66</span> <span class="number">75</span> <span class="number">6</span>e <span class="number">63</span>     <span class="regexp">//</span> <span class="string">&quot;func&quot;</span></span><br><span class="line">        <span class="regexp">//</span> co_firstlineno</span><br><span class="line">        <span class="number">04</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span>     <span class="regexp">//</span> <span class="number">4</span></span><br><span class="line">        <span class="regexp">//</span> co_lnotab</span><br><span class="line">        <span class="number">73</span>              <span class="regexp">//</span> TYPE_STRING </span><br><span class="line">        <span class="number">06</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> </span><br><span class="line">        <span class="number">00</span> <span class="number">01</span> <span class="number">04</span> <span class="number">01</span> <span class="number">0</span>a <span class="number">01</span> </span><br><span class="line">	<span class="regexp">//</span> value[<span class="number">3</span>] -&gt; <span class="string">&quot;func&quot;</span></span><br><span class="line">	<span class="number">72</span> 			   <span class="regexp">//</span> TYPE_OBREF = <span class="string">&#x27;r&#x27;</span></span><br><span class="line">	<span class="number">09</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span>     <span class="regexp">//</span> index</span><br><span class="line">	<span class="regexp">//</span> value[<span class="number">4</span>]</span><br><span class="line">	<span class="number">4</span>e 			   <span class="regexp">//</span> TYPE_NONE = <span class="string">&#x27;N&#x27;</span></span><br><span class="line">	<span class="regexp">//</span> value[<span class="number">5</span>]</span><br><span class="line">	<span class="number">29</span> 			   <span class="regexp">//</span> TYPE_SMALLTUPLE</span><br><span class="line">	<span class="number">01</span> 			   <span class="regexp">//</span> size</span><br><span class="line">	    <span class="regexp">//</span> value[<span class="number">0</span>] -&gt; <span class="number">3</span></span><br><span class="line">        <span class="number">72</span>	       <span class="regexp">//</span> TYPE_OBREF = <span class="string">&#x27;r&#x27;</span></span><br><span class="line">        <span class="number">01</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> 	<span class="regexp">//</span> index</span><br><span class="line"><span class="regexp">//</span> co_names</span><br><span class="line"><span class="number">29</span>         <span class="regexp">//</span> TYPE_SMALLTUPLE</span><br><span class="line"><span class="number">02</span>         <span class="regexp">//</span> size </span><br><span class="line">    <span class="regexp">//</span> value[<span class="number">0</span>]</span><br><span class="line">    da    <span class="regexp">//</span> TYPE_SHORT_ASCII_INTERNED | FLAG_REF <span class="number">10</span> </span><br><span class="line">    <span class="number">01</span>    <span class="regexp">//</span> length</span><br><span class="line">    <span class="number">73</span>    <span class="regexp">//</span> <span class="string">&#x27;s&#x27;</span></span><br><span class="line">    <span class="regexp">//</span> value[<span class="number">1</span>] -&gt; <span class="string">&quot;func&quot;</span></span><br><span class="line">    <span class="number">72</span> 			   <span class="regexp">//</span> TYPE_OBREF = <span class="string">&#x27;r&#x27;</span> </span><br><span class="line">    <span class="number">09</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span>     <span class="regexp">//</span> index = <span class="number">9</span> </span><br><span class="line"><span class="regexp">//</span> co_varnames</span><br><span class="line"><span class="number">72</span> 			       <span class="regexp">//</span> TYPE_OBREF = <span class="string">&#x27;r&#x27;</span></span><br><span class="line"><span class="number">07</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span>         <span class="regexp">//</span> index</span><br><span class="line"><span class="regexp">//</span> co_freevars -&gt; None</span><br><span class="line"><span class="number">72</span> 			       <span class="regexp">//</span> TYPE_OBREF = <span class="string">&#x27;r&#x27;</span> </span><br><span class="line"><span class="number">07</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span>         <span class="regexp">//</span> index </span><br><span class="line"><span class="regexp">//</span> co_cellvars -&gt; None</span><br><span class="line"><span class="number">72</span> 			       <span class="regexp">//</span> TYPE_OBREF = <span class="string">&#x27;r&#x27;</span> </span><br><span class="line"><span class="number">07</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span>         <span class="regexp">//</span> index </span><br><span class="line"><span class="regexp">//</span> co_filename -&gt; <span class="string">r&quot;.\test.py&quot;</span></span><br><span class="line"><span class="number">72</span> 			       <span class="regexp">//</span> TYPE_OBREF = <span class="string">&#x27;r&#x27;</span></span><br><span class="line"><span class="number">08</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span>         <span class="regexp">//</span> index </span><br><span class="line"><span class="regexp">//</span> co_name</span><br><span class="line">da              <span class="regexp">//</span> TYPE_SHORT_ASCII_INTERNED | FLAG_REF  </span><br><span class="line"><span class="number">08</span>              <span class="regexp">//</span> length</span><br><span class="line"><span class="number">3</span>c <span class="number">6</span>d <span class="number">6</span>f <span class="number">64</span> <span class="number">75</span> <span class="number">6</span>c <span class="number">65</span> <span class="number">3</span>e <span class="regexp">//</span> <span class="string">&quot;&lt;module&gt;&quot;</span></span><br><span class="line"><span class="regexp">//</span> co_firstlineno</span><br><span class="line"><span class="number">02</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span></span><br><span class="line"><span class="regexp">//</span> co_lnotab</span><br><span class="line"><span class="number">73</span>              <span class="regexp">//</span> TYPE_STRING </span><br><span class="line"><span class="number">02</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> </span><br><span class="line"><span class="number">04</span> <span class="number">02</span></span><br></pre></td></tr></table></figure>
+<p>下次可以考虑一下写个脚本打印了。</p>
+<h3 id="必要前置数据"><a href="#必要前置数据" class="headerlink" title="必要前置数据"></a>必要前置数据</h3><p>待会汇编指令要用上的东西我们先整理出来。</p>
+<p>文件名是<code>test.cpython-37.pyc</code>，于是写个脚本把它读取出来。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> marshal, dis</span><br><span class="line">f = <span class="built_in">open</span>(<span class="string">&#x27;test.cpython-37.pyc&#x27;</span>, <span class="string">&#x27;rb&#x27;</span>)</span><br><span class="line">f.read(<span class="number">4</span>)</span><br><span class="line">f.read(<span class="number">4</span>)</span><br><span class="line">f.read(<span class="number">4</span>)</span><br><span class="line">f.read(<span class="number">4</span>)</span><br><span class="line">b = marshal.load(f)</span><br></pre></td></tr></table></figure>
+<p>得到一个名为<code>b</code>的<code>PyCodeObject</code>。</p>
+<p>如上文所述，我们需要前置数据的是</p>
+<ol>
+<li><code>co_names</code></li>
+<li><code>co_consts</code></li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>b.co_consts</span><br><span class="line">(<span class="string">&#x27;Hello&#x27;</span>, <span class="number">3</span>, &lt;code <span class="built_in">object</span> func at <span class="number">0x0000023F92EF2DB0</span>, file <span class="string">&quot;.\test.py&quot;</span>, line <span class="number">4</span>&gt;, <span class="string">&#x27;func&#x27;</span>, <span class="literal">None</span>, (<span class="number">3</span>,))</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>b.co_consts[<span class="number">0</span>]</span><br><span class="line"><span class="string">&#x27;Hello&#x27;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>b.co_consts[<span class="number">1</span>]</span><br><span class="line"><span class="number">3</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>b.co_consts[<span class="number">2</span>]</span><br><span class="line">&lt;code <span class="built_in">object</span> func at <span class="number">0x0000023F92EF2DB0</span>, file <span class="string">&quot;.\test.py&quot;</span>, line <span class="number">4</span>&gt;</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>b.co_consts[<span class="number">3</span>]</span><br><span class="line"><span class="string">&#x27;func&#x27;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>b.co_consts[<span class="number">4</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>b.co_consts[<span class="number">5</span>]</span><br><span class="line">(<span class="number">3</span>,)</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>b.co_names</span><br><span class="line">(<span class="string">&#x27;s&#x27;</span>, <span class="string">&#x27;func&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="反汇编co-code代码"><a href="#反汇编co-code代码" class="headerlink" title="反汇编co_code代码"></a>反汇编<code>co_code</code>代码</h3><p>然后我们使用<code>dis</code>模块反汇编出代码来：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; dis.dis(b.co_code)</span><br><span class="line">          <span class="number">0</span> LOAD_CONST               <span class="number">0</span> (<span class="number">0</span>)</span><br><span class="line">          <span class="number">2</span> STORE_NAME               <span class="number">0</span> (<span class="number">0</span>)</span><br><span class="line">          <span class="number">4</span> LOAD_CONST               <span class="number">5</span> (<span class="number">5</span>)	<span class="comment">// (3,)</span></span><br><span class="line">          <span class="number">6</span> LOAD_CONST               <span class="number">2</span> (<span class="number">2</span>)  <span class="comment">// func code object</span></span><br><span class="line">          <span class="number">8</span> LOAD_CONST               <span class="number">3</span> (<span class="number">3</span>)  <span class="comment">// &quot;func&quot;</span></span><br><span class="line">         <span class="number">10</span> MAKE_FUNCTION            <span class="number">1</span>      <span class="comment">// a tuple of default values for positional-only and positional-or-keyword parameters in positional order</span></span><br><span class="line">         <span class="number">12</span> STORE_NAME               <span class="number">1</span> (<span class="number">1</span>)	<span class="comment">// func = MAKE_FUNCTION(...)</span></span><br><span class="line">         <span class="number">14</span> LOAD_CONST               <span class="number">4</span> (<span class="number">4</span>)  <span class="comment">// None</span></span><br><span class="line">         <span class="number">16</span> RETURN_VALUE                    <span class="comment">// 返回None</span></span><br></pre></td></tr></table></figure>
+<p><code>LOAD_CONST 0</code>加载了<code>co_consts</code>的第一个元素，即<code>&quot;Hello&quot;</code></p>
+<p>然后<code>STORE_NAME 0</code>把栈顶元素<code>&quot;Hello&quot;</code>弹出来存到了<code>co_names</code>对应的第一个元素，也就是<code>s</code></p>
+<p>相当于<code>s = &quot;Hello&quot;</code></p>
+<p>后面的同理</p>
+<p>这样我们就知道大致的意思了</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">0 LOAD_CONST               0 (0)</span></span><br><span class="line"><span class="string">2 STORE_NAME               0 (0)</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line">s = <span class="string">&quot;Hello&quot;</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">4 LOAD_CONST               5 (5)	// (3,)</span></span><br><span class="line"><span class="string">6 LOAD_CONST               2 (2)  // func code object</span></span><br><span class="line"><span class="string">8 LOAD_CONST               3 (3)  // &quot;func&quot;</span></span><br><span class="line"><span class="string">10 MAKE_FUNCTION            1      // a tuple of default values for positional-only and positional-or-keyword parameters in positional order</span></span><br><span class="line"><span class="string">12 STORE_NAME               1 (1)	// func = MAKE_FUNCTION(...)</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="comment"># 这一串是伪代码</span></span><br><span class="line">func = MAKE_FUNCTION(&lt;func code <span class="built_in">object</span>&gt;, position_or_keyword_only_args=(<span class="number">3</span>,))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 伪代码</span></span><br><span class="line"><span class="keyword">return</span> <span class="literal">None</span></span><br></pre></td></tr></table></figure>
+<p>上面反汇编的是整个模块的逻辑。</p>
+<p>然后再反汇编一下<code>func</code>函数的逻辑</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># b.co_consts[2]就是func对象</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>b.co_consts[<span class="number">2</span>].co_names</span><br><span class="line">(<span class="string">&#x27;print&#x27;</span>,)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>b.co_consts[<span class="number">2</span>].co_varnames</span><br><span class="line">(<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>, <span class="string">&#x27;args&#x27;</span>, <span class="string">&#x27;c&#x27;</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>b.co_consts[<span class="number">2</span>].co_consts</span><br><span class="line">(<span class="literal">None</span>, <span class="number">114514</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>dis.dis(b.co_consts[<span class="number">2</span>].co_code)</span><br><span class="line">          <span class="comment"># c = 114514</span></span><br><span class="line">          <span class="number">0</span> LOAD_CONST               <span class="number">1</span> (<span class="number">1</span>)	<span class="comment"># push 114514</span></span><br><span class="line">          <span class="number">2</span> STORE_FAST               <span class="number">3</span> (<span class="number">3</span>)  <span class="comment"># c = 114514</span></span><br><span class="line">          <span class="comment"># print(a, b)</span></span><br><span class="line">          <span class="number">4</span> LOAD_GLOBAL              <span class="number">0</span> (<span class="number">0</span>)  <span class="comment"># push global_obj co_names[0] == &quot;print&quot;</span></span><br><span class="line">          <span class="number">6</span> LOAD_FAST                <span class="number">0</span> (<span class="number">0</span>)  <span class="comment"># push a</span></span><br><span class="line">          <span class="number">8</span> LOAD_FAST                <span class="number">1</span> (<span class="number">1</span>)  <span class="comment"># push b --&gt; 这个在最顶端</span></span><br><span class="line">         <span class="number">10</span> CALL_FUNCTION            <span class="number">2</span>      <span class="comment"># 其中最右边的参数在最顶端，即从左往右push；区别于C式栈，从右往左push</span></span><br><span class="line">         <span class="number">12</span> POP_TOP                         <span class="comment"># 不要返回值，直接弹掉</span></span><br><span class="line">          <span class="comment"># print(args)</span></span><br><span class="line">         <span class="number">14</span> LOAD_GLOBAL              <span class="number">0</span> (<span class="number">0</span>)  <span class="comment"># push global_obj co_names[0] == &quot;print&quot;</span></span><br><span class="line">         <span class="number">16</span> LOAD_FAST                <span class="number">2</span> (<span class="number">2</span>)  <span class="comment"># push args</span></span><br><span class="line">         <span class="number">18</span> CALL_FUNCTION            <span class="number">1</span></span><br><span class="line">         <span class="number">20</span> POP_TOP</span><br><span class="line">        </span><br><span class="line">          <span class="comment"># return None</span></span><br><span class="line">         <span class="number">22</span> LOAD_CONST               <span class="number">0</span> (<span class="number">0</span>)  <span class="comment"># push None</span></span><br><span class="line">         <span class="number">24</span> RETURN_VALUE</span><br></pre></td></tr></table></figure>
+<h2 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h2><h3 id="关于co-freevars和co-cellvars"><a href="#关于co-freevars和co-cellvars" class="headerlink" title="关于co_freevars和co_cellvars"></a>关于<code>co_freevars</code>和<code>co_cellvars</code></h3><p>补充上次博客没仔细讲的点。这两个成员是用于Python闭包的。</p>
+<p><a target="_blank" rel="noopener" href="https://kdr2.com/tech/python/pyc-format.html">PYC文件格式分析 (kdr2.com)</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">outter</span>(<span class="params">o1,o2</span>):</span></span><br><span class="line">    fc1=o1+o2</span><br><span class="line">    fc2=o1*o2</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">inner</span>(<span class="params">i</span>):</span></span><br><span class="line">        <span class="keyword">return</span> (fc1+fc2)*i</span><br></pre></td></tr></table></figure>
+<ul>
+<li>对于 <code>outter</code> 函数来说,他的局部变量 <code>fc1</code> 和 <code>fc2</code> 被它内部嵌套的函数所引用,则 <code>fc1</code> 和 <code>fc2</code> 变成它的<code>cellvars</code>而不是局部变量 <code>varnames</code></li>
+<li>对于 <code>inner</code> 函数，<code>fc1</code>和<code>fc2</code>既不是局部变量也不是全局变量，他引用自外层函数，则 <code>fc1</code> 和 <code>fc2</code> 是 <code>inner</code> 的 <code>freevars</code></li>
+</ul>
+<h3 id="关于MAKE-FUNCTION汇编指令"><a href="#关于MAKE-FUNCTION汇编指令" class="headerlink" title="关于MAKE_FUNCTION汇编指令"></a>关于MAKE_FUNCTION汇编指令</h3><p>上文示例用到了，但是没解释具体咋用。这里强调一下。</p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// <span class="keyword">https</span>://stackoverflow.com/questions/<span class="number">54877888</span>/python<span class="number">-3</span><span class="number">-7</span>-bytecode-make-<span class="function"><span class="keyword">function</span><span class="title">-how-to-interpret-such-disassembled-function-d</span></span><span class="comment"></span></span><br><span class="line"><span class="comment">// https://docs.python.org/3/library/dis.html</span></span><br><span class="line">MAKE_FUNCTION(argc)</span><br><span class="line">Pushes <span class="keyword">a</span> <span class="built_in">new</span> <span class="function"><span class="keyword">function</span> <span class="title">object</span> <span class="title">on</span> <span class="title">the</span> <span class="title">stack</span>. <span class="title">From</span> <span class="title">bottom</span> <span class="title">to</span> <span class="title">top</span>, <span class="title">the</span> <span class="title">consumed</span> <span class="title">stack</span> <span class="title">must</span> <span class="title">consist</span> <span class="title">of</span> <span class="title">values</span> <span class="title">if</span> <span class="title">the</span> <span class="title">argument</span> <span class="title">carries</span> <span class="title">a</span> <span class="title">specified</span> <span class="title">flag</span> <span class="title">value</span>:</span></span><br><span class="line"></span><br><span class="line"><span class="number">0x01</span>   <span class="keyword">a</span> tuple <span class="keyword">of</span> default values <span class="keyword">for</span> positional-only <span class="keyword">and</span> positional-<span class="keyword">or</span>-keyword parameters <span class="keyword">in</span> positional order</span><br><span class="line"><span class="number">0x02</span>   <span class="keyword">a</span> dictionary <span class="keyword">of</span> keyword-only parameters’ default values</span><br><span class="line"><span class="number">0x04</span>   <span class="keyword">an</span> annotation dictionary</span><br><span class="line"><span class="number">0x08</span>   <span class="keyword">a</span> tuple containing cells <span class="keyword">for</span> free variables, making <span class="keyword">a</span> closure</span><br><span class="line"><span class="keyword">the</span> code associated <span class="keyword">with</span> <span class="keyword">the</span> <span class="function"><span class="keyword">function</span> (<span class="title">at</span> <span class="title">TOS1</span>)</span></span><br><span class="line"><span class="keyword">the</span> qualified name <span class="keyword">of</span> <span class="keyword">the</span> <span class="function"><span class="keyword">function</span> (<span class="title">at</span> <span class="title">TOS</span>)</span></span><br></pre></td></tr></table></figure>
+<h3 id="关于其他指令"><a href="#关于其他指令" class="headerlink" title="关于其他指令"></a>关于其他指令</h3><p><a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3/library/dis.html">https://docs.python.org/zh-cn/3/library/dis.html</a></p>
+<p>官方文档其实都有解释，且支持中文。</p>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><h3 id="逆向技巧"><a href="#逆向技巧" class="headerlink" title="逆向技巧"></a>逆向技巧</h3><p>上一次尝试逆向python3.10的<code>.pyc</code>文件时，我是对着题目的反汇编文本，写出猜出来的高级语言代码，然后再用<code>dis</code>模块去反汇编它，得到的反汇编文本再和题目比对，一致就是猜对了。不完全一致，则稍微修改一下，反复尝试，直到一致。</p>
+<h2 id="待解决"><a href="#待解决" class="headerlink" title="待解决"></a>待解决</h2><h3 id="关于pyinstaller打包时加密"><a href="#关于pyinstaller打包时加密" class="headerlink" title="关于pyinstaller打包时加密"></a>关于pyinstaller打包时加密</h3><p>随便乱翻文章的时候发现的问题。</p>
+<p><a target="_blank" rel="noopener" href="https://z.itpub.net/article/detail/F9A280FCEFD651D8ED7E06DA707747F5">https://z.itpub.net/article/detail/F9A280FCEFD651D8ED7E06DA707747F5</a></p>
+<p>在结尾处，作者说能够传入<code>--key</code>参数传入密码进行加密。</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip <span class="keyword">install</span> tinyaes</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pyinstaller -Fw --icon=h.ico auto_organize_gui.py --add-data=<span class="string">&quot;h.ico;/&quot;</span> --key <span class="number">123456</span></span><br></pre></td></tr></table></figure>
+<p>由于是本地加密，本地执行，所以按理文件会在执行的时候再次被解密，或者可能会在某个时刻泄露密钥。所以可以尝试逆向工程一番，或者通过审计源码，了解过程。</p>
+<h3 id="自动解析一般pyc文件结构的小脚本"><a href="#自动解析一般pyc文件结构的小脚本" class="headerlink" title="自动解析一般pyc文件结构的小脚本"></a>自动解析一般pyc文件结构的小脚本</h3><p>上面是纯手撸的，有点蠢。有空写个自动化解析的。</p>
+<h3 id="pyc混淆"><a href="#pyc混淆" class="headerlink" title="pyc混淆"></a>pyc混淆</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_44222568/article/details/111672799">逆python—pyc文件结构及pyc混淆基础_招财猫的小叮当的博客-CSDN博客</a></p>
+<p>想法挺好的，即网上大部分反汇编器都是线性扫描的，比如<code>pycdas</code>，但是实际上Python解释器的执行是一个字节一个字节顺着执行流的，所以可以通过设计一些永不可达分支，在上面添加垃圾无效指令，从而实现反反汇编。</p>
+<h3 id="pyc汇编举例"><a href="#pyc汇编举例" class="headerlink" title="pyc汇编举例"></a>pyc汇编举例</h3><p>像上次分析Cython一样，举一些常见例子来分析一下，总结一下大致结构。</p>
+<p>但是由于这个难度比Cython简单很多很多，所以一篇博客稍微谈谈足矣。</p>
+<h3 id="pyc汇编指令大全"><a href="#pyc汇编指令大全" class="headerlink" title="pyc汇编指令大全"></a>pyc汇编指令大全</h3><p>官网上有，但是没有具体例子。我准备基于官网上的简介再举一些例子，强化理解。</p>
+<h3 id="pyc高版本结构区别"><a href="#pyc高版本结构区别" class="headerlink" title="pyc高版本结构区别"></a>pyc高版本结构区别</h3><p>python39和python310都是无法反编译的。主要是新增的指令；但在我的印象中，头文件似乎有一些区别。我稍微尝试一下吧。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/yinguohai/p/11158492.html">python 字节码死磕 - 大步向前blue - 博客园 (cnblogs.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://nanguage.gitbook.io/inside-python-vm-cn/2.-the-view-from-30-000ft">https://nanguage.gitbook.io/inside-python-vm-cn/2.-the-view-from-30-000ft</a></p>
+<p><a target="_blank" rel="noopener" href="https://z.itpub.net/article/detail/F9A280FCEFD651D8ED7E06DA707747F5">https://z.itpub.net/article/detail/F9A280FCEFD651D8ED7E06DA707747F5</a></p>
+<p><a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3/library/dis.html">https://docs.python.org/zh-cn/3/library/dis.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://kdr2.com/tech/python/pyc-format.html">PYC文件格式分析 (kdr2.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://nanguage.gitbook.io/inside-python-vm-cn/1.-jian-jie">https://nanguage.gitbook.io/inside-python-vm-cn/1.-jian-jie</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/375323851">https://zhuanlan.zhihu.com/p/375323851</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/375323851">https://zhuanlan.zhihu.com/p/375323851</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/G1011/article/details/102908886"> Python虚拟机详解_G1011的博客-CSDN博客_python虚拟机</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/traditional/p/13642194.html">《深度剖析CPython解释器》24. Python运行时环境的初始化、源码分析Python解释器在启动时都做了哪些事情？ - 古明地盆 - 博客园 (cnblogs.com)</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/pyc/" rel="tag"><i class="fa fa-tag"></i></a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/02/09/Cython%20Reverse%205/" rel="prev" title="Cython程序分析_5">
+      <i class="fa fa-chevron-left"></i> Cython程序分析_5
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Pyc%E5%AD%97%E8%8A%82%E7%A0%81%E5%88%86%E6%9E%90-2"><span class="nav-number">1.</span> <span class="nav-text">Pyc字节码分析 2</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B1%87%E7%BC%96%E6%8C%87%E4%BB%A4%E9%9B%86"><span class="nav-number">1.1.</span> <span class="nav-text">汇编指令集</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#python36"><span class="nav-number">1.1.1.</span> <span class="nav-text">python36</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#python37"><span class="nav-number">1.1.2.</span> <span class="nav-text">python37</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#python38"><span class="nav-number">1.1.3.</span> <span class="nav-text">python38</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#python39"><span class="nav-number">1.1.4.</span> <span class="nav-text">python39</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#python310"><span class="nav-number">1.1.5.</span> <span class="nav-text">python310</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%89%E5%8F%82%E6%8C%87%E4%BB%A4"><span class="nav-number">1.1.6.</span> <span class="nav-text">有参指令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%BE%E4%BE%8B"><span class="nav-number">1.1.6.1.</span> <span class="nav-text">举例</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Python%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%AE%80%E4%BB%8B"><span class="nav-number">1.2.</span> <span class="nav-text">Python虚拟机简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#PyFrameObject"><span class="nav-number">1.2.1.</span> <span class="nav-text">PyFrameObject</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%AE%80%E5%8C%96%E7%BB%93%E6%9E%84"><span class="nav-number">1.2.2.</span> <span class="nav-text">虚拟机简化结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8E%E6%8C%87%E4%BB%A4%E9%9B%86%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="nav-number">1.2.3.</span> <span class="nav-text">与指令集的关系</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B%E4%BB%A3%E7%A0%81"><span class="nav-number">1.3.</span> <span class="nav-text">示例代码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Py%E6%96%87%E4%BB%B6"><span class="nav-number">1.3.1.</span> <span class="nav-text">Py文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Pyc%E6%96%87%E4%BB%B6"><span class="nav-number">1.3.2.</span> <span class="nav-text">Pyc文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BF%85%E8%A6%81%E5%89%8D%E7%BD%AE%E6%95%B0%E6%8D%AE"><span class="nav-number">1.3.3.</span> <span class="nav-text">必要前置数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%8D%E6%B1%87%E7%BC%96co-code%E4%BB%A3%E7%A0%81"><span class="nav-number">1.3.4.</span> <span class="nav-text">反汇编co_code代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A1%A5%E5%85%85"><span class="nav-number">1.4.</span> <span class="nav-text">补充</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E4%BA%8Eco-freevars%E5%92%8Cco-cellvars"><span class="nav-number">1.4.1.</span> <span class="nav-text">关于co_freevars和co_cellvars</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E4%BA%8EMAKE-FUNCTION%E6%B1%87%E7%BC%96%E6%8C%87%E4%BB%A4"><span class="nav-number">1.4.2.</span> <span class="nav-text">关于MAKE_FUNCTION汇编指令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E5%85%B6%E4%BB%96%E6%8C%87%E4%BB%A4"><span class="nav-number">1.4.3.</span> <span class="nav-text">关于其他指令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-number">1.5.</span> <span class="nav-text">其他</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%86%E5%90%91%E6%8A%80%E5%B7%A7"><span class="nav-number">1.5.1.</span> <span class="nav-text">逆向技巧</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BE%85%E8%A7%A3%E5%86%B3"><span class="nav-number">1.6.</span> <span class="nav-text">待解决</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E4%BA%8Epyinstaller%E6%89%93%E5%8C%85%E6%97%B6%E5%8A%A0%E5%AF%86"><span class="nav-number">1.6.1.</span> <span class="nav-text">关于pyinstaller打包时加密</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E8%A7%A3%E6%9E%90%E4%B8%80%E8%88%ACpyc%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E7%9A%84%E5%B0%8F%E8%84%9A%E6%9C%AC"><span class="nav-number">1.6.2.</span> <span class="nav-text">自动解析一般pyc文件结构的小脚本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pyc%E6%B7%B7%E6%B7%86"><span class="nav-number">1.6.3.</span> <span class="nav-text">pyc混淆</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pyc%E6%B1%87%E7%BC%96%E4%B8%BE%E4%BE%8B"><span class="nav-number">1.6.4.</span> <span class="nav-text">pyc汇编举例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pyc%E6%B1%87%E7%BC%96%E6%8C%87%E4%BB%A4%E5%A4%A7%E5%85%A8"><span class="nav-number">1.6.5.</span> <span class="nav-text">pyc汇编指令大全</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pyc%E9%AB%98%E7%89%88%E6%9C%AC%E7%BB%93%E6%9E%84%E5%8C%BA%E5%88%AB"><span class="nav-number">1.6.6.</span> <span class="nav-text">pyc高版本结构区别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">1.7.</span> <span class="nav-text">参考</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Tardis"
+      src="/images/spongebob.jpg">
+  <p class="site-author-name" itemprop="name">Tardis</p>
+  <div class="site-description" itemprop="description">学点好玩的逆向知识</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Taardisaa" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Taardisaa" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:136665562@qq.com" title="E-Mail → mailto:136665562@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa-heartbeat"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tardis</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">322k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">4:53</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='250' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+   if (typeof MathJax === 'undefined') {
+       window.MathJax = {
+         loader: {
+         source: {
+           '[tex]/amsCd': '[tex]/amscd',
+           '[tex]/AMScd': '[tex]/amscd'
+         }
+       },
+       tex: {
+         inlineMath: {'[+]': [['$', '$']]},
+         tags: 'ams'
+       },
+       options: {
+         renderActions: {
+           findScript: [10, doc => {
+             document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+               const display = !!node.type.match(/; *mode=display/);
+               const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+               const text = document.createTextNode('');
+               node.parentNode.replaceChild(text, node);
+               math.start = {node: text, delim: '', n: 0};
+               math.end = {node: text, delim: '', n: 0};
+               doc.math.push(math);
+             });
+           }, '', false],
+           insertedScript: [200, () => {
+         document.querySelectorAll('mjx-container').forEach(node => {
+           let target = node.parentNode;
+           if (target.nodeName.toLowerCase() === 'li') {
+             target.parentNode.classList.add('has-jax');
+           }
+         });
+       }, '', false]
+     }
+   }
+ };
+	
+
+    (function () {
+      var script = document.createElement('script');
+      script.src = 'https://cdn.jsdelivr.net/npm/mathjax@2.7.8/unpacked/MathJax.js?config=TeX-MML-AM_CHTML';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+
+   <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+   <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+   <script type="text/javascript" src="/js/fireworks.js"></script>
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"right","width":200,"height":400},"mobile":{"show":true},"log":false});</script></body>
+</html>
