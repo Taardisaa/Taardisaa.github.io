@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <script type="text/javascript" src="/js/dytitle.js"></script>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"taardisaa.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="一道cython配合觅马学rsa攻击的题目。由于本人稀烂的密码学能力，所以本篇主要分析cython逻辑。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Chal rsa-factory">
+<meta property="og:url" content="https://taardisaa.github.io/2022/02/17/rsa-factory-rh/index.html">
+<meta property="og:site_name" content="Tardis&#39;s blog">
+<meta property="og:description" content="一道cython配合觅马学rsa攻击的题目。由于本人稀烂的密码学能力，所以本篇主要分析cython逻辑。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-02-17T03:00:00.000Z">
+<meta property="article:modified_time" content="2022-02-18T06:24:15.760Z">
+<meta property="article:author" content="Tardis">
+<meta property="article:tag" content="Challenge">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://taardisaa.github.io/2022/02/17/rsa-factory-rh/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Chal rsa-factory | Tardis's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="Tardis's blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Tardis's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">摸鱼用博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://taardisaa.github.io/2022/02/17/rsa-factory-rh/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/spongebob.jpg">
+      <meta itemprop="name" content="Tardis">
+      <meta itemprop="description" content="学点好玩的逆向知识">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Tardis's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Chal rsa-factory
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-02-17 11:00:00" itemprop="dateCreated datePublished" datetime="2022-02-17T11:00:00+08:00">2022-02-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-02-18 14:24:15" itemprop="dateModified" datetime="2022-02-18T14:24:15+08:00">2022-02-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Challenge/" itemprop="url" rel="index"><span itemprop="name">Challenge</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>8.7k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>8 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>一道<code>cython</code>配合觅马学<code>rsa</code>攻击的题目。由于本人稀烂的密码学能力，所以本篇主要分析<code>cython</code>逻辑。</p>
+<span id="more"></span>
+<h1 id="rsa-factory"><a href="#rsa-factory" class="headerlink" title="rsa-factory"></a>rsa-factory</h1><h2 id="提供文件"><a href="#提供文件" class="headerlink" title="提供文件"></a>提供文件</h2><ol>
+<li><code>greet.o</code>文件，似乎是未连接到库和重定位，从而生成<code>.so</code>文件的半成品。无法用来调试（虽然我还没研究<code>cython</code>怎么调试）</li>
+<li><code>out.txt</code>文件，给了<code>rsa</code>相关数据。与本博客的目标无关。</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># out.txt</span></span><br><span class="line">e = <span class="number">64991215158963691560526666468141959384959109359439137131747651162956455586271</span></span><br><span class="line">n1 = <span class="number">29993503600164729015956324786706888442519396064191560750084140480290745819535179693348191507149250430395035552797283845777601934626280373409219187420866944308214314519319036917673538094015208260669572499228580056077786705598288026374871729383433345507107962917127650202187058774356364876840623349671218708163</span></span><br><span class="line">n2 = <span class="number">22111930331381204542945530852361998548318442407872218298358617096708819116917760050316820810420025909178795848107273937553163317177369208499520284574181398183015911140668391445813446367863710044212006290553153052918732733827420444142923043854261762712224865735741111776384712426729456003107915641158324427237</span></span><br><span class="line">enc1 = <span class="number">5734479269568428799754263829957380996168467091071186499560002255391225964390802296056440018922131498808809631799051595890069085606010803104164806662687146720687788026847911647036207771907631955479366662789973591244769696134468514079840335501351730204203353632991649784558594004181235638708670967712800524633</span></span><br><span class="line">enc2 = <span class="number">2362618611696658863938958429674618535671832342024171207784704801010887172339238339378660582011609537496581126507952922081766648758361491670598981875420705502658641664419829335179411621872684197316613144999495536326791046211596882050099351426090501042665486716774582833785205621814522795611943989934392618493</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="定位"><a href="#定位" class="headerlink" title="定位"></a>定位</h2><p>扔到<code>IDA7.6</code>分析</p>
+<p>此二进制文件由于没有生成正式<code>.so</code>文件，没有进行过<code>strip</code>操作，所以保留了符号表。很大的帮助。</p>
+<p>一开始自动进入<code>main</code>函数。没有用的。</p>
+<p>在函数窗口中找到<code>__pyx_pymod_exec_test</code>函数。此函数代表了原Python文件的主逻辑。</p>
+<h2 id="恢复代码"><a href="#恢复代码" class="headerlink" title="恢复代码"></a>恢复代码</h2><p>分析起来一步一步的真的很烦，讲解起来更麻烦。直接写点总结性经验吧。</p>
+<p>下面先贴一下我翻译后的脚本。和源码已经很接近了，不过双<code>while</code>循环上面还是用了<code>goto</code>伪代码。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> <span class="type">Tuple</span></span><br><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> math <span class="keyword">import</span> gcd</span><br><span class="line"><span class="keyword">from</span> flag <span class="keyword">import</span> FLAG</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getRandomNBitInteger</span>(<span class="params">a</span>):</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">isPrime</span>(<span class="params">a</span>):</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">inverse</span>(<span class="params">a</span>):</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">keygen</span>(<span class="params">dbit, nbit</span>):</span></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        <span class="keyword">if</span> <span class="number">2</span> * dbit &lt; nbit :</span><br><span class="line">            p = getRandomNBitInteger(dbit)</span><br><span class="line">            q = getRandomNBitInteger((nbit // <span class="number">2</span>) - dbit)</span><br><span class="line">            <span class="keyword">if</span> isPrime(p * q + <span class="number">1</span>):</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            <span class="comment"># do - while</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        p2 = getRandomNBitInteger(dbit)</span><br><span class="line">        q2 = getRandomNBitInteger(nbit // <span class="number">2</span> - dbit)</span><br><span class="line">        <span class="keyword">if</span> isPrime(p * q2 + <span class="number">1</span>) <span class="keyword">and</span> isPrime(p2 * q2 + <span class="number">1</span>):</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        p3 = getRandomNBitInteger(dbit)</span><br><span class="line">        <span class="keyword">if</span> gcd(p*q*p2*q2, p3) == <span class="number">1</span>:</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        <span class="keyword">else</span>: </span><br><span class="line">            LABEL0:</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line"></span><br><span class="line">    u = (p * q + <span class="number">1</span>) - <span class="number">1</span></span><br><span class="line">    v = (p2 * q2 + <span class="number">1</span>) - <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> isPrime(((p3 * inverse(p3 , u * v) - <span class="number">1</span>) // (u * v)) * q + <span class="number">1</span>):</span><br><span class="line">        <span class="keyword">return</span>  p3, (p * q + <span class="number">1</span>) * (p2 * q2, <span class="number">1</span>), (p * q2 + <span class="number">1</span>) * (((inverse(u * v, p3) * p3 - <span class="number">1</span>) // (u * v)) * q + <span class="number">1</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        goto LABEL0</span><br><span class="line">       </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">encrypt</span>(<span class="params">msg, pubkey:<span class="type">Tuple</span></span>):</span></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">pow</span>(msg, pubkey[<span class="number">0</span>], pubkey[<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line">nbit = <span class="number">1024</span></span><br><span class="line">dbit = <span class="number">256</span></span><br><span class="line"></span><br><span class="line">e, n1, n2 = keygen((dbit, <span class="string">&quot;?&quot;</span>))</span><br><span class="line"></span><br><span class="line">FLAG = <span class="built_in">int</span>(FLAG.encode(<span class="string">&quot;utf-8&quot;</span>).<span class="built_in">hex</span>(), <span class="number">16</span>)</span><br><span class="line"></span><br><span class="line">c1 = encrypt(FLAG, (e, n1))</span><br><span class="line">c2 = encrypt(FLAG, (e, n2))</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;e = &quot;</span>, e)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;n1 = &quot;</span>, n1)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;n2 = &quot;</span>, n2)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;enc1 = &quot;</span>, c1)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;enc2 = &quot;</span>, c2)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>上面的<code>goto</code>伪代码其实是：</p>
+<figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">	<span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">		pass</span><br><span class="line">	<span class="keyword">if</span> <span class="params">...</span>:</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	</span><br></pre></td></tr></table></figure>
+<p>即实际上外面还有个<code>while</code>，一共两个。</p>
+<blockquote>
+<p>IDA伪代码里面反编译出来，在开头似乎有个<code>while(2)</code>，这个2可能代表了其前驱有2个基本块，再加上IDA里面的<code>goto</code>语句，暗示了实际上就是个双<code>while</code>循环。</p>
+</blockquote>
+<p>难点实际在<code>keygen()</code>函数中。主函数中关于模块导入，函数定义等都是很鲜明的。以前博客也讲过很多次。</p>
+<h2 id="经验总结"><a href="#经验总结" class="headerlink" title="经验总结"></a>经验总结</h2><h3 id="如何定位-pyx-pymod-exec函数"><a href="#如何定位-pyx-pymod-exec函数" class="headerlink" title="如何定位__pyx_pymod_exec函数"></a>如何定位<code>__pyx_pymod_exec</code>函数</h3><p>此文件似乎是个可执行文件，带有<code>main</code>函数。但是没什么用。</p>
+<p>正确的方法是：</p>
+<h4 id="打开导出界面，找到PyInit-test函数"><a href="#打开导出界面，找到PyInit-test函数" class="headerlink" title="打开导出界面，找到PyInit_test函数"></a>打开导出界面，找到<code>PyInit_test</code>函数</h4><p>函数逻辑很小，就这点。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">__int64 <span class="title">PyInit_test</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">return</span> PyModuleDef_Init(&amp;_pyx_moduledef);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="在-pyx-moduledef下找到-pyx-moduledef-slots"><a href="#在-pyx-moduledef下找到-pyx-moduledef-slots" class="headerlink" title="在_pyx_moduledef下找到__pyx_moduledef_slots"></a>在<code>_pyx_moduledef</code>下找到<code>__pyx_moduledef_slots</code></h4><figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">.<span class="class"><span class="keyword">data</span>:000000000020ED60 __pyx_moduledef dq 1                    ; <span class="type">DATA</span> <span class="type">XREF</span>: <span class="type">PyInit_test</span>↑o</span></span><br><span class="line">.<span class="class"><span class="keyword">data</span>:000000000020ED68                 dq 0</span></span><br><span class="line">.<span class="class"><span class="keyword">data</span>:000000000020ED70                 dq 0</span></span><br><span class="line">.<span class="class"><span class="keyword">data</span>:000000000020ED78                 dq 0</span></span><br><span class="line">.<span class="class"><span class="keyword">data</span>:000000000020ED80                 dq 0</span></span><br><span class="line">.<span class="class"><span class="keyword">data</span>:000000000020ED88                 dq offset aTest         ; &quot;test&quot;</span></span><br><span class="line">.<span class="class"><span class="keyword">data</span>:000000000020ED90                 align 20h</span></span><br><span class="line">.<span class="class"><span class="keyword">data</span>:000000000020EDA0                 dq offset __pyx_methods</span></span><br><span class="line">.<span class="class"><span class="keyword">data</span>:000000000020EDA8                 dq offset __pyx_moduledef_slots</span></span><br><span class="line">.<span class="class"><span class="keyword">data</span>:000000000020EDB0                 dq 0</span></span><br><span class="line">.<span class="class"><span class="keyword">data</span>:000000000020EDB8                 dq 0</span></span><br><span class="line">.<span class="class"><span class="keyword">data</span>:000000000020EDC0                 dq 0</span></span><br><span class="line">.<span class="class"><span class="keyword">data</span>:000000000020EDC8                 dq 0</span></span><br><span class="line">.<span class="class"><span class="keyword">data</span>:000000000020EDD0                 dq 0</span></span><br><span class="line">.<span class="class"><span class="keyword">data</span>:000000000020EDD8                 dq 0</span></span><br></pre></td></tr></table></figure>
+<p>默认找到第二个地址指针即可。</p>
+<h4 id="找到-pyx-pymod-exec函数指针"><a href="#找到-pyx-pymod-exec函数指针" class="headerlink" title="找到__pyx_pymod_exec函数指针"></a>找到<code>__pyx_pymod_exec</code>函数指针</h4><figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">.<span class="class"><span class="keyword">data</span>:000000000020EDE0 __pyx_moduledef_slots dq 1              ; <span class="type">DATA</span> <span class="type">XREF</span>: .<span class="keyword">data</span>:000000000020EDA8↑o</span></span><br><span class="line">.<span class="class"><span class="keyword">data</span>:000000000020EDE8                 dq offset __pyx_pymod_create</span></span><br><span class="line">.<span class="class"><span class="keyword">data</span>:000000000020EDF0                 dq 2</span></span><br><span class="line">.<span class="class"><span class="keyword">data</span>:000000000020EDF8                 dq offset __pyx_pymod_exec_test</span></span><br><span class="line">.<span class="class"><span class="keyword">data</span>:000000000020EE00                 dq 0</span></span><br><span class="line">.<span class="class"><span class="keyword">data</span>:000000000020EE08                 dq 0</span></span><br><span class="line">.<span class="class"><span class="keyword">data</span>:000000000020EE10                 dq 0</span></span><br><span class="line">.<span class="class"><span class="keyword">data</span>:000000000020EE18                 dq 0</span></span><br></pre></td></tr></table></figure>
+<p>第二个函数就是。</p>
+<h3 id="解决PyTuple-New-函数传参判定出问题"><a href="#解决PyTuple-New-函数传参判定出问题" class="headerlink" title="解决PyTuple_New()函数传参判定出问题"></a>解决<code>PyTuple_New()</code>函数传参判定出问题</h3><p>修改<code>PyTuple_New()</code>的函数原型为</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">_QWORD *<span class="title">PyTuple_New</span><span class="params">(_QWORD, ...)</span></span></span><br></pre></td></tr></table></figure>
+<p>即可。第一个参数是元组的容量。后面三个点代表有可能会传入多余的<code>PyObject*</code>作为初始化。</p>
+<h3 id="向PyTupleObject传入数据"><a href="#向PyTupleObject传入数据" class="headerlink" title="向PyTupleObject传入数据"></a>向<code>PyTupleObject</code>传入数据</h3><p>如上，若<code>PyTuple_New</code>是只传入了初始化容量，那么后面还需要程序再次传入参数才行。</p>
+<p>给一个2参数的元组：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">v82 = PyTuple_New((<span class="keyword">int</span>)v78 + <span class="number">2</span>);	<span class="comment">// 一个参数，作为容量</span></span><br><span class="line">v23 = (__int64)v82;</span><br><span class="line"><span class="keyword">if</span> ( !v82 )</span><br><span class="line">&#123;</span><br><span class="line">  v17 = <span class="number">0LL</span>;</span><br><span class="line">  v14 = <span class="number">0LL</span>;</span><br><span class="line">  v18 = <span class="number">0LL</span>;</span><br><span class="line">  v15 = <span class="number">0LL</span>;</span><br><span class="line">  v13 = <span class="number">1880</span>;</span><br><span class="line">  <span class="keyword">goto</span> LABEL_415;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> ( judge )</span><br><span class="line">  v82[<span class="number">3</span>] = judge;</span><br><span class="line">v83 = v82;</span><br><span class="line">++*(_QWORD *)v94;</span><br><span class="line">v84 = &amp;v82[v78];</span><br><span class="line">v84[<span class="number">3</span>] = v94;	<span class="comment">// tuple[0]</span></span><br><span class="line">++*w;</span><br><span class="line">v84[<span class="number">4</span>] = w;  	<span class="comment">// tuple[1]</span></span><br></pre></td></tr></table></figure>
+<p>只要看到取值从<code>[3]</code>开始的，就是传参了。<code>[3]</code>对应元组第一个参数，往后类推。</p>
+<h3 id="确定函数调用"><a href="#确定函数调用" class="headerlink" title="确定函数调用"></a>确定函数调用</h3><p>全都内联了，又臭又长。</p>
+<p>这么长，全是<code>PyObject_Call</code>的内联形式。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br></pre></td><td class="code"><pre><span class="line">  <span class="keyword">if</span> ( (_UNKNOWN *)v9[<span class="number">1</span>] == &amp;PyMethod_Type )	<span class="comment">// 是method函数</span></span><br><span class="line">  &#123;</span><br><span class="line">    judge = (_QWORD *)v9[<span class="number">3</span>];</span><br><span class="line">    <span class="keyword">if</span> ( judge )</span><br><span class="line">    &#123;</span><br><span class="line">      v79 = (_QWORD *)v9[<span class="number">2</span>];</span><br><span class="line">      ++*judge;</span><br><span class="line">      ++*v79;</span><br><span class="line">      v11 = (*v9)-- == <span class="number">1LL</span>;</span><br><span class="line">      <span class="keyword">if</span> ( v11 )</span><br><span class="line">        qword_20FAB0(v9);</span><br><span class="line">      v9 = v79;</span><br><span class="line">      v78 = <span class="number">1LL</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  v80 = (<span class="keyword">void</span> *)v9[<span class="number">1</span>];</span><br><span class="line">  v81 = (<span class="keyword">int</span>)v78 + <span class="number">2</span>;</span><br><span class="line">  <span class="keyword">if</span> ( v80 == &amp;PyFunction_Type )	<span class="comment">// 是一般函数</span></span><br><span class="line">  &#123;</span><br><span class="line">    nbit = judge;</span><br><span class="line">    dbit = v94;</span><br><span class="line">    v158 = w;</span><br><span class="line">    v15 = (__int64 *)_Pyx_PyFunction_FastCallDict_constprop_29(v9, &amp;dbit - v78, v81);</span><br><span class="line">    <span class="keyword">if</span> ( !v15 )</span><br><span class="line">    &#123;</span><br><span class="line">      v17 = <span class="number">0LL</span>;</span><br><span class="line">      v14 = <span class="number">0LL</span>;</span><br><span class="line">      v23 = <span class="number">0LL</span>;</span><br><span class="line">      v18 = <span class="number">0LL</span>;</span><br><span class="line">      v13 = <span class="number">1866</span>;</span><br><span class="line">      <span class="keyword">goto</span> LABEL_415;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">goto</span> LABEL_278;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> ( v80 != &amp;PyCFunction_Type || (*(_DWORD *)(v9[<span class="number">2</span>] + <span class="number">16LL</span>) &amp; <span class="number">0xFFFFFF8D</span>) != <span class="number">128</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    v82 = PyTuple_New((<span class="keyword">int</span>)v78 + <span class="number">2</span>);</span><br><span class="line">    v23 = (__int64)v82;</span><br><span class="line">    <span class="keyword">if</span> ( !v82 )</span><br><span class="line">    &#123;</span><br><span class="line">      v17 = <span class="number">0LL</span>;</span><br><span class="line">      v14 = <span class="number">0LL</span>;</span><br><span class="line">      v18 = <span class="number">0LL</span>;</span><br><span class="line">      v15 = <span class="number">0LL</span>;</span><br><span class="line">      v13 = <span class="number">1880</span>;</span><br><span class="line">      <span class="keyword">goto</span> LABEL_415;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> ( judge )</span><br><span class="line">      v82[<span class="number">3</span>] = judge;</span><br><span class="line">    v83 = v82;</span><br><span class="line">    ++*(_QWORD *)v94;</span><br><span class="line">    v84 = &amp;v82[v78];</span><br><span class="line">    v84[<span class="number">3</span>] = v94;</span><br><span class="line">    ++*w;</span><br><span class="line">    v84[<span class="number">4</span>] = w;                                 <span class="comment">// inverse(p3 , u * v)</span></span><br><span class="line">    judge = (_QWORD *)_Pyx_PyObject_Call_constprop_30(v9, v83);</span><br><span class="line">    <span class="keyword">if</span> ( judge )	<span class="comment">// call 1个参数，但是这个参数是个2数据元组。</span></span><br><span class="line">    &#123;</span><br><span class="line">      v11 = (*(_QWORD *)v23)-- == <span class="number">1LL</span>;</span><br><span class="line">      <span class="keyword">if</span> ( v11 )</span><br><span class="line">        (*(<span class="keyword">void</span> (__fastcall **)(__int64))(*(_QWORD *)(v23 + <span class="number">8</span>) + <span class="number">48LL</span>))(v23);</span><br><span class="line">      <span class="keyword">goto</span> LABEL_280;</span><br><span class="line">    &#125;</span><br><span class="line">    v17 = <span class="number">0LL</span>;</span><br><span class="line">    v14 = <span class="number">0LL</span>;</span><br><span class="line">    v18 = <span class="number">0LL</span>;</span><br><span class="line">    v15 = <span class="number">0LL</span>;</span><br><span class="line">    v13 = <span class="number">1891</span>;</span><br><span class="line">LABEL_415:</span><br><span class="line">    v16 = <span class="number">24LL</span>;</span><br><span class="line"><span class="keyword">not</span>:</span><br><span class="line">    <span class="keyword">if</span> ( v9 )</span><br><span class="line">    &#123;</span><br><span class="line">      v11 = (*v9)-- == <span class="number">1LL</span>;</span><br><span class="line">      <span class="keyword">if</span> ( v11 )</span><br><span class="line">      &#123;</span><br><span class="line">        v151 = v16;</span><br><span class="line">        (*(<span class="keyword">void</span> (__fastcall **)(_QWORD *))(v9[<span class="number">1</span>] + <span class="number">48LL</span>))(v9);</span><br><span class="line">        v16 = v151;</span><br><span class="line">        v18 = <span class="number">0LL</span>;</span><br><span class="line">        v17 = <span class="number">0LL</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">goto</span> LABEL_432;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  nbit = judge;</span><br><span class="line">  dbit = v94;</span><br><span class="line">  v158 = w;				<span class="comment">// FastCall</span></span><br><span class="line">  v15 = (__int64 *)_Pyx_PyCFunction_FastCall(v9, &amp;dbit - v78, v81);</span><br><span class="line">  <span class="keyword">if</span> ( !v15 )</span><br><span class="line">  &#123;</span><br><span class="line">    v17 = <span class="number">0LL</span>;</span><br><span class="line">    v14 = <span class="number">0LL</span>;</span><br><span class="line">    v23 = <span class="number">0LL</span>;</span><br><span class="line">    v18 = <span class="number">0LL</span>;</span><br><span class="line">    v13 = <span class="number">1874</span>;</span><br><span class="line">    <span class="keyword">goto</span> LABEL_415;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>关于如何确定调用函数时的传参：</p>
+<ol>
+<li>首先第一个参数通常都是函数指针，交叉引用在上方找到此函数指针，点进去看看这个函数要什么参数。</li>
+<li>找<code>(_QWORD *)_Pyx_PyObject_Call_constprop_30(v9, v83);</code>这类传入一个元组参数的调用函数，然后通过上面确定元组元素的方法来确定。</li>
+</ol>
+<h3 id="学会运用交叉引用确定变量"><a href="#学会运用交叉引用确定变量" class="headerlink" title="学会运用交叉引用确定变量"></a>学会运用交叉引用确定变量</h3><p><code>Cython</code>代码又臭又长，有的变量隔了五六百行才被调用，所以需要学会交叉引用。</p>
+<p>在伪代码上交叉引用：按行排序从上到下，寻找距离本行较近，且是数据写入<code>w</code>的行，且不能处在错误处理行中。</p>
+<p>错误处理：</p>
+<figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">v15 = (__int64 *)_Pyx_PyCFunction_FastCall(v9, &amp;dbit - v78, v81);<span class="built_in"></span></span><br><span class="line"><span class="built_in">if </span>( !v15 )</span><br><span class="line">&#123;</span><br><span class="line">  v17 = 0<span class="class">LL;</span></span><br><span class="line">  v14 = 0<span class="class">LL;</span></span><br><span class="line">  v23 = 0<span class="class">LL;</span></span><br><span class="line">  v18 = 0<span class="class">LL;</span></span><br><span class="line">  v13 = 1874;</span><br><span class="line"> <span class="built_in"> goto </span><span class="class">LABEL_415;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>有时由于反汇编生成<code>goto</code>语句，所以可能出现向上跳转。从而按行排序没法找到正确赋值语句。所以还需要从汇编上看。</p>
+<p>从汇编CFG上交叉引用：</p>
+<p>比如查：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">v14</span> = (_QWORD *)PyNumber_FloorDivide(v9, w)<span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<p>汇编：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mov     rsi, [rsp+0D8h+var_C8]</span><br><span class="line">mov     rdi, r13</span><br><span class="line">call    _PyNumber_FloorDivide</span><br></pre></td></tr></table></figure>
+<p>则交叉引用<code>[rsp+0D8h+var_C8]</code>，寻找<code>w</code>写入且距离最近的代码，即可（）。</p>
+<p>都不行，就看CFG，看前驱块有没有赋值。</p>
+<p>比如往上翻翻找到</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mov     rsi, cs:__pyx_int_1</span><br><span class="line">mov     rdi, rax</span><br><span class="line">mov     [rsp+0D8h+var_C0], rax</span><br><span class="line">call    __Pyx_PyInt_SubtractObjC_isra_9_constprop_33</span><br><span class="line">test    rax, rax</span><br><span class="line">mov     r13, rax</span><br><span class="line">mov     r10, [rsp+0D8h+var_C0]</span><br><span class="line">jz      loc_AC71</span><br></pre></td></tr></table></figure>
+<p>即可确定。</p>
+<h3 id="删除冗余代码"><a href="#删除冗余代码" class="headerlink" title="删除冗余代码"></a>删除冗余代码</h3><p>IDA里面不给删代码，但是自己可以复制一下伪代码，贴到某个<code>.cpp</code>文件，用<code>VS Code</code>打开，然后慢慢删去一些无用代码。比如错误处理，一些函数指针调用等。</p>
+<p>比如</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">  v11 = (*v9)-- == <span class="number">1LL</span>;</span><br><span class="line">  <span class="keyword">if</span> ( v11 )</span><br><span class="line">    (*(<span class="keyword">void</span> (__fastcall **)(_QWORD *))(v9[<span class="number">1</span>] + <span class="number">48LL</span>))(v9);</span><br><span class="line">  <span class="keyword">if</span> ( !v75 )</span><br><span class="line">  &#123;</span><br><span class="line">    v138 = w;</span><br><span class="line">    <span class="keyword">goto</span> LABEL_309;</span><br><span class="line">  &#125;</span><br><span class="line">  v15 = (__int64 *)PyNumber_Multiply(v134, v130);<span class="comment">// (p*q+1)*(p2*q2+1)</span></span><br><span class="line">  <span class="keyword">if</span> ( !v15 )</span><br><span class="line">  &#123;</span><br><span class="line">    v128 = v14;</span><br><span class="line">    v17 = <span class="number">0LL</span>;</span><br><span class="line">    v18 = <span class="number">0LL</span>;</span><br><span class="line">    v129 = v71;</span><br><span class="line">    v14 = <span class="number">0LL</span>;</span><br><span class="line">    v115 = judge;</span><br><span class="line">    v13 = <span class="number">1967</span>;</span><br><span class="line">    v16 = <span class="number">28LL</span>;</span><br><span class="line">    <span class="keyword">goto</span> LABEL_438;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>其中</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">v11 = (*v9)-- == <span class="number">1LL</span>;</span><br><span class="line"><span class="keyword">if</span> ( v11 )</span><br><span class="line">  (*(<span class="keyword">void</span> (__fastcall **)(_QWORD *))(v9[<span class="number">1</span>] + <span class="number">48LL</span>))(v9);</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ( !v15 )</span><br><span class="line">&#123;</span><br><span class="line">  v128 = v14;</span><br><span class="line">  v17 = <span class="number">0LL</span>;</span><br><span class="line">  v18 = <span class="number">0LL</span>;</span><br><span class="line">  v129 = v71;</span><br><span class="line">  v14 = <span class="number">0LL</span>;</span><br><span class="line">  v115 = judge;</span><br><span class="line">  v13 = <span class="number">1967</span>;</span><br><span class="line">  v16 = <span class="number">28LL</span>;</span><br><span class="line">  <span class="keyword">goto</span> LABEL_438;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>都是没用的。</p>
+<h3 id="确定传参"><a href="#确定传参" class="headerlink" title="确定传参"></a>确定传参</h3><p>在<code>exec</code>函数中使用<code>PyCFunction_New</code>声明的函数没法确定传参。</p>
+<p>但是点进函数进去，看开头：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">_QWORD *__fastcall _pyx_pw_4test_1keygen(__int64 a1, _QWORD *a2, __int64 a3)</span><br><span class="line">&#123; <span class="comment">// ......</span></span><br><span class="line">&#123;</span><br><span class="line">LABEL_14:</span><br><span class="line">        <span class="keyword">if</span> ( v6 &gt; <span class="number">0</span> &amp;&amp; (<span class="keyword">int</span>)_Pyx_ParseOptionalKeywords_constprop_27(a3, _pyx_pyargnames_14180, &amp;nbit, v3, <span class="string">&quot;keygen&quot;</span>) &lt; <span class="number">0</span> )</span><br><span class="line">        &#123;</span><br><span class="line">          v7 = <span class="number">1390LL</span>;</span><br><span class="line">          <span class="keyword">goto</span> LABEL_488;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">goto</span> LABEL_19;</span><br><span class="line">      &#125;</span><br><span class="line">LABEL_12:</span><br><span class="line">      --v6;</span><br><span class="line">      dbit = _PyDict_GetItem_KnownHash(a3, _pyx_n_s_dbit, *(_QWORD *)(_pyx_n_s_dbit + <span class="number">24</span>));</span><br><span class="line">      <span class="keyword">if</span> ( !dbit )</span><br><span class="line">      &#123;</span><br><span class="line">        _Pyx_RaiseArgtupleInvalid_constprop_31(<span class="string">&quot;keygen&quot;</span>, <span class="number">1LL</span>);</span><br><span class="line">        v7 = <span class="number">1386LL</span>;</span><br><span class="line">LABEL_488:</span><br><span class="line">        v91 = <span class="number">0LL</span>;</span><br><span class="line">        _Pyx_AddTraceback(&amp;unk_BB9C, v7, <span class="number">9LL</span>, <span class="string">&quot;test.py&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> v91;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">goto</span> LABEL_14;</span><br><span class="line">    &#125;</span><br><span class="line">    v6 = v5 - <span class="number">1</span>;</span><br><span class="line">    nbit = (_QWORD *)_PyDict_GetItem_KnownHash(a3, _pyx_n_s_nbit, *(_QWORD *)(_pyx_n_s_nbit + <span class="number">24</span>));</span><br><span class="line">    <span class="keyword">if</span> ( nbit )</span><br><span class="line">      <span class="keyword">goto</span> LABEL_12;</span><br><span class="line">LABEL_487:</span><br><span class="line">    _Pyx_RaiseArgtupleInvalid_constprop_31(<span class="string">&quot;keygen&quot;</span>, a2[<span class="number">2</span>]);</span><br><span class="line">    v7 = <span class="number">1403LL</span>;</span><br><span class="line">    <span class="keyword">goto</span> LABEL_488;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>其中<code>PyDict_GetItem_KnownHash</code>可以作为传参确定点。从<code>a3</code>取值。</p>
+<h2 id="后话"><a href="#后话" class="headerlink" title="后话"></a>后话</h2><p>是空白在0x401知识星球上发的题目。已经有wp了。本题据说是有密码大手子找到原题脚本了。否则像我这样慢慢恢复真的很麻烦。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Challenge/" rel="tag"><i class="fa fa-tag"></i></a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/02/16/Pyc%20Reverse%203/" rel="prev" title="Pyc字节码分析 3">
+      <i class="fa fa-chevron-left"></i> Pyc字节码分析 3
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/02/17/Python%20Obfuscation%20Ast/" rel="next" title="Python Obfuscation Ast">
+      Python Obfuscation Ast <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#rsa-factory"><span class="nav-number">1.</span> <span class="nav-text">rsa-factory</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%90%E4%BE%9B%E6%96%87%E4%BB%B6"><span class="nav-number">1.1.</span> <span class="nav-text">提供文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9A%E4%BD%8D"><span class="nav-number">1.2.</span> <span class="nav-text">定位</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%81%A2%E5%A4%8D%E4%BB%A3%E7%A0%81"><span class="nav-number">1.3.</span> <span class="nav-text">恢复代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93"><span class="nav-number">1.4.</span> <span class="nav-text">经验总结</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%AE%9A%E4%BD%8D-pyx-pymod-exec%E5%87%BD%E6%95%B0"><span class="nav-number">1.4.1.</span> <span class="nav-text">如何定位__pyx_pymod_exec函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%89%93%E5%BC%80%E5%AF%BC%E5%87%BA%E7%95%8C%E9%9D%A2%EF%BC%8C%E6%89%BE%E5%88%B0PyInit-test%E5%87%BD%E6%95%B0"><span class="nav-number">1.4.1.1.</span> <span class="nav-text">打开导出界面，找到PyInit_test函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9C%A8-pyx-moduledef%E4%B8%8B%E6%89%BE%E5%88%B0-pyx-moduledef-slots"><span class="nav-number">1.4.1.2.</span> <span class="nav-text">在_pyx_moduledef下找到__pyx_moduledef_slots</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%89%BE%E5%88%B0-pyx-pymod-exec%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88"><span class="nav-number">1.4.1.3.</span> <span class="nav-text">找到__pyx_pymod_exec函数指针</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3PyTuple-New-%E5%87%BD%E6%95%B0%E4%BC%A0%E5%8F%82%E5%88%A4%E5%AE%9A%E5%87%BA%E9%97%AE%E9%A2%98"><span class="nav-number">1.4.2.</span> <span class="nav-text">解决PyTuple_New()函数传参判定出问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%91PyTupleObject%E4%BC%A0%E5%85%A5%E6%95%B0%E6%8D%AE"><span class="nav-number">1.4.3.</span> <span class="nav-text">向PyTupleObject传入数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A1%AE%E5%AE%9A%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8"><span class="nav-number">1.4.4.</span> <span class="nav-text">确定函数调用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%A6%E4%BC%9A%E8%BF%90%E7%94%A8%E4%BA%A4%E5%8F%89%E5%BC%95%E7%94%A8%E7%A1%AE%E5%AE%9A%E5%8F%98%E9%87%8F"><span class="nav-number">1.4.5.</span> <span class="nav-text">学会运用交叉引用确定变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E5%86%97%E4%BD%99%E4%BB%A3%E7%A0%81"><span class="nav-number">1.4.6.</span> <span class="nav-text">删除冗余代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A1%AE%E5%AE%9A%E4%BC%A0%E5%8F%82"><span class="nav-number">1.4.7.</span> <span class="nav-text">确定传参</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8E%E8%AF%9D"><span class="nav-number">1.5.</span> <span class="nav-text">后话</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Tardis"
+      src="/images/spongebob.jpg">
+  <p class="site-author-name" itemprop="name">Tardis</p>
+  <div class="site-description" itemprop="description">学点好玩的逆向知识</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Taardisaa" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Taardisaa" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:136665562@qq.com" title="E-Mail → mailto:136665562@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa-heartbeat"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tardis</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">392k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">5:57</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='250' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+   if (typeof MathJax === 'undefined') {
+       window.MathJax = {
+         loader: {
+         source: {
+           '[tex]/amsCd': '[tex]/amscd',
+           '[tex]/AMScd': '[tex]/amscd'
+         }
+       },
+       tex: {
+         inlineMath: {'[+]': [['$', '$']]},
+         tags: 'ams'
+       },
+       options: {
+         renderActions: {
+           findScript: [10, doc => {
+             document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+               const display = !!node.type.match(/; *mode=display/);
+               const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+               const text = document.createTextNode('');
+               node.parentNode.replaceChild(text, node);
+               math.start = {node: text, delim: '', n: 0};
+               math.end = {node: text, delim: '', n: 0};
+               doc.math.push(math);
+             });
+           }, '', false],
+           insertedScript: [200, () => {
+         document.querySelectorAll('mjx-container').forEach(node => {
+           let target = node.parentNode;
+           if (target.nodeName.toLowerCase() === 'li') {
+             target.parentNode.classList.add('has-jax');
+           }
+         });
+       }, '', false]
+     }
+   }
+ };
+	
+
+    (function () {
+      var script = document.createElement('script');
+      script.src = 'https://cdn.jsdelivr.net/npm/mathjax@2.7.8/unpacked/MathJax.js?config=TeX-MML-AM_CHTML';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+
+   <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+   <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+   <script type="text/javascript" src="/js/fireworks.js"></script>
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"right","width":200,"height":400},"mobile":{"show":true},"log":false});</script></body>
+</html>
