@@ -157,6 +157,114 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://taardisaa.github.io/2022/02/23/Nachos_0__Install/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/spongebob.jpg">
+      <meta itemprop="name" content="Tardis">
+      <meta itemprop="description" content="学点好玩的逆向知识">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Tardis's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/02/23/Nachos_0__Install/" class="post-title-link" itemprop="url">Nachos 0——Install</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-02-23 15:20:00 / 修改时间：20:16:15" itemprop="dateCreated datePublished" datetime="2022-02-23T15:20:00+08:00">2022-02-23</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/OS/" itemprop="url" rel="index"><span itemprop="name">OS</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>此文是用于分析课程操作系统原理的入门级教学用系统<code>NachOs</code>。</p>
+<h1 id="NachOs-0——安装"><a href="#NachOs-0——安装" class="headerlink" title="NachOs 0——安装"></a>NachOs 0——安装</h1><h2 id="获取"><a href="#获取" class="headerlink" title="获取"></a>获取</h2><p><a target="_blank" rel="noopener" href="https://homes.cs.washington.edu/~tom/nachos/">https://homes.cs.washington.edu/~tom/nachos/</a></p>
+<p>下载4.0版本。</p>
+<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Ubuntu14</span> i<span class="number">386</span> <span class="number">32</span>位系统</span><br></pre></td></tr></table></figure>
+<p>用x64系统编译时，由于高版本<code>gcc</code>+64位内核，导致了一大堆问题，最后不得不放弃，选择老版本的纯32位系统。</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p><code>NachOs</code>提供了若干支持的平台与架构。在网上搜索各类安装教程后，我发现</p>
+<p><a target="_blank" rel="noopener" href="https://jeffprogrammer.wordpress.com/2016/10/31/%E4%BD%9C%E6%A5%AD%E7%B3%BB%E7%B5%B1-nachos-%E7%B0%A1%E4%BB%8B/">https://jeffprogrammer.wordpress.com/2016/10/31/%E4%BD%9C%E6%A5%AD%E7%B3%BB%E7%B5%B1-nachos-%E7%B0%A1%E4%BB%8B/</a></p>
+<p>可能是最靠谱，最简单的。</p>
+<h3 id="1-安装csh和g"><a href="#1-安装csh和g" class="headerlink" title="1.安装csh和g++"></a>1.安装<code>csh</code>和<code>g++</code></h3><p><code>Ubuntu14 32位</code>默认只有<code>gcc</code>，且是<code>bash shell</code>。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install csh</span><br><span class="line">sudo apt-get install g++</span><br></pre></td></tr></table></figure>
+<p>可能会有点慢，可以考虑换源。</p>
+<h3 id="2-获取nachos和mips-gcc"><a href="#2-获取nachos和mips-gcc" class="headerlink" title="2.获取nachos和mips-gcc"></a>2.获取<code>nachos</code>和<code>mips-gcc</code></h3><p>从其他学校老师的服务器上面下下来。（参考上面贴的文章）</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget -d http://cc.ee.ntu.edu.tw/~farn/courses/OS/OS2015/projects/project.1/mips-x86.linux-xgcc.tar.gz</span><br><span class="line">wget -d http://cc.ee.ntu.edu.tw/~farn/courses/OS/OS2015/projects/project.1/nachos-4.0.tar.gz</span><br></pre></td></tr></table></figure>
+<p>其中第一个是MIPS架构交叉编译环境，提供了若干已经编译过的，现成的编译MIPS架构程序的工具链。</p>
+<p>第二个就是<code>nachos</code>了。</p>
+<h3 id="3-解压缩"><a href="#3-解压缩" class="headerlink" title="3.解压缩"></a>3.解压缩</h3><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">tar</span> –zxvf nachos-<span class="number">4</span>.<span class="number">0</span>.tar.gz</span><br></pre></td></tr></table></figure>
+<p>在系统根目录下面解压<code>mips-gcc</code>工具链。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo mv mips-x86<span class="selector-class">.linux-xgcc</span><span class="selector-class">.tar</span><span class="selector-class">.gz</span> /</span><br><span class="line">tar –zxvf /mips-x86<span class="selector-class">.linux-xgcc</span><span class="selector-class">.tar</span>.gz</span><br></pre></td></tr></table></figure>
+<h3 id="4-编译"><a href="#4-编译" class="headerlink" title="4.编译"></a>4.编译</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd nachos-4.0/code</span><br><span class="line">make</span><br></pre></td></tr></table></figure>
+<p>编译最后可能还是会报错，但是根据我的研究，似乎是在最后的<code>test</code>程序测试上出了问题。实际上<code>nachos</code>已经编译成功了。</p>
+<h3 id="5-测试"><a href="#5-测试" class="headerlink" title="5.测试"></a>5.测试</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd userprog</span><br><span class="line">./nachos –e ../test/test1 </span><br></pre></td></tr></table></figure>
+<p>结果：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Total</span> threads number is <span class="number">1</span></span><br><span class="line"><span class="attribute">Thread</span> ../test/test<span class="number">1</span> is executing.</span><br><span class="line"><span class="attribute">Print</span> integer:<span class="number">9</span></span><br><span class="line"><span class="attribute">Print</span> integer:<span class="number">8</span></span><br><span class="line"><span class="attribute">Print</span> integer:<span class="number">7</span></span><br><span class="line"><span class="attribute">Print</span> integer:<span class="number">6</span></span><br><span class="line"><span class="attribute">return</span> value:<span class="number">0</span></span><br><span class="line"><span class="attribute">No</span> threads ready or runnable, and no pending interrupts.</span><br><span class="line"><span class="attribute">Assuming</span> the program completed.</span><br><span class="line"><span class="attribute">Machine</span> halting!</span><br><span class="line"></span><br><span class="line"><span class="attribute">Ticks</span>: total <span class="number">200</span>, idle <span class="number">66</span>, system <span class="number">40</span>, user <span class="number">94</span></span><br><span class="line"><span class="attribute">Disk</span> I/O: reads <span class="number">0</span>, writes <span class="number">0</span></span><br><span class="line"><span class="attribute">Console</span> I/O: reads <span class="number">0</span>, writes <span class="number">0</span></span><br><span class="line"><span class="attribute">Paging</span>: faults <span class="number">0</span></span><br><span class="line"><span class="attribute">Network</span> I/O: packets received <span class="number">0</span>, sent <span class="number">0</span></span><br></pre></td></tr></table></figure>
+<p>这样看来属于成功了。hooray！</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><code>nachos</code>是真的古老，我看国内安装时候都是要修改一坨源码啥的，就是为了匹配高版本<code>gcc</code>以及适应64位版本。我自己整到最后，在用<code>ld</code>链接的重定位文件的时候出错了，也是让人很无语的。</p>
+<p>最后找来找去还是通过上面那个台湾人的博客轻松解决了这个事情。他使用的是<code>mips-gcc</code>交叉编译工具，我记得<code>apt</code>源里面也可以直接下，不过为了防止版本过高或过低，还是乖乖的用了那个人提供的学校下载链接。这么久了都没断掉，真不错。</p>
+<p>当然这一次小意外已经不是第一次了，上次自己编译<code>upx</code>的时候也是遇到了严重的版本不匹配问题。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://taardisaa.github.io/2022/02/17/Python%20Obfuscation%20Ast/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1037,95 +1145,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://taardisaa.github.io/2022/01/27/Cython%20Reverse%202/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/spongebob.jpg">
-      <meta itemprop="name" content="Tardis">
-      <meta itemprop="description" content="学点好玩的逆向知识">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Tardis's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/01/27/Cython%20Reverse%202/" class="post-title-link" itemprop="url">Cython程序分析_2</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-01-27 10:51:00 / 修改时间：18:31:59" itemprop="dateCreated datePublished" datetime="2022-01-27T10:51:00+08:00">2022-01-27</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/cython/" itemprop="url" rel="index"><span itemprop="name">cython</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>83k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1:16</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>下面从一些python的基本操作开始进行分析。总体流程准备跟着菜鸟教程上教的顺序走。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/01/27/Cython%20Reverse%202/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1197,20 +1216,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-count">16</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1259,13 +1278,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">392k</span>
+    <span title="站点总字数">394k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">5:57</span>
+    <span title="站点阅读时长">5:58</span>
 </div>
 
         
