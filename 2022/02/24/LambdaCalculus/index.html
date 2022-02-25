@@ -29,7 +29,7 @@
 <meta property="og:description" content="Lambda Calculus是一种和图灵机同级的计算机设计理论。在CTF实战中，可以用于混淆。国外CTF以前出过，不过那个时候我太菜了分析不出来。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-02-24T07:00:00.000Z">
-<meta property="article:modified_time" content="2022-02-25T07:56:48.117Z">
+<meta property="article:modified_time" content="2022-02-25T08:07:16.736Z">
 <meta property="article:author" content="Tardis">
 <meta property="article:tag" content="LambdaCalculus">
 <meta name="twitter:card" content="summary">
@@ -193,7 +193,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-02-25 15:56:48" itemprop="dateModified" datetime="2022-02-25T15:56:48+08:00">2022-02-25</time>
+                <time title="修改时间：2022-02-25 16:07:16" itemprop="dateModified" datetime="2022-02-25T16:07:16+08:00">2022-02-25</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -211,14 +211,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>10k</span>
+              <span>11k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>9 分钟</span>
+              <span>10 分钟</span>
             </span>
 
         </div>
@@ -359,7 +359,7 @@
 <p>$$<br>\lambda sz.z<br>$$</p>
 <p>需要注意的是<code>s</code>在最左侧，在应用时将会是第一个被替换的。其次是<code>z</code>。</p>
 <p>这样，我们继续定义其他自然数</p>
-<p>$$<br>1\equiv\lambda sz.s(z)\<br>2\equiv\lambda sz.s(s(z))\<br>3\equiv\lambda sz.s(s(s(z)))\<br>$$</p>
+<p>$$<br>1\equiv\lambda sz.s(z)\newline<br>2\equiv\lambda sz.s(s(z))\newline<br>3\equiv\lambda sz.s(s(s(z)))\newline<br>$$</p>
 <p>可以简单记成</p>
 <p>$$<br>n\equiv\lambda sz.s^n(z)<br>$$</p>
 <p>这个定义数的函数组成看上去很奇怪，尤其是括号位置，暗示着应用的顺序是从括号里向括号外传递的。比如1，<code>s(z)</code>就意味着是<code>s</code>应用于<code>z</code>上。</p>
@@ -376,7 +376,7 @@
 <p>$$<br>\lambda yx.y((\lambda sz.z)yx)&#x3D;\lambda yx.y((\lambda z.z)x)&#x3D;\lambda yx.y(x)&#x3D;\lambda sz.s(z)&#x3D;1<br>$$</p>
 <p>这样我们就获得了0的后继1。</p>
 <p>继续再试一个</p>
-<p>$$<br>(\lambda wyx.y(wyx))(\lambda sz.s(z))&#x3D;\<br>\lambda yx.y((\lambda sz.s(z))yx)&#x3D;\<br>\lambda yx.y((\lambda z.y(z))x)&#x3D;\<br>\lambda yx.y(y(x))&#x3D;\<br>\lambda sz.s(s(z))&#x3D;\<br>2<br>$$</p>
+<p>$$<br>(\lambda wyx.y(wyx))(\lambda sz.s(z))&#x3D;\newline<br>\lambda yx.y((\lambda sz.s(z))yx)&#x3D;\newline<br>\lambda yx.y((\lambda z.y(z))x)&#x3D;\newline<br>\lambda yx.y(y(x))&#x3D;\newline<br>\lambda sz.s(s(z))&#x3D;\newline<br>2<br>$$</p>
 <p>所以我们总结并进行抽象，得到</p>
 <p>$$<br>Sn\equiv n+1<br>$$</p>
 <h3 id="加法"><a href="#加法" class="headerlink" title="加法"></a>加法</h3><p>虽然论文里面说加法很简单，但是还是花了我不少时间思考。</p>
@@ -385,7 +385,7 @@
 <p>观察式子</p>
 <p>$$<br>nS &#x3D; (\lambda sz.s^n(z))S<br>$$</p>
 <p>便于求解，已经进行了笼统概括处理。整个后继函数<code>S</code>将用于替换<strong>所有的</strong><code>s</code>，那么得到结果（当然也可以S和n全都拆开不用简写，不过那就很麻烦了）</p>
-<p>$$<br>nS&#x3D;\lambda z.S^n(z)&#x3D;\<br>\lambda z.S(S(S(…S(z))))&#x3D;\<br>$$</p>
+<p>$$<br>nS&#x3D;\lambda z.S^n(z)&#x3D;\newline<br>\lambda z.S(S(S(…S(z))))&#x3D;\newline<br>$$</p>
 <p>上面后继函数的结论：</p>
 <p>$$<br>S(n)\equiv(n+1)<br>$$</p>
 <p>（这里的括号不要太在意，仅仅是表示应用顺序的）</p>
@@ -397,17 +397,17 @@
 <p>以上是我觉得比较清晰且满意的理解方法。</p>
 <p>这一块的证明参考 <a target="_blank" rel="noopener" href="https://brilliant.org/wiki/lambda-calculus/">https://brilliant.org/wiki/lambda-calculus/</a></p>
 <p>再举个例子，2+3，这次不使用任何简写，直接完全展开。</p>
-<p>$$<br>2S&#x3D;\<br>(\lambda sz.s(s(z)))(\lambda wyx.y(wyx))&#x3D;\<br>\lambda z.(\lambda wyx.y(wyx))((\lambda abc.b(abc))(z))&#x3D;\<br>\lambda z.(\lambda wyx.y(wyx))(\lambda bc.b(zbc))&#x3D;\<br>\lambda z.(\lambda yx.y((\lambda bc.b(zbc))yx))&#x3D;\<br>\lambda z.(\lambda yx.y((\lambda c.y(zyc))x))&#x3D;\<br>\lambda z.(\lambda yx.y(y(zyx)))\<br>$$</p>
-<p>$$<br>2S3&#x3D;\(\lambda z.(\lambda yx.y(y(zyx))))(\lambda sb.s(s(s(b))))&#x3D;\<br>(\lambda yx.y(y((\lambda sb.s(s(s(b))))yx)))&#x3D;\<br>(\lambda yx.y(y((\lambda b.y(y(y(b))))x)))&#x3D;\<br>(\lambda yx.y(y((y(y(y(x)))))))&#x3D;\<br>5<br>$$</p>
+<p>$$<br>2S&#x3D;\newline<br>(\lambda sz.s(s(z)))(\lambda wyx.y(wyx))&#x3D;\newline<br>\lambda z.(\lambda wyx.y(wyx))((\lambda abc.b(abc))(z))&#x3D;\newline<br>\lambda z.(\lambda wyx.y(wyx))(\lambda bc.b(zbc))&#x3D;\newline<br>\lambda z.(\lambda yx.y((\lambda bc.b(zbc))yx))&#x3D;\newline<br>\lambda z.(\lambda yx.y((\lambda c.y(zyc))x))&#x3D;\newline<br>\lambda z.(\lambda yx.y(y(zyx)))\newline<br>$$</p>
+<p>$$<br>2S3&#x3D;\newline(\lambda z.(\lambda yx.y(y(zyx))))(\lambda sb.s(s(s(b))))&#x3D;\newline<br>(\lambda yx.y(y((\lambda sb.s(s(s(b))))yx)))&#x3D;\newline<br>(\lambda yx.y(y((\lambda b.y(y(y(b))))x)))&#x3D;\newline<br>(\lambda yx.y(y((y(y(y(x)))))))&#x3D;\newline<br>5<br>$$</p>
 <p>嗯算真TM算出来了居然，就离谱。不过由于中间的变换式没什么参考性与特殊性，原本还想着能从中学到什么其他有意义的变换式，看样子是不行了。就暂且当作一个迫真例子吧。</p>
 <p>这证明里面，要注意避免冲突，修改名称。否则后面全都搞乱了。</p>
 <hr>
 <p>理解了一下论文的思路，再来补充一下。</p>
-<p>$$<br>2Sm&#x3D;\<br>(\lambda sz.s(s(z)))(\lambda wyx.y(wyx))m&#x3D;\<br>（S替代s）\<br>(\lambda z.(\lambda wyx.y(wyx))((\lambda wyx.y(wyx))(z)))m&#x3D;\<br>（第二个数字m替代z）\<br>(\lambda wyx.y(wyx))((\lambda wyx.y(wyx))(m))&#x3D;\<br>S(S(m))&#x3D;\<br>m+2<br>$$</p>
+<p>$$<br>2Sm&#x3D;\newline<br>(\lambda sz.s(s(z)))(\lambda wyx.y(wyx))m&#x3D;\newline<br>（S替代s）\newline<br>(\lambda z.(\lambda wyx.y(wyx))((\lambda wyx.y(wyx))(z)))m&#x3D;\newline<br>（第二个数字m替代z）\newline<br>(\lambda wyx.y(wyx))((\lambda wyx.y(wyx))(m))&#x3D;\newline<br>S(S(m))&#x3D;\newline<br>m+2<br>$$</p>
 <p>通过补全第二个数字<code>m</code>，避免了像刚才的<code>2S3</code>那样对着<code>2S</code>嗯化简，使得式子变得更加复杂了。<code>m</code>能够消去<code>z</code>参数，从而实现<code>nSm</code>到<code>S(S(S(...S(m))))</code>更基本的转变。</p>
 <h3 id="乘法"><a href="#乘法" class="headerlink" title="乘法"></a>乘法</h3><p>$$<br>Mul&#x3D;\lambda xyz.x(yz)<br>$$</p>
 <p>举例：2*2</p>
-<p>$$<br>(\lambda xyz.x(yz))22&#x3D;\<br>(\lambda yz.2(yz))2&#x3D;\<br>(\lambda z.2(2(z)))&#x3D;\<br>(\lambda z.(\lambda sb.s(s(b)))((\lambda mt.m(m(t)))(z)))&#x3D;\<br>\lambda z.(\lambda sb.s(s(b)))(\lambda t.z(z(t)))&#x3D;\<br>\lambda z.(\lambda b.(\lambda t.z(z(t)))((\lambda t.z(z(t)))(b)))&#x3D;\<br>\lambda z.(\lambda b.(\lambda t.z(z(t)))(z(z(b))))&#x3D;\<br>\lambda z.(\lambda b.(z(z(z(z(b))))))&#x3D;\<br>\lambda zb.(z(z(z(z(b))))))&#x3D;\<br>4<br>$$</p>
+<p>$$<br>(\lambda xyz.x(yz))22&#x3D;\newline<br>(\lambda yz.2(yz))2&#x3D;\newline<br>(\lambda z.2(2(z)))&#x3D;\newline<br>(\lambda z.(\lambda sb.s(s(b)))((\lambda mt.m(m(t)))(z)))&#x3D;\newline<br>\lambda z.(\lambda sb.s(s(b)))(\lambda t.z(z(t)))&#x3D;\newline<br>\lambda z.(\lambda b.(\lambda t.z(z(t)))((\lambda t.z(z(t)))(b)))&#x3D;\newline<br>\lambda z.(\lambda b.(\lambda t.z(z(t)))(z(z(b))))&#x3D;\newline<br>\lambda z.(\lambda b.(z(z(z(z(b))))))&#x3D;\newline<br>\lambda zb.(z(z(z(z(b))))))&#x3D;\newline<br>4<br>$$</p>
 <p>这种证明到最后肯定是需要用邱奇数代替一般表示的数字2的。</p>
 <h2 id="条件语句"><a href="#条件语句" class="headerlink" title="条件语句"></a>条件语句</h2><h3 id="真"><a href="#真" class="headerlink" title="真"></a>真</h3><p>$$<br>T&#x3D;\lambda xy.x<br>$$</p>
 <h3 id="假"><a href="#假" class="headerlink" title="假"></a>假</h3><p>$$<br>F&#x3D;\lambda xy.y<br>$$</p>
@@ -417,10 +417,10 @@
 <h4 id="非"><a href="#非" class="headerlink" title="非"></a>非</h4><p>$$<br>Not&#x3D;\lambda x.x(\lambda uv.v)(\lambda ab.a)&#x3D;\lambda x.xFT<br>$$</p>
 <hr>
 <p>举例：</p>
-<p>$$<br>And(TT)&#x3D;(\lambda xy.xyF)(TT)&#x3D;\<br>(\lambda y.TyF)(T)&#x3D;\<br>TTF&#x3D;\<br>T<br>$$</p>
-<p>$$<br>And(TF)&#x3D;TFF&#x3D;F\<br>And(FT)&#x3D;FTF&#x3D;F\<br>And(FF)&#x3D;FFF&#x3D;F<br>$$</p>
-<p>$$<br>Or(TT)&#x3D;TTT&#x3D;T\<br>Or(TF)&#x3D;TTF&#x3D;T\<br>Or(FT)&#x3D;FTT&#x3D;T\<br>Or(FF)&#x3D;FTF&#x3D;F<br>$$</p>
-<p>$$<br>Not(F)&#x3D;FFT&#x3D;T\<br>Not(T)&#x3D;TFT&#x3D;F<br>$$</p>
+<p>$$<br>And(TT)&#x3D;(\lambda xy.xyF)(TT)&#x3D;\newline<br>(\lambda y.TyF)(T)&#x3D;\newline<br>TTF&#x3D;\newline<br>T<br>$$</p>
+<p>$$<br>And(TF)&#x3D;TFF&#x3D;F\newline<br>And(FT)&#x3D;FTF&#x3D;F\newline<br>And(FF)&#x3D;FFF&#x3D;F<br>$$</p>
+<p>$$<br>Or(TT)&#x3D;TTT&#x3D;T\newline<br>Or(TF)&#x3D;TTF&#x3D;T\newline<br>Or(FT)&#x3D;FTT&#x3D;T\newline<br>Or(FF)&#x3D;FTF&#x3D;F<br>$$</p>
+<p>$$<br>Not(F)&#x3D;FFT&#x3D;T\newline<br>Not(T)&#x3D;TFT&#x3D;F<br>$$</p>
 <h3 id="条件测试"><a href="#条件测试" class="headerlink" title="条件测试"></a>条件测试</h3><p>设计一个检查某数是否为0的函数：</p>
 <p>$$<br>Z&#x3D;\lambda x.xF\neg F<br>$$</p>
 <p>首先得知道</p>
@@ -429,29 +429,29 @@
 <p>同时<code>F</code>应用于任意对象上面返回的都是<code>I</code>函数</p>
 <p>$$<br>Fa&#x3D;(\lambda xy.y)a&#x3D;\lambda y.y&#x3D;I<br>$$</p>
 <p>测试<code>Z</code>函数：</p>
-<p>$$<br>Z0&#x3D;(\lambda x.xF\neg F)(\lambda sz.z)&#x3D;\<br>(\lambda sz.z)F\neg F&#x3D;\<br>0F\neg F&#x3D;\<br>\neg F&#x3D;\<br>T<br>$$</p>
-<p>$$<br>Zn&#x3D;(\lambda x.xF\neg F)n&#x3D;\<br>nF\neg F&#x3D;\<br>(nF)\neg F<br>$$</p>
+<p>$$<br>Z0&#x3D;(\lambda x.xF\neg F)(\lambda sz.z)&#x3D;\newline<br>(\lambda sz.z)F\neg F&#x3D;\newline<br>0F\neg F&#x3D;\newline<br>\neg F&#x3D;\newline<br>T<br>$$</p>
+<p>$$<br>Zn&#x3D;(\lambda x.xF\neg F)n&#x3D;\newline<br>nF\neg F&#x3D;\newline<br>(nF)\neg F<br>$$</p>
 <p><code>nF</code>意味着要对$\neg$应用<code>n</code>次的<code>F</code>函数，但是我们知道<code>F</code>应用于任意对象无数次返回的都是<code>I</code>函数，所以</p>
-<p>$$<br>IF&#x3D;\<br>F<br>$$</p>
+<p>$$<br>IF&#x3D;\newline<br>F<br>$$</p>
 <h3 id="前序函数（Predecessor）"><a href="#前序函数（Predecessor）" class="headerlink" title="前序函数（Predecessor）"></a>前序函数（Predecessor）</h3><p>前面我们了解过后继函数，即从<code>n</code>获得<code>n+1</code>。现在了解前驱函数，即实现<code>(n, n-1)</code>的序列。</p>
 <h4 id="对（pair）"><a href="#对（pair）" class="headerlink" title="对（pair）"></a>对（pair）</h4><p>由<code>a</code>和<code>b</code>组成的一个对<code>(a, b)</code>可以通过以下λ函数表示：</p>
 <p>$$<br>\lambda x.xab<br>$$</p>
 <p>其中传参是<code>F</code>或<code>T</code></p>
 <p>比如要取第一个值，那么应用<code>T</code></p>
-<p>$$<br>(\lambda x.xab)T&#x3D;\<br>Tab&#x3D;\<br>a<br>$$</p>
+<p>$$<br>(\lambda x.xab)T&#x3D;\newline<br>Tab&#x3D;\newline<br>a<br>$$</p>
 <p>取<code>b</code></p>
-<p>$$<br>(\lambda x.xab)F&#x3D;\<br>Fab&#x3D;\<br>b<br>$$</p>
+<p>$$<br>(\lambda x.xab)F&#x3D;\newline<br>Fab&#x3D;\newline<br>b<br>$$</p>
 <p>想要获得前驱函数<code>P</code>，首先考虑以下函数：</p>
 <p>$$<br>\Phi&#x3D;(\lambda pz.z(S(pT))(pT))<br>$$</p>
 <p>函数有2个形参，<code>p</code>传入一个对；<code>z</code>传入<code>T</code>或<code>F</code>，用于选择第一个数还是第二个数字，即递增1还是返回原来数字。</p>
 <p>主体有三个块，<code>z</code>，<code>S(pT)</code>，<code>pT</code>。<code>S</code>是后继函数。</p>
 <p>比如将<code>Φ</code>应用于<code>(λx.xab)T</code>上面：</p>
-<p>$$<br>(\lambda pz.z(S(pT))(pT))((\lambda x.xab)T)&#x3D;\<br>T(S((\lambda x.xab)T))((\lambda x.xab)T)&#x3D;\<br>T(S(a))(a)&#x3D;\<br>S(a)&#x3D;\<br>a+1<br>$$</p>
+<p>$$<br>(\lambda pz.z(S(pT))(pT))((\lambda x.xab)T)&#x3D;\newline<br>T(S((\lambda x.xab)T))((\lambda x.xab)T)&#x3D;\newline<br>T(S(a))(a)&#x3D;\newline<br>S(a)&#x3D;\newline<br>a+1<br>$$</p>
 <p>而如果是<code>(λx.xab)F</code>，则返回第二个参数，那就是<code>a</code>。</p>
 <p>获得数字<code>n</code>的前驱可以将<code>Φ</code>应用<code>n</code>次于对<code>λz.00</code>上，然后选择新对的第二个数字：</p>
 <p>$$<br>P&#x3D;\lambda n.((n\Phi)(\lambda z.z00)F)<br>$$</p>
 <p>比如</p>
-<p>$$<br>P2&#x3D;(2\Phi)(\lambda z.z00)F&#x3D;\<br>(\lambda z.\Phi(\Phi(z)))(\lambda z.z00)F&#x3D;\<br>(\Phi(\Phi((\lambda z.z00))))F&#x3D;\<br>(\Phi(\lambda z.z(1)(0)))F&#x3D;\<br>(\lambda z.z21)F&#x3D;\<br>1<br>$$</p>
+<p>$$<br>P2&#x3D;(2\Phi)(\lambda z.z00)F&#x3D;\newline<br>(\lambda z.\Phi(\Phi(z)))(\lambda z.z00)F&#x3D;\newline<br>(\Phi(\Phi((\lambda z.z00))))F&#x3D;\newline<br>(\Phi(\lambda z.z(1)(0)))F&#x3D;\newline<br>(\lambda z.z21)F&#x3D;\newline<br>1<br>$$</p>
 <p>不过值得注意的是，根据这个定义，0的前驱还是0。</p>
 <h3 id="相等与不等"><a href="#相等与不等" class="headerlink" title="相等与不等"></a>相等与不等</h3><p>先定义大于等于：</p>
 <h4 id="大于等于"><a href="#大于等于" class="headerlink" title="大于等于"></a>大于等于</h4><p>$$<br>G&#x3D;(\lambda xy.Z(xPy))<br>$$</p>
@@ -463,7 +463,7 @@
 <h2 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h2><p>递归函数可以使用一个函数，这个函数调用函数<code>y</code>然后再重新生成它自身。</p>
 <p>$$<br>Y&#x3D;(\lambda y.(\lambda x.y(xx))(\lambda x.y(xx)))<br>$$</p>
 <p><code>Y</code>应用于<code>R</code>上：</p>
-<p>$$<br>YR&#x3D;(\lambda x.R(xx))(\lambda x.R(xx))&#x3D;\<br>R((\lambda x.R(xx))(\lambda x.R(xx)))&#x3D;\<br>R(YR)<br>$$</p>
+<p>$$<br>YR&#x3D;(\lambda x.R(xx))(\lambda x.R(xx))&#x3D;\newline<br>R((\lambda x.R(xx))(\lambda x.R(xx)))&#x3D;\newline<br>R(YR)<br>$$</p>
 <p>假设定义一个函数，能够对前n个自然数求和。我们使用递归定义法，因为</p>
 <p>$$<br>\sum_{i&#x3D;0}^n i&#x3D;n+\sum_{i&#x3D;0}^{n-1}i<br>$$</p>
 <p>$$<br>R&#x3D;(\lambda rn.Zn0(nS(r(Pn))))<br>$$</p>
@@ -471,10 +471,10 @@
 <p><code>n</code>不为0，那么就会返回后面的$(nS(r(Pn)))$，即将<code>S</code>后继函数对<code>r(Pn)</code>应用<code>n</code>次。<code>r</code>是一个递归调用，<code>Pn</code>便是<code>n-1</code>。</p>
 <p>不过我们如何知道<code>r</code>是一个递归参数？我们不清楚，所以我们需要用<code>Y</code>操作符来尝试。</p>
 <p>使用<code>Y</code>递归操作符实现0+1+2+3：</p>
-<p>$$<br>YR3&#x3D;R(YR)3&#x3D;Z30(3S(YR(P3)))&#x3D;\<br>F0(3S(YR(P3)))&#x3D;\<br>3S(YR2)&#x3D;\<br>$$</p>
+<p>$$<br>YR3&#x3D;R(YR)3&#x3D;Z30(3S(YR(P3)))&#x3D;\newline<br>F0(3S(YR(P3)))&#x3D;\newline<br>3S(YR2)&#x3D;\newline<br>$$</p>
 <p>化简到这里，就能发现这个式子就是<code>sum(3)=3+sum(2)</code>了。</p>
 <p>化简到最后：</p>
-<p>$$<br>3S2S1S0&#x3D;\<br>6<br>$$</p>
+<p>$$<br>3S2S1S0&#x3D;\newline<br>6<br>$$</p>
 <h2 id="预留任务"><a href="#预留任务" class="headerlink" title="预留任务"></a>预留任务</h2><ol>
 <li>定义小于，大于和不等</li>
 <li>定义正整数与负数</li>
