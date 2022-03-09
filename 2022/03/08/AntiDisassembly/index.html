@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <script type="text/javascript" src="/js/dytitle.js"></script>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"taardisaa.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Go研究卡住了，看代码看得头晕。休息一会看看其他的。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="反汇编分析">
+<meta property="og:url" content="https://taardisaa.github.io/2022/03/08/AntiDisassembly/index.html">
+<meta property="og:site_name" content="Tardis&#39;s blog">
+<meta property="og:description" content="Go研究卡住了，看代码看得头晕。休息一会看看其他的。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-03-08T07:22:00.000Z">
+<meta property="article:modified_time" content="2022-03-09T05:12:57.152Z">
+<meta property="article:author" content="Tardis">
+<meta property="article:tag" content="obfuscation">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://taardisaa.github.io/2022/03/08/AntiDisassembly/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>反汇编分析 | Tardis's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --><link rel="alternate" href="/atom.xml" title="Tardis's blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Tardis's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">摸鱼用博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://taardisaa.github.io/2022/03/08/AntiDisassembly/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/spongebob.jpg">
+      <meta itemprop="name" content="Tardis">
+      <meta itemprop="description" content="学点好玩的逆向知识">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Tardis's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          反汇编分析
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-03-08 15:22:00" itemprop="dateCreated datePublished" datetime="2022-03-08T15:22:00+08:00">2022-03-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-03-09 13:12:57" itemprop="dateModified" datetime="2022-03-09T13:12:57+08:00">2022-03-09</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/obfuscation/" itemprop="url" rel="index"><span itemprop="name">obfuscation</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>9.2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>8 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Go研究卡住了，看代码看得头晕。休息一会看看其他的。</p>
+<span id="more"></span>
+
+<h1 id="反-反汇编分析"><a href="#反-反汇编分析" class="headerlink" title="反-反汇编分析"></a>反-反汇编分析</h1><h2 id="反汇编器类型"><a href="#反汇编器类型" class="headerlink" title="反汇编器类型"></a>反汇编器类型</h2><h3 id="线性扫描"><a href="#线性扫描" class="headerlink" title="线性扫描"></a>线性扫描</h3><p><code>Ollydbg</code>，<code>x64dbg</code>这样的基本都是线性反汇编器。<code>capstone</code>更不用说了。</p>
+<p><a target="_blank" rel="noopener" href="http://sf.net/projects/bastard/files/libdisasm/">http://sf.net/projects/bastard/files/libdisasm/</a></p>
+<p>实现例子：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> buffer[BUF_SIZE];</span><br><span class="line"><span class="keyword">int</span> position = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> (position &lt; BUF_SIZE) &#123;</span><br><span class="line">    <span class="keyword">x86_insn_t</span> insn;</span><br><span class="line">    <span class="keyword">int</span> size = x86_disasm(buf, BUF_SIZE, <span class="number">0</span>, position, &amp;insn);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (size != <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">char</span> disassembly_line[<span class="number">1024</span>];</span><br><span class="line">        x86_format_insn(&amp;insn, disassembly_line, <span class="number">1024</span>, intel_syntax);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%s\n&quot;</span>, disassembly_line);</span><br><span class="line">        position += size;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">/* invalid/unrecognized instruction */</span></span><br><span class="line">        position++;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">x86_cleanup();</span><br></pre></td></tr></table></figure>
+
+<p>这种反汇编器的实现简单，但是缺点也十分大。比如数据段和代码段难以区分。</p>
+<h3 id="递归下降扫描器"><a href="#递归下降扫描器" class="headerlink" title="递归下降扫描器"></a>递归下降扫描器</h3><p><code>IDA</code>这样比较智能的就是使用这种反汇编器。毕竟它都会分析近似的执行流来生成伪代码。</p>
+<p>这种反汇编器会近似地跟踪执行流，从而绕开一些花指令和数据段。</p>
+<p>显然它还是有局限性的，比如<code>jz</code>+<code>jnz</code>组合；以及在<code>call</code>指令后立刻跟随一串字符串；字符串开头字节要是能代表某个汇编指令的开头，也有可能会被误认为是汇编指令（比如0x68是<code>push dword</code>的开头，对应字符<code>h</code>）</p>
+<h2 id="破解反反汇编"><a href="#破解反反汇编" class="headerlink" title="破解反反汇编"></a>破解反反汇编</h2><p><code>IDA</code>上处理这个还是很简单的，对着有问题的指令按<code>D</code>变成字节码数据，然后跳过垃圾数据（如果完全没用还可以<code>patch</code>掉），对着实际执行指令代码的开头按<code>C</code>返回变成正确指令。</p>
+<p><code>Ollydbg</code>，<code>x64dbg</code>上遇到这个还真不好处理。自动的<code>analyze</code>选项也经常不靠谱，容易搞错。不过这种纯线性汇编动态调试器，我不经常用，通常也就使用它的万能插件来处理一些特殊情形。</p>
+<hr>
+<p>后面讲x64平台上的常见类型</p>
+<h2 id="jmp-call"><a href="#jmp-call" class="headerlink" title="jmp+call"></a>jmp+call</h2><figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">.text:</span><span class="number">401568</span> EB <span class="number">09</span>                                   <span class="keyword">jmp</span>     short near ptr loc_401572+<span class="number">1</span> </span><br><span class="line"><span class="symbol">.text:</span><span class="number">40156</span>A <span class="number">90</span>                                      <span class="keyword">nop</span></span><br><span class="line"><span class="symbol">.text:</span><span class="number">40156</span>B <span class="number">90</span>                                      <span class="keyword">nop</span></span><br><span class="line"><span class="symbol">.text:</span><span class="number">40156</span>C <span class="number">90</span>                                      <span class="keyword">nop</span></span><br><span class="line"><span class="symbol">.text:</span><span class="number">40156</span>D <span class="number">90</span>                                      <span class="keyword">nop</span></span><br><span class="line"><span class="symbol">.text:</span><span class="number">40156</span>E <span class="number">90</span>                                      <span class="keyword">nop</span></span><br><span class="line"><span class="symbol">.text:</span><span class="number">40156</span>F <span class="number">90</span>                                      <span class="keyword">nop</span></span><br><span class="line"><span class="symbol">.text:</span><span class="number">401570</span> <span class="number">90</span>                                      <span class="keyword">nop</span></span><br><span class="line"><span class="symbol">.text:</span><span class="number">401571</span> <span class="number">90</span>                                      <span class="keyword">nop</span></span><br><span class="line"><span class="symbol">.text:</span><span class="number">401572</span>                         loc_401572:                             <span class="comment">; CODE XREF: main+18↑j</span></span><br><span class="line"><span class="symbol">.text:</span><span class="number">401572</span> E8 B8 <span class="number">00</span> <span class="number">00</span> <span class="number">00</span>                          <span class="keyword">call</span>    near ptr unk_40162F</span><br><span class="line"><span class="symbol">.text:</span><span class="number">401572</span>     <span class="comment">; ----------------------------------------------------------------------------------</span></span><br><span class="line"><span class="symbol">.text:</span><span class="number">401577</span> <span class="number">00</span>                                      db <span class="number">0</span></span><br><span class="line"><span class="symbol">.text:</span><span class="number">401578</span> <span class="number">48</span> <span class="number">83</span> C4 <span class="number">20</span>                             <span class="keyword">add</span>     rsp, <span class="number">20</span>h</span><br><span class="line"><span class="symbol">.text:</span><span class="number">40157</span>C <span class="number">5</span>D                                      <span class="keyword">pop</span>     rbp</span><br><span class="line"><span class="symbol">.text:</span><span class="number">40157</span>D C3                                      retn</span><br></pre></td></tr></table></figure>
+
+<h3 id="特征"><a href="#特征" class="headerlink" title="特征"></a>特征</h3><p><code>jmp loc+1</code>特意跳转过一个字节，到下面一个奇奇怪怪的<code>call</code>上。且指向了一个很诡异的地址。</p>
+<h3 id="构造方法"><a href="#构造方法" class="headerlink" title="构造方法"></a>构造方法</h3><p><code>B8 00 00 00 </code>就是个<code>mov eax, 0</code>。修改前面的一个字节为<code>0xE8</code>，这是<code>call</code>指令的特征码之一。</p>
+<p>在前面编一个<code>jmp</code>，特意跳过<code>0xE8</code>，到原来正常应该执行的地方去。</p>
+<p>虽然实际上<code>0xE8</code>并不会执行，但是这样会让线性扫描反汇编器误认为这里有个<code>call</code>指令。</p>
+<h3 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h3><p>对于OD这种线性扫描的挺好的，对于IDA这种不是很好。不过在<code>jmp</code>和<code>0xE8</code>之间的空隙中搞点乱数据似乎也能影响IDA的分析。</p>
+<h2 id="jz-jnz"><a href="#jz-jnz" class="headerlink" title="jz+jnz"></a>jz+jnz</h2><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">			    <span class="attribute">74</span> <span class="number">03</span> 				jz short near ptr loc_<span class="number">4011</span>C<span class="number">4</span>+<span class="number">1</span></span><br><span class="line">			    <span class="attribute">75</span> <span class="number">01</span> 				jnz short near ptr loc_<span class="number">4011</span>C<span class="number">4</span>+<span class="number">1</span></span><br><span class="line">		<span class="attribute">loc_4011C4</span>:</span><br><span class="line"><span class="attribute">0x4011C3</span> 		 E<span class="number">8</span> <span class="number">58</span> C<span class="number">3</span> <span class="number">90</span> <span class="number">90</span> 	  call near ptr <span class="number">90</span>D<span class="number">0</span>D<span class="number">521</span>h</span><br></pre></td></tr></table></figure>
+
+<p><code>jz</code>+<code>jnz</code>就是<code>jmp</code>，但是IDA还是会把<code>jnz</code>后面理应从不会执行的假执行流给反汇编，从而上当，导致<code>0xE8</code>被反汇编进去，变成<code>call</code>指令。</p>
+<h2 id="0-jz"><a href="#0-jz" class="headerlink" title="0+jz"></a>0+jz</h2><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">xor </span>eax, eax</span><br><span class="line"><span class="keyword">jz </span> LABEL_ALWAYS_TRUE</span><br><span class="line"><span class="comment">; some junk code</span></span><br></pre></td></tr></table></figure>
+
+<p>在前面设置一个恒真条件，然后再去“条件”跳转。这样会使得IDA也把假分支给反汇编了。</p>
+<h3 id="效果-1"><a href="#效果-1" class="headerlink" title="效果"></a>效果</h3><p>一般情况下不靠谱，IDA现在的分支判断已经很成熟了，能够发现<code>xor eax, eax</code>干了啥的。</p>
+<h3 id="改进"><a href="#改进" class="headerlink" title="改进"></a>改进</h3><p>添加指令混淆Pass，MBA Pass，能立刻提升效果。</p>
+<h2 id="重叠花指令"><a href="#重叠花指令" class="headerlink" title="重叠花指令"></a>重叠花指令</h2><p>垃圾代码也会影响到具体执行的特殊形式。非常特别的构造形式。以下字节码：</p>
+<figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">66 </span>B8 EB <span class="number">05</span> <span class="number">31</span> C0 <span class="number">74</span> FA E8 </span><br></pre></td></tr></table></figure>
+
+<p>直接得到：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">loc_40155D:</span><br><span class="line">.text:000000000040155D 66 B8 EB 05        mov     ax, 5EBh</span><br><span class="line">.text:0000000000401561 31 C0              xor     eax, eax</span><br><span class="line">.text:0000000000401563 74 FA              jz      short near ptr loc_40155D+2</span><br><span class="line">.text:0000000000401563  ; ----------------------------------------------------</span><br><span class="line">.text:0000000000401565 E8                 db 0E8h</span><br></pre></td></tr></table></figure>
+
+<p><code>xor</code>+<code>jz</code>绝对执行，那么会跳到<code>EB</code>那里。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">.text:000000000040155D 66                        db  66h ; f</span><br><span class="line">.text:000000000040155E B8                        db 0B8h</span><br><span class="line">.text:000000000040155F           ; -------------------------------------------</span><br><span class="line">.text:000000000040155F EB 05                     jmp     short loc_401566</span><br><span class="line">.text:000000000040155F           ; -------------------------------------------</span><br><span class="line">.text:0000000000401561 31                        db  31h ; 1</span><br><span class="line">.text:0000000000401562 C0                        db 0C0h</span><br><span class="line">.text:0000000000401563 74                        db  74h ; t</span><br><span class="line">.text:0000000000401564 FA                        db 0FAh</span><br><span class="line">.text:0000000000401565 E8                        db 0E8h</span><br><span class="line">.text:0000000000401566           ; -------------------------------------------</span><br><span class="line">.text:0000000000401566</span><br><span class="line">.text:0000000000401566           loc_401566:   </span><br><span class="line">							  ; 真正执行的指令</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>x86和x64似乎都能用</p>
+</blockquote>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>核心代码就是原来<code>mov ax, 5EBh</code>中的<code>EB 05</code>。这玩意就是<code>jmp $+7</code>。</p>
+<h2 id="重叠花指令2"><a href="#重叠花指令2" class="headerlink" title="重叠花指令2"></a>重叠花指令2</h2><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">EB</span> FF C<span class="number">0</span> <span class="number">48</span></span><br></pre></td></tr></table></figure>
+
+<p>得到</p>
+<figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">.text:</span>004132D4 loc_4132D4:</span><br><span class="line"><span class="symbol">.text:</span>004132D4                 <span class="keyword">jmp</span>     short <span class="built_in">near</span> <span class="built_in">ptr</span> loc_4132D4+<span class="number">1</span></span><br><span class="line"><span class="symbol">.text:</span>004132D6                 <span class="keyword">ror</span>     <span class="built_in">byte</span> <span class="built_in">ptr</span> [<span class="built_in">eax</span>-<span class="number">34h</span>], <span class="number">0CCh</span></span><br></pre></td></tr></table></figure>
+
+<p>而<code>jmp</code>会跳转到自身的第二个字节上，从而实际上得到</p>
+<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">.text:</span><span class="number">004132</span>D4                 db <span class="number">0</span>EBh</span><br><span class="line"><span class="symbol">.text:</span><span class="number">004132</span>D5 <span class="comment">; ---------------------------------------------------------------------------</span></span><br><span class="line"><span class="symbol">.text:</span><span class="number">004132</span>D5                 <span class="keyword">inc</span>     eax</span><br><span class="line"><span class="symbol">.text:</span><span class="number">004132</span>D7                 <span class="keyword">dec</span>     eax</span><br></pre></td></tr></table></figure>
+
+<p>不要最后的0x48大抵也是可以的，那么这一块代码的意思就是将<code>eax</code>递增1。若不删除，那就是一个复杂4字节的<code>nop</code>指令。</p>
+<h2 id="利用异常处理"><a href="#利用异常处理" class="headerlink" title="利用异常处理"></a>利用异常处理</h2><p>老生常谈了。单独分一个博客来研究。</p>
+<p> <a target="_blank" rel="noopener" href="http://staff.ustc.edu.cn/~bjhua/courses/security/2014/readings/anti-disas.pdf">anti-disas.pdf (ustc.edu.cn)</a> </p>
+<p>里面有关于x86 SEH的。</p>
+<h2 id="栈分析混淆"><a href="#栈分析混淆" class="headerlink" title="栈分析混淆"></a>栈分析混淆</h2><p>大抵是用于针对IDA这种智能分析工具，否则的话也用不着这么高雅的技术。作用挺大的，那就是IDA会无法正常分析变量，以及没法生成函数伪代码。</p>
+<p>举个例子：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">00401543    sub_401543 proc near ; CODE XREF: sub_4012D0+3Cp</span><br><span class="line">00401543    ; sub_401328+9Bp</span><br><span class="line">00401543    </span><br><span class="line">00401543    arg_F4 = dword ptr 0F8h</span><br><span class="line">00401543    arg_F8 = dword ptr 0FCh</span><br><span class="line">00401543    </span><br><span class="line">00401543  000   sub esp, 8</span><br><span class="line">00401546  008   sub esp, 4</span><br><span class="line">00401549  00C   cmp esp, 1000h</span><br><span class="line">0040154F  00C   jl short loc_401556</span><br><span class="line">00401551  00C   add esp, 4</span><br><span class="line">00401554  008   jmp short loc_40155C</span><br><span class="line">00401556    ; --------------------------------------------------------------</span><br><span class="line">00401556    </span><br><span class="line">00401556    loc_401556: ; CODE XREF: sub_401543+Cj</span><br><span class="line">00401556  00C   add esp, 104h</span><br><span class="line">0040155C    </span><br><span class="line">0040155C    loc_40155C: ; CODE XREF: sub_401543+11j</span><br><span class="line">0040155C  -F8   mov [esp-0F8h+arg_F8], 1E61h</span><br><span class="line">00401564  -F8   lea eax, [esp-0F8h+arg_F8]</span><br><span class="line">00401568  -F8   mov [esp-0F8h+arg_F4], eax</span><br><span class="line">0040156B  -F8   mov edx, [esp-0F8h+arg_F4]</span><br><span class="line">0040156E  -F8   mov eax, [esp-0F8h+arg_F8]</span><br><span class="line">00401572  -F8   inc eax</span><br><span class="line">00401573  -F8   mov [edx], eax</span><br><span class="line">00401575  -F8   mov eax, [esp-0F8h+arg_F4]</span><br><span class="line">00401578  -F8   mov eax, [eax]</span><br><span class="line">0040157A  -F8   add esp, 8</span><br><span class="line">0040157D  -100  retn</span><br><span class="line">0040157D    sub_401543 endp ; sp-analysis failed</span><br></pre></td></tr></table></figure>
+
+<p>会发现后面的栈分析出了错误，这是由于IDA将永远不会执行的分支<code>add esp, 104h</code>给判断进了栈分析中。至于为什么不会执行，是因为<code>esp</code>的值至少在Windows中必然是不可能小于0x1000的。</p>
+<blockquote>
+<p>注意：栈分析混淆十分依赖于高级语言编译器实现，如果是使用高级语言编程恶俗程序的话。直接汇编写的话灵活性就会高很多，恶俗操作也会更多。</p>
+</blockquote>
+<h3 id="消除"><a href="#消除" class="headerlink" title="消除"></a>消除</h3><p><code>alt+k</code>手动更改栈指针，或者直接<code>patch</code>掉让IDA产生混淆的指令。</p>
+<h2 id="控制流混淆"><a href="#控制流混淆" class="headerlink" title="控制流混淆"></a>控制流混淆</h2><h3 id="间接跳转"><a href="#间接跳转" class="headerlink" title="间接跳转"></a>间接跳转</h3><p>IDA的交叉引用都是通过直接调用来获知的，比如<code>jmp 0x400000</code>。</p>
+<p>若强行改成<code>jmp rax</code>，<code>call rax</code>这种基于函数指针的形式，那么交叉引用就会失效。</p>
+<h4 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h4><blockquote>
+<p>这一块纯脑洞实验内容，强度应该很弱</p>
+</blockquote>
+<p>如何去写这个我倒是没啥想法。可以试试宏替换。</p>
+<blockquote>
+<p>实验环境：Visual Studio 2019，不喜欢<code>gcc</code>内联汇编风格。</p>
+</blockquote>
+<h5 id="1-无混淆"><a href="#1-无混淆" class="headerlink" title="1.无混淆"></a>1.无混淆</h5><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">CallMe</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line">	<span class="built_in">puts</span>(<span class="string">&quot;Callme&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line">	_asm nop;</span><br><span class="line">	_asm call CallMe;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可执行。</p>
+<h5 id="2-lea-call-eax"><a href="#2-lea-call-eax" class="headerlink" title="2.lea+call eax"></a>2.<code>lea</code>+<code>call eax</code></h5><p>先<code>lea</code>获得函数地址于<code>eax</code>寄存器中，然后再<code>call</code>。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">CallMe</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line">	<span class="built_in">puts</span>(<span class="string">&quot;Callme&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line">	_asm nop;</span><br><span class="line">	_asm call CallMe;</span><br><span class="line"></span><br><span class="line">	_asm pushf</span><br><span class="line">	_asm pushad</span><br><span class="line">	_asm lea eax, CallMe</span><br><span class="line">	_asm call eax</span><br><span class="line">	_asm popad</span><br><span class="line">	_asm popf</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可执行，但是混淆力度不大，轻松被IDA的常量传递操作识别出来。</p>
+<h5 id="3-间接调用-加解密"><a href="#3-间接调用-加解密" class="headerlink" title="3.间接调用+加解密"></a>3.间接调用+加解密</h5><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> __declspec(naked) EncAddr(<span class="keyword">void</span>) &#123;</span><br><span class="line">	_asm ror eax, <span class="number">5</span></span><br><span class="line">	_asm ret</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//void EncAddr(int addr) &#123;</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> __declspec(naked) DecAddr(<span class="keyword">void</span>) &#123;</span><br><span class="line">	_asm rol eax, <span class="number">5</span></span><br><span class="line">	_asm ret</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">CallMe</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line">	<span class="built_in">puts</span>(<span class="string">&quot;Callme&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> decaddr;</span><br><span class="line">	<span class="keyword">int</span> encaddr;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%#p\n&quot;</span>, &amp;CallMe);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 作为一个整体，写成宏</span></span><br><span class="line">	_asm lea eax, CallMe</span><br><span class="line">	_asm call EncAddr</span><br><span class="line">	_asm mov encaddr, <span class="function">eax</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">	<span class="title">printf</span><span class="params">(<span class="string">&quot;%#x\n&quot;</span>, encaddr)</span></span>;</span><br><span class="line"></span><br><span class="line">	_asm mov eax, encaddr</span><br><span class="line">	_asm call DecAddr</span><br><span class="line">	_asm mov decaddr, <span class="function">eax</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">	<span class="title">printf</span><span class="params">(<span class="string">&quot;%#x\n&quot;</span>, decaddr)</span></span>;</span><br><span class="line"></span><br><span class="line">	_asm mov eax, decaddr</span><br><span class="line">	_asm call eax</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>大概的方法很迫真，但是确实起了一定的作用。也就是消除了直接的调用。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> __cdecl <span class="title">main_0</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> **argv, <span class="keyword">const</span> <span class="keyword">char</span> **envp)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> v4; <span class="comment">// [esp+D0h] [ebp-18h]</span></span><br><span class="line">  <span class="keyword">void</span> (*v5)(<span class="keyword">void</span>); <span class="comment">// [esp+DCh] [ebp-Ch]</span></span><br><span class="line"></span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%#p\n&quot;</span>, sub_41116D);</span><br><span class="line">  v4 = EncAddr();</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%#x\n&quot;</span>, v4);</span><br><span class="line">  v5 = (<span class="keyword">void</span> (*)(<span class="keyword">void</span>))DecAddr();</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%#x\n&quot;</span>, v5);</span><br><span class="line">  v5();</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当然看汇编的话还是有<code>lea  eax, sub_41116D</code>这样直接引用函数地址的操作，所以交叉引用还是有效的。</p>
+<p>可见在IDA自动生成的情况下，反编译中，<code>EncAddr()</code>函数是并不会显示出传入的地址的。</p>
+<h5 id="4-before-main"><a href="#4-before-main" class="headerlink" title="4.before main"></a>4.before main</h5><p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/10897552/call-a-function-before-main">https://stackoverflow.com/questions/10897552/call-a-function-before-main</a></p>
+<p>给了很多方法。其中有几个是基于C++特性实现的。<code>msvc</code>中不提供对<code>main</code>前面<code>start</code>等初始化函数进行修改的宏；<code>gcc</code>有修改<code>main</code>前面函数的，但是我现在不想换汇编格式。</p>
+<p>换个博客仔细讲这个骚操作。总而言之，目的就是要解密函数离<code>main</code>函数远一点。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">foo</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="built_in">puts</span>(<span class="string">&quot;Foo&quot;</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">foo2</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="built_in">puts</span>(<span class="string">&quot;Foo2&quot;</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">auto</span> b = <span class="built_in">foo</span>();</span><br><span class="line"><span class="keyword">auto</span> c = <span class="built_in">foo2</span>();</span><br></pre></td></tr></table></figure>
+
+<p><code>foo()</code>，<code>foo2()</code>会依次提前运行，因为这2个类对象的生成必然得提前于<code>main</code>。</p>
+<p>那么配合控制流混淆：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">foo</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="built_in">puts</span>(<span class="string">&quot;Foo&quot;</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">foo2</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="built_in">puts</span>(<span class="string">&quot;Foo2&quot;</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">CallMe</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line">	<span class="built_in">puts</span>(<span class="string">&quot;Callme&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> __declspec(naked) EncAddr(<span class="keyword">void</span>) &#123;</span><br><span class="line">	_asm ror eax, <span class="number">5</span></span><br><span class="line">	_asm ret</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> __declspec(naked) DecAddr(<span class="keyword">void</span>) &#123;</span><br><span class="line">	_asm rol eax, <span class="number">5</span></span><br><span class="line">	_asm ret</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">EncAddrWrapper</span><span class="params">(<span class="keyword">int</span> addr)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> tmp;</span><br><span class="line">	_asm mov eax, addr</span><br><span class="line">	_asm call EncAddr</span><br><span class="line">	_asm mov tmp, eax</span><br><span class="line">	<span class="keyword">return</span> tmp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">DecAddrWrapper</span><span class="params">(<span class="keyword">int</span> addr)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> tmp;</span><br><span class="line">	_asm mov eax, addr</span><br><span class="line">	_asm call DecAddr </span><br><span class="line">	_asm mov tmp, eax</span><br><span class="line">	<span class="keyword">return</span> tmp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">auto</span> c = EncAddrWrapper((<span class="keyword">int</span>)&amp;CallMe);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%#x\n&quot;</span>, (<span class="keyword">int</span>)&amp;CallMe);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%#x\n&quot;</span>, c);</span><br><span class="line"></span><br><span class="line">	_asm mov eax, c</span><br><span class="line">	_asm call DecAddr</span><br><span class="line">	_asm call eax</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0xe8118b</span></span><br><span class="line"><span class="number">0x5807408c</span></span><br><span class="line">Callme</span><br></pre></td></tr></table></figure>
+
+<h5 id="5-完全去除具体地址"><a href="#5-完全去除具体地址" class="headerlink" title="5.完全去除具体地址"></a>5.完全去除具体地址</h5><p>上面的玩意无论怎么说都还是有具体函数地址的。消除也是完全可行的。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">CallMe</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line">	<span class="built_in">puts</span>(<span class="string">&quot;Callme&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	_asm mov eax, CallMe+<span class="number">1919810</span></span><br><span class="line">	_asm sub eax, <span class="number">1919810</span></span><br><span class="line">	_asm push L</span><br><span class="line">	_asm push eax</span><br><span class="line">	_asm ret</span><br><span class="line">	L:</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样能保证绝绝对对得到的不是具体地址了。虽然看上去还是很简单，因为相隔距离太近了；不过要是配合其他几个手法的话，再加上指令替换Pass，就会比较厉害了。</p>
+<hr>
+<p>还有一种想法</p>
+<figure class="highlight llvm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">call</span> $+<span class="number">5</span></span><br><span class="line"><span class="keyword">add</span>  [esp]<span class="punctuation">,</span> <span class="number">0</span><span class="keyword">x</span>????</span><br><span class="line"><span class="keyword">ret</span></span><br></pre></td></tr></table></figure>
+
+<p>用这种代替<code>jmp</code>指令的操作。即将<code>CallMe</code>函数地址直接拆成<code>add</code>指令所在地址+<code>0x????</code>（相对偏移），更加具有迷惑性。不过直接源码上似乎无法实现，我也暂时不打算在汇编层面上魔改甚至直接patch二进制程序了。以后有机会的话看看别人的开源混淆器实现后，再来找思路。</p>
+<h5 id="6-其他脑洞（未实现）"><a href="#6-其他脑洞（未实现）" class="headerlink" title="6.其他脑洞（未实现）"></a>6.其他脑洞（未实现）</h5><p>比如在<code>main</code>函数里面<code>lea eax, A</code>，那么可能会被认为这是在调用<code>A</code>，但是实际上进行了一次解密转换后，变成了实际调用函数<code>B</code>。</p>
+<h4 id="消除-1"><a href="#消除-1" class="headerlink" title="消除"></a>消除</h4><ol>
+<li>若是很明显的宏替换，那么可以选择直接Python脚本替换字节码。</li>
+<li>若没什么规则，则得考虑使用模拟执行。比如使用<code>Unicorn</code>或者<code>angr</code>，模拟执行相关跳转块，然后保存具体跳转地址，然后再<code>patch</code>。</li>
+</ol>
+<h3 id="利用ret"><a href="#利用ret" class="headerlink" title="利用ret"></a>利用ret</h3><p>一般而言<code>ret == pop + jmp</code>，所以可以利用这一点来进行骚操作。</p>
+<p>上面实现的第五点已经用过了</p>
+<figure class="highlight llvm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">call</span> $+<span class="number">5</span></span><br><span class="line"><span class="keyword">add</span>  [esp]<span class="punctuation">,</span> <span class="number">0</span><span class="keyword">x</span>????</span><br><span class="line"><span class="keyword">ret</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="反Patch（没写完）"><a href="#反Patch（没写完）" class="headerlink" title="反Patch（没写完）"></a>反Patch（没写完）</h2><p>反混淆难免得需要魔改程序，修改几个字节码。那么通过<code>CRC</code>自校验算法，则可以检测自身是否被<code>patch</code>过。</p>
+<p>我一开始的想法是，开个线程，然后读取内存或者硬盘上本可执行程序的字节码，然后哈希或者CRC梭哈一番，然后比对未patch时的哈希码，看看有没有篡改。但是这个手段似乎太容易被日了</p>
+<p><a target="_blank" rel="noopener" href="https://www.codeproject.com/Articles/18961/Tamper-Aware-and-Self-Healing-Code#pre0">https://www.codeproject.com/Articles/18961/Tamper-Aware-and-Self-Healing-Code#pre0</a></p>
+<p>提供了一个不错的思路，学完后再补充。</p>
+<h3 id="缺陷"><a href="#缺陷" class="headerlink" title="缺陷"></a>缺陷</h3><p>这玩意相关文章都是05-09年左右的了，技术古老。本地自校验确实太容易被patch了。</p>
+<h2 id="进阶"><a href="#进阶" class="headerlink" title="进阶"></a>进阶</h2><p>2011年的时候就有一个人写过Windows上可以说最详细的反调试手段。</p>
+<p><a target="_blank" rel="noopener" href="https://anti-reversing.com/Downloads/Anti-Reversing/The_Ultimate_Anti-Reversing_Reference.pdf">https://anti-reversing.com/Downloads/Anti-Reversing/The_Ultimate_Anti-Reversing_Reference.pdf</a></p>
+<p>内容过多不Copy了，不过可能会自己尽量尝试实现一番。</p>
+<h2 id="IDAPython脚本"><a href="#IDAPython脚本" class="headerlink" title="IDAPython脚本"></a>IDAPython脚本</h2><h3 id="nop指令"><a href="#nop指令" class="headerlink" title="nop指令"></a><code>nop</code>指令</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> idaapi</span><br><span class="line"></span><br><span class="line">idaapi.CompileLine(<span class="string">&#x27;static n_key() &#123; RunPythonStatement(&quot;nopIt()&quot;); &#125;&#x27;</span>)</span><br><span class="line"></span><br><span class="line">AddHotkey(<span class="string">&quot;Alt-N&quot;</span>, <span class="string">&quot;n_key&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">nopIt</span>():</span></span><br><span class="line">     start = ScreenEA()</span><br><span class="line">     end = NextHead(start)</span><br><span class="line">     <span class="keyword">for</span> ea <span class="keyword">in</span> <span class="built_in">range</span>(start, end):</span><br><span class="line">     	PatchByte(ea, <span class="number">0x90</span>)</span><br><span class="line">     Jump(end)</span><br><span class="line">     Refresh()</span><br></pre></td></tr></table></figure>
+
+<p>（<code>IDAPython</code>的API似乎已经有变化了，留在这做个参考罢了）</p>
+<h3 id="添加xref交叉引用"><a href="#添加xref交叉引用" class="headerlink" title="添加xref交叉引用"></a>添加<code>xref</code>交叉引用</h3><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">AddCodeXref</span>(<span class="number">0</span>x<span class="number">004011</span>DE, <span class="number">0</span>x<span class="number">004011</span>C<span class="number">0</span>, fl_CF);</span><br></pre></td></tr></table></figure>
+
+<p><code>fl_CF</code>是<code>call</code></p>
+<p><code>fl_JF</code>是<code>jmp</code></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p> <a target="_blank" rel="noopener" href="http://staff.ustc.edu.cn/~bjhua/courses/security/2014/readings/anti-disas.pdf">anti-disas.pdf (ustc.edu.cn)</a> </p>
+<p> <a target="_blank" rel="noopener" href="https://blog.csdn.net/pianogirl123/article/details/53871397">代码混淆／程序保护（对抗反汇编）原理与实践_pianogirl123的博客-CSDN博客_防止反汇编</a> </p>
+<p> <a target="_blank" rel="noopener" href="https://blog.csdn.net/DavidHsing/article/details/4184240">在 VS2008 下用 CRC32 算法实现程序自校验_蜡笔小辛的专栏-CSDN博客</a> </p>
+<p><a target="_blank" rel="noopener" href="https://anti-reversing.com/Downloads/Anti-Reversing/The_Ultimate_Anti-Reversing_Reference.pdf">https://anti-reversing.com/Downloads/Anti-Reversing/The_Ultimate_Anti-Reversing_Reference.pdf</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/obfuscation/" rel="tag"><i class="fa fa-tag"></i></a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/03/07/cgo/" rel="prev" title="CGO初探">
+      <i class="fa fa-chevron-left"></i> CGO初探
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%8D-%E5%8F%8D%E6%B1%87%E7%BC%96%E5%88%86%E6%9E%90"><span class="nav-number">1.</span> <span class="nav-text">反-反汇编分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%8D%E6%B1%87%E7%BC%96%E5%99%A8%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.1.</span> <span class="nav-text">反汇编器类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%BF%E6%80%A7%E6%89%AB%E6%8F%8F"><span class="nav-number">1.1.1.</span> <span class="nav-text">线性扫描</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%92%E5%BD%92%E4%B8%8B%E9%99%8D%E6%89%AB%E6%8F%8F%E5%99%A8"><span class="nav-number">1.1.2.</span> <span class="nav-text">递归下降扫描器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A0%B4%E8%A7%A3%E5%8F%8D%E5%8F%8D%E6%B1%87%E7%BC%96"><span class="nav-number">1.2.</span> <span class="nav-text">破解反反汇编</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jmp-call"><span class="nav-number">1.3.</span> <span class="nav-text">jmp+call</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%B9%E5%BE%81"><span class="nav-number">1.3.1.</span> <span class="nav-text">特征</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95"><span class="nav-number">1.3.2.</span> <span class="nav-text">构造方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%88%E6%9E%9C"><span class="nav-number">1.3.3.</span> <span class="nav-text">效果</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jz-jnz"><span class="nav-number">1.4.</span> <span class="nav-text">jz+jnz</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0-jz"><span class="nav-number">1.5.</span> <span class="nav-text">0+jz</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%88%E6%9E%9C-1"><span class="nav-number">1.5.1.</span> <span class="nav-text">效果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%94%B9%E8%BF%9B"><span class="nav-number">1.5.2.</span> <span class="nav-text">改进</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8D%E5%8F%A0%E8%8A%B1%E6%8C%87%E4%BB%A4"><span class="nav-number">1.6.</span> <span class="nav-text">重叠花指令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">1.6.1.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8D%E5%8F%A0%E8%8A%B1%E6%8C%87%E4%BB%A42"><span class="nav-number">1.7.</span> <span class="nav-text">重叠花指令2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A9%E7%94%A8%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86"><span class="nav-number">1.8.</span> <span class="nav-text">利用异常处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%88%E5%88%86%E6%9E%90%E6%B7%B7%E6%B7%86"><span class="nav-number">1.9.</span> <span class="nav-text">栈分析混淆</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B6%88%E9%99%A4"><span class="nav-number">1.9.1.</span> <span class="nav-text">消除</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A7%E5%88%B6%E6%B5%81%E6%B7%B7%E6%B7%86"><span class="nav-number">1.10.</span> <span class="nav-text">控制流混淆</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%B4%E6%8E%A5%E8%B7%B3%E8%BD%AC"><span class="nav-number">1.10.1.</span> <span class="nav-text">间接跳转</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0"><span class="nav-number">1.10.1.1.</span> <span class="nav-text">实现</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-%E6%97%A0%E6%B7%B7%E6%B7%86"><span class="nav-number">1.10.1.1.1.</span> <span class="nav-text">1.无混淆</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-lea-call-eax"><span class="nav-number">1.10.1.1.2.</span> <span class="nav-text">2.lea+call eax</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-%E9%97%B4%E6%8E%A5%E8%B0%83%E7%94%A8-%E5%8A%A0%E8%A7%A3%E5%AF%86"><span class="nav-number">1.10.1.1.3.</span> <span class="nav-text">3.间接调用+加解密</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-before-main"><span class="nav-number">1.10.1.1.4.</span> <span class="nav-text">4.before main</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-%E5%AE%8C%E5%85%A8%E5%8E%BB%E9%99%A4%E5%85%B7%E4%BD%93%E5%9C%B0%E5%9D%80"><span class="nav-number">1.10.1.1.5.</span> <span class="nav-text">5.完全去除具体地址</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6-%E5%85%B6%E4%BB%96%E8%84%91%E6%B4%9E%EF%BC%88%E6%9C%AA%E5%AE%9E%E7%8E%B0%EF%BC%89"><span class="nav-number">1.10.1.1.6.</span> <span class="nav-text">6.其他脑洞（未实现）</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B6%88%E9%99%A4-1"><span class="nav-number">1.10.1.2.</span> <span class="nav-text">消除</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A9%E7%94%A8ret"><span class="nav-number">1.10.2.</span> <span class="nav-text">利用ret</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%8DPatch%EF%BC%88%E6%B2%A1%E5%86%99%E5%AE%8C%EF%BC%89"><span class="nav-number">1.11.</span> <span class="nav-text">反Patch（没写完）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%BA%E9%99%B7"><span class="nav-number">1.11.1.</span> <span class="nav-text">缺陷</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E9%98%B6"><span class="nav-number">1.12.</span> <span class="nav-text">进阶</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IDAPython%E8%84%9A%E6%9C%AC"><span class="nav-number">1.13.</span> <span class="nav-text">IDAPython脚本</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#nop%E6%8C%87%E4%BB%A4"><span class="nav-number">1.13.1.</span> <span class="nav-text">nop指令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0xref%E4%BA%A4%E5%8F%89%E5%BC%95%E7%94%A8"><span class="nav-number">1.13.2.</span> <span class="nav-text">添加xref交叉引用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">1.14.</span> <span class="nav-text">参考</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Tardis"
+      src="/images/spongebob.jpg">
+  <p class="site-author-name" itemprop="name">Tardis</p>
+  <div class="site-description" itemprop="description">学点好玩的逆向知识</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Taardisaa" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Taardisaa" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:136665562@qq.com" title="E-Mail → mailto:136665562@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa-heartbeat"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tardis</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">566k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">8:35</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='250' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+   if (typeof MathJax === 'undefined') {
+       window.MathJax = {
+         loader: {
+         source: {
+           '[tex]/amsCd': '[tex]/amscd',
+           '[tex]/AMScd': '[tex]/amscd'
+         }
+       },
+       tex: {
+         inlineMath: {'[+]': [['$', '$']]},
+         tags: 'ams'
+       },
+       options: {
+         renderActions: {
+           findScript: [10, doc => {
+             document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+               const display = !!node.type.match(/; *mode=display/);
+               const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+               const text = document.createTextNode('');
+               node.parentNode.replaceChild(text, node);
+               math.start = {node: text, delim: '', n: 0};
+               math.end = {node: text, delim: '', n: 0};
+               doc.math.push(math);
+             });
+           }, '', false],
+           insertedScript: [200, () => {
+         document.querySelectorAll('mjx-container').forEach(node => {
+           let target = node.parentNode;
+           if (target.nodeName.toLowerCase() === 'li') {
+             target.parentNode.classList.add('has-jax');
+           }
+         });
+       }, '', false]
+     }
+   }
+ };
+	
+
+    (function () {
+      var script = document.createElement('script');
+      script.src = 'https://cdn.jsdelivr.net/npm/mathjax@2.7.8/unpacked/MathJax.js?config=TeX-MML-AM_CHTML';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+
+   <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+   <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+   <script type="text/javascript" src="/js/fireworks.js"></script>
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"right","width":200,"height":400},"mobile":{"show":true},"log":false});</script></body>
+</html>
