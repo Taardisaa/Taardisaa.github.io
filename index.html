@@ -159,6 +159,113 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://taardisaa.github.io/2022/03/10/ELFCrypt/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/spongebob.jpg">
+      <meta itemprop="name" content="Tardis">
+      <meta itemprop="description" content="学点好玩的逆向知识">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Tardis's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/03/10/ELFCrypt/" class="post-title-link" itemprop="url">ELFCrypt</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-03-10 14:11:00 / 修改时间：14:41:57" itemprop="dateCreated datePublished" datetime="2022-03-10T14:11:00+08:00">2022-03-10</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Obfuscation/" itemprop="url" rel="index"><span itemprop="name">Obfuscation</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>986</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>在复习RC4时遇到的一个有意思的小众ELF加密库。看着玩玩。</p>
+<h1 id="ELFCrypt"><a href="#ELFCrypt" class="headerlink" title="ELFCrypt"></a>ELFCrypt</h1><h2 id="源码仓库"><a href="#源码仓库" class="headerlink" title="源码仓库"></a>源码仓库</h2><p><a target="_blank" rel="noopener" href="https://github.com/droberson/ELFcrypt">https://github.com/droberson/ELFcrypt</a></p>
+<p>这个Github主的头像好阴间</p>
+<h2 id="用处"><a href="#用处" class="headerlink" title="用处"></a>用处</h2><p>利用RC4加密函数，使得只有输入正确的密码才能解密二进制程序，从而执行。</p>
+<h2 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h2><p>核心在于</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">void <span class="constructor">ELFcrypt(<span class="params">const</span> <span class="params">char</span> <span class="operator">*</span><span class="params">in</span>, <span class="params">const</span> <span class="params">char</span> <span class="operator">*</span><span class="params">out</span>, <span class="params">const</span> <span class="params">unsigned</span> <span class="params">char</span> <span class="operator">*</span><span class="params">key</span>)</span>;</span><br></pre></td></tr></table></figure>
+
+<p>获取<code>in</code>，<code>out</code>后</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">program</span> = mmap(<span class="number">0</span>, filesize, PROT_READ | PROT_WRITE, MAP_PRIVATE, fd, <span class="number">0</span>)<span class="comment">;</span></span><br></pre></td></tr></table></figure>
+
+<p>将会<code>mmap</code>未加密程序，然后</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">crypted</span> = get_elf_section(program, <span class="string">&quot;.crypted&quot;</span>)<span class="comment">;</span></span><br></pre></td></tr></table></figure>
+
+<p>获取<code>.crypted</code>待加密段</p>
+<p>然后尝试加密</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Encrypt .crypted section using &#x27;key&#x27; */</span></span><br><span class="line"><span class="keyword">if</span> (rc4(program + crypted-&gt;sh_offset, crypted-&gt;sh_size, (<span class="keyword">unsigned</span> <span class="keyword">char</span> *)key) == <span class="number">1</span>)</span><br><span class="line">  fatal(<span class="string">&quot;Failed to encrypt input file %s\n&quot;</span>, in);</span><br></pre></td></tr></table></figure>
+
+<p>然后写回</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">*((<span class="keyword">int</span> *)(program + <span class="number">0x09</span>)) = crypted-&gt;sh_offset;</span><br><span class="line">*((<span class="keyword">short</span> *)(program + <span class="number">0x0d</span>)) = crypted-&gt;sh_size;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Write outfile */</span></span><br><span class="line"><span class="keyword">if</span> (write(output, program, filesize) != filesize)</span><br><span class="line">  fatal(<span class="string">&quot;Failed to write to output file %s: %s\n&quot;</span>, out, strerror(errno));</span><br></pre></td></tr></table></figure>
+
+<p>当然<code>.crypted</code>段也必须在待加密程序编译时提前声明。在想要加密的函数前加上</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#define CRYPTED __attribute__((<span class="name">section</span>(<span class="string">&quot;.crypted&quot;</span>)))</span><br></pre></td></tr></table></figure>
+
+<p>然后编译。</p>
+<p>里面的RC4算法也是很一般的操作。</p>
+<h2 id="实际使用"><a href="#实际使用" class="headerlink" title="实际使用"></a>实际使用</h2><p>现在来看是没法用的，里面有些设定很死，必须默认入口地址就是0x4000000，导致现在基本上默认基于PIE的程序，或者基址不在这里的程序一跑就会SIGSEGV。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://taardisaa.github.io/2022/03/10/RC4/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -980,95 +1087,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://taardisaa.github.io/2022/02/24/Go%20Reverse%202/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/spongebob.jpg">
-      <meta itemprop="name" content="Tardis">
-      <meta itemprop="description" content="学点好玩的逆向知识">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Tardis's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/02/24/Go%20Reverse%202/" class="post-title-link" itemprop="url">Go逆向_2</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-02-24 14:00:00 / 修改时间：14:45:13" itemprop="dateCreated datePublished" datetime="2022-02-24T14:00:00+08:00">2022-02-24</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Go/" itemprop="url" rel="index"><span itemprop="name">Go</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>72k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1:05</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Go内存模型，调用机制和PLAN9汇编</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/02/24/Go%20Reverse%202/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1140,20 +1158,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-count">29</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-count">16</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-count">16</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1202,13 +1220,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">576k</span>
+    <span title="站点总字数">577k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">8:43</span>
+    <span title="站点阅读时长">8:44</span>
 </div>
 
         
