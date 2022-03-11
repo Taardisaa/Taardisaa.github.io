@@ -21,20 +21,20 @@
     var CONFIG = {"hostname":"taardisaa.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="记一下我容易忘记的一些细节上的小知识。持续更新。">
+  <meta name="description" content="pie会影响逆向分析。讨论一下解决方案。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Things to Remember">
-<meta property="og:url" content="https://taardisaa.github.io/2022/03/09/Things%20to%20Remember/index.html">
+<meta property="og:title" content="PIE">
+<meta property="og:url" content="https://taardisaa.github.io/2022/03/10/PIE/index.html">
 <meta property="og:site_name" content="Tardis&#39;s blog">
-<meta property="og:description" content="记一下我容易忘记的一些细节上的小知识。持续更新。">
+<meta property="og:description" content="pie会影响逆向分析。讨论一下解决方案。">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-03-09T11:23:00.000Z">
-<meta property="article:modified_time" content="2022-03-09T11:31:38.687Z">
+<meta property="article:published_time" content="2022-03-10T12:50:00.000Z">
+<meta property="article:modified_time" content="2022-03-11T04:03:38.724Z">
 <meta property="article:author" content="Tardis">
 <meta property="article:tag" content="Other">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://taardisaa.github.io/2022/03/09/Things%20to%20Remember/">
+<link rel="canonical" href="https://taardisaa.github.io/2022/03/10/PIE/">
 
 
 <script id="page-configurations">
@@ -47,7 +47,7 @@
   };
 </script>
 
-  <title>Things to Remember | Tardis's blog</title>
+  <title>PIE | Tardis's blog</title>
   
 
 
@@ -163,7 +163,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://taardisaa.github.io/2022/03/09/Things%20to%20Remember/">
+    <link itemprop="mainEntityOfPage" href="https://taardisaa.github.io/2022/03/10/PIE/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/spongebob.jpg">
@@ -176,7 +176,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Things to Remember
+          PIE
         </h1>
 
         <div class="post-meta">
@@ -185,10 +185,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-03-09 19:23:00 / 修改时间：19:31:38" itemprop="dateCreated datePublished" datetime="2022-03-09T19:23:00+08:00">2022-03-09</time>
+              <time title="创建时间：2022-03-10 20:50:00" itemprop="dateCreated datePublished" datetime="2022-03-10T20:50:00+08:00">2022-03-10</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-03-11 12:03:38" itemprop="dateModified" datetime="2022-03-11T12:03:38+08:00">2022-03-11</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -205,14 +211,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>288</span>
+              <span>1.8k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>2 分钟</span>
             </span>
 
         </div>
@@ -224,14 +230,53 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>记一下我容易忘记的一些细节上的小知识。持续更新。</p>
+        <p><code>pie</code>会影响逆向分析。讨论一下解决方案。</p>
 <span id="more"></span>
 
-<h1 id="Things-to-Remember"><a href="#Things-to-Remember" class="headerlink" title="Things to Remember"></a>Things to Remember</h1><h2 id="push-amp-pop"><a href="#push-amp-pop" class="headerlink" title="push&amp;pop"></a>push&amp;pop</h2><p>每次都把<code>push</code>和<code>pop</code>中指针移动和数据移动的先后关系搞倒了。</p>
-<p> <a target="_blank" rel="noopener" href="http://c.biancheng.net/view/3534.html">汇编语言PUSH和POP指令（压栈和出栈） (biancheng.net)</a> </p>
-<p> <code>PUSH</code> 指令<strong>首先减少</strong> <code>ESP</code> 的值，<strong>再将源操作数复制到堆栈</strong>。操作数是 16 位的，则 <code>ESP</code> 减 2，操作数是 32 位的，则 <code>ESP</code> 减 4。 </p>
-<p>所以说<code>push</code>完之后，<code>esp</code>指针将正好指向刚刚<code>push</code>的数据上。于是乎<code>mov eax, [esp]</code>取的就是刚刚所<code>push</code>的值。</p>
-<p> <code>POP</code> 指令<strong>首先</strong>把 <code>ESP</code> 指向的堆栈元素内容<strong>复制</strong>到一个 16 位或 32 位目的操作数中，<strong>再增加</strong> <code>ESP</code> 的值。 </p>
+<h1 id="PIE"><a href="#PIE" class="headerlink" title="PIE"></a>PIE</h1><p> <a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43921239/article/details/103813046">ASLR 与 PIE 的同与异_SkYe’s Blog-CSDN博客_aslr和pie</a> </p>
+<p> [PIE保护详解和常用bypass手段 - 安全客，安全资讯平台 (anquanke.com)](<a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/177520#:~:text=%E4%BB%80%E4%B9%88%E6%98%AFPIE%E5%91%A2%EF%BC%9F">https://www.anquanke.com/post/id/177520#:~:text=什么是PIE呢？</a>. PIE全称是position-independent,executable，中文解释为地址无关可执行文件，该技术是一个针对代码段（.text）、数据段（.data）、未初始化全局变量段（.bss）等固定地址的一个防护技术，如果程序开启了PIE保护的话，在每次加载程序时都变换加载地址，从而不能通过ROPgadget等一些工具来帮助解题. 开启PIE保护的时候每次运行时加载地址是随机变化的.) </p>
+<p><code>PIE</code>全称是<code>position-independent executable</code>，中文解释为地址无关可执行文件，该技术是一个针对代码段（<code>.text</code>）、数据段（<code>.data</code>）、未初始化全局变量段（<code>.bss</code>）等固定地址的一个防护技术。</p>
+<p>使用上次<code>CGO</code>逆向的<code>my.go</code>文件测试。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">#include &lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">static void SayHello(const char* s) &#123;</span></span><br><span class="line"><span class="comment">	puts(s);</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;C&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="function">func <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	C.SayHello(C.CString(<span class="string">&quot;Hello, World\n&quot;</span>))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">go</span> build -buildmode=pie -<span class="keyword">o</span> my_pie.<span class="keyword">exe</span> my.<span class="keyword">go</span></span><br></pre></td></tr></table></figure>
+
+<p>记一下默认<code>main.main</code>地址：0x46F9C0</p>
+<p>跑起来后：0x1CF9C0</p>
+<p>发生了变化。</p>
+<p> <a target="_blank" rel="noopener" href="https://kms.app/archives/206/">逆向随机基址 全解决方案 - So who are you (kms.app)</a> </p>
+<p>PIE这个玩意确实很鸡贼。有的程序会依赖这个，所以直接关闭会出现意想不到的结果。不关闭的话，每次逆向都要重新找基址，很麻烦。</p>
+<h2 id="关闭PIE"><a href="#关闭PIE" class="headerlink" title="关闭PIE"></a>关闭PIE</h2><h3 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h3><p>这玩意的开启与关闭就存储在<code>Nt header</code>中。</p>
+<p>找到<code>DllCharacteristics</code>设置，修改比特位进行关闭。</p>
+<p>可以使用<code>CFF Explorer</code>进行修改，关闭<code>Dll can move</code>选项。</p>
+<h4 id="测试（持续记录）"><a href="#测试（持续记录）" class="headerlink" title="测试（持续记录）"></a>测试（持续记录）</h4><ol>
+<li>Go-PIE：关闭后无影响。</li>
+<li></li>
+</ol>
+<h3 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h3><p>网上一堆关于开了PIE后如何bypass啥的，但是我是个逆向手，我当前不需要知道这个，我只想知道如何直接关闭。</p>
+<p><a target="_blank" rel="noopener" href="https://reverseengineering.stackexchange.com/questions/22731/convert-pie-elf-binary-into-no-pie">https://reverseengineering.stackexchange.com/questions/22731/convert-pie-elf-binary-into-no-pie</a></p>
+<h4 id="GDB"><a href="#GDB" class="headerlink" title="GDB"></a>GDB</h4><p><code>set disable-randomization on</code></p>
+<p>这样能强行默认加载<strong>代码段</strong>于一个基址保持不变。大概是 <code>0x555555554000 </code></p>
+<p>堆栈段似乎由于由ASLR管控，所以没关闭的话，还是会随机化的。</p>
+<p><a target="_blank" rel="noopener" href="https://sourceware.org/gdb/current/onlinedocs/gdb.pdf">https://sourceware.org/gdb/current/onlinedocs/gdb.pdf</a></p>
+<h4 id="IDA"><a href="#IDA" class="headerlink" title="IDA"></a>IDA</h4><p>真没想出来办法，似乎没给这个操作。</p>
+<h4 id="终极办法"><a href="#终极办法" class="headerlink" title="终极办法"></a>终极办法</h4><p>进<code>root</code>权限</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo -<span class="selector-tag">i</span></span><br></pre></td></tr></table></figure>
+
+<p>直接关ASLR，这样似乎能够同时把PIE给失效掉。</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo <span class="number">0</span> &gt; <span class="regexp">/proc/</span>sys<span class="regexp">/kernel/</span>randomize_va_space</span><br></pre></td></tr></table></figure>
+
+<p>这样IDA也能享受不变基址的操作了。</p>
+<h2 id="计算偏移"><a href="#计算偏移" class="headerlink" title="计算偏移"></a>计算偏移</h2><p>首先在IDA中获取静态情况下的入口地址<code>static_addr</code>。</p>
+<p>然后动态调试时记录入口地址的真正值<code>real_addr</code>。（在x64dbg上动态追踪，或者另开一个IDA动态跑）</p>
+<p>得到了<code>real_addr - static_addr</code>相差偏移，那么就可以通过任一静态地址获得其具体的动态地址了。</p>
+<h3 id="IDA-Rebase-Program"><a href="#IDA-Rebase-Program" class="headerlink" title="IDA Rebase Program"></a>IDA Rebase Program</h3><p><code>Edit-&gt;Segments-&gt;Rebase program</code></p>
+<p>修改<code>Image base</code>或者提供刚刚计算出来的<code>Shift delta</code>。</p>
+<h3 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h3><p>IDA自适应不一定万能，出了啥映射错误的话还是不好处理</p>
+<p>每调试一次都要修一遍。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>能直接关PIE肯定直接关，轻轻松松的事情。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p> <a target="_blank" rel="noopener" href="https://will.io/blog/2013/05/31/disable-aslr/">Disable ASLR and stop IDA rebasing | Will Donohoe</a> </p>
+<p> <a target="_blank" rel="noopener" href="https://blog.csdn.net/counsellor/article/details/81543197">Linux下关闭ALSR(地址空间随机化)的方法_counsellor的专栏-CSDN博客_linux关闭地址随机化</a> </p>
 
     </div>
 
@@ -250,13 +295,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2022/03/09/Float-Point%20Number/" rel="prev" title="IEEE 754浮点数——重要点备忘">
-      <i class="fa fa-chevron-left"></i> IEEE 754浮点数——重要点备忘
+    <a href="/2022/03/10/ELFCrypt/" rel="prev" title="ELFCrypt">
+      <i class="fa fa-chevron-left"></i> ELFCrypt
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2022/03/10/RC4/" rel="next" title="RC4流密码">
-      RC4流密码 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -315,7 +357,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Things-to-Remember"><span class="nav-number">1.</span> <span class="nav-text">Things to Remember</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#push-amp-pop"><span class="nav-number">1.1.</span> <span class="nav-text">push&amp;pop</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#PIE"><span class="nav-number">1.</span> <span class="nav-text">PIE</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E9%97%ADPIE"><span class="nav-number">1.1.</span> <span class="nav-text">关闭PIE</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Windows"><span class="nav-number">1.1.1.</span> <span class="nav-text">Windows</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%EF%BC%88%E6%8C%81%E7%BB%AD%E8%AE%B0%E5%BD%95%EF%BC%89"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">测试（持续记录）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux"><span class="nav-number">1.1.2.</span> <span class="nav-text">Linux</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#GDB"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">GDB</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#IDA"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">IDA</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BB%88%E6%9E%81%E5%8A%9E%E6%B3%95"><span class="nav-number">1.1.2.3.</span> <span class="nav-text">终极办法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E5%81%8F%E7%A7%BB"><span class="nav-number">1.2.</span> <span class="nav-text">计算偏移</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#IDA-Rebase-Program"><span class="nav-number">1.2.1.</span> <span class="nav-text">IDA Rebase Program</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%BA%E7%82%B9"><span class="nav-number">1.2.2.</span> <span class="nav-text">缺点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">1.3.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">1.4.</span> <span class="nav-text">参考</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
