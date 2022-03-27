@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <script type="text/javascript" src="/js/dytitle.js"></script>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"taardisaa.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="了解一下SM3。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SM3">
+<meta property="og:url" content="https://taardisaa.github.io/2022/03/26/SM3/index.html">
+<meta property="og:site_name" content="Tardis&#39;s blog">
+<meta property="og:description" content="了解一下SM3。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-03-26T11:00:00.000Z">
+<meta property="article:modified_time" content="2022-03-27T05:42:28.083Z">
+<meta property="article:author" content="Tardis">
+<meta property="article:tag" content="Crypto">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://taardisaa.github.io/2022/03/26/SM3/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>SM3 | Tardis's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --><link rel="alternate" href="/atom.xml" title="Tardis's blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Tardis's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">摸鱼用博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://taardisaa.github.io/2022/03/26/SM3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/spongebob.jpg">
+      <meta itemprop="name" content="Tardis">
+      <meta itemprop="description" content="学点好玩的逆向知识">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Tardis's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          SM3
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-03-26 19:00:00" itemprop="dateCreated datePublished" datetime="2022-03-26T19:00:00+08:00">2022-03-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-03-27 13:42:28" itemprop="dateModified" datetime="2022-03-27T13:42:28+08:00">2022-03-27</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Crypto/" itemprop="url" rel="index"><span itemprop="name">Crypto</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>13k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>12 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>了解一下SM3。</p>
+<span id="more"></span>
+
+<h1 id="SM3哈希算法"><a href="#SM3哈希算法" class="headerlink" title="SM3哈希算法"></a>SM3哈希算法</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><h3 id="哈希值"><a href="#哈希值" class="headerlink" title="哈希值"></a>哈希值</h3><p>长度256比特，32字节</p>
+<h3 id="字"><a href="#字" class="headerlink" title="字"></a>字</h3><p>32比特，4字节长度</p>
+<h3 id="符号"><a href="#符号" class="headerlink" title="符号"></a>符号</h3><p>$$<br>A,B,C,D,E,F,G,H<br>$$</p>
+<p>8个字宽的寄存器<br>$$<br>B^{(i)}<br>$$<br>第<code>i</code>个消息分组<br>$$<br>CF<br>$$<br><code>Compress Function</code>，压缩函数<br>$$<br>FF_j<br>$$<br>布尔函数，随<code>j</code>而取不同表达式<br>$$<br>GG_j<br>$$<br>布尔函数，随<code>j</code>而取不同表达式<br>$$<br>IV<br>$$<br><code>Initial Value</code>，初始值，用于确定压缩函数寄存器的初态<br>$$<br>P_0<br>$$<br>压缩函数中的置换函数<br>$$<br>P_1<br>$$<br>消息拓展中的置换函数<br>$$<br>T_j<br>$$<br>常量，根据<code>j</code>变化<br>$$<br>m<br>$$<br>消息<br>$$<br>m’<br>$$<br>填充后的消息</p>
+<h3 id="常数"><a href="#常数" class="headerlink" title="常数"></a>常数</h3><blockquote>
+<p>部分定义直接写Python函数了，懒得写Latex数学公式。</p>
+</blockquote>
+<h3 id="初始值"><a href="#初始值" class="headerlink" title="初始值"></a>初始值</h3><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">IV</span> =<span class="number">7380166</span>f <span class="number">4914</span>b<span class="number">2</span>b<span class="number">9</span> <span class="number">172442</span>d<span class="number">7</span> da<span class="number">8</span>a<span class="number">0600</span> a<span class="number">96</span>f<span class="number">30</span>bc <span class="number">163138</span>aa e<span class="number">38</span>dee<span class="number">4</span>d b<span class="number">0</span>fb<span class="number">0</span>e<span class="number">4</span>e</span><br></pre></td></tr></table></figure>
+
+<p>Python <code>claripy</code>模块实现向量似乎是个好想法。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">self.IV = claripy.BVV(<span class="number">0x7380166f_4914b2b9_172442d7_da8a0600_a96f30bc_163138aa_e38dee4d_b0fb0e4e</span>, <span class="number">32</span>*<span class="number">8</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="常量"><a href="#常量" class="headerlink" title="常量"></a>常量</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">T_j</span>(<span class="params">j:<span class="built_in">int</span></span>):</span></span><br><span class="line">    <span class="keyword">if</span> <span class="number">0</span> &lt;= j &lt;= <span class="number">15</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0x79CC4519</span></span><br><span class="line">    <span class="keyword">elif</span> <span class="number">16</span> &lt;= j &lt;= <span class="number">63</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0x7A879D8A</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="布尔函数"><a href="#布尔函数" class="headerlink" title="布尔函数"></a>布尔函数</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">FF_j</span>(<span class="params">self, X, Y, Z, j:<span class="built_in">int</span></span>):</span></span><br><span class="line">    <span class="keyword">if</span> <span class="number">0</span> &lt;= j &lt;= <span class="number">15</span>:</span><br><span class="line">        <span class="keyword">return</span> X ^ Y ^ Z</span><br><span class="line">    <span class="keyword">elif</span> <span class="number">16</span> &lt;= j &lt;= <span class="number">63</span>:</span><br><span class="line">        <span class="keyword">return</span> (X &amp; Y) | (X &amp; Z) | (Y &amp; Z)</span><br><span class="line">    </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">GG_j</span>(<span class="params">self, X, Y, Z, j:<span class="built_in">int</span></span>):</span></span><br><span class="line">    <span class="keyword">if</span> <span class="number">0</span> &lt;= j &lt;= <span class="number">15</span>:</span><br><span class="line">        <span class="keyword">return</span> X ^ Y ^ Z</span><br><span class="line">    <span class="keyword">elif</span> <span class="number">16</span> &lt;= j &lt;= <span class="number">63</span>:</span><br><span class="line">        <span class="keyword">return</span> (X &amp; Y) | (~X &amp; Z)</span><br></pre></td></tr></table></figure>
+
+<h3 id="置换函数"><a href="#置换函数" class="headerlink" title="置换函数"></a>置换函数</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">ROL32</span>(<span class="params">self, Num, i</span>):</span></span><br><span class="line">    i %= <span class="number">32</span></span><br><span class="line">    <span class="comment"># if m != 0:</span></span><br><span class="line">    <span class="comment">#     print(&quot;Here!&quot;)</span></span><br><span class="line">    <span class="comment">#     print(m)</span></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">isinstance</span>(Num, <span class="built_in">int</span>):</span><br><span class="line">        <span class="keyword">return</span> ((Num &lt;&lt; i) | (Num &gt;&gt; (<span class="number">32</span>-i)))</span><br><span class="line">    </span><br><span class="line">    Num = Num.zero_extend(<span class="number">32</span>)</span><br><span class="line">    <span class="keyword">return</span> ((Num &lt;&lt; i) | (Num &gt;&gt; (<span class="number">32</span>-i))).chop(<span class="number">32</span>)[<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">P_0</span>(<span class="params">self, X</span>):</span></span><br><span class="line">    <span class="keyword">return</span> (X) ^ self.ROL32(X, <span class="number">9</span>) ^ self.ROL32(X, <span class="number">17</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">P_1</span>(<span class="params">self, X</span>):</span></span><br><span class="line">    <span class="keyword">return</span> (X) ^ self.ROL32(X, <span class="number">15</span>) ^ self.ROL32(X, <span class="number">23</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h2><p>对长度为<code>l</code>（小于<code>2**64</code>比特）的消息<code>m</code>，生成256比特的哈希值</p>
+<h3 id="填充"><a href="#填充" class="headerlink" title="填充"></a>填充</h3><p>长度<code>l</code>的消息</p>
+<p>先添加比特1到末尾</p>
+<p>再添加<code>k</code>个0</p>
+<p><code>k</code>要满足<br>$$<br>l + 1 + k &#x3D;448\ mod\ 512<br>$$<br>然后再添加64位，该串是长度<code>l</code>的二进制表示。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_getLenBit</span>(<span class="params">self, m:<span class="built_in">bytes</span></span>):</span></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">len</span>(m) * <span class="number">8</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_getK</span>(<span class="params">self, m:<span class="built_in">bytes</span></span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    l + 1 + k == 448 + 512*m</span></span><br><span class="line"><span class="string">    k == 447 + 512*m - l</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    i = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        <span class="keyword">if</span> <span class="number">447</span> + <span class="number">512</span>*i - self._getLenBit(m) &gt;= <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">447</span> + <span class="number">512</span>*i - self._getLenBit(m)</span><br><span class="line">        i += <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># def _getUint_64_Bytes8(self, m:bytes):</span></span><br><span class="line"><span class="comment">#     l = self._getLenBit(m)</span></span><br><span class="line"><span class="comment">#     return binascii.unhexlify(hex(l)[2:].zfill(16))</span></span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">padding</span>(<span class="params">self, m:<span class="built_in">bytes</span></span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    输入随意字节流</span></span><br><span class="line"><span class="string">    返回claripy.BVV数据对象</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    k = self._getK(m)</span><br><span class="line">    <span class="built_in">print</span>(k)</span><br><span class="line">    l = self._getLenBit(m)</span><br><span class="line">    <span class="comment"># print((k, l))</span></span><br><span class="line">    <span class="comment"># 这块其实不严谨，因为这样就会导致以字节为最小单位，而实际上是可以精确到比特的</span></span><br><span class="line">    <span class="comment"># 但是由于大部分情况下都只需要以字节为单位，所以这里不管了</span></span><br><span class="line">    m_ = claripy.BVV(m, <span class="built_in">len</span>(m)*<span class="number">8</span>)</span><br><span class="line">    m_ = m_.concat(claripy.BVV(<span class="number">1</span>, <span class="number">1</span>))</span><br><span class="line">    m_ = m_.concat(claripy.BVV(<span class="number">0</span>, k))</span><br><span class="line">    m_ = m_.concat(claripy.BVV(l, <span class="number">64</span>))</span><br><span class="line">    <span class="comment"># print(m)</span></span><br><span class="line">    <span class="built_in">print</span>(m_.length)</span><br><span class="line">    <span class="keyword">assert</span> m_.length % <span class="number">512</span> == <span class="number">0</span></span><br><span class="line">    <span class="keyword">return</span> m_</span><br><span class="line">    <span class="comment"># m = bytearray(m)</span></span><br><span class="line">    <span class="comment"># m += b&#x27;\x01&#x27;</span></span><br><span class="line">    <span class="comment"># m += b&#x27;\x00&#x27; * self._getK(m)</span></span><br><span class="line">    <span class="comment"># m += self._getUint_64_Bytes8(m)</span></span><br><span class="line">    <span class="comment"># assert self._getLenBit(m) % 512 == 0</span></span><br><span class="line">    <span class="comment"># return m</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="迭代压缩"><a href="#迭代压缩" class="headerlink" title="迭代压缩"></a>迭代压缩</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">recur</span>(<span class="params">self, m</span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    迭代过程</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="comment"># s = claripy.Solver()</span></span><br><span class="line">    <span class="comment"># binascii.unhexlify(hex(s.eval(a,1)[0])[2:])</span></span><br><span class="line">    self.B = m.chop(<span class="number">512</span>)</span><br><span class="line">    self.n = <span class="built_in">len</span>(self.B)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># V, B都是claripy.BVV列表</span></span><br><span class="line">    self.V = [<span class="number">0</span>] * (self.n+<span class="number">1</span>)</span><br><span class="line">    self.V[<span class="number">0</span>] = self.IV</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(self.n):</span><br><span class="line">        <span class="comment"># 512, 512</span></span><br><span class="line">        self.V[i+<span class="number">1</span>] = self.CF(self.V[i], self.B[i])</span><br></pre></td></tr></table></figure>
+
+<p>将填充后的消息<code>m&#39;</code>分组为<code>B</code>，一组512比特。</p>
+<p>然后进行迭代压缩。其中主要使用<code>CF</code>压缩函数。</p>
+<h3 id="消息扩展"><a href="#消息扩展" class="headerlink" title="消息扩展"></a>消息扩展</h3><p>将<code>B</code>拓展生成132个字，用于<code>CF</code>函数。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">messageExpand</span>(<span class="params">self, B</span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    消息拓展</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    self.W = B.chop(<span class="number">32</span>)</span><br><span class="line">    self.W += [claripy.BVV(<span class="number">0</span>, <span class="number">32</span>)] * (<span class="number">68</span>-<span class="number">16</span>)</span><br><span class="line">    self.W_alt = [claripy.BVV(<span class="number">0</span>, <span class="number">32</span>)] * <span class="number">64</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># assert len(self.W) % 68 == 0</span></span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">16</span>, <span class="number">67</span>+<span class="number">1</span>):</span><br><span class="line">        a = self.W[j-<span class="number">16</span>] </span><br><span class="line">        a ^= self.W[j-<span class="number">9</span>] </span><br><span class="line">        <span class="comment"># print(self.W[j-3])</span></span><br><span class="line">        <span class="comment"># print(j)</span></span><br><span class="line">        a ^= self.ROL32(self.W[j-<span class="number">3</span>], <span class="number">15</span>)</span><br><span class="line">        a = self.P_1(a)</span><br><span class="line">        a ^= self.ROL32(self.W[j-<span class="number">13</span>], <span class="number">7</span>)</span><br><span class="line">        a ^= self.W[j-<span class="number">6</span>]</span><br><span class="line">        self.W[j] = a</span><br><span class="line">        <span class="comment"># self.W[j] = self.P_1( self.W[j-16] ^  self.W[j-9] ^ self.ROL32(self.W[j-3], 15)) ^ self.ROL32(self.W[j-13], 7) ^ self.W[j-6]</span></span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">63</span>+<span class="number">1</span>):</span><br><span class="line">        self.W_alt[j] = self.W[j] ^ self.W[j+<span class="number">4</span>]</span><br></pre></td></tr></table></figure>
+
+<h3 id="压缩函数"><a href="#压缩函数" class="headerlink" title="压缩函数"></a>压缩函数</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">CF</span>(<span class="params">self, inV, inB</span>):</span></span><br><span class="line">    <span class="comment"># 8*32比特</span></span><br><span class="line">    <span class="comment"># 256比特</span></span><br><span class="line">    self.messageExpand(inB)</span><br><span class="line">    </span><br><span class="line">    A, B, C, D, E, F, G, H = inV.chop(<span class="number">32</span>)</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">63</span>+<span class="number">1</span>):</span><br><span class="line">        <span class="built_in">print</span>((A, B, C, D, E, F, G, H))</span><br><span class="line">        SS1 = self.ROL32(self.ROL32(A, <span class="number">12</span>) + E + self.ROL32(self.T_j(j), j), <span class="number">7</span>)</span><br><span class="line">        SS2 = SS1 ^ self.ROL32(A, <span class="number">12</span>)</span><br><span class="line">        TT1 = self.FF_j(A, B, C, j) + D + SS2 + self.W_alt[j]</span><br><span class="line">        TT2 = self.GG_j(E, F, G, j) + H + SS1 + self.W[j]</span><br><span class="line">        D = C</span><br><span class="line">        C = self.ROL32(B, <span class="number">9</span>)</span><br><span class="line">        B = A</span><br><span class="line">        A = TT1</span><br><span class="line">        H = G</span><br><span class="line">        G = self.ROL32(F, <span class="number">19</span>)</span><br><span class="line">        F = E</span><br><span class="line">        E = self.P_0(TT2)</span><br><span class="line">    <span class="built_in">print</span>((A, B, C, D, E, F, G, H)) </span><br><span class="line">    <span class="keyword">return</span> (A.concat(B.concat(C.concat(D.concat(E.concat(F.concat(G.concat(H)))))))) ^ inV</span><br><span class="line">    </span><br></pre></td></tr></table></figure>
+
+<h3 id="杂凑值"><a href="#杂凑值" class="headerlink" title="杂凑值"></a>杂凑值</h3><p>256比特</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">self.V[n]</span><br></pre></td></tr></table></figure>
+
+<h2 id="Python源码"><a href="#Python源码" class="headerlink" title="Python源码"></a>Python源码</h2><p>这是我自己实现的。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># from ctypes import c_uint32</span></span><br><span class="line"><span class="keyword">import</span> binascii</span><br><span class="line"><span class="keyword">import</span> claripy</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SM3</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>) -&gt; <span class="literal">None</span>:</span></span><br><span class="line">        self.IV = claripy.BVV(<span class="number">0x7380166f_4914b2b9_172442d7_da8a0600_a96f30bc_163138aa_e38dee4d_b0fb0e4e</span>, <span class="number">32</span>*<span class="number">8</span>)</span><br><span class="line">        self.V = [</span><br><span class="line">            self.IV,</span><br><span class="line">        ]</span><br><span class="line">        <span class="comment"># self.V = [</span></span><br><span class="line">        <span class="comment">#     0x7380166f,</span></span><br><span class="line">        <span class="comment">#     0x4914b2b9,</span></span><br><span class="line">        <span class="comment">#     0x172442d7,</span></span><br><span class="line">        <span class="comment">#     0xda8a0600,</span></span><br><span class="line">        <span class="comment">#     0xa96f30bc,</span></span><br><span class="line">        <span class="comment">#     0x163138aa,</span></span><br><span class="line">        <span class="comment">#     0xe38dee4d,</span></span><br><span class="line">        <span class="comment">#     0xb0fb0e4e</span></span><br><span class="line">        <span class="comment"># ]</span></span><br><span class="line">        self.B = []</span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">T_j</span>(<span class="params">self, j:<span class="built_in">int</span></span>):</span></span><br><span class="line">        <span class="keyword">if</span> <span class="number">0</span> &lt;= j &lt;= <span class="number">15</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0x79CC4519</span></span><br><span class="line">        <span class="keyword">elif</span> <span class="number">16</span> &lt;= j &lt;= <span class="number">63</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0x7A879D8A</span></span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">FF_j</span>(<span class="params">self, X, Y, Z, j:<span class="built_in">int</span></span>):</span></span><br><span class="line">        <span class="keyword">if</span> <span class="number">0</span> &lt;= j &lt;= <span class="number">15</span>:</span><br><span class="line">            <span class="keyword">return</span> X ^ Y ^ Z</span><br><span class="line">        <span class="keyword">elif</span> <span class="number">16</span> &lt;= j &lt;= <span class="number">63</span>:</span><br><span class="line">            <span class="keyword">return</span> (X &amp; Y) | (X &amp; Z) | (Y &amp; Z)</span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">GG_j</span>(<span class="params">self, X, Y, Z, j:<span class="built_in">int</span></span>):</span></span><br><span class="line">        <span class="keyword">if</span> <span class="number">0</span> &lt;= j &lt;= <span class="number">15</span>:</span><br><span class="line">            <span class="keyword">return</span> X ^ Y ^ Z</span><br><span class="line">        <span class="keyword">elif</span> <span class="number">16</span> &lt;= j &lt;= <span class="number">63</span>:</span><br><span class="line">            <span class="keyword">return</span> (X &amp; Y) | (~X &amp; Z)</span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">ROL32</span>(<span class="params">self, Num, i</span>):</span></span><br><span class="line">        i %= <span class="number">32</span></span><br><span class="line">        <span class="comment"># if m != 0:</span></span><br><span class="line">        <span class="comment">#     print(&quot;Here!&quot;)</span></span><br><span class="line">        <span class="comment">#     print(m)</span></span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">isinstance</span>(Num, <span class="built_in">int</span>):</span><br><span class="line">            <span class="keyword">return</span> ((Num &lt;&lt; i) | (Num &gt;&gt; (<span class="number">32</span>-i)))</span><br><span class="line">        </span><br><span class="line">        Num = Num.zero_extend(<span class="number">32</span>)</span><br><span class="line">        <span class="keyword">return</span> ((Num &lt;&lt; i) | (Num &gt;&gt; (<span class="number">32</span>-i))).chop(<span class="number">32</span>)[<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">P_0</span>(<span class="params">self, X</span>):</span></span><br><span class="line">        <span class="keyword">return</span> (X) ^ self.ROL32(X, <span class="number">9</span>) ^ self.ROL32(X, <span class="number">17</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">P_1</span>(<span class="params">self, X</span>):</span></span><br><span class="line">        <span class="keyword">return</span> (X) ^ self.ROL32(X, <span class="number">15</span>) ^ self.ROL32(X, <span class="number">23</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_getLenBit</span>(<span class="params">self, m:<span class="built_in">bytes</span></span>):</span></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">len</span>(m) * <span class="number">8</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_getK</span>(<span class="params">self, m:<span class="built_in">bytes</span></span>):</span></span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        l + 1 + k == 448 + 512*m</span></span><br><span class="line"><span class="string">        k == 447 + 512*m - l</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        i = <span class="number">0</span></span><br><span class="line">        <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">            <span class="keyword">if</span> <span class="number">447</span> + <span class="number">512</span>*i - self._getLenBit(m) &gt;= <span class="number">0</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="number">447</span> + <span class="number">512</span>*i - self._getLenBit(m)</span><br><span class="line">            i += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># def _getUint_64_Bytes8(self, m:bytes):</span></span><br><span class="line">    <span class="comment">#     l = self._getLenBit(m)</span></span><br><span class="line">    <span class="comment">#     return binascii.unhexlify(hex(l)[2:].zfill(16))</span></span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">padding</span>(<span class="params">self, m:<span class="built_in">bytes</span></span>):</span></span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        输入随意字节流</span></span><br><span class="line"><span class="string">        返回claripy.BVV数据对象</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        k = self._getK(m)</span><br><span class="line">        <span class="built_in">print</span>(k)</span><br><span class="line">        l = self._getLenBit(m)</span><br><span class="line">        <span class="comment"># print((k, l))</span></span><br><span class="line">        <span class="comment"># 这块其实不严谨，因为这样就会导致以字节为最小单位，而实际上是可以精确到比特的</span></span><br><span class="line">        <span class="comment"># 但是由于大部分情况下都只需要以字节为单位，所以这里不管了</span></span><br><span class="line">        m_ = claripy.BVV(m, <span class="built_in">len</span>(m)*<span class="number">8</span>)</span><br><span class="line">        m_ = m_.concat(claripy.BVV(<span class="number">1</span>, <span class="number">1</span>))</span><br><span class="line">        m_ = m_.concat(claripy.BVV(<span class="number">0</span>, k))</span><br><span class="line">        m_ = m_.concat(claripy.BVV(l, <span class="number">64</span>))</span><br><span class="line">        <span class="comment"># print(m)</span></span><br><span class="line">        <span class="built_in">print</span>(m_.length)</span><br><span class="line">        <span class="keyword">assert</span> m_.length % <span class="number">512</span> == <span class="number">0</span></span><br><span class="line">        <span class="keyword">return</span> m_</span><br><span class="line">        <span class="comment"># m = bytearray(m)</span></span><br><span class="line">        <span class="comment"># m += b&#x27;\x01&#x27;</span></span><br><span class="line">        <span class="comment"># m += b&#x27;\x00&#x27; * self._getK(m)</span></span><br><span class="line">        <span class="comment"># m += self._getUint_64_Bytes8(m)</span></span><br><span class="line">        <span class="comment"># assert self._getLenBit(m) % 512 == 0</span></span><br><span class="line">        <span class="comment"># return m</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># def splittPaddedMessage(self, m:bytes):</span></span><br><span class="line">    <span class="comment">#     &quot;&quot;&quot;</span></span><br><span class="line">    <span class="comment">#     填充后的消息m&#x27;按512比特分组</span></span><br><span class="line">    <span class="comment">#     &quot;&quot;&quot;</span></span><br><span class="line">    <span class="comment">#     m_ = bytearray(m)</span></span><br><span class="line">        </span><br><span class="line">    <span class="comment">#     assert self._getLenBit(m_) % 512 == 0</span></span><br><span class="line">    <span class="comment">#     # B = []</span></span><br><span class="line">    <span class="comment">#     if self.B != []:</span></span><br><span class="line">    <span class="comment">#         raise Exception(&quot;B is not empty&quot;)</span></span><br><span class="line">        </span><br><span class="line">    <span class="comment">#     self.n = 0</span></span><br><span class="line">    <span class="comment">#     for i in range(self._getLenBit(m_) // 512):</span></span><br><span class="line">    <span class="comment">#         self.B.append(m_[:64])</span></span><br><span class="line">    <span class="comment">#         m_ = m_[64:]</span></span><br><span class="line">    <span class="comment">#         self.n += 1</span></span><br><span class="line">            </span><br><span class="line">    <span class="comment">#     return self.B, self.n</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">recur</span>(<span class="params">self, m</span>):</span></span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        迭代过程</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="comment"># s = claripy.Solver()</span></span><br><span class="line">        <span class="comment"># binascii.unhexlify(hex(s.eval(a,1)[0])[2:])</span></span><br><span class="line">        self.B = m.chop(<span class="number">512</span>)</span><br><span class="line">        self.n = <span class="built_in">len</span>(self.B)</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># V, B都是claripy.BVV列表</span></span><br><span class="line">        self.V = [<span class="number">0</span>] * (self.n+<span class="number">1</span>)</span><br><span class="line">        self.V[<span class="number">0</span>] = self.IV</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(self.n):</span><br><span class="line">            <span class="comment"># 512, 512</span></span><br><span class="line">            self.V[i+<span class="number">1</span>] = self.CF(self.V[i], self.B[i])</span><br><span class="line">            </span><br><span class="line">            </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">messageExpand</span>(<span class="params">self, B</span>):</span></span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        消息拓展</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        self.W = B.chop(<span class="number">32</span>)</span><br><span class="line">        self.W += [claripy.BVV(<span class="number">0</span>, <span class="number">32</span>)] * (<span class="number">68</span>-<span class="number">16</span>)</span><br><span class="line">        self.W_alt = [claripy.BVV(<span class="number">0</span>, <span class="number">32</span>)] * <span class="number">64</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment"># assert len(self.W) % 68 == 0</span></span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">16</span>, <span class="number">67</span>+<span class="number">1</span>):</span><br><span class="line">            a = self.W[j-<span class="number">16</span>] </span><br><span class="line">            a ^= self.W[j-<span class="number">9</span>] </span><br><span class="line">            <span class="comment"># print(self.W[j-3])</span></span><br><span class="line">            <span class="comment"># print(j)</span></span><br><span class="line">            a ^= self.ROL32(self.W[j-<span class="number">3</span>], <span class="number">15</span>)</span><br><span class="line">            a = self.P_1(a)</span><br><span class="line">            a ^= self.ROL32(self.W[j-<span class="number">13</span>], <span class="number">7</span>)</span><br><span class="line">            a ^= self.W[j-<span class="number">6</span>]</span><br><span class="line">            self.W[j] = a</span><br><span class="line">            <span class="comment"># self.W[j] = self.P_1( self.W[j-16] ^  self.W[j-9] ^ self.ROL32(self.W[j-3], 15)) ^ self.ROL32(self.W[j-13], 7) ^ self.W[j-6]</span></span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">63</span>+<span class="number">1</span>):</span><br><span class="line">            self.W_alt[j] = self.W[j] ^ self.W[j+<span class="number">4</span>]</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">CF</span>(<span class="params">self, inV, inB</span>):</span></span><br><span class="line">        <span class="comment"># 8*32比特</span></span><br><span class="line">        <span class="comment"># 256比特</span></span><br><span class="line">        self.messageExpand(inB)</span><br><span class="line">        </span><br><span class="line">        A, B, C, D, E, F, G, H = inV.chop(<span class="number">32</span>)</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">63</span>+<span class="number">1</span>):</span><br><span class="line">            <span class="built_in">print</span>((A, B, C, D, E, F, G, H))</span><br><span class="line">            SS1 = self.ROL32(self.ROL32(A, <span class="number">12</span>) + E + self.ROL32(self.T_j(j), j), <span class="number">7</span>)</span><br><span class="line">            SS2 = SS1 ^ self.ROL32(A, <span class="number">12</span>)</span><br><span class="line">            TT1 = self.FF_j(A, B, C, j) + D + SS2 + self.W_alt[j]</span><br><span class="line">            TT2 = self.GG_j(E, F, G, j) + H + SS1 + self.W[j]</span><br><span class="line">            D = C</span><br><span class="line">            C = self.ROL32(B, <span class="number">9</span>)</span><br><span class="line">            B = A</span><br><span class="line">            A = TT1</span><br><span class="line">            H = G</span><br><span class="line">            G = self.ROL32(F, <span class="number">19</span>)</span><br><span class="line">            F = E</span><br><span class="line">            E = self.P_0(TT2)</span><br><span class="line">        <span class="built_in">print</span>((A, B, C, D, E, F, G, H)) </span><br><span class="line">        <span class="keyword">return</span> (A.concat(B.concat(C.concat(D.concat(E.concat(F.concat(G.concat(H)))))))) ^ inV</span><br><span class="line">        </span><br><span class="line">    </span><br><span class="line">sm3 = SM3()</span><br><span class="line">a = sm3.padding(<span class="string">b&#x27;abcd&#x27;</span>*<span class="number">16</span>)</span><br><span class="line"><span class="comment"># print(a)</span></span><br><span class="line"></span><br><span class="line">sm3.recur(a)</span><br><span class="line"><span class="comment"># sm3.messageExpand(a)</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="C源码"><a href="#C源码" class="headerlink" title="C源码"></a>C源码</h2><p> <a target="_blank" rel="noopener" href="https://www.jianshu.com/p/d33670bfdd4f">C语言实现国密SM3算法 - 简书 (jianshu.com)</a> </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SHL(x,n) (x&lt;&lt;n)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SHR(x,n) (x&gt;&gt;n)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ROTL(x,n) ((x<span class="meta-string">&lt;&lt;n)|(x&gt;</span>&gt;(32-n)))</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ROTR(x,n) ((x&gt;&gt;n)|(x&lt;&lt;(32-n)))</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> P1(a,b,c,d,e) (P2((a)^(b)^ROTL((c),15))^ROTL((d),7)^e)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> P2(a) ((a)^ROTL((a),15)^ROTL((a),23))</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> P3(a,b) ((a)^(b))</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> P4(a) ((a)^ROTL((a),9)^ROTL((a),17))</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> T1 (0x79cc4519)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> T2 (0x7a879d8a)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> FF1(a,b,c) ((a)^(b)^(c))</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> FF2(a,b,c) (((a)&amp;(b))|((a)&amp;(c))|((b)&amp;(c)))</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> GG1(a,b,c) ((a)^(b)^(c))</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> GG2(a,b,c) (((a)&amp;(b))|((~a)&amp;(c)))</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SS1(a,b,c,d) (ROTL((ROTL((a),12)+b+ROTL((c),(d))),7))</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SS2(a,b,c,d) (SS1((a),(b),(c),(d))^ROTL((a),12))</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> TT1(e,f,g,a,b,c,d) ((e)+(f)+SS2(a,b,c,d)+(g))</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> TT2(e,f,g,a,b,c,d) ((e)+(f)+SS1(a,b,c,d)+(g))</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">unsigned</span> <span class="keyword">long</span> H[<span class="number">8</span>] = &#123;<span class="number">0x7380166f</span>, <span class="number">0x4914b2b9</span>, <span class="number">0x172442d7</span>, <span class="number">0xda8a0600</span>, <span class="number">0xa96f30bc</span>, <span class="number">0x163138aa</span>, <span class="number">0xe38dee4d</span>, <span class="number">0xb0fb0e4e</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">print_str</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">char</span> *str, <span class="keyword">int</span> len)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;str=[&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>; i&lt;len; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%02X&quot;</span>, str[i]);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;], len=[%d]\n&quot;</span>, len);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sm3_long_to_str</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">long</span> a, <span class="keyword">unsigned</span> <span class="keyword">char</span> *b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> x = a;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span> *d = (<span class="keyword">unsigned</span> <span class="keyword">char</span> *)&amp;x;</span><br><span class="line"></span><br><span class="line">    b[<span class="number">0</span>] = d[<span class="number">3</span>];</span><br><span class="line">    b[<span class="number">1</span>] = d[<span class="number">2</span>];</span><br><span class="line">    b[<span class="number">2</span>] = d[<span class="number">1</span>];</span><br><span class="line">    b[<span class="number">3</span>] = d[<span class="number">0</span>];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="title">sm3_str_to_long</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">char</span> *a)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> x = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span> *b = (<span class="keyword">unsigned</span> <span class="keyword">char</span> *)&amp;x;</span><br><span class="line"></span><br><span class="line">    b[<span class="number">0</span>] = a[<span class="number">3</span>];</span><br><span class="line">    b[<span class="number">1</span>] = a[<span class="number">2</span>];</span><br><span class="line">    b[<span class="number">2</span>] = a[<span class="number">1</span>];</span><br><span class="line">    b[<span class="number">3</span>] = a[<span class="number">0</span>];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> x;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sm3_pad_message</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">char</span> *str, <span class="keyword">int</span> len)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> high, low;</span><br><span class="line">    <span class="keyword">int</span> u = len % <span class="number">64</span>;</span><br><span class="line"></span><br><span class="line">    high = <span class="number">0</span>;</span><br><span class="line">    low = len * <span class="number">8</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(u &lt; <span class="number">56</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        str[len++] = <span class="number">0x80</span>;</span><br><span class="line">        u++;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span>(u &lt; <span class="number">56</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            str[len++] = <span class="number">0x00</span>;</span><br><span class="line">            u++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(u &gt; <span class="number">56</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        str[len++] = <span class="number">0x80</span>;</span><br><span class="line">        u++;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span>(u &lt; <span class="number">56</span>+<span class="number">64</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            str[len++] = <span class="number">0x00</span>;</span><br><span class="line">            u++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//printf(&quot;len=[%08x]\n&quot;, low);</span></span><br><span class="line"></span><br><span class="line">    str[len++] = high &gt;&gt; <span class="number">24</span>;</span><br><span class="line">    str[len++] = high &gt;&gt; <span class="number">16</span>;</span><br><span class="line">    str[len++] = high &gt;&gt; <span class="number">8</span>;</span><br><span class="line">    str[len++] = high;</span><br><span class="line">    str[len++] = low &gt;&gt; <span class="number">24</span>;</span><br><span class="line">    str[len++] = low &gt;&gt; <span class="number">16</span>;</span><br><span class="line">    str[len++] = low &gt;&gt; <span class="number">8</span>;</span><br><span class="line">    str[len++] = low;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> len;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sm3_group_a</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">char</span> *a, <span class="keyword">unsigned</span> <span class="keyword">char</span> *b, <span class="keyword">unsigned</span> <span class="keyword">char</span> *c, <span class="keyword">unsigned</span> <span class="keyword">char</span> *d, <span class="keyword">unsigned</span> <span class="keyword">char</span> *e, <span class="keyword">unsigned</span> <span class="keyword">char</span> *f)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> x[<span class="number">6</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line"></span><br><span class="line">    x[<span class="number">0</span>] = sm3_str_to_long(a);</span><br><span class="line">    x[<span class="number">1</span>] = sm3_str_to_long(b);</span><br><span class="line">    x[<span class="number">2</span>] = sm3_str_to_long(c);</span><br><span class="line">    x[<span class="number">3</span>] = sm3_str_to_long(d);</span><br><span class="line">    x[<span class="number">4</span>] = sm3_str_to_long(e);</span><br><span class="line">    x[<span class="number">5</span>] = P1(x[<span class="number">0</span>],x[<span class="number">1</span>],x[<span class="number">2</span>],x[<span class="number">3</span>],x[<span class="number">4</span>]);</span><br><span class="line"></span><br><span class="line">    sm3_long_to_str(x[<span class="number">5</span>], f);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sm3_group_b</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">char</span> *a, <span class="keyword">unsigned</span> <span class="keyword">char</span> *b, <span class="keyword">unsigned</span> <span class="keyword">char</span> *c)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> x[<span class="number">3</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line"></span><br><span class="line">    x[<span class="number">0</span>] = sm3_str_to_long(a);</span><br><span class="line">    x[<span class="number">1</span>] = sm3_str_to_long(b);</span><br><span class="line">    x[<span class="number">2</span>] = P3(x[<span class="number">0</span>],x[<span class="number">1</span>]);</span><br><span class="line"></span><br><span class="line">    sm3_long_to_str(x[<span class="number">2</span>], c);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sm3_str_group</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">char</span> *str, <span class="keyword">int</span> len)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span> M[<span class="number">64</span>];</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span> W[<span class="number">68</span>][<span class="number">4</span>];</span><br><span class="line">    <span class="keyword">int</span> u = len / <span class="number">64</span>;</span><br><span class="line">    <span class="keyword">int</span> v = <span class="number">64</span> / <span class="number">16</span> * <span class="number">64</span> * <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> j = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(i=u<span class="number">-1</span>; i&gt;=<span class="number">0</span>; i--)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">memset</span>(M, <span class="number">0x00</span>, <span class="keyword">sizeof</span>(M));</span><br><span class="line"></span><br><span class="line">        <span class="built_in">memcpy</span>(M, str+i*<span class="number">64</span>, <span class="number">64</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(j=<span class="number">0</span>; j&lt;<span class="number">16</span>; j++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">memcpy</span>(W[j], M+<span class="number">4</span>*j, <span class="number">4</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(j=<span class="number">16</span>; j&lt;<span class="number">68</span>; j++)</span><br><span class="line">        &#123;</span><br><span class="line">            sm3_group_a(W[j<span class="number">-16</span>], W[j<span class="number">-9</span>], W[j<span class="number">-3</span>], W[j<span class="number">-13</span>], W[j<span class="number">-6</span>], W[j]);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">memset</span>(M, <span class="number">0x00</span>, <span class="keyword">sizeof</span>(M));</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(j=<span class="number">0</span>; j&lt;<span class="number">64</span>; j++)</span><br><span class="line">        &#123;</span><br><span class="line">            sm3_group_b(W[j], W[j+<span class="number">4</span>], M);</span><br><span class="line">            <span class="built_in">memcpy</span>(str+i*v+<span class="number">8</span>*j, W[j], <span class="number">4</span>);</span><br><span class="line">            <span class="built_in">memcpy</span>(str+i*v+<span class="number">8</span>*j+<span class="number">4</span>, M, <span class="number">4</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> u*v;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sm3_str_summ</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">char</span> *str, <span class="keyword">unsigned</span> <span class="keyword">char</span> *summ, <span class="keyword">int</span> len)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span> W[<span class="number">128</span>][<span class="number">4</span>];</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> A[<span class="number">8</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> B[<span class="number">8</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> C[<span class="number">8</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">    <span class="keyword">int</span> u = len / <span class="number">512</span>;</span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> j = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">memcpy</span>(B, H, <span class="keyword">sizeof</span>(B));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>; i&lt;u; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(j=<span class="number">0</span>; j&lt;<span class="number">128</span>; j++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">memcpy</span>(W[j], str+i*<span class="number">512</span>+j*<span class="number">4</span>, <span class="number">4</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        A[<span class="number">0</span>] = B[<span class="number">0</span>];</span><br><span class="line">        A[<span class="number">1</span>] = B[<span class="number">1</span>];</span><br><span class="line">        A[<span class="number">2</span>] = B[<span class="number">2</span>];</span><br><span class="line">        A[<span class="number">3</span>] = B[<span class="number">3</span>];</span><br><span class="line">        A[<span class="number">4</span>] = B[<span class="number">4</span>];</span><br><span class="line">        A[<span class="number">5</span>] = B[<span class="number">5</span>];</span><br><span class="line">        A[<span class="number">6</span>] = B[<span class="number">6</span>];</span><br><span class="line">        A[<span class="number">7</span>] = B[<span class="number">7</span>];</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(j=<span class="number">0</span>; j&lt;<span class="number">16</span>; j++)</span><br><span class="line">        &#123;</span><br><span class="line">            C[<span class="number">0</span>] = sm3_str_to_long(W[<span class="number">2</span>*j+<span class="number">1</span>]);</span><br><span class="line">            C[<span class="number">1</span>] = sm3_str_to_long(W[<span class="number">2</span>*j]);</span><br><span class="line">            C[<span class="number">2</span>] = TT1(FF1(A[<span class="number">0</span>],A[<span class="number">1</span>],A[<span class="number">2</span>]),A[<span class="number">3</span>],C[<span class="number">0</span>],A[<span class="number">0</span>],A[<span class="number">4</span>],T1,j);</span><br><span class="line">            C[<span class="number">3</span>] = TT2(GG1(A[<span class="number">4</span>],A[<span class="number">5</span>],A[<span class="number">6</span>]),A[<span class="number">7</span>],C[<span class="number">1</span>],A[<span class="number">0</span>],A[<span class="number">4</span>],T1,j);</span><br><span class="line">            A[<span class="number">7</span>] = A[<span class="number">6</span>];</span><br><span class="line">            A[<span class="number">6</span>] = ROTL(A[<span class="number">5</span>],<span class="number">19</span>);</span><br><span class="line">            A[<span class="number">5</span>] = A[<span class="number">4</span>];</span><br><span class="line">            A[<span class="number">4</span>] = P4(C[<span class="number">3</span>]);</span><br><span class="line">            A[<span class="number">3</span>] = A[<span class="number">2</span>];</span><br><span class="line">            A[<span class="number">2</span>] = ROTL(A[<span class="number">1</span>],<span class="number">9</span>);</span><br><span class="line">            A[<span class="number">1</span>] = A[<span class="number">0</span>];</span><br><span class="line">            A[<span class="number">0</span>] = C[<span class="number">2</span>];</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(j=<span class="number">16</span>; j&lt;<span class="number">64</span>; j++)</span><br><span class="line">        &#123;</span><br><span class="line">            C[<span class="number">0</span>] = sm3_str_to_long(W[<span class="number">2</span>*j+<span class="number">1</span>]);</span><br><span class="line">            C[<span class="number">1</span>] = sm3_str_to_long(W[<span class="number">2</span>*j]);</span><br><span class="line">            C[<span class="number">2</span>] = TT1(FF2(A[<span class="number">0</span>],A[<span class="number">1</span>],A[<span class="number">2</span>]),A[<span class="number">3</span>],C[<span class="number">0</span>],A[<span class="number">0</span>],A[<span class="number">4</span>],T2,j);</span><br><span class="line">            C[<span class="number">3</span>] = TT2(GG2(A[<span class="number">4</span>],A[<span class="number">5</span>],A[<span class="number">6</span>]),A[<span class="number">7</span>],C[<span class="number">1</span>],A[<span class="number">0</span>],A[<span class="number">4</span>],T2,j);</span><br><span class="line">            A[<span class="number">7</span>] = A[<span class="number">6</span>];</span><br><span class="line">            A[<span class="number">6</span>] = ROTL(A[<span class="number">5</span>],<span class="number">19</span>);</span><br><span class="line">            A[<span class="number">5</span>] = A[<span class="number">4</span>];</span><br><span class="line">            A[<span class="number">4</span>] = P4(C[<span class="number">3</span>]);</span><br><span class="line">            A[<span class="number">3</span>] = A[<span class="number">2</span>];</span><br><span class="line">            A[<span class="number">2</span>] = ROTL(A[<span class="number">1</span>],<span class="number">9</span>);</span><br><span class="line">            A[<span class="number">1</span>] = A[<span class="number">0</span>];</span><br><span class="line">            A[<span class="number">0</span>] = C[<span class="number">2</span>];</span><br><span class="line"></span><br><span class="line">            <span class="comment">//printf(&quot;A[0]=[%08X]\n&quot;, A[0]);</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        B[<span class="number">0</span>] ^= A[<span class="number">0</span>];</span><br><span class="line">        B[<span class="number">1</span>] ^= A[<span class="number">1</span>];</span><br><span class="line">        B[<span class="number">2</span>] ^= A[<span class="number">2</span>];</span><br><span class="line">        B[<span class="number">3</span>] ^= A[<span class="number">3</span>];</span><br><span class="line">        B[<span class="number">4</span>] ^= A[<span class="number">4</span>];</span><br><span class="line">        B[<span class="number">5</span>] ^= A[<span class="number">5</span>];</span><br><span class="line">        B[<span class="number">6</span>] ^= A[<span class="number">6</span>];</span><br><span class="line">        B[<span class="number">7</span>] ^= A[<span class="number">7</span>];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    sm3_long_to_str(B[<span class="number">0</span>], summ);</span><br><span class="line">    sm3_long_to_str(B[<span class="number">1</span>], summ+<span class="number">4</span>);</span><br><span class="line">    sm3_long_to_str(B[<span class="number">2</span>], summ+<span class="number">8</span>);</span><br><span class="line">    sm3_long_to_str(B[<span class="number">3</span>], summ+<span class="number">12</span>);</span><br><span class="line">    sm3_long_to_str(B[<span class="number">4</span>], summ+<span class="number">16</span>);</span><br><span class="line">    sm3_long_to_str(B[<span class="number">5</span>], summ+<span class="number">20</span>);</span><br><span class="line">    sm3_long_to_str(B[<span class="number">6</span>], summ+<span class="number">24</span>);</span><br><span class="line">    sm3_long_to_str(B[<span class="number">7</span>], summ+<span class="number">28</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span> str[<span class="number">64</span>*<span class="number">8</span>*<span class="number">8</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span> str_sm3[<span class="number">32</span>];</span><br><span class="line">    <span class="keyword">int</span> len = <span class="number">5</span>;</span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*for(i=0; i&lt;16; i++)</span></span><br><span class="line"><span class="comment">    &#123;</span></span><br><span class="line"><span class="comment">        str[4*i+0] = 0x61;</span></span><br><span class="line"><span class="comment">        str[4*i+1] = 0x62;</span></span><br><span class="line"><span class="comment">        str[4*i+2] = 0x63;</span></span><br><span class="line"><span class="comment">        str[4*i+3] = 0x64;</span></span><br><span class="line"><span class="comment">    &#125;*/</span></span><br><span class="line"></span><br><span class="line">    str[<span class="number">0</span>] = <span class="number">0x33</span>;</span><br><span class="line">    str[<span class="number">1</span>] = <span class="number">0x66</span>;</span><br><span class="line">    str[<span class="number">2</span>] = <span class="number">0x77</span>;</span><br><span class="line">    str[<span class="number">3</span>] = <span class="number">0x99</span>;</span><br><span class="line"></span><br><span class="line">    len = sm3_pad_message(str, len);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//print_str(str, len);</span></span><br><span class="line"></span><br><span class="line">    len = sm3_str_group(str, len);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//print_str(str, len);</span></span><br><span class="line"></span><br><span class="line">    sm3_str_summ(str, str_sm3, len);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//print_str(str, len);</span></span><br><span class="line"></span><br><span class="line">    print_str(str_sm3, <span class="number">32</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>看上去是很一般的哈希流程，跟SHA有异曲同工之妙。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p> <a target="_blank" rel="noopener" href="https://sca.gov.cn/sca/xwdt/2010-12/17/1002389/files/302a3ada057c4a73830536d03e683110.pdf">302a3ada057c4a73830536d03e683110.pdf (sca.gov.cn)</a> </p>
+<p> <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_43710705/article/details/103915133">python实现sm3算法_mt 2333的博客-CSDN博客_python sm3</a> </p>
+<p> <a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_48203710/article/details/106409587">C语言实现SM3_嘤3的博客-CSDN博客_c语言实现sm3算法</a> </p>
+<p> <a target="_blank" rel="noopener" href="https://www.jianshu.com/p/d33670bfdd4f">C语言实现国密SM3算法 - 简书 (jianshu.com)</a> </p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Crypto/" rel="tag"><i class="fa fa-tag"></i></a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/03/21/Antlr4/" rel="prev" title="Antlr4(存根)">
+      <i class="fa fa-chevron-left"></i> Antlr4(存根)
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#SM3%E5%93%88%E5%B8%8C%E7%AE%97%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">SM3哈希算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89"><span class="nav-number">1.1.</span> <span class="nav-text">定义</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%93%88%E5%B8%8C%E5%80%BC"><span class="nav-number">1.1.1.</span> <span class="nav-text">哈希值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97"><span class="nav-number">1.1.2.</span> <span class="nav-text">字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%A6%E5%8F%B7"><span class="nav-number">1.1.3.</span> <span class="nav-text">符号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E6%95%B0"><span class="nav-number">1.1.4.</span> <span class="nav-text">常数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%80%BC"><span class="nav-number">1.1.5.</span> <span class="nav-text">初始值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E9%87%8F"><span class="nav-number">1.1.6.</span> <span class="nav-text">常量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%83%E5%B0%94%E5%87%BD%E6%95%B0"><span class="nav-number">1.1.7.</span> <span class="nav-text">布尔函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BD%AE%E6%8D%A2%E5%87%BD%E6%95%B0"><span class="nav-number">1.1.8.</span> <span class="nav-text">置换函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%97%E6%B3%95"><span class="nav-number">1.2.</span> <span class="nav-text">算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A1%AB%E5%85%85"><span class="nav-number">1.2.1.</span> <span class="nav-text">填充</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%AD%E4%BB%A3%E5%8E%8B%E7%BC%A9"><span class="nav-number">1.2.2.</span> <span class="nav-text">迭代压缩</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B6%88%E6%81%AF%E6%89%A9%E5%B1%95"><span class="nav-number">1.2.3.</span> <span class="nav-text">消息扩展</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%8B%E7%BC%A9%E5%87%BD%E6%95%B0"><span class="nav-number">1.2.4.</span> <span class="nav-text">压缩函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9D%82%E5%87%91%E5%80%BC"><span class="nav-number">1.2.5.</span> <span class="nav-text">杂凑值</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Python%E6%BA%90%E7%A0%81"><span class="nav-number">1.3.</span> <span class="nav-text">Python源码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C%E6%BA%90%E7%A0%81"><span class="nav-number">1.4.</span> <span class="nav-text">C源码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">1.5.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">1.6.</span> <span class="nav-text">参考</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Tardis"
+      src="/images/spongebob.jpg">
+  <p class="site-author-name" itemprop="name">Tardis</p>
+  <div class="site-description" itemprop="description">学点好玩的逆向知识</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Taardisaa" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Taardisaa" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:136665562@qq.com" title="E-Mail → mailto:136665562@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa-heartbeat"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tardis</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">637k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">9:39</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='250' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+   if (typeof MathJax === 'undefined') {
+       window.MathJax = {
+         loader: {
+         source: {
+           '[tex]/amsCd': '[tex]/amscd',
+           '[tex]/AMScd': '[tex]/amscd'
+         }
+       },
+       tex: {
+         inlineMath: {'[+]': [['$', '$']]},
+         tags: 'ams'
+       },
+       options: {
+         renderActions: {
+           findScript: [10, doc => {
+             document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+               const display = !!node.type.match(/; *mode=display/);
+               const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+               const text = document.createTextNode('');
+               node.parentNode.replaceChild(text, node);
+               math.start = {node: text, delim: '', n: 0};
+               math.end = {node: text, delim: '', n: 0};
+               doc.math.push(math);
+             });
+           }, '', false],
+           insertedScript: [200, () => {
+         document.querySelectorAll('mjx-container').forEach(node => {
+           let target = node.parentNode;
+           if (target.nodeName.toLowerCase() === 'li') {
+             target.parentNode.classList.add('has-jax');
+           }
+         });
+       }, '', false]
+     }
+   }
+ };
+	
+
+    (function () {
+      var script = document.createElement('script');
+      script.src = 'https://cdn.jsdelivr.net/npm/mathjax@2.7.8/unpacked/MathJax.js?config=TeX-MML-AM_CHTML';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+
+   <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+   <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+   <script type="text/javascript" src="/js/fireworks.js"></script>
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"right","width":200,"height":400},"mobile":{"show":true},"log":false});</script></body>
+</html>
