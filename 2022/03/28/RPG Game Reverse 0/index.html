@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <script type="text/javascript" src="/js/dytitle.js"></script>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"taardisaa.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="RPG游戏逆向">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RPG Game Reverse 0">
+<meta property="og:url" content="https://taardisaa.github.io/2022/03/28/RPG%20Game%20Reverse%200/index.html">
+<meta property="og:site_name" content="Tardis&#39;s blog">
+<meta property="og:description" content="RPG游戏逆向">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-03-28T01:50:00.000Z">
+<meta property="article:modified_time" content="2022-03-28T07:59:57.161Z">
+<meta property="article:author" content="Tardis">
+<meta property="article:tag" content="RPG">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://taardisaa.github.io/2022/03/28/RPG%20Game%20Reverse%200/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>RPG Game Reverse 0 | Tardis's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --><link rel="alternate" href="/atom.xml" title="Tardis's blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Tardis's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">摸鱼用博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://taardisaa.github.io/2022/03/28/RPG%20Game%20Reverse%200/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/spongebob.jpg">
+      <meta itemprop="name" content="Tardis">
+      <meta itemprop="description" content="学点好玩的逆向知识">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Tardis's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          RPG Game Reverse 0
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-03-28 09:50:00 / 修改时间：15:59:57" itemprop="dateCreated datePublished" datetime="2022-03-28T09:50:00+08:00">2022-03-28</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/RPG/" itemprop="url" rel="index"><span itemprop="name">RPG</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>8.8k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>8 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>RPG游戏逆向</p>
+<span id="more"></span>
+
+<h1 id="RPG-Game-Reverse-0"><a href="#RPG-Game-Reverse-0" class="headerlink" title="RPG Game Reverse 0"></a>RPG Game Reverse 0</h1><h2 id="目的"><a href="#目的" class="headerlink" title="目的"></a>目的</h2><p>没心情玩恐怖游戏，疯狂死。于是准备逆一下看看剧本。</p>
+<h2 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h2><p>暂时遇到的工具。不是所有都有用。</p>
+<h3 id="RPG-Maker-VX-Ace"><a href="#RPG-Maker-VX-Ace" class="headerlink" title="RPG Maker VX Ace"></a><code>RPG Maker VX Ace</code></h3><p>RPG游戏制作工具。需要破解。</p>
+<h3 id="RPGVXAce-RTP"><a href="#RPGVXAce-RTP" class="headerlink" title="RPGVXAce_RTP"></a><code>RPGVXAce_RTP</code></h3><p>RPG VX Ace Runtime Package，是游戏运行库，想要正常运行RPG Maker的游戏需要先安装这个。</p>
+<h3 id="RGSS加密文件解包器"><a href="#RGSS加密文件解包器" class="headerlink" title="RGSS加密文件解包器"></a><code>RGSS加密文件解包器</code></h3><p>RPG Maker制作的游戏核心逻辑位于<code>Game.rgss3a</code>资源文件中。此工具可以解包，获得图片，地图等资源。</p>
+<h3 id="RpgMakerSaveEdit"><a href="#RpgMakerSaveEdit" class="headerlink" title="RpgMakerSaveEdit"></a><code>RpgMakerSaveEdit</code></h3><p>可以用于修改<code>Save.rvdata2</code>保存文件，用于魔改游戏进度。</p>
+<p>但是对于其他<code>.rvdata2</code>资源文件无效。</p>
+<h3 id="rvdata2json"><a href="#rvdata2json" class="headerlink" title="rvdata2json"></a><code>rvdata2json</code></h3><p>Ruby脚本</p>
+<p>将<code>rvdata2</code>转化成<code>json</code>序列化文件。</p>
+<p>缺少某些依赖，放弃使用。</p>
+<h3 id="rvdata2-parser"><a href="#rvdata2-parser" class="headerlink" title="rvdata2_parser"></a><code>rvdata2_parser</code></h3><p>Python脚本</p>
+<p>可以将<code>rvdata2</code>解析</p>
+<p>根据实践发现可以将除了<code>MAP.rvdata2</code>地图文件以外的资源文件进行解析，生成Python字典格式。</p>
+<h2 id="RPG游戏结构"><a href="#RPG游戏结构" class="headerlink" title="RPG游戏结构"></a>RPG游戏结构</h2><p>以某恐怖RPG游戏为例。</p>
+<blockquote>
+<p>此游戏似乎没有做强加密，属于没有任何保护。</p>
+</blockquote>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── Audio</span><br><span class="line">│   ├── BGM</span><br><span class="line">│   ├── BGS</span><br><span class="line">│   ├── ME</span><br><span class="line">│   └── SE</span><br><span class="line">├── <span class="module-access"><span class="module"><span class="identifier">Game</span>.</span></span>exe</span><br><span class="line">├── <span class="module-access"><span class="module"><span class="identifier">Game</span>.</span></span>ini</span><br><span class="line">├── <span class="module-access"><span class="module"><span class="identifier">Game</span>.</span></span>rgss3a</span><br><span class="line">├── <span class="module-access"><span class="module"><span class="identifier">RGSS300</span>.</span></span>dll</span><br><span class="line">├── Save</span><br><span class="line">│   └── <span class="module-access"><span class="module"><span class="identifier">GSave</span>.</span></span>rxdata</span><br><span class="line">├── <span class="module-access"><span class="module"><span class="identifier">Save01</span>.</span></span>rvdata2</span><br><span class="line">├── System</span><br><span class="line">│   └── <span class="module-access"><span class="module"><span class="identifier">RGSS300</span>.</span></span>dll</span><br><span class="line">├── readme.txt</span><br><span class="line">└── simhei</span><br><span class="line">    └── simhei.ttf</span><br></pre></td></tr></table></figure>
+
+<h3 id="Audio"><a href="#Audio" class="headerlink" title="Audio"></a>Audio</h3><p>各种格式的音频资源。</p>
+<h3 id="Game-exe"><a href="#Game-exe" class="headerlink" title="Game.exe"></a>Game.exe</h3><p>游戏启动器。根据逆向发现，并没有核心算法，大部分为标准库函数，属于RPG游戏的默认启动器。</p>
+<h3 id="Game-ini"><a href="#Game-ini" class="headerlink" title="Game.ini"></a>Game.ini</h3><p>配置文件</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[Game]</span></span><br><span class="line"><span class="attr">RTP</span>=RPGVXAce</span><br><span class="line"><span class="attr">Library</span>=System\RGSS300.dll</span><br><span class="line"><span class="attr">Scripts</span>=Data\Scripts.rvdata2</span><br><span class="line"><span class="attr">Title</span>=the LifT</span><br></pre></td></tr></table></figure>
+
+<p>定义了脚本，库，游戏名以及制作工具为<code>RPGVXAce</code>（RPG Maker底下还有3个不同子版本）</p>
+<h3 id="simhei"><a href="#simhei" class="headerlink" title="simhei"></a>simhei</h3><p>文件夹名含义未知，但是里面有中文字体配置文件。</p>
+<h3 id="Save"><a href="#Save" class="headerlink" title="Save"></a>Save</h3><h4 id="GSave-rxdata"><a href="#GSave-rxdata" class="headerlink" title="GSave.rxdata"></a>GSave.rxdata</h4><p>猜测是用于记录存档的，但是发觉全都保存在主文件夹的<code>SaveXX.rvdata2</code>下了。</p>
+<h3 id="RGSS300-dll"><a href="#RGSS300-dll" class="headerlink" title="RGSS300.dll"></a>RGSS300.dll</h3><p> <code>Ruby Game Scripting System</code>，Ruby游戏扩展，有Aspack压缩壳。</p>
+<h3 id="SaveXX-rvdata2"><a href="#SaveXX-rvdata2" class="headerlink" title="SaveXX.rvdata2"></a>SaveXX.rvdata2</h3><p>各个存档文件。可以使用<code>RpgMakerSaveEdit</code>进行魔改。</p>
+<h3 id="Game-rgss3a⭐"><a href="#Game-rgss3a⭐" class="headerlink" title="Game.rgss3a⭐"></a>Game.rgss3a⭐</h3><p>资源文件存档，可以解包后拿到各种资源文件。核心分析点。</p>
+<p>据说若有加密，则解包后也只会得到一些加密数据。就需要分析<code>RGSS300.dll</code>中有没有调用什么解密流程了。</p>
+<h2 id="解包"><a href="#解包" class="headerlink" title="解包"></a>解包</h2><p>在没被加密，能够直接拆包的情况下，</p>
+<p>得到</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── Data</span><br><span class="line">│   ├── <span class="module-access"><span class="module"><span class="identifier">Actors</span>.</span></span>rvdata2</span><br><span class="line">│   ├── <span class="module-access"><span class="module"><span class="identifier">Animations</span>.</span></span>rvdata2</span><br><span class="line">│   ├── <span class="module-access"><span class="module"><span class="identifier">Armors</span>.</span></span>rvdata2</span><br><span class="line">│   ├── <span class="module-access"><span class="module"><span class="identifier">Classes</span>.</span></span>rvdata2</span><br><span class="line">│   ├── <span class="module-access"><span class="module"><span class="identifier">CommonEvents</span>.</span></span>rvdata2</span><br><span class="line">│   ├── <span class="module-access"><span class="module"><span class="identifier">Enemies</span>.</span></span>rvdata2</span><br><span class="line">│   ├── <span class="module-access"><span class="module"><span class="identifier">Items</span>.</span></span>rvdata2</span><br><span class="line">│   ├── <span class="module-access"><span class="module"><span class="identifier">Map001</span>.</span></span>rvdata2</span><br><span class="line">│   ├── <span class="module-access"><span class="module"><span class="identifier">Map105</span>.</span></span>rvdata2</span><br><span class="line">│   ├── <span class="module-access"><span class="module"><span class="identifier">MapInfos</span>.</span></span>rvdata2</span><br><span class="line">│   ├── <span class="module-access"><span class="module"><span class="identifier">Scripts</span>.</span></span>rvdata2</span><br><span class="line">│   ├── <span class="module-access"><span class="module"><span class="identifier">Skills</span>.</span></span>rvdata2</span><br><span class="line">│   ├── <span class="module-access"><span class="module"><span class="identifier">States</span>.</span></span>rvdata2</span><br><span class="line">│   ├── <span class="module-access"><span class="module"><span class="identifier">System</span>.</span></span>rvdata2</span><br><span class="line">│   ├── <span class="module-access"><span class="module"><span class="identifier">Tilesets</span>.</span></span>rvdata2</span><br><span class="line">│   ├── <span class="module-access"><span class="module"><span class="identifier">Troops</span>.</span></span>rvdata2</span><br><span class="line">│   └── <span class="module-access"><span class="module"><span class="identifier">Weapons</span>.</span></span>rvdata2</span><br><span class="line">├── Graphics</span><br><span class="line">│   ├── Characters</span><br><span class="line">│   ├── Faces</span><br><span class="line">│   ├── Parallaxes</span><br><span class="line">│   ├── Pictures</span><br><span class="line">│   ├── System</span><br><span class="line">│   ├── Tilesets</span><br><span class="line">│   └── Titles1</span><br><span class="line">└── extract.log</span><br></pre></td></tr></table></figure>
+
+<p>其中省略了若干<code>MapXXX.rvdata2</code>。皆是地图资源文件。</p>
+<p>2个主文件夹</p>
+<h3 id="Graphics"><a href="#Graphics" class="headerlink" title="Graphics"></a>Graphics</h3><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">.</span></span><br><span class="line"><span class="bullet"></span>├── Characters</span><br><span class="line">├── Faces</span><br><span class="line">├── Parallaxes</span><br><span class="line">├── Pictures</span><br><span class="line">├── System</span><br><span class="line">├── Tilesets</span><br><span class="line">└── Titles1</span><br></pre></td></tr></table></figure>
+
+<p>都是图片文件。<code>Pictures</code>文件夹下有剧情相关图片，剧透警告。</p>
+<h3 id="Data"><a href="#Data" class="headerlink" title="Data"></a>Data</h3><p>充满了各种<code>.rvdata2</code>资源文件。本质上是<code>Ruby</code>数据对象序列化后的样子；和Python中PyObject与<code>.pyc</code>文件的关系有异曲同工之妙。</p>
+<p>使用<code>rvdata2_parser</code>能够解码除了Map以外的文件。</p>
+<p>或者塞到某个RPG Maker的新建项目里面也能够直接看到相应数据。</p>
+<h3 id="Actors"><a href="#Actors" class="headerlink" title="Actors"></a>Actors</h3><p>游戏内人物，主角的数据。</p>
+<h3 id="Animations"><a href="#Animations" class="headerlink" title="Animations"></a>Animations</h3><p>若干回合制格斗中的技能设定。此游戏是恐怖游戏，没有回合制格斗，所以这应该是项目创建时RPG Maker默认提供的。</p>
+<h3 id="Armors"><a href="#Armors" class="headerlink" title="Armors"></a>Armors</h3><p>回合制格斗中的盔甲设定。</p>
+<h3 id="Classes"><a href="#Classes" class="headerlink" title="Classes"></a>Classes</h3><p>种族&#x2F;阶级分类。</p>
+<p>比如此游戏中的主角是个苦逼社畜。</p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="name">None</span>, RubyObject(&#123;<span class="symbol">&#x27;@name</span><span class="symbol">&#x27;:</span> <span class="symbol">&#x27;上班族</span>&#x27;, <span class="symbol">&#x27;@learnings</span><span class="symbol">&#x27;:</span> ...]</span><br></pre></td></tr></table></figure>
+
+<h3 id="CommonEvents"><a href="#CommonEvents" class="headerlink" title="CommonEvents"></a>CommonEvents</h3><p>应该是事件设定。直接看序列化文件看不出名堂。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[<span class="literal">None</span>, </span><br><span class="line">    RubyObject(</span><br><span class="line">        &#123;<span class="string">&#x27;@trigger&#x27;</span>: <span class="number">2</span>, </span><br><span class="line">        <span class="string">&#x27;@name&#x27;</span>: <span class="string">&#x27;Light&#x27;</span>, </span><br><span class="line">        <span class="string">&#x27;@switch_id&#x27;</span>: <span class="number">23</span>, </span><br><span class="line">        <span class="string">&#x27;@list&#x27;</span>: [</span><br><span class="line">            RubyObject(</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="string">&#x27;@indent&#x27;</span>: <span class="number">0</span>, </span><br><span class="line">                    <span class="string">&#x27;@code&#x27;</span>: <span class="number">122</span>, </span><br><span class="line">                    <span class="string">&#x27;@parameters&#x27;</span>: [<span class="number">12</span>, <span class="number">12</span>, <span class="number">0</span>, <span class="number">3</span>, <span class="number">5</span>, -<span class="number">1</span>, <span class="number">3</span>]</span><br><span class="line">                &#125;</span><br><span class="line">            ), </span><br><span class="line">            RubyObject(&#123;<span class="string">&#x27;@indent&#x27;</span>: <span class="number">0</span>, <span class="string">&#x27;@code&#x27;</span>: <span class="number">122</span>, <span class="string">&#x27;@parameters&#x27;</span>: [<span class="number">13</span>, <span class="number">13</span>, <span class="number">0</span>, <span class="number">3</span>, <span class="number">5</span>, -<span class="number">1</span>, <span class="number">4</span>]&#125;), </span><br><span class="line">            RubyObject(&#123;<span class="string">&#x27;@indent&#x27;</span>: <span class="number">0</span>, <span class="string">&#x27;@code&#x27;</span>: <span class="number">231</span>, <span class="string">&#x27;@parameters&#x27;</span>: [<span class="number">2</span>, <span class="string">&#x27;Light-2&#x27;</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">12</span>, <span class="number">13</span>, <span class="number">100</span>, <span class="number">100</span>, <span class="number">255</span>, <span class="number">0</span>]&#125;), </span><br><span class="line">            RubyObject(&#123;<span class="string">&#x27;@indent&#x27;</span>: <span class="number">0</span>, <span class="string">&#x27;@code&#x27;</span>: <span class="number">0</span>, <span class="string">&#x27;@parameters&#x27;</span>: []&#125;)], <span class="string">&#x27;@id&#x27;</span>: <span class="number">1</span>&#125;), ...]</span><br></pre></td></tr></table></figure>
+
+<p>需要RPG Maker配合分析</p>
+<h3 id="Enemies"><a href="#Enemies" class="headerlink" title="Enemies"></a>Enemies</h3><p>根据名称猜测，应该是默认的敌人种类和分类。</p>
+<p>具体于这个游戏：</p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">[<span class="name">None</span>, </span><br><span class="line">    RubyObject(&#123;</span><br><span class="line">        <span class="symbol">&#x27;@description</span><span class="symbol">&#x27;:</span> &#x27;&#x27;, </span><br><span class="line">        <span class="symbol">&#x27;@name</span><span class="symbol">&#x27;:</span> <span class="symbol">&#x27;flag1</span>&#x27;, </span><br><span class="line">        <span class="symbol">&#x27;@consumable</span><span class="symbol">&#x27;:</span> False, </span><br><span class="line">        <span class="symbol">&#x27;@occasion</span><span class="symbol">&#x27;:</span> <span class="number">0</span>, </span><br><span class="line">        <span class="symbol">&#x27;@icon_index</span><span class="symbol">&#x27;:</span> <span class="number">192</span>, </span><br><span class="line">        <span class="symbol">&#x27;@price</span><span class="symbol">&#x27;:</span> <span class="number">0</span>, </span><br><span class="line">        <span class="symbol">&#x27;@scope</span><span class="symbol">&#x27;:</span> <span class="number">7</span>, </span><br><span class="line">        <span class="symbol">&#x27;@animation_id</span><span class="symbol">&#x27;:</span> <span class="number">37</span>, </span><br><span class="line">        <span class="symbol">&#x27;@note</span><span class="symbol">&#x27;:</span> &#x27;&#x27;, </span><br><span class="line">        <span class="symbol">&#x27;@speed</span><span class="symbol">&#x27;:</span> <span class="number">0</span>, </span><br><span class="line">        <span class="symbol">&#x27;@id</span><span class="symbol">&#x27;:</span> <span class="number">1</span>, </span><br><span class="line">        <span class="symbol">&#x27;@features</span><span class="symbol">&#x27;:</span> [], </span><br><span class="line">        <span class="symbol">&#x27;@effects</span><span class="symbol">&#x27;:</span> [<span class="name">RubyObject</span>(&#123;<span class="symbol">&#x27;@code</span><span class="symbol">&#x27;:</span> <span class="number">11</span>, <span class="symbol">&#x27;@data_id</span><span class="symbol">&#x27;:</span> <span class="number">0</span>, <span class="symbol">&#x27;@value1</span><span class="symbol">&#x27;:</span> <span class="number">0.0</span>, <span class="symbol">&#x27;@value2</span><span class="symbol">&#x27;:</span> <span class="number">500.0</span>&#125;)], </span><br><span class="line">        <span class="symbol">&#x27;@damage</span><span class="symbol">&#x27;:</span> RubyObject(&#123;<span class="symbol">&#x27;@type</span><span class="symbol">&#x27;:</span> <span class="number">0</span>, <span class="symbol">&#x27;@element_id</span><span class="symbol">&#x27;:</span> <span class="number">0</span>, <span class="symbol">&#x27;@formula</span><span class="symbol">&#x27;:</span> <span class="symbol">&#x27;0</span>&#x27;, <span class="symbol">&#x27;@variance</span><span class="symbol">&#x27;:</span> <span class="number">20</span>, <span class="symbol">&#x27;@critical</span><span class="symbol">&#x27;:</span> False&#125;), </span><br><span class="line">        <span class="symbol">&#x27;@success_rate</span><span class="symbol">&#x27;:</span> <span class="number">100</span>, </span><br><span class="line">        <span class="symbol">&#x27;@hit_type</span><span class="symbol">&#x27;:</span> <span class="number">0</span>, </span><br><span class="line">        <span class="symbol">&#x27;@itype_id</span><span class="symbol">&#x27;:</span> <span class="number">1</span>, </span><br><span class="line">        <span class="symbol">&#x27;@repeats</span><span class="symbol">&#x27;:</span> <span class="number">1</span>, </span><br><span class="line">        <span class="symbol">&#x27;@tp_gain</span><span class="symbol">&#x27;:</span> <span class="number">0</span>&#125;</span><br><span class="line">    ), </span><br><span class="line">    RubyObject(&#123;<span class="symbol">&#x27;@description</span><span class="symbol">&#x27;:</span> &#x27;&#x27;, <span class="symbol">&#x27;@name</span><span class="symbol">&#x27;:</span> <span class="symbol">&#x27;flag2</span>&#x27;, <span class="symbol">&#x27;@consumable</span><span class="symbol">&#x27;:</span> True, <span class="symbol">&#x27;@occasion</span><span class="symbol">&#x27;:</span> <span class="number">0</span>, <span class="symbol">&#x27;@icon_index</span><span class="symbol">&#x27;:</span> <span class="number">0</span>, <span class="symbol">&#x27;@price</span><span class="symbol">&#x27;:</span> <span class="number">0</span>, <span class="symbol">&#x27;@scope</span><span class="symbol">&#x27;:</span> <span class="number">7</span>, <span class="symbol">&#x27;@animation_id</span><span class="symbol">&#x27;:</span> <span class="number">0</span>, <span class="symbol">&#x27;@note</span><span class="symbol">&#x27;:</span> &#x27;&#x27;, <span class="symbol">&#x27;@speed</span><span class="symbol">&#x27;:</span> <span class="number">0</span>, <span class="symbol">&#x27;@id</span><span class="symbol">&#x27;:</span> <span class="number">2</span>, <span class="symbol">&#x27;@features</span><span class="symbol">&#x27;:</span> [], <span class="symbol">&#x27;@effects</span><span class="symbol">&#x27;:</span> [], <span class="symbol">&#x27;@damage</span><span class="symbol">&#x27;:</span> RubyObject(&#123;<span class="symbol">&#x27;@type</span><span class="symbol">&#x27;:</span> <span class="number">0</span>, <span class="symbol">&#x27;@element_id</span><span class="symbol">&#x27;:</span> <span class="number">0</span>, <span class="symbol">&#x27;@formula</span><span class="symbol">&#x27;:</span> <span class="symbol">&#x27;0</span>&#x27;, <span class="symbol">&#x27;@variance</span><span class="symbol">&#x27;:</span> <span class="number">20</span>, <span class="symbol">&#x27;@critical</span><span class="symbol">&#x27;:</span> False&#125;), <span class="symbol">&#x27;@success_rate</span><span class="symbol">&#x27;:</span> <span class="number">100</span>, <span class="symbol">&#x27;@hit_type</span><span class="symbol">&#x27;:</span> <span class="number">0</span>, <span class="symbol">&#x27;@itype_id</span><span class="symbol">&#x27;:</span> <span class="number">1</span>, <span class="symbol">&#x27;@repeats</span><span class="symbol">&#x27;:</span> <span class="number">1</span>, <span class="symbol">&#x27;@tp_gain</span><span class="symbol">&#x27;:</span> <span class="number">0</span>&#125;), </span><br><span class="line">    RubyObject(&#123;<span class="symbol">&#x27;@description</span><span class="symbol">&#x27;:</span> &#x27;&#x27;, <span class="symbol">&#x27;@name</span><span class="symbol">&#x27;:</span> <span class="symbol">&#x27;flag3</span>&#x27;, <span class="symbol">&#x27;@consumable</span><span class="symbol">&#x27;:</span> True, <span class="symbol">&#x27;@occasion</span><span class="symbol">&#x27;:</span> <span class="number">0</span>, <span class="symbol">&#x27;@icon_index</span><span class="symbol">&#x27;:</span> <span class="number">0</span>, <span class="symbol">&#x27;@price</span><span class="symbol">&#x27;:</span> <span class="number">0</span>, <span class="symbol">&#x27;@scope</span><span class="symbol">&#x27;:</span> <span class="number">7</span>, <span class="symbol">&#x27;@animation_id</span><span class="symbol">&#x27;:</span> <span class="number">0</span>, <span class="symbol">&#x27;@note</span><span class="symbol">&#x27;:</span> &#x27;&#x27;, <span class="symbol">&#x27;@speed</span><span class="symbol">&#x27;:</span> <span class="number">0</span>, <span class="symbol">&#x27;@id</span><span class="symbol">&#x27;:</span> <span class="number">3</span>, <span class="symbol">&#x27;@features</span><span class="symbol">&#x27;:</span> [], <span class="symbol">&#x27;@effects</span><span class="symbol">&#x27;:</span> [], <span class="symbol">&#x27;@damage</span><span class="symbol">&#x27;:</span> RubyObject(&#123;<span class="symbol">&#x27;@type</span><span class="symbol">&#x27;:</span> <span class="number">0</span>, <span class="symbol">&#x27;@element_id</span><span class="symbol">&#x27;:</span> <span class="number">0</span>, <span class="symbol">&#x27;@formula</span><span class="symbol">&#x27;:</span> <span class="symbol">&#x27;0</span>&#x27;, <span class="symbol">&#x27;@variance</span><span class="symbol">&#x27;:</span> <span class="number">20</span>, <span class="symbol">&#x27;@critical</span><span class="symbol">&#x27;:</span> False&#125;), <span class="symbol">&#x27;@success_rate</span><span class="symbol">&#x27;:</span> <span class="number">100</span>, <span class="symbol">&#x27;@hit_type</span><span class="symbol">&#x27;:</span> <span class="number">0</span>, <span class="symbol">&#x27;@itype_id</span><span class="symbol">&#x27;:</span> <span class="number">1</span>, <span class="symbol">&#x27;@repeats</span><span class="symbol">&#x27;:</span> <span class="number">1</span>, <span class="symbol">&#x27;@tp_gain</span><span class="symbol">&#x27;:</span> <span class="number">0</span>&#125;), </span><br><span class="line">    RubyObject(&#123;<span class="symbol">&#x27;@description</span><span class="symbol">&#x27;:</span> &#x27;&#x27;, <span class="symbol">&#x27;@name</span><span class="symbol">&#x27;:</span> <span class="symbol">&#x27;flag4</span>&#x27;, <span class="symbol">&#x27;@consumable</span><span class="symbol">&#x27;:</span> True, <span class="symbol">&#x27;@occasion</span><span class="symbol">&#x27;:</span> <span class="number">0</span>, <span class="symbol">&#x27;@icon_index</span><span class="symbol">&#x27;:</span> <span class="number">0</span>, <span class="symbol">&#x27;@price</span><span class="symbol">&#x27;:</span> <span class="number">0</span>, <span class="symbol">&#x27;@scope</span><span class="symbol">&#x27;:</span> <span class="number">7</span>, <span class="symbol">&#x27;@animation_id</span><span class="symbol">&#x27;:</span> <span class="number">0</span>, <span class="symbol">&#x27;@note</span><span class="symbol">&#x27;:</span> &#x27;&#x27;, <span class="symbol">&#x27;@speed</span><span class="symbol">&#x27;:</span> <span class="number">0</span>, <span class="symbol">&#x27;@id</span><span class="symbol">&#x27;:</span> <span class="number">4</span>, <span class="symbol">&#x27;@features</span><span class="symbol">&#x27;:</span> [], <span class="symbol">&#x27;@effects</span><span class="symbol">&#x27;:</span> [], <span class="symbol">&#x27;@damage</span><span class="symbol">&#x27;:</span> RubyObject(&#123;<span class="symbol">&#x27;@type</span><span class="symbol">&#x27;:</span> <span class="number">0</span>, <span class="symbol">&#x27;@element_id</span><span class="symbol">&#x27;:</span> <span class="number">0</span>, <span class="symbol">&#x27;@formula</span><span class="symbol">&#x27;:</span> <span class="symbol">&#x27;0</span>&#x27;, <span class="symbol">&#x27;@variance</span><span class="symbol">&#x27;:</span> <span class="number">20</span>, <span class="symbol">&#x27;@critical</span><span class="symbol">&#x27;:</span> False&#125;), <span class="symbol">&#x27;@success_rate</span><span class="symbol">&#x27;:</span> <span class="number">100</span>, <span class="symbol">&#x27;@hit_type</span><span class="symbol">&#x27;:</span> <span class="number">0</span>, <span class="symbol">&#x27;@itype_id</span><span class="symbol">&#x27;:</span> <span class="number">1</span>, <span class="symbol">&#x27;@repeats</span><span class="symbol">&#x27;:</span> <span class="number">1</span>, <span class="symbol">&#x27;@tp_gain</span><span class="symbol">&#x27;:</span> <span class="number">0</span>&#125;), </span><br><span class="line">    RubyObject(&#123;<span class="symbol">&#x27;@description</span><span class="symbol">&#x27;:</span> &#x27;&#x27;, <span class="symbol">&#x27;@name</span><span class="symbol">&#x27;:</span> <span class="symbol">&#x27;flag5</span>&#x27;, <span class="symbol">&#x27;@consumable</span><span class="symbol">&#x27;:</span> True, <span class="symbol">&#x27;@occasion</span><span class="symbol">&#x27;:</span> <span class="number">0</span>, <span class="symbol">&#x27;@icon_index</span><span class="symbol">&#x27;:</span> <span class="number">0</span>, <span class="symbol">&#x27;@price</span><span class="symbol">&#x27;:</span> <span class="number">0</span>, <span class="symbol">&#x27;@scope</span><span class="symbol">&#x27;:</span> <span class="number">7</span>, <span class="symbol">&#x27;@animation_id</span><span class="symbol">&#x27;:</span> <span class="number">0</span>, <span class="symbol">&#x27;@note</span><span class="symbol">&#x27;:</span> &#x27;&#x27;, <span class="symbol">&#x27;@speed</span><span class="symbol">&#x27;:</span> <span class="number">0</span>, <span class="symbol">&#x27;@id</span><span class="symbol">&#x27;:</span> <span class="number">5</span>, <span class="symbol">&#x27;@features</span><span class="symbol">&#x27;:</span> [], <span class="symbol">&#x27;@effects</span><span class="symbol">&#x27;:</span> [], <span class="symbol">&#x27;@damage</span><span class="symbol">&#x27;:</span> RubyObject(&#123;<span class="symbol">&#x27;@type</span><span class="symbol">&#x27;:</span> <span class="number">0</span>, <span class="symbol">&#x27;@element_id</span><span class="symbol">&#x27;:</span> <span class="number">0</span>, <span class="symbol">&#x27;@formula</span><span class="symbol">&#x27;:</span> <span class="symbol">&#x27;0</span>&#x27;, <span class="symbol">&#x27;@variance</span><span class="symbol">&#x27;:</span> <span class="number">20</span>, <span class="symbol">&#x27;@critical</span><span class="symbol">&#x27;:</span> False&#125;), <span class="symbol">&#x27;@success_rate</span><span class="symbol">&#x27;:</span> <span class="number">100</span>, <span class="symbol">&#x27;@hit_type</span><span class="symbol">&#x27;:</span> <span class="number">0</span>, <span class="symbol">&#x27;@itype_id</span><span class="symbol">&#x27;:</span> <span class="number">1</span>, <span class="symbol">&#x27;@repeats</span><span class="symbol">&#x27;:</span> <span class="number">1</span>, <span class="symbol">&#x27;@tp_gain</span><span class="symbol">&#x27;:</span> <span class="number">0</span>&#125;)]</span><br></pre></td></tr></table></figure>
+
+<p>设立了5个<code>flag</code>，严重怀疑应该与不同的结局有关系，因为在修改存档文件的时候也会发现这5个<code>flag</code>数据。</p>
+<h3 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h3><p>定义了游戏内地图设定。虽然应该也是Ruby序列化对象，但是似乎和其他的文件有少许差别。暂时只能使用RPG Maker进行阅读。</p>
+<h3 id="MapInfos"><a href="#MapInfos" class="headerlink" title="MapInfos"></a>MapInfos</h3><p>记录了Map的数量与名称。如果不对应的话，Map数据无法在RPG Maker中正常加载。</p>
+<h3 id="Scripts"><a href="#Scripts" class="headerlink" title="Scripts"></a>Scripts</h3><p>脚本资源。需要RPGMaker</p>
+<h3 id="Skills"><a href="#Skills" class="headerlink" title="Skills"></a>Skills</h3><p>回合制格斗中的技能数据。</p>
+<h3 id="States"><a href="#States" class="headerlink" title="States"></a>States</h3><p>回合制格斗中的人物状态。</p>
+<h3 id="System"><a href="#System" class="headerlink" title="System"></a>System</h3><p>需要RPGMaker</p>
+<h3 id="Tilesets"><a href="#Tilesets" class="headerlink" title="Tilesets"></a>Tilesets</h3><p>未知。</p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="name">None</span>, RubyObject(&#123;<span class="symbol">&#x27;@id</span><span class="symbol">&#x27;:</span> <span class="number">1</span>, <span class="symbol">&#x27;@name</span><span class="symbol">&#x27;:</span> <span class="symbol">&#x27;世界地图</span>&#x27;, <span class="symbol">&#x27;@mode</span><span class="symbol">&#x27;:</span> <span class="number">0</span>, <span class="symbol">&#x27;@tileset_names</span><span class="symbol">&#x27;:</span> [<span class="symbol">&#x27;World_A1</span>&#x27;, <span class="symbol">&#x27;World_A2</span>&#x27;, &#x27;&#x27;, &#x27;&#x27;, &#x27;&#x27;, <span class="symbol">&#x27;World_B</span>&#x27;, &#x27;&#x27;, &#x27;&#x27;, &#x27;&#x27;], <span class="symbol">&#x27;@flags</span><span class="symbol">&#x27;:</span> UserDef(&#123;&#125;), <span class="symbol">&#x27;@note</span><span class="symbol">&#x27;:</span> &#x27;&#x27;&#125;), RubyObject(&#123;<span class="symbol">&#x27;@id</span><span class="symbol">&#x27;:</span> <span class="number">2</span>, <span class="symbol">&#x27;@name</span><span class="symbol">&#x27;:</span> <span class="symbol">&#x27;外观地图</span>&#x27;, <span class="symbol">&#x27;@mode</span><span class="symbol">&#x27;:</span> <span class="number">1</span>, <span class="symbol">&#x27;@tileset_names</span><span class="symbol">&#x27;:</span> [<span class="symbol">&#x27;Inside_A5</span>&#x27;, <span class="symbol">&#x27;Outside_A2</span>&#x27;, <span class="symbol">&#x27;Outside_A3</span>&#x27;, <span class="symbol">&#x27;Outside_A4</span>&#x27;, <span class="symbol">&#x27;Outside_A5</span>&#x27;, <span class="symbol">&#x27;Inside_B</span>&#x27;, <span class="symbol">&#x27;Outside_C</span>&#x27;, &#x27;&#x27;, &#x27;&#x27;], <span class="symbol">&#x27;@flags</span><span class="symbol">&#x27;:</span> UserDef(&#123;&#125;), <span class="symbol">&#x27;@note</span><span class="symbol">&#x27;:</span> &#x27;&#x27;&#125;), RubyObject(&#123;<span class="symbol">&#x27;@id</span><span class="symbol">&#x27;:</span> <span class="number">3</span>, <span class="symbol">&#x27;@name</span><span class="symbol">&#x27;:</span> <span class="symbol">&#x27;内部地图</span>&#x27;, <span class="symbol">&#x27;@mode</span><span class="symbol">&#x27;:</span> <span class="number">1</span>, <span class="symbol">&#x27;@tileset_names</span><span class="symbol">&#x27;:</span> [<span class="symbol">&#x27;Inside_A1</span>&#x27;, <span class="symbol">&#x27;Inside_A2</span>&#x27;, &#x27;&#x27;, <span class="symbol">&#x27;Inside_A4</span>&#x27;, <span class="symbol">&#x27;Inside_A5</span>&#x27;, <span class="symbol">&#x27;Inside_B</span>&#x27;, <span class="symbol">&#x27;Inside_C</span>&#x27;, &#x27;&#x27;, &#x27;&#x27;], <span class="symbol">&#x27;@flags</span><span class="symbol">&#x27;:</span> UserDef(&#123;&#125;), <span class="symbol">&#x27;@note</span><span class="symbol">&#x27;:</span> &#x27;&#x27;&#125;), RubyObject(&#123;<span class="symbol">&#x27;@id</span><span class="symbol">&#x27;:</span> <span class="number">4</span>, <span class="symbol">&#x27;@name</span><span class="symbol">&#x27;:</span> <span class="symbol">&#x27;迷宫地图</span>&#x27;, <span class="symbol">&#x27;@mode</span><span class="symbol">&#x27;:</span> <span class="number">1</span>, <span class="symbol">&#x27;@tileset_names</span><span class="symbol">&#x27;:</span> [<span class="symbol">&#x27;Dungeon_A1</span>&#x27;, <span class="symbol">&#x27;Dungeon_A2</span>&#x27;, &#x27;&#x27;, <span class="symbol">&#x27;Dungeon_A4</span>&#x27;, <span class="symbol">&#x27;Dungeon_A5</span>&#x27;, <span class="symbol">&#x27;Dungeon_B</span>&#x27;, <span class="symbol">&#x27;Dungeon_C</span>&#x27;, &#x27;&#x27;, &#x27;&#x27;], <span class="symbol">&#x27;@flags</span><span class="symbol">&#x27;:</span> UserDef(&#123;&#125;), <span class="symbol">&#x27;@note</span><span class="symbol">&#x27;:</span> &#x27;&#x27;&#125;)]</span><br></pre></td></tr></table></figure>
+
+<p>记录了若干默认地图。</p>
+<h3 id="Troops"><a href="#Troops" class="headerlink" title="Troops"></a>Troops</h3><p>敌人集群设定。</p>
+<h3 id="Weapons"><a href="#Weapons" class="headerlink" title="Weapons"></a>Weapons</h3><p>武器设定。</p>
+<h2 id="恢复RPG-Maker项目"><a href="#恢复RPG-Maker项目" class="headerlink" title="恢复RPG Maker项目"></a>恢复RPG Maker项目</h2><p>在另一个文件夹下创建新项目</p>
+<p>然后复制刚刚的<code>Data</code>和<code>Graphics</code>文件夹到项目文件夹中。可能有替换，直接替换即可。</p>
+<p>最好也把游戏文件夹里的<code>Audio</code>音频资源也复制过来。这样就获得了完整的游戏项目了。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p> <a target="_blank" rel="noopener" href="https://www.php.cn/manual/view/20170.html">1、什么是RGSS -  Ruby中文文档 (php.cn)</a> </p>
+<p> <a target="_blank" rel="noopener" href="https://github.com/Ancurio/rgss_script_editor">Ancurio&#x2F;rgss_script_editor: Script editor for Scripts.{rxdata, rvdata, rvdata2} (github.com)</a> </p>
+<p> <a target="_blank" rel="noopener" href="https://github.com/Inejka/rvdata2_parser">Inejka&#x2F;rvdata2_parser: Tool for reading packed rvdata2 files (github.com)</a> </p>
+<p> <a target="_blank" rel="noopener" href="https://github.com/Bioruebe/rmvdec">Bioruebe&#x2F;rmvdec: A decrypter for RPG-Maker-MV ressource files (.rpgmvp, .rpgmvo, rpgmvm) (github.com)</a> </p>
+<p> <a target="_blank" rel="noopener" href="https://m.blog.naver.com/ladycalla/222011415963">쯔꾸르 에디터 (Rpg Maker VX Ace 세이브 에디터) : 네이버 블로그 (naver.com)</a> </p>
+<p> <a target="_blank" rel="noopener" href="https://web.save-editor.com/tool/rpg_tkool_vx_ace.html">RPGツクールVX Ace セーブ改造ツール (RPG MAKER VX SAVE EDITOR) (save-editor.com)</a> </p>
+<p> <a target="_blank" rel="noopener" href="https://www.rpgmakerweb.com/downloads">Downloads And Free Trials | RPG Maker | Make Your Own Game! (rpgmakerweb.com)</a> </p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/RPG/" rel="tag"><i class="fa fa-tag"></i></a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/03/27/clemency/" rel="prev" title="cLEMENCy架构">
+      <i class="fa fa-chevron-left"></i> cLEMENCy架构
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#RPG-Game-Reverse-0"><span class="nav-number">1.</span> <span class="nav-text">RPG Game Reverse 0</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%AE%E7%9A%84"><span class="nav-number">1.1.</span> <span class="nav-text">目的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B7%A5%E5%85%B7"><span class="nav-number">1.2.</span> <span class="nav-text">工具</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#RPG-Maker-VX-Ace"><span class="nav-number">1.2.1.</span> <span class="nav-text">RPG Maker VX Ace</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RPGVXAce-RTP"><span class="nav-number">1.2.2.</span> <span class="nav-text">RPGVXAce_RTP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RGSS%E5%8A%A0%E5%AF%86%E6%96%87%E4%BB%B6%E8%A7%A3%E5%8C%85%E5%99%A8"><span class="nav-number">1.2.3.</span> <span class="nav-text">RGSS加密文件解包器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RpgMakerSaveEdit"><span class="nav-number">1.2.4.</span> <span class="nav-text">RpgMakerSaveEdit</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rvdata2json"><span class="nav-number">1.2.5.</span> <span class="nav-text">rvdata2json</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rvdata2-parser"><span class="nav-number">1.2.6.</span> <span class="nav-text">rvdata2_parser</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RPG%E6%B8%B8%E6%88%8F%E7%BB%93%E6%9E%84"><span class="nav-number">1.3.</span> <span class="nav-text">RPG游戏结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Audio"><span class="nav-number">1.3.1.</span> <span class="nav-text">Audio</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Game-exe"><span class="nav-number">1.3.2.</span> <span class="nav-text">Game.exe</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Game-ini"><span class="nav-number">1.3.3.</span> <span class="nav-text">Game.ini</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#simhei"><span class="nav-number">1.3.4.</span> <span class="nav-text">simhei</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Save"><span class="nav-number">1.3.5.</span> <span class="nav-text">Save</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#GSave-rxdata"><span class="nav-number">1.3.5.1.</span> <span class="nav-text">GSave.rxdata</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RGSS300-dll"><span class="nav-number">1.3.6.</span> <span class="nav-text">RGSS300.dll</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SaveXX-rvdata2"><span class="nav-number">1.3.7.</span> <span class="nav-text">SaveXX.rvdata2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Game-rgss3a%E2%AD%90"><span class="nav-number">1.3.8.</span> <span class="nav-text">Game.rgss3a⭐</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E5%8C%85"><span class="nav-number">1.4.</span> <span class="nav-text">解包</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Graphics"><span class="nav-number">1.4.1.</span> <span class="nav-text">Graphics</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Data"><span class="nav-number">1.4.2.</span> <span class="nav-text">Data</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Actors"><span class="nav-number">1.4.3.</span> <span class="nav-text">Actors</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Animations"><span class="nav-number">1.4.4.</span> <span class="nav-text">Animations</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Armors"><span class="nav-number">1.4.5.</span> <span class="nav-text">Armors</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Classes"><span class="nav-number">1.4.6.</span> <span class="nav-text">Classes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CommonEvents"><span class="nav-number">1.4.7.</span> <span class="nav-text">CommonEvents</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Enemies"><span class="nav-number">1.4.8.</span> <span class="nav-text">Enemies</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Map"><span class="nav-number">1.4.9.</span> <span class="nav-text">Map</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MapInfos"><span class="nav-number">1.4.10.</span> <span class="nav-text">MapInfos</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Scripts"><span class="nav-number">1.4.11.</span> <span class="nav-text">Scripts</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Skills"><span class="nav-number">1.4.12.</span> <span class="nav-text">Skills</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#States"><span class="nav-number">1.4.13.</span> <span class="nav-text">States</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#System"><span class="nav-number">1.4.14.</span> <span class="nav-text">System</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Tilesets"><span class="nav-number">1.4.15.</span> <span class="nav-text">Tilesets</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Troops"><span class="nav-number">1.4.16.</span> <span class="nav-text">Troops</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Weapons"><span class="nav-number">1.4.17.</span> <span class="nav-text">Weapons</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%81%A2%E5%A4%8DRPG-Maker%E9%A1%B9%E7%9B%AE"><span class="nav-number">1.5.</span> <span class="nav-text">恢复RPG Maker项目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">1.6.</span> <span class="nav-text">参考</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Tardis"
+      src="/images/spongebob.jpg">
+  <p class="site-author-name" itemprop="name">Tardis</p>
+  <div class="site-description" itemprop="description">学点好玩的逆向知识</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">38</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Taardisaa" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Taardisaa" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:136665562@qq.com" title="E-Mail → mailto:136665562@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa-heartbeat"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tardis</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">649k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">9:50</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='250' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+   if (typeof MathJax === 'undefined') {
+       window.MathJax = {
+         loader: {
+         source: {
+           '[tex]/amsCd': '[tex]/amscd',
+           '[tex]/AMScd': '[tex]/amscd'
+         }
+       },
+       tex: {
+         inlineMath: {'[+]': [['$', '$']]},
+         tags: 'ams'
+       },
+       options: {
+         renderActions: {
+           findScript: [10, doc => {
+             document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+               const display = !!node.type.match(/; *mode=display/);
+               const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+               const text = document.createTextNode('');
+               node.parentNode.replaceChild(text, node);
+               math.start = {node: text, delim: '', n: 0};
+               math.end = {node: text, delim: '', n: 0};
+               doc.math.push(math);
+             });
+           }, '', false],
+           insertedScript: [200, () => {
+         document.querySelectorAll('mjx-container').forEach(node => {
+           let target = node.parentNode;
+           if (target.nodeName.toLowerCase() === 'li') {
+             target.parentNode.classList.add('has-jax');
+           }
+         });
+       }, '', false]
+     }
+   }
+ };
+	
+
+    (function () {
+      var script = document.createElement('script');
+      script.src = 'https://cdn.jsdelivr.net/npm/mathjax@2.7.8/unpacked/MathJax.js?config=TeX-MML-AM_CHTML';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+
+   <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+   <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+   <script type="text/javascript" src="/js/fireworks.js"></script>
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"right","width":200,"height":400},"mobile":{"show":true},"log":false});</script></body>
+</html>
