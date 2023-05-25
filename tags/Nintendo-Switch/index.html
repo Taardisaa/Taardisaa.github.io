@@ -6,22 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://taardisaa.github.io">
-  <title>Sekiro Shadows Die Twice UXM Analysis | Taardis&#39;s blog</title>
+  <title>Tag: Nintendo Switch | Taardis&#39;s blog</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="UXM is a tool to unpack game archives and patch the executable to load loose files instead for DS2, SotFS, DS3, and Sekiro.">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Sekiro Shadows Die Twice UXM Analysis">
-<meta property="og:url" content="https://taardisaa.github.io/2023/04/09/Sekiro_UXM_Analysis/index.html">
+  <meta name="description" content="Documenting both my learning and gaming experiences">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Taardis&#39;s blog">
+<meta property="og:url" content="https://taardisaa.github.io/tags/Nintendo-Switch/index.html">
 <meta property="og:site_name" content="Taardis&#39;s blog">
-<meta property="og:description" content="UXM is a tool to unpack game archives and patch the executable to load loose files instead for DS2, SotFS, DS3, and Sekiro.">
+<meta property="og:description" content="Documenting both my learning and gaming experiences">
 <meta property="og:locale">
-<meta property="article:published_time" content="2023-04-09T13:00:00.000Z">
-<meta property="article:modified_time" content="2023-05-25T13:12:31.526Z">
 <meta property="article:author" content="Taardis">
-<meta property="article:tag" content="Sekiro:Shadows Die Twice">
-<meta property="article:tag" content="Mod">
+<meta property="article:tag" content="Taardis, Reverse Engineering, Software Analysis">
 <meta name="twitter:card" content="summary">
   
   
@@ -275,114 +272,54 @@
           </div>
           <div id="js-content" class="content-ll" style="opacity:0.96">
           <!-- <div id="js-content" class="content-ll" > -->
-            <article id="post-Sekiro_UXM_Analysis" class="article article-type-post " itemscope itemprop="blogPost" style="opacity:0.92">
-  <div class="article-inner">
+            
+  
+  
     
-      <header class="article-header">
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2023" class="archive-year">2023</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	
+<a href="/2023/05/25/Nintendo-Switch%E8%AF%84%E6%B5%8B-%E6%83%8A%E5%96%9C%E4%B8%8E%E5%A4%B1%E6%9C%9B%E5%B9%B6%E5%AD%98/" class="archive-article-date">
+        <!-- <time datetime="2023-05-25T13:14:19.000Z" itemprop="datePublished""><i class="icon-calendar icon"></i>2023-05-25</time> -->
+        <time datetime="2023-05-25T13:14:19.000Z" itemprop="datePublished" style="color:black"><i class="icon-calendar icon"></i>2023-05-25</time>
+</a>
+
+        </div>
+    	 
   
+    <h1 itemprop="name">
+	
+	  <a class="archive-article-title" href="/2023/05/25/Nintendo-Switch%E8%AF%84%E6%B5%8B-%E6%83%8A%E5%96%9C%E4%B8%8E%E5%A4%B1%E6%9C%9B%E5%B9%B6%E5%AD%98/" target="_blank" style="color:black">Nintendo Switch评测--惊喜与失望并存</a>
   
-    <h1 class="article-title" itemprop="name" style="color:black">
-      Sekiro Shadows Die Twice UXM Analysis
     </h1>
   
 
 
-  
-  
-<a href="/2023/04/09/Sekiro_UXM_Analysis/" class="archive-article-date">
-        <!-- <time datetime="2023-04-09T13:00:00.000Z" itemprop="datePublished""><i class="icon-calendar icon"></i>2023-04-09</time> -->
-        <time datetime="2023-04-09T13:00:00.000Z" itemprop="datePublished" style="color:black"><i class="icon-calendar icon"></i>2023-04-09</time>
-</a>
-
-  
-  
-    
-<div style="margin-top:10px;">
-  <span class="post-time">
-    <span class="post-meta-item-icon">
-      <!-- fonts.scss -->
-      <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
-      <i class="icon-statistics"></i>
-      <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">153字</span>
-    </span>
-  </span>
-
-  <span class="post-time">
-    &nbsp; | &nbsp;
-    <span class="post-meta-item-icon">
-      <i class="icon-book icon"></i>
-      <span class="post-meta-item-text"> 阅读时长≈</span>
-      <span class="post-count">1分</span>
-    </span>
-  </span>
-</div>
-
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p>UXM is a tool to unpack game archives and patch the executable to load loose files instead for DS2, SotFS, DS3, and Sekiro. </p>
-<span id="more"></span>
-
-<h1 id="Sekiro-Shadows-Die-Twice-UXM-Analysis"><a href="#Sekiro-Shadows-Die-Twice-UXM-Analysis" class="headerlink" title="Sekiro: Shadows Die Twice UXM Analysis"></a>Sekiro: Shadows Die Twice UXM Analysis</h1><p>UXM is a tool to unpack game archives and patch the executable to load loose files instead for DS2, SotFS, DS3, and Sekiro. The blog’s goal is to analyze the project’s source code as best as I can.</p>
-<h2 id="Dev-Environment-Setup"><a href="#Dev-Environment-Setup" class="headerlink" title="Dev Environment Setup"></a>Dev Environment Setup</h2><p>Firstly, download these two repos:</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://github.com/JKAnderson/UXM">JKAnderson&#x2F;UXM: Enables file modding for DS2, SotFS, DS3, and Sekiro by unpacking game archives and patching the executable to load loose files instead. (github.com)</a> </li>
-<li><a target="_blank" rel="noopener" href="https://github.com/JKAnderson/SoulsFormats">JKAnderson&#x2F;SoulsFormats: A .NET library for reading and writing FromSoftware file formats. (github.com)</a></li>
-</ul>
-<p>Then unpack and organize the folder into the following structure:</p>
-<ul>
-<li>UXM</li>
-<li>SoulsFormats</li>
-</ul>
-<p>Then we open UXM’s <code>.sln</code> Visual Studio Project file, and then the SoulsFormats will also be loaded as an exported project as well.</p>
-
-    
-
-    
-
-    
-    <div class="declare"> 
-      <ul class="post-copyright">
-        <li>
-          <strong>本文作者：</strong>
-          Taardis
-        </li>
-        <li>
-          <strong>本文链接：</strong>
-          <a href="https://taardisaa.github.io/2023/04/09/Sekiro_UXM_Analysis/" title="Sekiro Shadows Die Twice UXM Analysis" target="_blank">https://taardisaa.github.io/2023/04/09/Sekiro_UXM_Analysis/</a>
-        </li>
-        <li>
-          <strong>版权声明： </strong>
-          本博客所有文章除特别声明外，均采用 <a href="https://www.apache.org/licenses/LICENSE-2.0.html" rel="external nofollow" target="_blank">Apache License 2.0</a> 许可协议。转载请注明出处！
-        </li>
-      </ul>
-    </div>
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Sekiro:Shadows Die Twice</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Mod</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Nintendo Switch</a>
         		</li>
       		
 		</ul>
 	</div>
 
-    
+          
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -396,62 +333,17 @@
 	</div>
 
 
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
+        </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-
-<nav id="article-nav">
-  
-    <a href="/2023/04/09/Sekiro_ModEngine_Analysis/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          Sekiro Shadows Die Twice ModEngine Analysis
-        
-      </div>
-    </a>
   
   
-    <a href="/2022/03/28/RPG%20Game%20Reverse%200/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">RPG Game Reverse 0</div>
-      <i class="icon-circle-right"></i>
-    </a>
+    </div></section>
   
-</nav>
 
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-
-
-
-
-
-
+    
 
 
           </div>
@@ -480,9 +372,9 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: true,
+		isPost: false,
 		isArchive: false,
-		isTag: false,
+		isTag: true,
 		isCategory: false,
 		open_in_new: true,
 		toc_hide_index: true,

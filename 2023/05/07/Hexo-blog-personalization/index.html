@@ -18,7 +18,7 @@
 <meta property="og:description" content="Today I am going to switch my blog’s theme from next to yilia-plus. This blog records some steps I’ve taken to do the job.">
 <meta property="og:locale">
 <meta property="article:published_time" content="2023-05-07T01:45:15.000Z">
-<meta property="article:modified_time" content="2023-05-21T07:39:13.272Z">
+<meta property="article:modified_time" content="2023-05-25T13:11:37.485Z">
 <meta property="article:author" content="Taardis">
 <meta property="article:tag" content="Hexo">
 <meta property="article:tag" content="Personalization">
@@ -304,7 +304,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">2.3k字</span>
+      <span class="post-count">2.6k字</span>
     </span>
   </span>
 
@@ -313,7 +313,7 @@
     <span class="post-meta-item-icon">
       <i class="icon-book icon"></i>
       <span class="post-meta-item-text"> 阅读时长≈</span>
-      <span class="post-count">13分</span>
+      <span class="post-count">15分</span>
     </span>
   </span>
 </div>
@@ -461,6 +461,21 @@
 
 <h3 id="Fix-amp-bug"><a href="#Fix-amp-bug" class="headerlink" title="Fix &amp; bug"></a>Fix <code>&amp;</code> bug</h3><p>the <code>&amp;</code> in<code>&amp;laquo; Prev</code> will be translated into <code>&amp;amps;</code>, leading to bugs</p>
 <p>so I just avoid using these chars, and simply replace them with « and »</p>
+<h3 id="修复一个post有多个categories时的分类生成错误（未完全解决）"><a href="#修复一个post有多个categories时的分类生成错误（未完全解决）" class="headerlink" title="修复一个post有多个categories时的分类生成错误（未完全解决）"></a>修复一个post有多个categories时的分类生成错误（未完全解决）</h3><blockquote>
+<p>现在的解决方案：不使用多个categories。每一个文章完全只对应一个category。</p>
+</blockquote>
+<p>比如说有个blog的categories同时有<code>Study</code>和<code>Game</code>两个</p>
+<p>然后它生成出来的链接就会有两个：</p>
+<p>一个是：</p>
+<p><a href="https://taardisaa.github.io/categories/Study/Game/">https://taardisaa.github.io/categories/Study/Game/</a></p>
+<p>另一个是</p>
+<p><a href="https://taardisaa.github.io/categories/Study/Game/">https://taardisaa.github.io/categories/Study/Game/</a></p>
+<p>太诡异了</p>
+<p>首先定位生成链接的代码位置，应该是<code>_partial/post/categories.ejs</code>这个文件上：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;% if (post.categories &amp;&amp; post.categories.length)&#123; %&gt;</span><br><span class="line">	&lt;div class=&quot;article-category tagcloud&quot;&gt;</span><br><span class="line">		&lt;i class=&quot;icon-book icon&quot;&gt;&lt;/i&gt;</span><br><span class="line">		&lt;ul class=&quot;article-tag-list&quot;&gt;</span><br><span class="line">			&lt;% post.categories.forEach(function(tag, i)&#123; %&gt; </span><br><span class="line">        		&lt;li class=&quot;article-tag-list-item&quot;&gt;</span><br><span class="line">        			&lt;!-- &lt;a href=&quot;&lt;%= config.root %&gt;&lt;%= tag.path %&gt;/&quot; class=&quot;article-tag-list-link color&lt;%= tag.name.length % 5 + 1 %&gt;&quot;&gt;&lt;%-tag.name%&gt;&lt;/a&gt; --&gt;</span><br><span class="line">        			&lt;a href=&quot;&lt;%= config.root %&gt;&lt;%= tag.path %&gt;&quot; class=&quot;article-tag-list-link color&lt;%= tag.name.length % 5 + 1 %&gt;&quot;&gt;&lt;%-tag.name%&gt;&lt;/a&gt;</span><br><span class="line">        		&lt;/li&gt;</span><br><span class="line">      		&lt;% &#125;) %&gt;</span><br><span class="line">		&lt;/ul&gt;</span><br><span class="line">	&lt;/div&gt;</span><br><span class="line">&lt;% &#125; %&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
 <h2 id="Tags-x2F-Categories-Style"><a href="#Tags-x2F-Categories-Style" class="headerlink" title="Tags&#x2F;Categories Style"></a>Tags&#x2F;Categories Style</h2><p>edit <code>layout.ejs</code>:</p>
 <p>from</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=&quot;js-content&quot; class=&quot;content-ll&quot; &gt;</span><br></pre></td></tr></table></figure>
@@ -992,6 +1007,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">WSL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Nintendo Switch</a>
               </li>
             
             <div class="clearfix"></div>
