@@ -6,21 +6,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://taardisaa.github.io">
-  <title>CRC | Taardis&#39;s blog</title>
+  <title>近期想要干的事情 | Taardis&#39;s blog</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="CRC">
+  <meta name="description" content="记一下最近想要实现的事情。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="CRC">
-<meta property="og:url" content="https://taardisaa.github.io/2022/03/17/CRC/index.html">
+<meta property="og:title" content="近期想要干的事情">
+<meta property="og:url" content="https://taardisaa.github.io/2023/05/26/%E8%BF%91%E6%9C%9F%E6%83%B3%E8%A6%81%E5%B9%B2%E7%9A%84%E4%BA%8B%E6%83%85/index.html">
 <meta property="og:site_name" content="Taardis&#39;s blog">
-<meta property="og:description" content="CRC">
+<meta property="og:description" content="记一下最近想要实现的事情。">
 <meta property="og:locale">
-<meta property="article:published_time" content="2022-03-17T06:00:00.000Z">
-<meta property="article:modified_time" content="2023-05-21T06:38:17.876Z">
+<meta property="article:published_time" content="2023-05-26T07:24:49.000Z">
+<meta property="article:modified_time" content="2023-05-26T07:27:35.277Z">
 <meta property="article:author" content="Taardis">
-<meta property="article:tag" content="Crypto">
+<meta property="article:tag" content="Taardis, Reverse Engineering, Software Analysis">
 <meta name="twitter:card" content="summary">
   
   
@@ -274,23 +274,23 @@
           </div>
           <div id="js-content" class="content-ll" style="opacity:0.96">
           <!-- <div id="js-content" class="content-ll" > -->
-            <article id="post-CRC" class="article article-type-post " itemscope itemprop="blogPost" style="opacity:0.92">
+            <article id="post-近期想要干的事情" class="article article-type-post " itemscope itemprop="blogPost" style="opacity:0.92">
   <div class="article-inner">
     
       <header class="article-header">
   
   
     <h1 class="article-title" itemprop="name" style="color:black">
-      CRC
+      近期想要干的事情
     </h1>
   
 
 
   
   
-<a href="/2022/03/17/CRC/" class="archive-article-date">
-        <!-- <time datetime="2022-03-17T06:00:00.000Z" itemprop="datePublished""><i class="icon-calendar icon"></i>2022-03-17</time> -->
-        <time datetime="2022-03-17T06:00:00.000Z" itemprop="datePublished" style="color:black"><i class="icon-calendar icon"></i>2022-03-17</time>
+<a href="/2023/05/26/%E8%BF%91%E6%9C%9F%E6%83%B3%E8%A6%81%E5%B9%B2%E7%9A%84%E4%BA%8B%E6%83%85/" class="archive-article-date">
+        <!-- <time datetime="2023-05-26T07:24:49.000Z" itemprop="datePublished""><i class="icon-calendar icon"></i>2023-05-26</time> -->
+        <time datetime="2023-05-26T07:24:49.000Z" itemprop="datePublished" style="color:black"><i class="icon-calendar icon"></i>2023-05-26</time>
 </a>
 
   
@@ -303,7 +303,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">375字</span>
+      <span class="post-count">98字</span>
     </span>
   </span>
 
@@ -323,43 +323,13 @@
   
   <div class="article-entry" itemprop="articleBody">
     
-    <p>CRC</p>
+    <p>记一下最近想要实现的事情。</p>
 <span id="more"></span>
 
-<h1 id="CyclicRedundancyCheck"><a href="#CyclicRedundancyCheck" class="headerlink" title="CyclicRedundancyCheck"></a>CyclicRedundancyCheck</h1><h2 id="常用多项式"><a href="#常用多项式" class="headerlink" title="常用多项式"></a>常用多项式</h2><p>$$<br>CRC4&#x3D;x^4+x+1<br>$$</p>
-<p>$$<br>CRC8&#x3D;x^8+x^5+x^4+1<br>$$</p>
-<p>$$<br>CRC12&#x3D;x^{12}+x^{11}+x^{3}+x^{2}+1<br>$$</p>
-<p>$$<br>CRC16&#x3D;x^{16}+x^{15}+x^2+1<br>$$</p>
-<p>$$<br>CRC-CCITT&#x3D;x^{16}+x^{12}+x^5+1<br>$$</p>
-<p>$$<br>CRC32&#x3D;x^{32}+x^{26}+x^{23}+x^{22}+x^{16}+x^{12}+x^{11}+x^{10}+x^8+x^7+x^5+x^4+x^2+x^1+1<br>$$</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">CRC4 = 0b10011</span><br><span class="line">CRC8 = 0b100110001</span><br><span class="line">CRC12= 0b1100000001101</span><br><span class="line">CRC16= 0b11000000000000101</span><br><span class="line">CRC_CCITT= 0b10001000000100001</span><br><span class="line">CRC32= 0b100000100110000010001110110110111</span><br></pre></td></tr></table></figure>
-
-<h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><h3 id="选择除数与阶数"><a href="#选择除数与阶数" class="headerlink" title="选择除数与阶数"></a>选择<strong>除数</strong>与<strong>阶数</strong></h3><p>选择除数<code>G</code></p>
-<p>选择阶数<code>r</code></p>
-<h3 id="M-39-后附加r个0"><a href="#M-39-后附加r个0" class="headerlink" title="M&#39;后附加r个0"></a><code>M&#39;</code>后附加<code>r</code>个0</h3><p><code>M&#39;</code>是待处理数据块</p>
-<p>假设原始数据块的长度是<code>l</code>位的话，附加之后的长度就变成<code>l+r</code>位了，我们用<code>M</code>来代表附加后的值。 </p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">M = M&#x27; &lt;&lt; r</span><br></pre></td></tr></table></figure>
-
-<h3 id="除法"><a href="#除法" class="headerlink" title="除法"></a>除法</h3><p><code>G</code>除<code>M</code>，直到余数<code>Y</code>的阶数<code>r&#39;</code>小于等于<code>r-1</code></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Y = bindiv(M, G)</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>具体除法例子可以看老师PPT或者Wiki</p>
-</blockquote>
-<h3 id="校验"><a href="#校验" class="headerlink" title="校验"></a>校验</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#binsub代表模2减法</span><br><span class="line">M&#x27;&#x27; = binsub(M, Y)</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>似乎 模2加法&#x3D;模2减法&#x3D;异或</p>
-</blockquote>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>$$<br>M(x)·x^n&#x3D;Q(x)·K(x)-R(x)<br>$$</p>
-<p>其中，<code>M(x)</code>就是原始信息数据，乘以<code>x^n</code>即在后面添加<code>n</code>个0</p>
-<p><code>R(x)</code>即校验码，是余数</p>
-<p><code>K(x)</code>是“钥匙”，即作为除数的多项式</p>
-<p>所以有<br>$$<br>M(x)·x^n+R(x)&#x3D;Q(x)·K(x)<br>$$<br>即在数据正确的情况下，左侧多项式能够被<code>K(x)</code>整除</p>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Computation_of_cyclic_redundancy_checks">https://en.wikipedia.org/wiki/Computation_of_cyclic_redundancy_checks</a></p>
-<p> <a target="_blank" rel="noopener" href="https://www.cnblogs.com/ziqiuqiandao/p/3346195.html">CRC32查表法 - 孜求嵌道 - 博客园 (cnblogs.com)</a> </p>
-<p><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%BE%AA%E7%92%B0%E5%86%97%E9%A4%98%E6%A0%A1%E9%A9%97">https://zh.wikipedia.org/wiki/%E5%BE%AA%E7%92%B0%E5%86%97%E9%A4%98%E6%A0%A1%E9%A9%97</a></p>
-
+<h1 id="近期想要干的事情"><a href="#近期想要干的事情" class="headerlink" title="近期想要干的事情"></a>近期想要干的事情</h1><h2 id="NS模拟器实现原理"><a href="#NS模拟器实现原理" class="headerlink" title="NS模拟器实现原理"></a>NS模拟器实现原理</h2><p>看看Ryujinx和Yuzu的原理。反正有源码。</p>
+<h2 id="NS破解"><a href="#NS破解" class="headerlink" title="NS破解"></a>NS破解</h2><p>这个可以稍微延后一下。</p>
+<h2 id="编译原理"><a href="#编译原理" class="headerlink" title="编译原理"></a>编译原理</h2><p>把借来的龙书给看了。同时配合LLVM学习。LLVM还有个什么叫做Kaleidoscope的小型Haskell编译器教程，也可以学。</p>
+<h2 id="背点日语单词"><a href="#背点日语单词" class="headerlink" title="背点日语单词"></a>背点日语单词</h2>
     
 
     
@@ -373,7 +343,7 @@
         </li>
         <li>
           <strong>本文链接：</strong>
-          <a href="https://taardisaa.github.io/2022/03/17/CRC/" title="CRC" target="_blank">https://taardisaa.github.io/2022/03/17/CRC/</a>
+          <a href="https://taardisaa.github.io/2023/05/26/近期想要干的事情/" title="近期想要干的事情" target="_blank">https://taardisaa.github.io/2023/05/26/近期想要干的事情/</a>
         </li>
         <li>
           <strong>版权声明： </strong>
@@ -387,25 +357,14 @@
   <div class="article-info article-info-index">
     
     
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Crypto</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
     
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<!-- <a href="/categories/Study//" class="article-tag-list-link color1">Study</a> -->
-        			<a href="/categories/Study/" class="article-tag-list-link color1">Study</a>
+        			<!-- <a href="/categories/Thoughts//" class="article-tag-list-link color4">Thoughts</a> -->
+        			<a href="/categories/Thoughts/" class="article-tag-list-link color4">Thoughts</a>
         		</li>
       		
 		</ul>
@@ -423,18 +382,9 @@
 
 <nav id="article-nav">
   
-    <a href="/2022/03/21/ARM/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          ARM Instruction Set
-        
-      </div>
-    </a>
   
-  
-    <a href="/2022/03/17/SHA/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">SecureHashAlgorithm</div>
+    <a href="/2023/05/26/PlayStation5%E8%AF%84%E6%B5%8B-%E6%AC%A1%E4%B8%96%E4%BB%A3%E6%B8%B8%E6%88%8F%E4%BD%93%E9%AA%8C/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">PlayStation5评测--次世代游戏体验</div>
       <i class="icon-circle-right"></i>
     </a>
   
