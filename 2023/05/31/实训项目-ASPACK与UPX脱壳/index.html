@@ -18,7 +18,7 @@
 <meta property="og:description" content="这是我们的实训项目，ASPACK和UPX的脱壳。">
 <meta property="og:locale">
 <meta property="article:published_time" content="2023-05-31T02:53:58.000Z">
-<meta property="article:modified_time" content="2023-06-02T07:42:25.861Z">
+<meta property="article:modified_time" content="2023-06-09T08:48:09.583Z">
 <meta property="article:author" content="Taardis">
 <meta property="article:tag" content="Python">
 <meta property="article:tag" content="Packer">
@@ -309,7 +309,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">2k字</span>
+      <span class="post-count">2.5k字</span>
     </span>
   </span>
 
@@ -318,7 +318,7 @@
     <span class="post-meta-item-icon">
       <i class="icon-book icon"></i>
       <span class="post-meta-item-text"> 阅读时长≈</span>
-      <span class="post-count">8分</span>
+      <span class="post-count">10分</span>
     </span>
   </span>
 </div>
@@ -406,6 +406,28 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Internet选项 -&gt; 安全 -&gt; 自定义级别 -&gt; 找到“其他”中的“将本地文件上载至服务器时包含本地目录路径”，选中“启用”即可</span><br></pre></td></tr></table></figure>
 
 <p>还是有问题，不管了。</p>
+<h3 id="版本5——添加基于实际执行的脱壳器"><a href="#版本5——添加基于实际执行的脱壳器" class="headerlink" title="版本5——添加基于实际执行的脱壳器"></a>版本5——添加基于实际执行的脱壳器</h3><p>添加原生UPX脱壳器的利用</p>
+<p>模拟执行的脱壳速度真的是有点慢。</p>
+<p> <a target="_blank" rel="noopener" href="https://github.com/upx/upx/releases/tag/v4.0.2">Release v4.0.2 · upx&#x2F;upx · GitHub</a> </p>
+<p>这里添加一个mode选择，选择模拟执行+直接脱壳</p>
+<blockquote>
+<p>ASPACK还没有直接脱壳的程序。</p>
+</blockquote>
+<h3 id="版本6——class化"><a href="#版本6——class化" class="headerlink" title="版本6——class化"></a>版本6——class化</h3><p>将代码稍微进行了重构，变成了class的样子。</p>
+<p>但是这样，就导致eel的跨进程调用变得更加的tricky了。</p>
+<p>首先在py文件里面，需要进行一定的修改：首先方法中不能直接使用<code>self</code>，必须用全局变量（这里是<code>APP</code>）获得类A的一个引用，然后在方法里面用<code>APP</code>来进行操作。</p>
+<p>因为在这里<code>APP</code>就跟<code>self</code>的作用是一样的，都是对自身类的一个引用。</p>
+<p>比如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">APP = A()	<span class="comment"># 全局变量APP便是对类A的引用，约等于self</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">A</span>:</span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">		self.name = <span class="string">&quot;class A&quot;</span></span><br><span class="line">    </span><br><span class="line"><span class="meta">    @eel.expose</span></span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">func</span>(<span class="params">self</span>):</span><br><span class="line">		<span class="comment"># print(self.name)	# 不能用self</span></span><br><span class="line">		<span class="built_in">print</span>(APP.name)	<span class="comment"># 必须用全局变量</span></span><br><span class="line">        </span><br><span class="line"><span class="meta">    @eel.expose</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">func2</span>(<span class="params">self, num</span>):</span><br><span class="line">        APP.num = num</span><br><span class="line">        <span class="built_in">print</span>(num)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>然后，js那边也要稍微改动一下。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">eel.<span class="title function_">func</span>(<span class="literal">null</span>);</span><br><span class="line">eel.<span class="title function_">func2</span>(<span class="literal">null</span>, <span class="number">3</span>);</span><br></pre></td></tr></table></figure>
+
+<p>即，暴露出来的类方法的第一个参数<code>self，</code>在Js接口这边，是不能匿名传递的，必须得传一个东西。一开始我是想设计<code>A.get_self()</code>这种自己指向自己的玩意的，不过发现一开始函数定义的时候也得传入一个匿名<code>self</code>，因此不可行。所以选择直接改成传null，然后在python中进行修改，用全局变量而不是<code>self</code>来传递自身。</p>
+<blockquote>
+<p>当然，我猜测，如果能用eel直接暴露类中的self，应该也可以做到类似的效果，但是暂且不去深究。</p>
+</blockquote>
+<p>稍微参考了一下： <a target="_blank" rel="noopener" href="https://github.com/python-eel/Eel/issues/141">Using Python OOP with Eel · Issue #141 · python-eel&#x2F;Eel · GitHub</a> </p>
 <h2 id="设计目标"><a href="#设计目标" class="headerlink" title="设计目标"></a>设计目标</h2><ol>
 <li>自动判断给定大量的样本是否具有压缩壳，并对应脱壳√</li>
 <li>支持对多次加壳的样本进行脱壳×</li>
@@ -1021,6 +1043,14 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Japanese</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Debug</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">UCSB</a>
               </li>
             
             <div class="clearfix"></div>
