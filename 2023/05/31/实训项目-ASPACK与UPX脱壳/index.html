@@ -18,7 +18,7 @@
 <meta property="og:description" content="这是我们的实训项目，ASPACK和UPX的脱壳。">
 <meta property="og:locale">
 <meta property="article:published_time" content="2023-05-31T02:53:58.000Z">
-<meta property="article:modified_time" content="2023-06-11T12:24:51.333Z">
+<meta property="article:modified_time" content="2023-06-16T06:41:37.597Z">
 <meta property="article:author" content="Taardis">
 <meta property="article:tag" content="Python">
 <meta property="article:tag" content="Packer">
@@ -309,7 +309,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">4.5k字</span>
+      <span class="post-count">5k字</span>
     </span>
   </span>
 
@@ -318,7 +318,7 @@
     <span class="post-meta-item-icon">
       <i class="icon-book icon"></i>
       <span class="post-meta-item-text"> 阅读时长≈</span>
-      <span class="post-count">21分</span>
+      <span class="post-count">23分</span>
     </span>
   </span>
 </div>
@@ -336,7 +336,8 @@
 <p> <del><a target="_blank" rel="noopener" href="https://github.com/fyears/electron-python-example">fyears&#x2F;electron-python-example: Electron as GUI of Python Applications (github.com)</a></del> </p>
 <p><del>搭建流程就跟着教程走就好了。</del></p>
 <p> <a target="_blank" rel="noopener" href="https://github.com/python-eel/Eel#install">python-eel&#x2F;Eel: A little Python library for making simple Electron-like HTML&#x2F;JS GUI apps (github.com)</a> </p>
-<h3 id="偷懒——用webflow设计网页前端"><a href="#偷懒——用webflow设计网页前端" class="headerlink" title="偷懒——用webflow设计网页前端"></a>偷懒——用webflow设计网页前端</h3><p><a target="_blank" rel="noopener" href="https://webflow.com/">https://webflow.com/</a></p>
+<h3 id="尝试用webflow设计网页前端（失败）"><a href="#尝试用webflow设计网页前端（失败）" class="headerlink" title="尝试用webflow设计网页前端（失败）"></a><del>尝试用webflow设计网页前端（失败）</del></h3><p><del><a target="_blank" rel="noopener" href="https://webflow.com/">https://webflow.com/</a></del></p>
+<p><del>完全不会用</del></p>
 <h2 id="后端（脱壳部分）"><a href="#后端（脱壳部分）" class="headerlink" title="后端（脱壳部分）"></a>后端（脱壳部分）</h2><p> <a target="_blank" rel="noopener" href="https://github.com/unipacker/unipacker/tree/master">unipacker&#x2F;unipacker: Automatic and platform-independent unpacker for Windows binaries based on emulation (github.com)</a> </p>
 <p>用的是这个项目。</p>
 <p>大抵就是用unicorn模拟执行，然后运行到真正的起始点后把内存dump出来，再patch IAT表什么的。速度确实不如一般的实际执行的脱壳器要快，但是感觉挺安全的。</p>
@@ -428,6 +429,42 @@
 <p>当然，我猜测，如果能用eel直接暴露类中的self，应该也可以做到类似的效果，但是暂且不去深究。</p>
 </blockquote>
 <p>稍微参考了一下： <a target="_blank" rel="noopener" href="https://github.com/python-eel/Eel/issues/141">Using Python OOP with Eel · Issue #141 · python-eel&#x2F;Eel · GitHub</a> </p>
+<h3 id="版本7"><a href="#版本7" class="headerlink" title="版本7"></a>版本7</h3><p>后端也是有一些bug要改进的。</p>
+<ul>
+<li>安装包：安装，卸载</li>
+<li>后端的ASPACK模拟执行脱壳太慢了</li>
+<li>识别算法改进：用DIE</li>
+</ul>
+<h4 id="version1——DIE"><a href="#version1——DIE" class="headerlink" title="version1——DIE"></a>version1——DIE</h4><p>添加文件夹<code>logs</code>，<code>tests</code></p>
+<p>添加文件<code>test_identifypacker.py</code>。</p>
+<p>up.py改了点东西</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">DEFAULT_DIE_PATH = f&quot;&#123;os.path.dirname(upacker.__file__)&#125;/Tools/die_win64_portable/diec.exe&quot;</span><br><span class="line">DEFAULT_DIE_PATH = BeautifyPath(DEFAULT_DIE_PATH)</span><br><span class="line"></span><br><span class="line">DEFAULT_UPACKER_DIR_PATH = f&quot;&#123;os.path.dirname(upacker.__file__)&#125;/&quot;</span><br><span class="line">DEFAULT_UPACKER_DIR_PATH = BeautifyPath(DEFAULT_UPACKER_DIR_PATH)</span><br><span class="line"></span><br><span class="line">DEFAULT_LOG_DIR_PATH = f&quot;&#123;DEFAULT_UPACKER_DIR_PATH&#125;../logs/&quot;</span><br><span class="line"></span><br><span class="line">def die_identify</span><br><span class="line">def identifypacker</span><br></pre></td></tr></table></figure>
+
+<h4 id="version2——junpacker（未完成）"><a href="#version2——junpacker（未完成）" class="headerlink" title="version2——junpacker（未完成）"></a>version2——junpacker（未完成）</h4><blockquote>
+<p>这玩意还是等等再搞吧，我发觉speakeasy居然还是用模拟执行实现的，说到底还是效率不行啊。</p>
+</blockquote>
+<p> <a target="_blank" rel="noopener" href="https://github.com/mandiant/speakeasy">mandiant&#x2F;speakeasy: Windows kernel and user mode emulation. (github.com)</a> </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/mandiant/speakeasy.git</span><br></pre></td></tr></table></figure>
+
+<p>然后里面一个unicorn版本与我现有的angr冲突了，逆天</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd speakeasy</span><br><span class="line">virtualenv venv</span><br><span class="line">.\venv\Scripts\activate.ps1</span><br></pre></td></tr></table></figure>
+
+<p>执行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 -m pip install -r requirements.txt</span><br></pre></td></tr></table></figure>
+
+<p>然后在一个admin的Powershell里面执行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 .\setup.py install</span><br></pre></td></tr></table></figure>
+
+<p> <a target="_blank" rel="noopener" href="https://github.com/mdrngrng/junpacker">mdrngrng&#x2F;junpacker (github.com)</a> </p>
+<h4 id="version3——clamav（未完成）"><a href="#version3——clamav（未完成）" class="headerlink" title="version3——clamav（未完成）"></a>version3——clamav（未完成）</h4><p> <a target="_blank" rel="noopener" href="https://github.com/Cisco-Talos/clamav/releases/tag/clamav-1.1.0">Release ClamAV 1.1.0 · Cisco-Talos&#x2F;clamav (github.com)</a> </p>
+<p> <a target="_blank" rel="noopener" href="https://home.uncg.edu/cmp/faculty/srtate/495.s15/clang/clamav/report-2f9b10.html">aspack.c (uncg.edu)</a> </p>
+<p>这个工具里面好像有用C实现的Unpacker。</p>
+<h4 id="version4——RHUnpacker（成功）"><a href="#version4——RHUnpacker（成功）" class="headerlink" title="version4——RHUnpacker（成功）"></a>version4——RHUnpacker（成功）</h4><p>从UnAspack里直接抠出来代码用。</p>
+<p>实现方法是动态执行，断点中断dump。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DEFAULT_ASUNPACKER_PATH = f&quot;&#123;os.path.dirname(upacker.__file__)&#125;/Tools/RHUnpacker.exe&quot;</span><br><span class="line">DEFAULT_ASUNPACKER_PATH = BeautifyPath(DEFAULT_ASUNPACKER_PATH)</span><br></pre></td></tr></table></figure>
+
+
+
 <h2 id="设计目标"><a href="#设计目标" class="headerlink" title="设计目标"></a>设计目标</h2><ol>
 <li>自动判断给定大量的样本是否具有压缩壳，并对应脱壳√</li>
 <li>支持对多次加壳的样本进行脱壳×</li>
@@ -443,6 +480,14 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install zeromq</span><br></pre></td></tr></table></figure>
 
 <p>解决方案：用eel库，不用魔改这个demo了，太野蛮了</p>
+<h2 id="问题总结"><a href="#问题总结" class="headerlink" title="问题总结"></a>问题总结</h2><ol>
+<li>解决yara模块存在UTF8字符集问题</li>
+<li>解决Unpack后程序还被识别为加壳程序的问题</li>
+<li>解决UPX解压模块的一个Bug</li>
+<li>解决文件路径上传不全的问题</li>
+<li>解决了Python OOP与前端交互的问题</li>
+<li>解决了Pyinstaller打包的问题</li>
+</ol>
 <h2 id="打包基于eel的Python-Web-GUI程序"><a href="#打包基于eel的Python-Web-GUI程序" class="headerlink" title="打包基于eel的Python Web GUI程序"></a>打包基于eel的Python Web GUI程序</h2><p> <a target="_blank" rel="noopener" href="https://github.com/python-eel/Eel#building-distributable-binary-with-pyinstaller">python-eel&#x2F;Eel: A little Python library for making simple Electron-like HTML&#x2F;JS GUI apps (github.com)</a> </p>
 <h3 id="Demo打包"><a href="#Demo打包" class="headerlink" title="Demo打包"></a>Demo打包</h3><p>demo项目结构如下：</p>
 <ul>
@@ -559,9 +604,16 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">electron-packager . --overwrite --ignore=&quot;pycalc$&quot; --ignore=&quot;\.venv&quot; --ignore=&quot;old-post-backup&quot;</span><br></pre></td></tr></table></figure>
 
 <p>然后就生产了一个独立的文件夹，不出意外的话应该就是独立的exe了。</p>
+<h2 id="测试样例生成"><a href="#测试样例生成" class="headerlink" title="测试样例生成"></a>测试样例生成</h2><p>AsPack2.12加壳器 + </p>
+<h3 id="Linux交叉编译32bit-exe"><a href="#Linux交叉编译32bit-exe" class="headerlink" title="Linux交叉编译32bit exe"></a>Linux交叉编译32bit exe</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install g++-mingw-w64-i686</span><br></pre></td></tr></table></figure>
+
+
+
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://github.com/python-eel/Eel">https://github.com/python-eel/Eel</a></p>
 <p> <a target="_blank" rel="noopener" href="https://pypi.org/project/auto-py-to-exe/">auto-py-to-exe · PyPI</a> </p>
 <p> <a target="_blank" rel="noopener" href="https://pyinstaller.org/en/stable/usage.html">Using PyInstaller — PyInstaller 5.12.0 documentation</a> </p>
+<p> <a target="_blank" rel="noopener" href="https://www.jianshu.com/p/e7dcdcdeaa73">Python-virtualenv创建虚拟环境 - 简书 (jianshu.com)</a> </p>
+<p> <a target="_blank" rel="noopener" href="https://blog.csdn.net/linxinfa/article/details/109228049">(160条消息) 新发的日常小实验——javascript自定义alert窗口样式_林新发的博客-CSDN博客</a> </p>
 
     
 
@@ -1133,6 +1185,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">UCSB</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Antivirus</a>
               </li>
             
             <div class="clearfix"></div>
