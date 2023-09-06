@@ -18,7 +18,7 @@
 <meta property="og:description" content="I have an idea about optimizing the Cython pseudo-code through IDAPython. So firstly lets learn about it and the IDA microcode as well.">
 <meta property="og:locale">
 <meta property="article:published_time" content="2023-04-24T11:29:36.000Z">
-<meta property="article:modified_time" content="2023-05-21T06:40:58.473Z">
+<meta property="article:modified_time" content="2023-08-28T07:31:49.239Z">
 <meta property="article:author" content="Taardis">
 <meta property="article:tag" content="Compiler">
 <meta property="article:tag" content="Assembly">
@@ -56,6 +56,9 @@
 
   
 
+<link rel="stylesheet" href="\assets\css\APlayer.min.css" class="aplayer-style-marker">
+<script src="\assets\js\APlayer.min.js" class="aplayer-script-marker"></script>
+<script src="\assets\js\Meting.min.js" class="meting-script-marker"></script>
 </head>
 
 <body>
@@ -114,20 +117,26 @@
 					<a class="mail" href="mailto:taardisaa@gmail.com" title="NULL" target="_blank"><i class="icon-mail"></i></a>
 		        
 			</div>
+		</nav>
+
 		
 			
 			
+		
+				
+		
 			
 			
-			<div>
-				<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="240" height="52" src="//music.163.com/outchain/player?type=2&id=1818064296&auto=0&height=32"></iframe>
+			<div id="aplayer-hjnObCgk" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="460528"
+					data-server="netease" data-type="song" data-loop="none"
+					data-order="random" data-lrctype="0" data-listfolded="true" 
+					data-fixed="true" data-autoplay="false" 
+					data-volume="0.4" data-mutex="true" 
+					data-listmaxheight="400px" data-preload="none" 
+					data-theme="">
 			</div>
 			
-				
-				<p style="font-size: 12px;">Enjoy the music!<p>
-			
 		
-		</nav>
 	</header>		
 </div>
 
@@ -186,20 +195,26 @@
 					<a class="mail" href="mailto:taardisaa@gmail.com" title="NULL" target="_blank"><i class="icon-mail"></i></a>
 		        
 			</div>
+		</nav>
+
 		
 			
 			
+		
+				
+		
 			
 			
-			<div>
-				<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="240" height="52" src="//music.163.com/outchain/player?type=2&id=1818064296&auto=0&height=32"></iframe>
+			<div id="aplayer-hjnObCgk" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="460528"
+					data-server="netease" data-type="song" data-loop="none"
+					data-order="random" data-lrctype="0" data-listfolded="true" 
+					data-fixed="true" data-autoplay="false" 
+					data-volume="0.4" data-mutex="true" 
+					data-listmaxheight="400px" data-preload="none" 
+					data-theme="">
 			</div>
 			
-				
-				<p style="font-size: 12px;">Enjoy the music!<p>
-			
 		
-		</nav>
 	</header>		
 </div>
 
@@ -330,6 +345,11 @@
   
   <div class="article-entry" itemprop="articleBody">
     
+    <!-- 
+<div id="toc">
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#IDAPython-Development-Study-0"><span class="toc-number">1.</span> <span class="toc-text">IDAPython Development Study 0</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#IDA-microcode-intro"><span class="toc-number">1.1.</span> <span class="toc-text">IDA microcode intro</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IDA-Ctree"><span class="toc-number">1.2.</span> <span class="toc-text">IDA Ctree</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#finding-ctype-t-constants"><span class="toc-number">1.2.1.</span> <span class="toc-text">finding ctype_t constants</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Deobfuscating-OLLVM-through-microcode"><span class="toc-number">1.3.</span> <span class="toc-text">Deobfuscating OLLVM through microcode</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Useful-plugins"><span class="toc-number">1.4.</span> <span class="toc-text">Useful plugins</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#HexRaysDeob"><span class="toc-number">1.4.1.</span> <span class="toc-text">HexRaysDeob</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HexRaysCodeXplorer"><span class="toc-number">1.4.2.</span> <span class="toc-text">HexRaysCodeXplorer</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IDABeautify"><span class="toc-number">1.4.3.</span> <span class="toc-text">IDABeautify</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Lucid-An-Interactive-Hex-Rays-Microcode-Explorer"><span class="toc-number">1.4.4.</span> <span class="toc-text">Lucid - An Interactive Hex-Rays Microcode Explorer</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HRDevHelper"><span class="toc-number">1.4.5.</span> <span class="toc-text">HRDevHelper</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#How-to-use-microcode-for-optimizations"><span class="toc-number">1.5.</span> <span class="toc-text">How to use microcode for optimizations?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#How-to-achieve"><span class="toc-number">1.6.</span> <span class="toc-text">How to achieve?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Obstacles"><span class="toc-number">1.7.</span> <span class="toc-text">Obstacles</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PyImport-AddModule"><span class="toc-number">1.8.</span> <span class="toc-text">PyImport_AddModule</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Intermediate-Language"><span class="toc-number">1.9.</span> <span class="toc-text">Intermediate Language</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Compiling-IDA-SDK"><span class="toc-number">1.10.</span> <span class="toc-text">Compiling IDA SDK</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#References"><span class="toc-number">1.11.</span> <span class="toc-text">References</span></a></li></ol></li></ol>
+</div>
+ -->
     <p>I have an idea about optimizing the Cython pseudo-code through IDAPython. So firstly lets learn about it and the IDA microcode as well.</p>
 <span id="more"></span>
 
@@ -511,6 +531,19 @@
             </div>
         </div>
         
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#IDAPython-Development-Study-0"><span class="toc-number">1.</span> <span class="toc-text">IDAPython Development Study 0</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#IDA-microcode-intro"><span class="toc-number">1.1.</span> <span class="toc-text">IDA microcode intro</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IDA-Ctree"><span class="toc-number">1.2.</span> <span class="toc-text">IDA Ctree</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#finding-ctype-t-constants"><span class="toc-number">1.2.1.</span> <span class="toc-text">finding ctype_t constants</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Deobfuscating-OLLVM-through-microcode"><span class="toc-number">1.3.</span> <span class="toc-text">Deobfuscating OLLVM through microcode</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Useful-plugins"><span class="toc-number">1.4.</span> <span class="toc-text">Useful plugins</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#HexRaysDeob"><span class="toc-number">1.4.1.</span> <span class="toc-text">HexRaysDeob</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HexRaysCodeXplorer"><span class="toc-number">1.4.2.</span> <span class="toc-text">HexRaysCodeXplorer</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IDABeautify"><span class="toc-number">1.4.3.</span> <span class="toc-text">IDABeautify</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Lucid-An-Interactive-Hex-Rays-Microcode-Explorer"><span class="toc-number">1.4.4.</span> <span class="toc-text">Lucid - An Interactive Hex-Rays Microcode Explorer</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HRDevHelper"><span class="toc-number">1.4.5.</span> <span class="toc-text">HRDevHelper</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#How-to-use-microcode-for-optimizations"><span class="toc-number">1.5.</span> <span class="toc-text">How to use microcode for optimizations?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#How-to-achieve"><span class="toc-number">1.6.</span> <span class="toc-text">How to achieve?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Obstacles"><span class="toc-number">1.7.</span> <span class="toc-text">Obstacles</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PyImport-AddModule"><span class="toc-number">1.8.</span> <span class="toc-text">PyImport_AddModule</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Intermediate-Language"><span class="toc-number">1.9.</span> <span class="toc-text">Intermediate Language</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Compiling-IDA-SDK"><span class="toc-number">1.10.</span> <span class="toc-text">Compiling IDA SDK</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#References"><span class="toc-number">1.11.</span> <span class="toc-text">References</span></a></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
         
     </div>
 </aside>
@@ -977,6 +1010,42 @@
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Travel</a>
               </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">UEFI</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Objection</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Frida</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Unidbg</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">CodeQL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Pwn</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Proxy</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Comic</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Cars</a>
+              </li>
             
             <div class="clearfix"></div>
           </ul>
@@ -1224,7 +1293,7 @@
   }
 
   
-    var modelName = "hijiki";
+    var modelName = "haru/02";
   
 
   var modelJsonPath = "";
@@ -1243,7 +1312,7 @@
        width: 145, 
        height: 320, 
        hOffset: 50, 
-      
+       vOffset: -20 
     },
     mobile: {
        show: false, 

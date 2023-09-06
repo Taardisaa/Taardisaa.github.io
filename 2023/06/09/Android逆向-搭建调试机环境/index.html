@@ -18,7 +18,7 @@
 <meta property="og:description" content="为了调游戏外挂，需要一个更强劲的调试机，之前的Pixel 3 XL不太行了，因此又买了个Google Pixel 5。现在开始移植一下调试环境，顺便把以前没发出来的blog整理一下。">
 <meta property="og:locale">
 <meta property="article:published_time" content="2023-06-09T08:46:47.000Z">
-<meta property="article:modified_time" content="2023-06-09T09:23:23.416Z">
+<meta property="article:modified_time" content="2023-09-03T06:20:45.612Z">
 <meta property="article:author" content="Taardis">
 <meta property="article:tag" content="Android">
 <meta property="article:tag" content="Reverse">
@@ -51,6 +51,9 @@
 
   
 
+<link rel="stylesheet" href="\assets\css\APlayer.min.css" class="aplayer-style-marker">
+<script src="\assets\js\APlayer.min.js" class="aplayer-script-marker"></script>
+<script src="\assets\js\Meting.min.js" class="meting-script-marker"></script>
 </head>
 
 <body>
@@ -109,20 +112,26 @@
 					<a class="mail" href="mailto:taardisaa@gmail.com" title="NULL" target="_blank"><i class="icon-mail"></i></a>
 		        
 			</div>
+		</nav>
+
 		
 			
 			
+		
+				
+		
 			
 			
-			<div>
-				<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="240" height="52" src="//music.163.com/outchain/player?type=2&id=1818064296&auto=0&height=32"></iframe>
+			<div id="aplayer-hjnObCgk" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="460528"
+					data-server="netease" data-type="song" data-loop="none"
+					data-order="random" data-lrctype="0" data-listfolded="true" 
+					data-fixed="true" data-autoplay="false" 
+					data-volume="0.4" data-mutex="true" 
+					data-listmaxheight="400px" data-preload="none" 
+					data-theme="">
 			</div>
 			
-				
-				<p style="font-size: 12px;">Enjoy the music!<p>
-			
 		
-		</nav>
 	</header>		
 </div>
 
@@ -181,20 +190,26 @@
 					<a class="mail" href="mailto:taardisaa@gmail.com" title="NULL" target="_blank"><i class="icon-mail"></i></a>
 		        
 			</div>
+		</nav>
+
 		
 			
 			
+		
+				
+		
 			
 			
-			<div>
-				<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="240" height="52" src="//music.163.com/outchain/player?type=2&id=1818064296&auto=0&height=32"></iframe>
+			<div id="aplayer-hjnObCgk" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="460528"
+					data-server="netease" data-type="song" data-loop="none"
+					data-order="random" data-lrctype="0" data-listfolded="true" 
+					data-fixed="true" data-autoplay="false" 
+					data-volume="0.4" data-mutex="true" 
+					data-listmaxheight="400px" data-preload="none" 
+					data-theme="">
 			</div>
 			
-				
-				<p style="font-size: 12px;">Enjoy the music!<p>
-			
 		
-		</nav>
 	</header>		
 </div>
 
@@ -305,7 +320,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">1.2k字</span>
+      <span class="post-count">1.4k字</span>
     </span>
   </span>
 
@@ -314,7 +329,7 @@
     <span class="post-meta-item-icon">
       <i class="icon-book icon"></i>
       <span class="post-meta-item-text"> 阅读时长≈</span>
-      <span class="post-count">4分</span>
+      <span class="post-count">5分</span>
     </span>
   </span>
 </div>
@@ -325,6 +340,11 @@
   
   <div class="article-entry" itemprop="articleBody">
     
+    <!-- 
+<div id="toc">
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Android%E9%80%86%E5%90%91-%E6%90%AD%E5%BB%BA%E8%B0%83%E8%AF%95%E6%9C%BA%E7%8E%AF%E5%A2%83"><span class="toc-number">1.</span> <span class="toc-text">Android逆向-搭建调试机环境</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B4%AD%E4%B9%B0%E6%89%8B%E6%9C%BA"><span class="toc-number">1.1.</span> <span class="toc-text">购买手机</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="toc-number">1.2.</span> <span class="toc-text">环境配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A3%E9%94%81bootloader"><span class="toc-number">1.3.</span> <span class="toc-text">解锁bootloader</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%93%E5%BC%80%E5%BC%80%E5%8F%91%E8%80%85%E9%80%89%E9%A1%B9"><span class="toc-number">1.3.1.</span> <span class="toc-text">打开开发者选项</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E9%94%81OEM"><span class="toc-number">1.3.2.</span> <span class="toc-text">解锁OEM</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95fastboot"><span class="toc-number">1.3.3.</span> <span class="toc-text">测试fastboot</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E9%94%81bootloader-1"><span class="toc-number">1.3.4.</span> <span class="toc-text">解锁bootloader</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BD%E9%95%9C%E5%83%8F"><span class="toc-number">1.4.</span> <span class="toc-text">下载镜像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%B7%E6%9C%BA%EF%BC%88%E9%9D%9E%E5%BF%85%E9%A1%BB%EF%BC%89"><span class="toc-number">1.5.</span> <span class="toc-text">刷机（非必须）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85Magisk"><span class="toc-number">1.6.</span> <span class="toc-text">安装Magisk</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BD%E5%B9%B6%E5%AE%89%E8%A3%85Magisk"><span class="toc-number">1.6.1.</span> <span class="toc-text">下载并安装Magisk</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Patch%E9%95%9C%E5%83%8F"><span class="toc-number">1.6.2.</span> <span class="toc-text">Patch镜像</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9B%B4%E6%96%B0Magisk"><span class="toc-number">1.6.3.</span> <span class="toc-text">更新Magisk</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85Riru%EF%BC%88outdated%EF%BC%89"><span class="toc-number">1.7.</span> <span class="toc-text">安装Riru（outdated）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85Zygisk"><span class="toc-number">1.8.</span> <span class="toc-text">安装Zygisk</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85TWRP%EF%BC%88%E6%B2%A1%E5%AE%89%E8%A3%85%EF%BC%89"><span class="toc-number">1.9.</span> <span class="toc-text">安装TWRP（没安装）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A5%E9%AA%A4"><span class="toc-number">1.9.1.</span> <span class="toc-text">步骤</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85LSPosed"><span class="toc-number">1.10.</span> <span class="toc-text">安装LSPosed</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85FoxMagiskManager"><span class="toc-number">1.11.</span> <span class="toc-text">安装FoxMagiskManager</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85XAppDebug"><span class="toc-number">1.12.</span> <span class="toc-text">安装XAppDebug</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Pixel%E6%95%91%E7%A0%96"><span class="toc-number">1.13.</span> <span class="toc-text">Pixel救砖</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%A6%E4%B8%80%E7%A7%8D%E5%8F%AF%E8%A1%8C%E7%9A%84%E8%B0%83%E8%AF%95%E6%96%B9%E6%B3%95"><span class="toc-number">1.14.</span> <span class="toc-text">另一种可行的调试方法</span></a></li></ol></li></ol>
+</div>
+ -->
     <p>为了调游戏外挂，需要一个更强劲的调试机，之前的Pixel 3 XL不太行了，因此又买了个Google Pixel 5。现在开始移植一下调试环境，顺便把以前没发出来的blog整理一下。</p>
 <span id="more"></span>
 
@@ -407,6 +427,11 @@
 <p><a target="_blank" rel="noopener" href="https://twrp.me/google/googlepixel3xl.html">https://twrp.me/google/googlepixel3xl.html</a></p>
 <p><a target="_blank" rel="noopener" href="https://dl.twrp.me/crosshatch/">https://dl.twrp.me/crosshatch/</a></p>
 <p><a target="_blank" rel="noopener" href="https://dl.twrp.me/twrpapp/">Download TWRP for twrpapp</a> </p>
+<h3 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h3><p>手机关机，电源键+音量减同时按进入bootloader（或者adb reboot bootloader）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fastboot flash recovery twrp_xxx.img</span><br></pre></td></tr></table></figure>
+
+<p> 等待出现 <code>finished total time</code> 后表示刷入成功。 </p>
+<p> 手机上用音量键来选择 “recovery mode” 按电源键来进入 twrp 即可 </p>
 <h2 id="安装LSPosed"><a href="#安装LSPosed" class="headerlink" title="安装LSPosed"></a>安装LSPosed</h2><p>以前的Xposed早就在Android5就过时了，后面还有个Ed-Xposed，不过也不是很稳定，有一堆bug。现在用LSPosed，这玩意还在持续更新。</p>
 <p> <a target="_blank" rel="noopener" href="https://github.com/LSPosed/LSPosed">GitHub - LSPosed&#x2F;LSPosed: LSPosed Framework</a> </p>
 <p>选择Zygisk release：</p>
@@ -422,6 +447,13 @@
 <p>开发者选项里面选择”可调试的应用“，选中后，当这个程序打开后，便会自动进入等待attach的状态，即可用JEB或者其他调试器去attach上去。</p>
 <p><a target="_blank" rel="noopener" href="https://bbs.pediy.com/thread-267256-1.htm">https://bbs.pediy.com/thread-267256-1.htm</a></p>
 <p><a target="_blank" rel="noopener" href="https://github.com/Palatis/XAppDebug/releases/tag/1.0.5">https://github.com/Palatis/XAppDebug/releases/tag/1.0.5</a></p>
+<h2 id="Pixel救砖"><a href="#Pixel救砖" class="headerlink" title="Pixel救砖"></a>Pixel救砖</h2><p> [<a target="_blank" rel="noopener" href="https://bbs.kanxue.com/thread-277748.htm">原创]记一次 pixel 救砖历程-Android安全-看雪-安全社区|安全招聘|kanxue.com</a> </p>
+<p>在电脑上配置好fastboot工具，然后USB连接手机设备，然后用官方镜像直接<code>flash-all.bat</code>开始重置整个手机即可。</p>
+<h2 id="另一种可行的调试方法"><a href="#另一种可行的调试方法" class="headerlink" title="另一种可行的调试方法"></a>另一种可行的调试方法</h2><p>除了利用XAppDebug，也可以用这种原始方式来强制开启debug选项。</p>
+<p>这样能够临时修改ro.debuggable权限，且保持adb连接，这样即使开发者选项崩溃了也可以继续调试。</p>
+<p>临时变量，手机重启后即重置为0。每次重启都需要手动操作一次。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">adb shell #adb进入命令行模式</span><br><span class="line">su #切换至超级用户</span><br><span class="line">magisk resetprop ro.debuggable 1</span><br><span class="line">stop;start; #一定要通过该方式重启</span><br></pre></td></tr></table></figure>
+
 
     
 
@@ -524,6 +556,19 @@
             </div>
         </div>
         
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Android%E9%80%86%E5%90%91-%E6%90%AD%E5%BB%BA%E8%B0%83%E8%AF%95%E6%9C%BA%E7%8E%AF%E5%A2%83"><span class="toc-number">1.</span> <span class="toc-text">Android逆向-搭建调试机环境</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B4%AD%E4%B9%B0%E6%89%8B%E6%9C%BA"><span class="toc-number">1.1.</span> <span class="toc-text">购买手机</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="toc-number">1.2.</span> <span class="toc-text">环境配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A3%E9%94%81bootloader"><span class="toc-number">1.3.</span> <span class="toc-text">解锁bootloader</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%93%E5%BC%80%E5%BC%80%E5%8F%91%E8%80%85%E9%80%89%E9%A1%B9"><span class="toc-number">1.3.1.</span> <span class="toc-text">打开开发者选项</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E9%94%81OEM"><span class="toc-number">1.3.2.</span> <span class="toc-text">解锁OEM</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95fastboot"><span class="toc-number">1.3.3.</span> <span class="toc-text">测试fastboot</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E9%94%81bootloader-1"><span class="toc-number">1.3.4.</span> <span class="toc-text">解锁bootloader</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BD%E9%95%9C%E5%83%8F"><span class="toc-number">1.4.</span> <span class="toc-text">下载镜像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%B7%E6%9C%BA%EF%BC%88%E9%9D%9E%E5%BF%85%E9%A1%BB%EF%BC%89"><span class="toc-number">1.5.</span> <span class="toc-text">刷机（非必须）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85Magisk"><span class="toc-number">1.6.</span> <span class="toc-text">安装Magisk</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BD%E5%B9%B6%E5%AE%89%E8%A3%85Magisk"><span class="toc-number">1.6.1.</span> <span class="toc-text">下载并安装Magisk</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Patch%E9%95%9C%E5%83%8F"><span class="toc-number">1.6.2.</span> <span class="toc-text">Patch镜像</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9B%B4%E6%96%B0Magisk"><span class="toc-number">1.6.3.</span> <span class="toc-text">更新Magisk</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85Riru%EF%BC%88outdated%EF%BC%89"><span class="toc-number">1.7.</span> <span class="toc-text">安装Riru（outdated）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85Zygisk"><span class="toc-number">1.8.</span> <span class="toc-text">安装Zygisk</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85TWRP%EF%BC%88%E6%B2%A1%E5%AE%89%E8%A3%85%EF%BC%89"><span class="toc-number">1.9.</span> <span class="toc-text">安装TWRP（没安装）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A5%E9%AA%A4"><span class="toc-number">1.9.1.</span> <span class="toc-text">步骤</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85LSPosed"><span class="toc-number">1.10.</span> <span class="toc-text">安装LSPosed</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85FoxMagiskManager"><span class="toc-number">1.11.</span> <span class="toc-text">安装FoxMagiskManager</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85XAppDebug"><span class="toc-number">1.12.</span> <span class="toc-text">安装XAppDebug</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Pixel%E6%95%91%E7%A0%96"><span class="toc-number">1.13.</span> <span class="toc-text">Pixel救砖</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%A6%E4%B8%80%E7%A7%8D%E5%8F%AF%E8%A1%8C%E7%9A%84%E8%B0%83%E8%AF%95%E6%96%B9%E6%B3%95"><span class="toc-number">1.14.</span> <span class="toc-text">另一种可行的调试方法</span></a></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
         
     </div>
 </aside>
@@ -990,6 +1035,42 @@
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Travel</a>
               </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">UEFI</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Objection</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Frida</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Unidbg</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">CodeQL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Pwn</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Proxy</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Comic</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Cars</a>
+              </li>
             
             <div class="clearfix"></div>
           </ul>
@@ -1237,7 +1318,7 @@
   }
 
   
-    var modelName = "hijiki";
+    var modelName = "haru/02";
   
 
   var modelJsonPath = "";
@@ -1256,7 +1337,7 @@
        width: 145, 
        height: 320, 
        hOffset: 50, 
-      
+       vOffset: -20 
     },
     mobile: {
        show: false, 

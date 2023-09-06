@@ -53,6 +53,9 @@
 
   
 
+<link rel="stylesheet" href="\assets\css\APlayer.min.css" class="aplayer-style-marker">
+<script src="\assets\js\APlayer.min.js" class="aplayer-script-marker"></script>
+<script src="\assets\js\Meting.min.js" class="meting-script-marker"></script>
 </head>
 
 <body>
@@ -111,20 +114,26 @@
 					<a class="mail" href="mailto:taardisaa@gmail.com" title="NULL" target="_blank"><i class="icon-mail"></i></a>
 		        
 			</div>
+		</nav>
+
 		
 			
 			
+		
+				
+		
 			
 			
-			<div>
-				<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="240" height="52" src="//music.163.com/outchain/player?type=2&id=1818064296&auto=0&height=32"></iframe>
+			<div id="aplayer-hjnObCgk" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="460528"
+					data-server="netease" data-type="song" data-loop="none"
+					data-order="random" data-lrctype="0" data-listfolded="true" 
+					data-fixed="true" data-autoplay="false" 
+					data-volume="0.4" data-mutex="true" 
+					data-listmaxheight="400px" data-preload="none" 
+					data-theme="">
 			</div>
 			
-				
-				<p style="font-size: 12px;">Enjoy the music!<p>
-			
 		
-		</nav>
 	</header>		
 </div>
 
@@ -183,20 +192,26 @@
 					<a class="mail" href="mailto:taardisaa@gmail.com" title="NULL" target="_blank"><i class="icon-mail"></i></a>
 		        
 			</div>
+		</nav>
+
 		
 			
 			
+		
+				
+		
 			
 			
-			<div>
-				<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="240" height="52" src="//music.163.com/outchain/player?type=2&id=1818064296&auto=0&height=32"></iframe>
+			<div id="aplayer-hjnObCgk" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="460528"
+					data-server="netease" data-type="song" data-loop="none"
+					data-order="random" data-lrctype="0" data-listfolded="true" 
+					data-fixed="true" data-autoplay="false" 
+					data-volume="0.4" data-mutex="true" 
+					data-listmaxheight="400px" data-preload="none" 
+					data-theme="">
 			</div>
 			
-				
-				<p style="font-size: 12px;">Enjoy the music!<p>
-			
 		
-		</nav>
 	</header>		
 </div>
 
@@ -327,6 +342,11 @@
   
   <div class="article-entry" itemprop="articleBody">
     
+    <!-- 
+<div id="toc">
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#IDAPython-Helpful-Code-Snippets"><span class="toc-number">1.</span> <span class="toc-text">IDAPython-Helpful Code Snippets</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BE%97%E5%88%B0Names"><span class="toc-number">1.1.</span> <span class="toc-text">得到Names</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%BD%E6%95%B0"><span class="toc-number">1.2.</span> <span class="toc-text">函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BE%97%E5%88%B0%E6%89%80%E6%9C%89%E5%87%BD%E6%95%B0%E7%9A%84%E5%A4%B4%E5%9C%B0%E5%9D%80"><span class="toc-number">1.2.1.</span> <span class="toc-text">得到所有函数的头地址</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BE%97%E5%88%B0%E5%87%BD%E6%95%B0%E7%BB%93%E6%9E%84%E4%BD%93"><span class="toc-number">1.2.2.</span> <span class="toc-text">得到函数结构体</span></a></li></ol></li></ol></li></ol>
+</div>
+ -->
     <p>这里把一些我个人总结的，觉得有用的IDAPython代码片段放出来。便于复习和快速利用。</p>
 <span id="more"></span>
 
@@ -444,6 +464,19 @@
             </div>
         </div>
         
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#IDAPython-Helpful-Code-Snippets"><span class="toc-number">1.</span> <span class="toc-text">IDAPython-Helpful Code Snippets</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BE%97%E5%88%B0Names"><span class="toc-number">1.1.</span> <span class="toc-text">得到Names</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%BD%E6%95%B0"><span class="toc-number">1.2.</span> <span class="toc-text">函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BE%97%E5%88%B0%E6%89%80%E6%9C%89%E5%87%BD%E6%95%B0%E7%9A%84%E5%A4%B4%E5%9C%B0%E5%9D%80"><span class="toc-number">1.2.1.</span> <span class="toc-text">得到所有函数的头地址</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BE%97%E5%88%B0%E5%87%BD%E6%95%B0%E7%BB%93%E6%9E%84%E4%BD%93"><span class="toc-number">1.2.2.</span> <span class="toc-text">得到函数结构体</span></a></li></ol></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
         
     </div>
 </aside>
@@ -910,6 +943,42 @@
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Travel</a>
               </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">UEFI</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Objection</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Frida</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Unidbg</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">CodeQL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Pwn</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Proxy</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Comic</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Cars</a>
+              </li>
             
             <div class="clearfix"></div>
           </ul>
@@ -1157,7 +1226,7 @@
   }
 
   
-    var modelName = "hijiki";
+    var modelName = "haru/02";
   
 
   var modelJsonPath = "";
@@ -1176,7 +1245,7 @@
        width: 145, 
        height: 320, 
        hOffset: 50, 
-      
+       vOffset: -20 
     },
     mobile: {
        show: false, 

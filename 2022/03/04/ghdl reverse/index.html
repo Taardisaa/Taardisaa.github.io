@@ -50,6 +50,9 @@
 
   
 
+<link rel="stylesheet" href="\assets\css\APlayer.min.css" class="aplayer-style-marker">
+<script src="\assets\js\APlayer.min.js" class="aplayer-script-marker"></script>
+<script src="\assets\js\Meting.min.js" class="meting-script-marker"></script>
 </head>
 
 <body>
@@ -108,20 +111,26 @@
 					<a class="mail" href="mailto:taardisaa@gmail.com" title="NULL" target="_blank"><i class="icon-mail"></i></a>
 		        
 			</div>
+		</nav>
+
 		
 			
 			
+		
+				
+		
 			
 			
-			<div>
-				<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="240" height="52" src="//music.163.com/outchain/player?type=2&id=1818064296&auto=0&height=32"></iframe>
+			<div id="aplayer-hjnObCgk" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="460528"
+					data-server="netease" data-type="song" data-loop="none"
+					data-order="random" data-lrctype="0" data-listfolded="true" 
+					data-fixed="true" data-autoplay="false" 
+					data-volume="0.4" data-mutex="true" 
+					data-listmaxheight="400px" data-preload="none" 
+					data-theme="">
 			</div>
 			
-				
-				<p style="font-size: 12px;">Enjoy the music!<p>
-			
 		
-		</nav>
 	</header>		
 </div>
 
@@ -180,20 +189,26 @@
 					<a class="mail" href="mailto:taardisaa@gmail.com" title="NULL" target="_blank"><i class="icon-mail"></i></a>
 		        
 			</div>
+		</nav>
+
 		
 			
 			
+		
+				
+		
 			
 			
-			<div>
-				<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="240" height="52" src="//music.163.com/outchain/player?type=2&id=1818064296&auto=0&height=32"></iframe>
+			<div id="aplayer-hjnObCgk" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="460528"
+					data-server="netease" data-type="song" data-loop="none"
+					data-order="random" data-lrctype="0" data-listfolded="true" 
+					data-fixed="true" data-autoplay="false" 
+					data-volume="0.4" data-mutex="true" 
+					data-listmaxheight="400px" data-preload="none" 
+					data-theme="">
 			</div>
 			
-				
-				<p style="font-size: 12px;">Enjoy the music!<p>
-			
 		
-		</nav>
 	</header>		
 </div>
 
@@ -324,6 +339,11 @@
   
   <div class="article-entry" itemprop="articleBody">
     
+    <!-- 
+<div id="toc">
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#GHDL-Reverse"><span class="toc-number">1.</span> <span class="toc-text">GHDL Reverse</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#What"><span class="toc-number">1.1.</span> <span class="toc-text">What</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-number">1.2.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BE%8B%E5%AD%90"><span class="toc-number">1.3.</span> <span class="toc-text">例子</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#hello-vhdl"><span class="toc-number">1.3.1.</span> <span class="toc-text">hello.vhdl</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BC%96%E8%AF%91"><span class="toc-number">1.3.1.1.</span> <span class="toc-text">编译</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%86%E5%90%91"><span class="toc-number">1.3.1.2.</span> <span class="toc-text">逆向</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB"><span class="toc-number">1.3.1.3.</span> <span class="toc-text">源码解读</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Ghdl-Process-Register"><span class="toc-number">1.3.1.3.1.</span> <span class="toc-text">Ghdl_Process_Register</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Ghdl-Stack2"><span class="toc-number">1.3.1.3.2.</span> <span class="toc-text">Ghdl_Stack2_</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#heartbeat-vhdl"><span class="toc-number">1.3.2.</span> <span class="toc-text">heartbeat.vhdl</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%86%E5%90%91-1"><span class="toc-number">1.3.2.1.</span> <span class="toc-text">逆向</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#ghdl-process-wait-timeout"><span class="toc-number">1.3.2.1.1.</span> <span class="toc-text">_ghdl_process_wait_timeout</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#ghdl-signal-direct-assign"><span class="toc-number">1.3.2.1.2.</span> <span class="toc-text">_ghdl_signal_direct_assign</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BC%A0%E5%8F%82%E7%BB%93%E6%9E%84%E4%BD%93%E9%80%86%E5%90%91"><span class="toc-number">1.3.2.1.3.</span> <span class="toc-text">传参结构体逆向</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E6%81%A2%E5%A4%8D%E5%90%8E"><span class="toc-number">1.3.2.1.3.1.</span> <span class="toc-text">恢复后</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#adder-vhdl"><span class="toc-number">1.3.3.</span> <span class="toc-text">adder.vhdl</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%81%A2%E5%A4%8D"><span class="toc-number">1.3.3.1.</span> <span class="toc-text">恢复</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#TestBench"><span class="toc-number">1.3.3.2.</span> <span class="toc-text">TestBench</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">1.4.</span> <span class="toc-text"></span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93"><span class="toc-number">1.4.1.</span> <span class="toc-text">技巧总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CTF%E4%BE%8B%E9%A2%98"><span class="toc-number">1.5.</span> <span class="toc-text">CTF例题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SUS-CTF2022%E2%80%94%E2%80%94hello-world"><span class="toc-number">1.5.1.</span> <span class="toc-text">SUS_CTF2022——hello_world</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">1.5.2.</span> <span class="toc-text">总结</span></a></li></ol></li></ol></li></ol>
+</div>
+ -->
     <p>最近4个月遇到过2次<code>ghdl</code>程序逆向题，虽然核心代码都很简单，但是感觉还是有必要稍微总结一下经验。</p>
 <span id="more"></span>
 
@@ -645,6 +665,19 @@
             </div>
         </div>
         
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#GHDL-Reverse"><span class="toc-number">1.</span> <span class="toc-text">GHDL Reverse</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#What"><span class="toc-number">1.1.</span> <span class="toc-text">What</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-number">1.2.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BE%8B%E5%AD%90"><span class="toc-number">1.3.</span> <span class="toc-text">例子</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#hello-vhdl"><span class="toc-number">1.3.1.</span> <span class="toc-text">hello.vhdl</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BC%96%E8%AF%91"><span class="toc-number">1.3.1.1.</span> <span class="toc-text">编译</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%86%E5%90%91"><span class="toc-number">1.3.1.2.</span> <span class="toc-text">逆向</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB"><span class="toc-number">1.3.1.3.</span> <span class="toc-text">源码解读</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Ghdl-Process-Register"><span class="toc-number">1.3.1.3.1.</span> <span class="toc-text">Ghdl_Process_Register</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Ghdl-Stack2"><span class="toc-number">1.3.1.3.2.</span> <span class="toc-text">Ghdl_Stack2_</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#heartbeat-vhdl"><span class="toc-number">1.3.2.</span> <span class="toc-text">heartbeat.vhdl</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%86%E5%90%91-1"><span class="toc-number">1.3.2.1.</span> <span class="toc-text">逆向</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#ghdl-process-wait-timeout"><span class="toc-number">1.3.2.1.1.</span> <span class="toc-text">_ghdl_process_wait_timeout</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#ghdl-signal-direct-assign"><span class="toc-number">1.3.2.1.2.</span> <span class="toc-text">_ghdl_signal_direct_assign</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BC%A0%E5%8F%82%E7%BB%93%E6%9E%84%E4%BD%93%E9%80%86%E5%90%91"><span class="toc-number">1.3.2.1.3.</span> <span class="toc-text">传参结构体逆向</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E6%81%A2%E5%A4%8D%E5%90%8E"><span class="toc-number">1.3.2.1.3.1.</span> <span class="toc-text">恢复后</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#adder-vhdl"><span class="toc-number">1.3.3.</span> <span class="toc-text">adder.vhdl</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%81%A2%E5%A4%8D"><span class="toc-number">1.3.3.1.</span> <span class="toc-text">恢复</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#TestBench"><span class="toc-number">1.3.3.2.</span> <span class="toc-text">TestBench</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">1.4.</span> <span class="toc-text"></span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93"><span class="toc-number">1.4.1.</span> <span class="toc-text">技巧总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CTF%E4%BE%8B%E9%A2%98"><span class="toc-number">1.5.</span> <span class="toc-text">CTF例题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SUS-CTF2022%E2%80%94%E2%80%94hello-world"><span class="toc-number">1.5.1.</span> <span class="toc-text">SUS_CTF2022——hello_world</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">1.5.2.</span> <span class="toc-text">总结</span></a></li></ol></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
         
     </div>
 </aside>
@@ -1111,6 +1144,42 @@
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Travel</a>
               </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">UEFI</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Objection</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Frida</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Unidbg</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">CodeQL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Pwn</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Proxy</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Comic</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Cars</a>
+              </li>
             
             <div class="clearfix"></div>
           </ul>
@@ -1358,7 +1427,7 @@
   }
 
   
-    var modelName = "hijiki";
+    var modelName = "haru/02";
   
 
   var modelJsonPath = "";
@@ -1377,7 +1446,7 @@
        width: 145, 
        height: 320, 
        hOffset: 50, 
-      
+       vOffset: -20 
     },
     mobile: {
        show: false, 

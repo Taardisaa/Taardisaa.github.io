@@ -50,6 +50,9 @@
 
   
 
+<link rel="stylesheet" href="\assets\css\APlayer.min.css" class="aplayer-style-marker">
+<script src="\assets\js\APlayer.min.js" class="aplayer-script-marker"></script>
+<script src="\assets\js\Meting.min.js" class="meting-script-marker"></script>
 </head>
 
 <body>
@@ -108,20 +111,26 @@
 					<a class="mail" href="mailto:taardisaa@gmail.com" title="NULL" target="_blank"><i class="icon-mail"></i></a>
 		        
 			</div>
+		</nav>
+
 		
 			
 			
+		
+				
+		
 			
 			
-			<div>
-				<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="240" height="52" src="//music.163.com/outchain/player?type=2&id=1818064296&auto=0&height=32"></iframe>
+			<div id="aplayer-hjnObCgk" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="460528"
+					data-server="netease" data-type="song" data-loop="none"
+					data-order="random" data-lrctype="0" data-listfolded="true" 
+					data-fixed="true" data-autoplay="false" 
+					data-volume="0.4" data-mutex="true" 
+					data-listmaxheight="400px" data-preload="none" 
+					data-theme="">
 			</div>
 			
-				
-				<p style="font-size: 12px;">Enjoy the music!<p>
-			
 		
-		</nav>
 	</header>		
 </div>
 
@@ -180,20 +189,26 @@
 					<a class="mail" href="mailto:taardisaa@gmail.com" title="NULL" target="_blank"><i class="icon-mail"></i></a>
 		        
 			</div>
+		</nav>
+
 		
 			
 			
+		
+				
+		
 			
 			
-			<div>
-				<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="240" height="52" src="//music.163.com/outchain/player?type=2&id=1818064296&auto=0&height=32"></iframe>
+			<div id="aplayer-hjnObCgk" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="460528"
+					data-server="netease" data-type="song" data-loop="none"
+					data-order="random" data-lrctype="0" data-listfolded="true" 
+					data-fixed="true" data-autoplay="false" 
+					data-volume="0.4" data-mutex="true" 
+					data-listmaxheight="400px" data-preload="none" 
+					data-theme="">
 			</div>
 			
-				
-				<p style="font-size: 12px;">Enjoy the music!<p>
-			
 		
-		</nav>
 	</header>		
 </div>
 
@@ -324,6 +339,11 @@
   
   <div class="article-entry" itemprop="articleBody">
     
+    <!-- 
+<div id="toc">
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Go%E9%80%86%E5%90%91-2"><span class="toc-number">1.</span> <span class="toc-text">Go逆向_2</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83"><span class="toc-number">1.1.</span> <span class="toc-text">环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="toc-number">1.2.</span> <span class="toc-text">基本使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%93%E5%8D%B0PLAN-9%E6%B1%87%E7%BC%96"><span class="toc-number">1.2.1.</span> <span class="toc-text">打印PLAN 9汇编</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E6%88%90-o%EF%BC%8C-exe-%E4%BB%A5%E5%8F%8APLAN9%E6%B1%87%E7%BC%96"><span class="toc-number">1.2.2.</span> <span class="toc-text">生成.o，.exe.以及PLAN9汇编</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8D%E6%B1%87%E7%BC%96"><span class="toc-number">1.2.3.</span> <span class="toc-text">反汇编</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E-gcflags%E5%92%8C-ldflags%E4%BC%A0%E5%8F%82"><span class="toc-number">1.2.4.</span> <span class="toc-text">关于-gcflags和-ldflags传参</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#gcflags"><span class="toc-number">1.2.4.1.</span> <span class="toc-text">-gcflags</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ldflags"><span class="toc-number">1.2.4.2.</span> <span class="toc-text">-ldflags</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Go-PLAN9%E6%B1%87%E7%BC%96"><span class="toc-number">1.3.</span> <span class="toc-text">Go PLAN9汇编</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%80%E8%A6%81"><span class="toc-number">1.3.1.</span> <span class="toc-text">简要</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%8B%E5%AD%90"><span class="toc-number">1.3.2.</span> <span class="toc-text">例子</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E9%87%8F%E8%A7%A3%E6%9E%90"><span class="toc-number">1.3.3.</span> <span class="toc-text">常量解析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%AA%E5%AF%84%E5%AD%98%E5%99%A8"><span class="toc-number">1.3.4.</span> <span class="toc-text">伪寄存器</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#FP"><span class="toc-number">1.3.4.1.</span> <span class="toc-text">FP</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SB"><span class="toc-number">1.3.4.2.</span> <span class="toc-text">SB</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SP"><span class="toc-number">1.3.4.3.</span> <span class="toc-text">SP</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#PC"><span class="toc-number">1.3.4.4.</span> <span class="toc-text">PC</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E4%B8%8E%E6%95%B0%E6%8D%AE%E5%AE%9A%E4%B9%89"><span class="toc-number">1.3.5.</span> <span class="toc-text">函数与数据定义</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%87%BD%E6%95%B0"><span class="toc-number">1.3.5.1.</span> <span class="toc-text">函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F"><span class="toc-number">1.3.5.2.</span> <span class="toc-text">全局变量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%87%E8%AF%86%E5%88%97%E8%A1%A8%EF%BC%88%E6%9C%AA%E7%BF%BB%E8%AF%91%EF%BC%89"><span class="toc-number">1.3.5.3.</span> <span class="toc-text">标识列表（未翻译）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8Go%E7%B1%BB%E5%9E%8B-x2F-%E5%B8%B8%E9%87%8F"><span class="toc-number">1.3.6.</span> <span class="toc-text">使用Go类型&#x2F;常量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Runtime-Coordination"><span class="toc-number">1.3.7.</span> <span class="toc-text">Runtime Coordination</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B7%E4%BD%93%E6%9E%B6%E6%9E%84%E7%BB%86%E8%8A%82"><span class="toc-number">1.3.8.</span> <span class="toc-text">具体架构细节</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#32-bit-Intel-386"><span class="toc-number">1.3.8.1.</span> <span class="toc-text">32-bit Intel 386</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#64bit-Intel-386-%EF%BC%88AMD64%EF%BC%89"><span class="toc-number">1.3.8.2.</span> <span class="toc-text">64bit Intel 386 （AMD64）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B6%E4%BB%96RISC%E6%9E%B6%E6%9E%84"><span class="toc-number">1.3.8.3.</span> <span class="toc-text">其他RISC架构</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Unsupported-opcodes"><span class="toc-number">1.3.9.</span> <span class="toc-text">Unsupported opcodes</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AMD64%E4%B8%8BGo%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8%E5%BA%95%E5%B1%82%E5%88%86%E6%9E%90"><span class="toc-number">1.4.</span> <span class="toc-text">AMD64下Go函数调用底层分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E6%95%B0-x2F-%E8%BF%94%E5%9B%9E%E5%80%BC-x2F-%E5%BA%8F%E5%88%97%E8%B0%83%E7%94%A8"><span class="toc-number">1.4.1.</span> <span class="toc-text">参数&#x2F;返回值&#x2F;序列调用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%82%E6%95%B0%E5%92%8C%E8%BF%94%E5%9B%9E%E5%80%BC"><span class="toc-number">1.4.1.1.</span> <span class="toc-text">参数和返回值</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#EmptyFunc"><span class="toc-number">1.4.1.1.1.</span> <span class="toc-text">EmptyFunc</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#FuncConst"><span class="toc-number">1.4.1.1.2.</span> <span class="toc-text">FuncConst</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#FuncAdd"><span class="toc-number">1.4.1.1.3.</span> <span class="toc-text">FuncAdd</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8"><span class="toc-number">1.4.1.2.</span> <span class="toc-text">函数调用</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%88%E8%A1%A5%E5%85%85%EF%BC%89C-x2F-C-%E4%B8%AD%E7%9A%84%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86"><span class="toc-number">1.4.2.</span> <span class="toc-text">（补充）C&#x2F;C++中的异常处理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A2%AB%E8%B0%83%E7%94%A8%E5%87%BD%E6%95%B0%E6%98%AF%E5%90%A6%E6%8B%A5%E6%9C%89%E4%BF%9D%E7%95%99%E5%AF%84%E5%AD%98%E5%99%A8"><span class="toc-number">1.4.2.1.</span> <span class="toc-text">被调用函数是否拥有保留寄存器</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%87%E9%92%88%E8%8A%B1%E9%94%80%E5%92%8C%E6%8E%A5%E5%8F%A3"><span class="toc-number">1.4.3.</span> <span class="toc-text">指针花销和接口</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%AA%E7%94%A8%E4%B8%80%E4%B8%AAQWORD%E7%9A%84%E6%8C%87%E9%92%88"><span class="toc-number">1.4.3.1.</span> <span class="toc-text">只用一个QWORD的指针</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A82%E4%B8%AAQWORD%E7%9A%84%E6%8E%A5%E5%8F%A3%EF%BC%88%E9%9D%9E%E7%A9%BA%E6%8E%A5%E5%8F%A3%EF%BC%89"><span class="toc-number">1.4.3.2.</span> <span class="toc-text">使用2个QWORD的接口（非空接口）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A82%E6%88%963%E4%B8%AAQWORD%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%88%96%E5%88%87%E7%89%87"><span class="toc-number">1.4.3.3.</span> <span class="toc-text">使用2或3个QWORD的字符串或切片</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-number">1.4.3.3.1.</span> <span class="toc-text">字符串</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%88%87%E7%89%87"><span class="toc-number">1.4.3.3.2.</span> <span class="toc-text">切片</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9E%84%E9%80%A0%E6%8E%A5%E5%8F%A3%E5%80%BC"><span class="toc-number">1.4.3.4.</span> <span class="toc-text">构造接口值</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%80%9A%E8%BF%87%E7%BB%93%E6%9E%84%E6%8C%87%E9%92%88%E6%9E%84%E9%80%A0"><span class="toc-number">1.4.3.4.1.</span> <span class="toc-text">通过结构指针构造</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%80%9A%E8%BF%87%E7%BB%93%E6%9E%84%E6%9E%84%E9%80%A0"><span class="toc-number">1.4.3.4.2.</span> <span class="toc-text">通过结构构造</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A9%BA%E7%BB%93%E6%9E%84%E4%BD%93%E7%9A%84%E6%8E%A5%E5%8F%A3"><span class="toc-number">1.4.3.5.</span> <span class="toc-text">空结构体的接口</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#error%E6%98%AF%E4%B8%80%E7%A7%8D%E6%8E%A5%E5%8F%A3%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.4.4.</span> <span class="toc-text">error是一种接口类型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E9%94%99%E8%AF%AF"><span class="toc-number">1.4.4.1.</span> <span class="toc-text">计算错误</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E9%94%99%E8%AF%AF"><span class="toc-number">1.4.4.2.</span> <span class="toc-text">测试错误</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#defer%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-number">1.4.5.</span> <span class="toc-text">defer的实现</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#defer%E9%97%AD%E5%8C%85"><span class="toc-number">1.4.5.1.</span> <span class="toc-text">defer闭包</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#panic%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-number">1.4.6.</span> <span class="toc-text">panic的实现</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9C%A8%E5%87%BD%E6%95%B0%E4%B8%AD%E4%BD%BF%E7%94%A8panic"><span class="toc-number">1.4.6.1.</span> <span class="toc-text">在函数中使用panic()</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Panic1"><span class="toc-number">1.4.6.1.1.</span> <span class="toc-text">Panic1()</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Panic2"><span class="toc-number">1.4.6.1.2.</span> <span class="toc-text">Panic2()</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8D%95%E6%8D%89%E5%BC%82%E5%B8%B8%EF%BC%9Adefer-recover"><span class="toc-number">1.4.7.</span> <span class="toc-text">捕捉异常：defer+recover</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#gccgo"><span class="toc-number">1.4.8.</span> <span class="toc-text">gccgo</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%A5%E5%85%85"><span class="toc-number">1.5.</span> <span class="toc-text">补充</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E4%BA%8EGo%E6%8E%A5%E5%8F%A3"><span class="toc-number">1.5.1.</span> <span class="toc-text">关于Go接口</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#iface"><span class="toc-number">1.5.1.1.</span> <span class="toc-text">iface</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#eface"><span class="toc-number">1.5.1.2.</span> <span class="toc-text">eface</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8E%A5%E5%8F%A3%E7%9A%84nil%E5%92%8Cnon-nil"><span class="toc-number">1.5.1.3.</span> <span class="toc-text">接口的nil和non-nil</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">1.6.</span> <span class="toc-text">参考</span></a></li></ol></li></ol>
+</div>
+ -->
     <p>Go内存模型，调用机制和PLAN9汇编</p>
 <span id="more"></span>
 
@@ -914,6 +934,19 @@
         </div>
         
         
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Go%E9%80%86%E5%90%91-2"><span class="toc-number">1.</span> <span class="toc-text">Go逆向_2</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83"><span class="toc-number">1.1.</span> <span class="toc-text">环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="toc-number">1.2.</span> <span class="toc-text">基本使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%93%E5%8D%B0PLAN-9%E6%B1%87%E7%BC%96"><span class="toc-number">1.2.1.</span> <span class="toc-text">打印PLAN 9汇编</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E6%88%90-o%EF%BC%8C-exe-%E4%BB%A5%E5%8F%8APLAN9%E6%B1%87%E7%BC%96"><span class="toc-number">1.2.2.</span> <span class="toc-text">生成.o，.exe.以及PLAN9汇编</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8D%E6%B1%87%E7%BC%96"><span class="toc-number">1.2.3.</span> <span class="toc-text">反汇编</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E-gcflags%E5%92%8C-ldflags%E4%BC%A0%E5%8F%82"><span class="toc-number">1.2.4.</span> <span class="toc-text">关于-gcflags和-ldflags传参</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#gcflags"><span class="toc-number">1.2.4.1.</span> <span class="toc-text">-gcflags</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ldflags"><span class="toc-number">1.2.4.2.</span> <span class="toc-text">-ldflags</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Go-PLAN9%E6%B1%87%E7%BC%96"><span class="toc-number">1.3.</span> <span class="toc-text">Go PLAN9汇编</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%80%E8%A6%81"><span class="toc-number">1.3.1.</span> <span class="toc-text">简要</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%8B%E5%AD%90"><span class="toc-number">1.3.2.</span> <span class="toc-text">例子</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E9%87%8F%E8%A7%A3%E6%9E%90"><span class="toc-number">1.3.3.</span> <span class="toc-text">常量解析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%AA%E5%AF%84%E5%AD%98%E5%99%A8"><span class="toc-number">1.3.4.</span> <span class="toc-text">伪寄存器</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#FP"><span class="toc-number">1.3.4.1.</span> <span class="toc-text">FP</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SB"><span class="toc-number">1.3.4.2.</span> <span class="toc-text">SB</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SP"><span class="toc-number">1.3.4.3.</span> <span class="toc-text">SP</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#PC"><span class="toc-number">1.3.4.4.</span> <span class="toc-text">PC</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E4%B8%8E%E6%95%B0%E6%8D%AE%E5%AE%9A%E4%B9%89"><span class="toc-number">1.3.5.</span> <span class="toc-text">函数与数据定义</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%87%BD%E6%95%B0"><span class="toc-number">1.3.5.1.</span> <span class="toc-text">函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F"><span class="toc-number">1.3.5.2.</span> <span class="toc-text">全局变量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%87%E8%AF%86%E5%88%97%E8%A1%A8%EF%BC%88%E6%9C%AA%E7%BF%BB%E8%AF%91%EF%BC%89"><span class="toc-number">1.3.5.3.</span> <span class="toc-text">标识列表（未翻译）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8Go%E7%B1%BB%E5%9E%8B-x2F-%E5%B8%B8%E9%87%8F"><span class="toc-number">1.3.6.</span> <span class="toc-text">使用Go类型&#x2F;常量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Runtime-Coordination"><span class="toc-number">1.3.7.</span> <span class="toc-text">Runtime Coordination</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B7%E4%BD%93%E6%9E%B6%E6%9E%84%E7%BB%86%E8%8A%82"><span class="toc-number">1.3.8.</span> <span class="toc-text">具体架构细节</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#32-bit-Intel-386"><span class="toc-number">1.3.8.1.</span> <span class="toc-text">32-bit Intel 386</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#64bit-Intel-386-%EF%BC%88AMD64%EF%BC%89"><span class="toc-number">1.3.8.2.</span> <span class="toc-text">64bit Intel 386 （AMD64）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B6%E4%BB%96RISC%E6%9E%B6%E6%9E%84"><span class="toc-number">1.3.8.3.</span> <span class="toc-text">其他RISC架构</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Unsupported-opcodes"><span class="toc-number">1.3.9.</span> <span class="toc-text">Unsupported opcodes</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AMD64%E4%B8%8BGo%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8%E5%BA%95%E5%B1%82%E5%88%86%E6%9E%90"><span class="toc-number">1.4.</span> <span class="toc-text">AMD64下Go函数调用底层分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E6%95%B0-x2F-%E8%BF%94%E5%9B%9E%E5%80%BC-x2F-%E5%BA%8F%E5%88%97%E8%B0%83%E7%94%A8"><span class="toc-number">1.4.1.</span> <span class="toc-text">参数&#x2F;返回值&#x2F;序列调用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%82%E6%95%B0%E5%92%8C%E8%BF%94%E5%9B%9E%E5%80%BC"><span class="toc-number">1.4.1.1.</span> <span class="toc-text">参数和返回值</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#EmptyFunc"><span class="toc-number">1.4.1.1.1.</span> <span class="toc-text">EmptyFunc</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#FuncConst"><span class="toc-number">1.4.1.1.2.</span> <span class="toc-text">FuncConst</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#FuncAdd"><span class="toc-number">1.4.1.1.3.</span> <span class="toc-text">FuncAdd</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8"><span class="toc-number">1.4.1.2.</span> <span class="toc-text">函数调用</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%88%E8%A1%A5%E5%85%85%EF%BC%89C-x2F-C-%E4%B8%AD%E7%9A%84%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86"><span class="toc-number">1.4.2.</span> <span class="toc-text">（补充）C&#x2F;C++中的异常处理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A2%AB%E8%B0%83%E7%94%A8%E5%87%BD%E6%95%B0%E6%98%AF%E5%90%A6%E6%8B%A5%E6%9C%89%E4%BF%9D%E7%95%99%E5%AF%84%E5%AD%98%E5%99%A8"><span class="toc-number">1.4.2.1.</span> <span class="toc-text">被调用函数是否拥有保留寄存器</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%87%E9%92%88%E8%8A%B1%E9%94%80%E5%92%8C%E6%8E%A5%E5%8F%A3"><span class="toc-number">1.4.3.</span> <span class="toc-text">指针花销和接口</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%AA%E7%94%A8%E4%B8%80%E4%B8%AAQWORD%E7%9A%84%E6%8C%87%E9%92%88"><span class="toc-number">1.4.3.1.</span> <span class="toc-text">只用一个QWORD的指针</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A82%E4%B8%AAQWORD%E7%9A%84%E6%8E%A5%E5%8F%A3%EF%BC%88%E9%9D%9E%E7%A9%BA%E6%8E%A5%E5%8F%A3%EF%BC%89"><span class="toc-number">1.4.3.2.</span> <span class="toc-text">使用2个QWORD的接口（非空接口）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A82%E6%88%963%E4%B8%AAQWORD%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%88%96%E5%88%87%E7%89%87"><span class="toc-number">1.4.3.3.</span> <span class="toc-text">使用2或3个QWORD的字符串或切片</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-number">1.4.3.3.1.</span> <span class="toc-text">字符串</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%88%87%E7%89%87"><span class="toc-number">1.4.3.3.2.</span> <span class="toc-text">切片</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9E%84%E9%80%A0%E6%8E%A5%E5%8F%A3%E5%80%BC"><span class="toc-number">1.4.3.4.</span> <span class="toc-text">构造接口值</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%80%9A%E8%BF%87%E7%BB%93%E6%9E%84%E6%8C%87%E9%92%88%E6%9E%84%E9%80%A0"><span class="toc-number">1.4.3.4.1.</span> <span class="toc-text">通过结构指针构造</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%80%9A%E8%BF%87%E7%BB%93%E6%9E%84%E6%9E%84%E9%80%A0"><span class="toc-number">1.4.3.4.2.</span> <span class="toc-text">通过结构构造</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A9%BA%E7%BB%93%E6%9E%84%E4%BD%93%E7%9A%84%E6%8E%A5%E5%8F%A3"><span class="toc-number">1.4.3.5.</span> <span class="toc-text">空结构体的接口</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#error%E6%98%AF%E4%B8%80%E7%A7%8D%E6%8E%A5%E5%8F%A3%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.4.4.</span> <span class="toc-text">error是一种接口类型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E9%94%99%E8%AF%AF"><span class="toc-number">1.4.4.1.</span> <span class="toc-text">计算错误</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E9%94%99%E8%AF%AF"><span class="toc-number">1.4.4.2.</span> <span class="toc-text">测试错误</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#defer%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-number">1.4.5.</span> <span class="toc-text">defer的实现</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#defer%E9%97%AD%E5%8C%85"><span class="toc-number">1.4.5.1.</span> <span class="toc-text">defer闭包</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#panic%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-number">1.4.6.</span> <span class="toc-text">panic的实现</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9C%A8%E5%87%BD%E6%95%B0%E4%B8%AD%E4%BD%BF%E7%94%A8panic"><span class="toc-number">1.4.6.1.</span> <span class="toc-text">在函数中使用panic()</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Panic1"><span class="toc-number">1.4.6.1.1.</span> <span class="toc-text">Panic1()</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Panic2"><span class="toc-number">1.4.6.1.2.</span> <span class="toc-text">Panic2()</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8D%95%E6%8D%89%E5%BC%82%E5%B8%B8%EF%BC%9Adefer-recover"><span class="toc-number">1.4.7.</span> <span class="toc-text">捕捉异常：defer+recover</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#gccgo"><span class="toc-number">1.4.8.</span> <span class="toc-text">gccgo</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%A5%E5%85%85"><span class="toc-number">1.5.</span> <span class="toc-text">补充</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E4%BA%8EGo%E6%8E%A5%E5%8F%A3"><span class="toc-number">1.5.1.</span> <span class="toc-text">关于Go接口</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#iface"><span class="toc-number">1.5.1.1.</span> <span class="toc-text">iface</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#eface"><span class="toc-number">1.5.1.2.</span> <span class="toc-text">eface</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8E%A5%E5%8F%A3%E7%9A%84nil%E5%92%8Cnon-nil"><span class="toc-number">1.5.1.3.</span> <span class="toc-text">接口的nil和non-nil</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">1.6.</span> <span class="toc-text">参考</span></a></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
+        
     </div>
 </aside>
 
@@ -1379,6 +1412,42 @@
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Travel</a>
               </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">UEFI</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Objection</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Frida</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Unidbg</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">CodeQL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Pwn</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Proxy</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Comic</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Cars</a>
+              </li>
             
             <div class="clearfix"></div>
           </ul>
@@ -1626,7 +1695,7 @@
   }
 
   
-    var modelName = "hijiki";
+    var modelName = "haru/02";
   
 
   var modelJsonPath = "";
@@ -1645,7 +1714,7 @@
        width: 145, 
        height: 320, 
        hOffset: 50, 
-      
+       vOffset: -20 
     },
     mobile: {
        show: false, 

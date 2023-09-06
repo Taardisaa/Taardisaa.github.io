@@ -50,6 +50,9 @@
 
   
 
+<link rel="stylesheet" href="\assets\css\APlayer.min.css" class="aplayer-style-marker">
+<script src="\assets\js\APlayer.min.js" class="aplayer-script-marker"></script>
+<script src="\assets\js\Meting.min.js" class="meting-script-marker"></script>
 </head>
 
 <body>
@@ -108,20 +111,26 @@
 					<a class="mail" href="mailto:taardisaa@gmail.com" title="NULL" target="_blank"><i class="icon-mail"></i></a>
 		        
 			</div>
+		</nav>
+
 		
 			
 			
+		
+				
+		
 			
 			
-			<div>
-				<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="240" height="52" src="//music.163.com/outchain/player?type=2&id=1818064296&auto=0&height=32"></iframe>
+			<div id="aplayer-hjnObCgk" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="460528"
+					data-server="netease" data-type="song" data-loop="none"
+					data-order="random" data-lrctype="0" data-listfolded="true" 
+					data-fixed="true" data-autoplay="false" 
+					data-volume="0.4" data-mutex="true" 
+					data-listmaxheight="400px" data-preload="none" 
+					data-theme="">
 			</div>
 			
-				
-				<p style="font-size: 12px;">Enjoy the music!<p>
-			
 		
-		</nav>
 	</header>		
 </div>
 
@@ -180,20 +189,26 @@
 					<a class="mail" href="mailto:taardisaa@gmail.com" title="NULL" target="_blank"><i class="icon-mail"></i></a>
 		        
 			</div>
+		</nav>
+
 		
 			
 			
+		
+				
+		
 			
 			
-			<div>
-				<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="240" height="52" src="//music.163.com/outchain/player?type=2&id=1818064296&auto=0&height=32"></iframe>
+			<div id="aplayer-hjnObCgk" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="460528"
+					data-server="netease" data-type="song" data-loop="none"
+					data-order="random" data-lrctype="0" data-listfolded="true" 
+					data-fixed="true" data-autoplay="false" 
+					data-volume="0.4" data-mutex="true" 
+					data-listmaxheight="400px" data-preload="none" 
+					data-theme="">
 			</div>
 			
-				
-				<p style="font-size: 12px;">Enjoy the music!<p>
-			
 		
-		</nav>
 	</header>		
 </div>
 
@@ -324,6 +339,11 @@
   
   <div class="article-entry" itemprop="articleBody">
     
+    <!-- 
+<div id="toc">
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Sekiro-Shadows-Die-Twice-ModEngine-Analysis"><span class="toc-number">1.</span> <span class="toc-text">Sekiro: Shadows Die Twice ModEngine Analysis</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Prelude"><span class="toc-number">1.1.</span> <span class="toc-text">Prelude</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Environment"><span class="toc-number">1.2.</span> <span class="toc-text">Environment</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Project-Structure"><span class="toc-number">1.3.</span> <span class="toc-text">Project Structure</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AOBScanner"><span class="toc-number">1.4.</span> <span class="toc-text">AOBScanner</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Game"><span class="toc-number">1.5.</span> <span class="toc-text">Game</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GameplayPatcher"><span class="toc-number">1.6.</span> <span class="toc-text">GameplayPatcher</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ApplyBonfireSacrificePatch-postponed"><span class="toc-number">1.6.1.</span> <span class="toc-text">ApplyBonfireSacrificePatch(postponed)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ApplyGameplayPatches-postponed"><span class="toc-number">1.6.2.</span> <span class="toc-text">ApplyGameplayPatches(postponed)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ApplyNoLogoPatch"><span class="toc-number">1.6.3.</span> <span class="toc-text">ApplyNoLogoPatch</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#tFXRConstructor-unimportant"><span class="toc-number">1.6.4.</span> <span class="toc-text">tFXRConstructor(unimportant)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#tFXR1-unimportant"><span class="toc-number">1.6.5.</span> <span class="toc-text">tFXR1(unimportant)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#tMSBHitConstructor-unimportant"><span class="toc-number">1.6.6.</span> <span class="toc-text">tMSBHitConstructor(unimportant)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#tMemoryAllocate-unimportant"><span class="toc-number">1.6.7.</span> <span class="toc-text">tMemoryAllocate(unimportant)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#tVirtualAlloc"><span class="toc-number">1.6.8.</span> <span class="toc-text">tVirtualAlloc</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ApplyAllocationTracer-unimportant"><span class="toc-number">1.6.9.</span> <span class="toc-text">ApplyAllocationTracer(unimportant)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ApplyMiscPatches"><span class="toc-number">1.6.10.</span> <span class="toc-text">ApplyMiscPatches</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ApplyShadowMapResolutionPatches-unimportant"><span class="toc-number">1.6.11.</span> <span class="toc-text">ApplyShadowMapResolutionPatches(unimportant)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#tFmodMemoryAllocate-unimportant"><span class="toc-number">1.6.12.</span> <span class="toc-text">tFmodMemoryAllocate(unimportant)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ApplyFModHooks-unimportant"><span class="toc-number">1.6.13.</span> <span class="toc-text">ApplyFModHooks(unimportant)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ApplyDS3SekiroAllocatorLimitPatch"><span class="toc-number">1.6.14.</span> <span class="toc-text">ApplyDS3SekiroAllocatorLimitPatch</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ApplyAllocatorLimitPatchVA"><span class="toc-number">1.6.15.</span> <span class="toc-text">ApplyAllocatorLimitPatchVA</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Minhook"><span class="toc-number">1.7.</span> <span class="toc-text">Minhook</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#MH-CreateHook"><span class="toc-number">1.7.1.</span> <span class="toc-text">MH_CreateHook</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MH-CreatHookApi"><span class="toc-number">1.7.2.</span> <span class="toc-text">MH_CreatHookApi</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MH-EnableHook"><span class="toc-number">1.7.3.</span> <span class="toc-text">MH_EnableHook</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HideThreadFromDebugger"><span class="toc-number">1.8.</span> <span class="toc-text">HideThreadFromDebugger</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ImGui"><span class="toc-number">1.9.</span> <span class="toc-text">ImGui</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ImGuiHook"><span class="toc-number">1.10.</span> <span class="toc-text">ImGuiHook</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#d3d11hook"><span class="toc-number">1.10.1.</span> <span class="toc-text">d3d11hook</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#imgui-impl-dx11"><span class="toc-number">1.10.2.</span> <span class="toc-text">imgui_impl_dx11</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#InputHook"><span class="toc-number">1.10.3.</span> <span class="toc-text">InputHook</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Menu"><span class="toc-number">1.10.4.</span> <span class="toc-text">Menu</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LooseParams"><span class="toc-number">1.11.</span> <span class="toc-text">LooseParams</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#LooseParamsPatch-unimportant"><span class="toc-number">1.11.1.</span> <span class="toc-text">LooseParamsPatch(unimportant)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ModLoader"><span class="toc-number">1.12.</span> <span class="toc-text">ModLoader</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#HookModLoader"><span class="toc-number">1.12.1.</span> <span class="toc-text">HookModLoader</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GetArchiveFunctionAddress-postponed"><span class="toc-number">1.12.2.</span> <span class="toc-text">GetArchiveFunctionAddress(postponed)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#tFuckSekiro"><span class="toc-number">1.12.3.</span> <span class="toc-text">tFuckSekiro</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ReplaceFileLoadPath"><span class="toc-number">1.12.4.</span> <span class="toc-text">ReplaceFileLoadPath</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#NetworkBlocker"><span class="toc-number">1.13.</span> <span class="toc-text">NetworkBlocker</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#StackWalker"><span class="toc-number">1.14.</span> <span class="toc-text">StackWalker</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#dllmain%E2%AD%90"><span class="toc-number">1.15.</span> <span class="toc-text">dllmain⭐</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#DllMain%E2%AD%90"><span class="toc-number">1.15.1.</span> <span class="toc-text">DllMain⭐</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#InitInstance"><span class="toc-number">1.15.2.</span> <span class="toc-text">InitInstance</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MainThread"><span class="toc-number">1.15.3.</span> <span class="toc-text">MainThread</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ApplyPostUnpackHooks"><span class="toc-number">1.15.4.</span> <span class="toc-text">ApplyPostUnpackHooks</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Conclusion"><span class="toc-number">1.16.</span> <span class="toc-text">Conclusion</span></a></li></ol></li></ol>
+</div>
+ -->
     <p>Sekiro: Shadows Die Twice is a souls-like game produced by FromSoftware with additional ACT features and I quite like it, as well as other souls-like games, namely Bloodborne, Elden Ring. Anyway, recently I’m inspired by some Streamers who tried to mod the game in order to add more fun, therefore I’m also in to analyze this ModEngine to unveil its technical details. I may also create or update some mods if I have enough time.</p>
 <span id="more"></span>
 
@@ -625,6 +645,19 @@
             </div>
         </div>
         
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Sekiro-Shadows-Die-Twice-ModEngine-Analysis"><span class="toc-number">1.</span> <span class="toc-text">Sekiro: Shadows Die Twice ModEngine Analysis</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Prelude"><span class="toc-number">1.1.</span> <span class="toc-text">Prelude</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Environment"><span class="toc-number">1.2.</span> <span class="toc-text">Environment</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Project-Structure"><span class="toc-number">1.3.</span> <span class="toc-text">Project Structure</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AOBScanner"><span class="toc-number">1.4.</span> <span class="toc-text">AOBScanner</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Game"><span class="toc-number">1.5.</span> <span class="toc-text">Game</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GameplayPatcher"><span class="toc-number">1.6.</span> <span class="toc-text">GameplayPatcher</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ApplyBonfireSacrificePatch-postponed"><span class="toc-number">1.6.1.</span> <span class="toc-text">ApplyBonfireSacrificePatch(postponed)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ApplyGameplayPatches-postponed"><span class="toc-number">1.6.2.</span> <span class="toc-text">ApplyGameplayPatches(postponed)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ApplyNoLogoPatch"><span class="toc-number">1.6.3.</span> <span class="toc-text">ApplyNoLogoPatch</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#tFXRConstructor-unimportant"><span class="toc-number">1.6.4.</span> <span class="toc-text">tFXRConstructor(unimportant)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#tFXR1-unimportant"><span class="toc-number">1.6.5.</span> <span class="toc-text">tFXR1(unimportant)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#tMSBHitConstructor-unimportant"><span class="toc-number">1.6.6.</span> <span class="toc-text">tMSBHitConstructor(unimportant)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#tMemoryAllocate-unimportant"><span class="toc-number">1.6.7.</span> <span class="toc-text">tMemoryAllocate(unimportant)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#tVirtualAlloc"><span class="toc-number">1.6.8.</span> <span class="toc-text">tVirtualAlloc</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ApplyAllocationTracer-unimportant"><span class="toc-number">1.6.9.</span> <span class="toc-text">ApplyAllocationTracer(unimportant)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ApplyMiscPatches"><span class="toc-number">1.6.10.</span> <span class="toc-text">ApplyMiscPatches</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ApplyShadowMapResolutionPatches-unimportant"><span class="toc-number">1.6.11.</span> <span class="toc-text">ApplyShadowMapResolutionPatches(unimportant)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#tFmodMemoryAllocate-unimportant"><span class="toc-number">1.6.12.</span> <span class="toc-text">tFmodMemoryAllocate(unimportant)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ApplyFModHooks-unimportant"><span class="toc-number">1.6.13.</span> <span class="toc-text">ApplyFModHooks(unimportant)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ApplyDS3SekiroAllocatorLimitPatch"><span class="toc-number">1.6.14.</span> <span class="toc-text">ApplyDS3SekiroAllocatorLimitPatch</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ApplyAllocatorLimitPatchVA"><span class="toc-number">1.6.15.</span> <span class="toc-text">ApplyAllocatorLimitPatchVA</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Minhook"><span class="toc-number">1.7.</span> <span class="toc-text">Minhook</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#MH-CreateHook"><span class="toc-number">1.7.1.</span> <span class="toc-text">MH_CreateHook</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MH-CreatHookApi"><span class="toc-number">1.7.2.</span> <span class="toc-text">MH_CreatHookApi</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MH-EnableHook"><span class="toc-number">1.7.3.</span> <span class="toc-text">MH_EnableHook</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HideThreadFromDebugger"><span class="toc-number">1.8.</span> <span class="toc-text">HideThreadFromDebugger</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ImGui"><span class="toc-number">1.9.</span> <span class="toc-text">ImGui</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ImGuiHook"><span class="toc-number">1.10.</span> <span class="toc-text">ImGuiHook</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#d3d11hook"><span class="toc-number">1.10.1.</span> <span class="toc-text">d3d11hook</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#imgui-impl-dx11"><span class="toc-number">1.10.2.</span> <span class="toc-text">imgui_impl_dx11</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#InputHook"><span class="toc-number">1.10.3.</span> <span class="toc-text">InputHook</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Menu"><span class="toc-number">1.10.4.</span> <span class="toc-text">Menu</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LooseParams"><span class="toc-number">1.11.</span> <span class="toc-text">LooseParams</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#LooseParamsPatch-unimportant"><span class="toc-number">1.11.1.</span> <span class="toc-text">LooseParamsPatch(unimportant)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ModLoader"><span class="toc-number">1.12.</span> <span class="toc-text">ModLoader</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#HookModLoader"><span class="toc-number">1.12.1.</span> <span class="toc-text">HookModLoader</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GetArchiveFunctionAddress-postponed"><span class="toc-number">1.12.2.</span> <span class="toc-text">GetArchiveFunctionAddress(postponed)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#tFuckSekiro"><span class="toc-number">1.12.3.</span> <span class="toc-text">tFuckSekiro</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ReplaceFileLoadPath"><span class="toc-number">1.12.4.</span> <span class="toc-text">ReplaceFileLoadPath</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#NetworkBlocker"><span class="toc-number">1.13.</span> <span class="toc-text">NetworkBlocker</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#StackWalker"><span class="toc-number">1.14.</span> <span class="toc-text">StackWalker</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#dllmain%E2%AD%90"><span class="toc-number">1.15.</span> <span class="toc-text">dllmain⭐</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#DllMain%E2%AD%90"><span class="toc-number">1.15.1.</span> <span class="toc-text">DllMain⭐</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#InitInstance"><span class="toc-number">1.15.2.</span> <span class="toc-text">InitInstance</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MainThread"><span class="toc-number">1.15.3.</span> <span class="toc-text">MainThread</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ApplyPostUnpackHooks"><span class="toc-number">1.15.4.</span> <span class="toc-text">ApplyPostUnpackHooks</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Conclusion"><span class="toc-number">1.16.</span> <span class="toc-text">Conclusion</span></a></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
         
     </div>
 </aside>
@@ -1091,6 +1124,42 @@
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Travel</a>
               </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">UEFI</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Objection</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Frida</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Unidbg</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">CodeQL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Pwn</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Proxy</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Comic</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Cars</a>
+              </li>
             
             <div class="clearfix"></div>
           </ul>
@@ -1338,7 +1407,7 @@
   }
 
   
-    var modelName = "hijiki";
+    var modelName = "haru/02";
   
 
   var modelJsonPath = "";
@@ -1357,7 +1426,7 @@
        width: 145, 
        height: 320, 
        hOffset: 50, 
-      
+       vOffset: -20 
     },
     mobile: {
        show: false, 

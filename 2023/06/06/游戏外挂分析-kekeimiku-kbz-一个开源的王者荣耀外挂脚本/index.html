@@ -51,6 +51,9 @@
 
   
 
+<link rel="stylesheet" href="\assets\css\APlayer.min.css" class="aplayer-style-marker">
+<script src="\assets\js\APlayer.min.js" class="aplayer-script-marker"></script>
+<script src="\assets\js\Meting.min.js" class="meting-script-marker"></script>
 </head>
 
 <body>
@@ -109,20 +112,26 @@
 					<a class="mail" href="mailto:taardisaa@gmail.com" title="NULL" target="_blank"><i class="icon-mail"></i></a>
 		        
 			</div>
+		</nav>
+
 		
 			
 			
+		
+				
+		
 			
 			
-			<div>
-				<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="240" height="52" src="//music.163.com/outchain/player?type=2&id=1818064296&auto=0&height=32"></iframe>
+			<div id="aplayer-hjnObCgk" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="460528"
+					data-server="netease" data-type="song" data-loop="none"
+					data-order="random" data-lrctype="0" data-listfolded="true" 
+					data-fixed="true" data-autoplay="false" 
+					data-volume="0.4" data-mutex="true" 
+					data-listmaxheight="400px" data-preload="none" 
+					data-theme="">
 			</div>
 			
-				
-				<p style="font-size: 12px;">Enjoy the music!<p>
-			
 		
-		</nav>
 	</header>		
 </div>
 
@@ -181,20 +190,26 @@
 					<a class="mail" href="mailto:taardisaa@gmail.com" title="NULL" target="_blank"><i class="icon-mail"></i></a>
 		        
 			</div>
+		</nav>
+
 		
 			
 			
+		
+				
+		
 			
 			
-			<div>
-				<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="240" height="52" src="//music.163.com/outchain/player?type=2&id=1818064296&auto=0&height=32"></iframe>
+			<div id="aplayer-hjnObCgk" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="460528"
+					data-server="netease" data-type="song" data-loop="none"
+					data-order="random" data-lrctype="0" data-listfolded="true" 
+					data-fixed="true" data-autoplay="false" 
+					data-volume="0.4" data-mutex="true" 
+					data-listmaxheight="400px" data-preload="none" 
+					data-theme="">
 			</div>
 			
-				
-				<p style="font-size: 12px;">Enjoy the music!<p>
-			
 		
-		</nav>
 	</header>		
 </div>
 
@@ -325,6 +340,11 @@
   
   <div class="article-entry" itemprop="articleBody">
     
+    <!-- 
+<div id="toc">
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%B8%B8%E6%88%8F%E5%A4%96%E6%8C%82%E5%88%86%E6%9E%90-kekeimiku-x2F-kbz-%E4%B8%80%E4%B8%AA%E5%BC%80%E6%BA%90%E7%9A%84%E7%8E%8B%E8%80%85%E8%8D%A3%E8%80%80%E5%A4%96%E6%8C%82%E8%84%9A%E6%9C%AC"><span class="toc-number">1.</span> <span class="toc-text">游戏外挂分析-kekeimiku&#x2F;kbz-一个开源的王者荣耀外挂脚本</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#main"><span class="toc-number">1.1.</span> <span class="toc-text">main</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#inotify"><span class="toc-number">1.2.</span> <span class="toc-text">inotify</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#findpid"><span class="toc-number">1.3.</span> <span class="toc-text">findpid</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#get-module-base"><span class="toc-number">1.4.</span> <span class="toc-text">get_module_base</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#findpid1"><span class="toc-number">1.5.</span> <span class="toc-text">findpid1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#readBuffer"><span class="toc-number">1.6.</span> <span class="toc-text">readBuffer</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#iovec"><span class="toc-number">1.6.1.</span> <span class="toc-text">iovec</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E8%A7%A3%E8%AF%BB"><span class="toc-number">1.6.2.</span> <span class="toc-text">函数解读</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%BF%E7%94%A8SYS-process-vm-readv%E6%9D%A5%E8%AF%BB%E5%8F%96"><span class="toc-number">1.6.3.</span> <span class="toc-text">为什么使用SYS_process_vm_readv来读取</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%98%E6%9C%89%E5%85%B6%E4%BB%96%E4%BB%80%E4%B9%88%E5%86%85%E5%AD%98%E8%AF%BB%E5%8F%96%E6%93%8D%E4%BD%9C"><span class="toc-number">1.6.4.</span> <span class="toc-text">还有其他什么内存读取操作</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#readInt"><span class="toc-number">1.7.</span> <span class="toc-text">readInt</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#readFloat"><span class="toc-number">1.8.</span> <span class="toc-text">readFloat</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#readValueL%EF%BC%88%E6%9C%89%E4%BA%89%E8%AE%AE%EF%BC%89"><span class="toc-number">1.9.</span> <span class="toc-text">readValueL（有争议）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ValueLmultiple"><span class="toc-number">1.10.</span> <span class="toc-text">ValueLmultiple</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#getscreen"><span class="toc-number">1.11.</span> <span class="toc-text">getscreen</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#print%EF%BC%88%E9%87%8D%E7%82%B9%EF%BC%89"><span class="toc-number">1.12.</span> <span class="toc-text">print（重点）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#matrix"><span class="toc-number">1.12.1.</span> <span class="toc-text">matrix</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">1.13.</span> <span class="toc-text">参考</span></a></li></ol></li></ol>
+</div>
+ -->
     <p>分析一个王者荣耀的外挂脚本。以前从来没研究过游戏安全，所以稍微看看。</p>
 <span id="more"></span>
 
@@ -501,18 +521,18 @@
 
 <nav id="article-nav">
   
-    <a href="/2023/06/06/%E4%B8%AD%E6%97%A5%E4%BA%A4%E6%B5%81-%E6%A0%87%E5%87%86%E6%97%A5%E6%9C%AC%E8%AF%AD-%E5%85%A5%E9%97%A8%E5%8D%95%E5%85%83/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2023/06/06/%E6%97%A5%E8%AF%AD%E5%8D%95%E8%AF%8D/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          中日交流-标准日本语-入门单元
+          日语单词
         
       </div>
     </a>
   
   
-    <a href="/2023/06/06/%E6%B8%B8%E6%88%8F%E5%A4%96%E6%8C%82%E5%88%86%E6%9E%90-%E5%9B%BD%E6%9C%8D%E6%AC%A7%E6%98%93a%E7%89%88%E6%9C%AC/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">游戏外挂分析-国服欧易a版本</div>
+    <a href="/2023/06/06/%E6%97%A5%E8%AF%AD%E5%AD%A6%E4%B9%A0/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">日语学习</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -531,6 +551,19 @@
             </div>
         </div>
         
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%B8%B8%E6%88%8F%E5%A4%96%E6%8C%82%E5%88%86%E6%9E%90-kekeimiku-x2F-kbz-%E4%B8%80%E4%B8%AA%E5%BC%80%E6%BA%90%E7%9A%84%E7%8E%8B%E8%80%85%E8%8D%A3%E8%80%80%E5%A4%96%E6%8C%82%E8%84%9A%E6%9C%AC"><span class="toc-number">1.</span> <span class="toc-text">游戏外挂分析-kekeimiku&#x2F;kbz-一个开源的王者荣耀外挂脚本</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#main"><span class="toc-number">1.1.</span> <span class="toc-text">main</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#inotify"><span class="toc-number">1.2.</span> <span class="toc-text">inotify</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#findpid"><span class="toc-number">1.3.</span> <span class="toc-text">findpid</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#get-module-base"><span class="toc-number">1.4.</span> <span class="toc-text">get_module_base</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#findpid1"><span class="toc-number">1.5.</span> <span class="toc-text">findpid1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#readBuffer"><span class="toc-number">1.6.</span> <span class="toc-text">readBuffer</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#iovec"><span class="toc-number">1.6.1.</span> <span class="toc-text">iovec</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E8%A7%A3%E8%AF%BB"><span class="toc-number">1.6.2.</span> <span class="toc-text">函数解读</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%BF%E7%94%A8SYS-process-vm-readv%E6%9D%A5%E8%AF%BB%E5%8F%96"><span class="toc-number">1.6.3.</span> <span class="toc-text">为什么使用SYS_process_vm_readv来读取</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%98%E6%9C%89%E5%85%B6%E4%BB%96%E4%BB%80%E4%B9%88%E5%86%85%E5%AD%98%E8%AF%BB%E5%8F%96%E6%93%8D%E4%BD%9C"><span class="toc-number">1.6.4.</span> <span class="toc-text">还有其他什么内存读取操作</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#readInt"><span class="toc-number">1.7.</span> <span class="toc-text">readInt</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#readFloat"><span class="toc-number">1.8.</span> <span class="toc-text">readFloat</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#readValueL%EF%BC%88%E6%9C%89%E4%BA%89%E8%AE%AE%EF%BC%89"><span class="toc-number">1.9.</span> <span class="toc-text">readValueL（有争议）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ValueLmultiple"><span class="toc-number">1.10.</span> <span class="toc-text">ValueLmultiple</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#getscreen"><span class="toc-number">1.11.</span> <span class="toc-text">getscreen</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#print%EF%BC%88%E9%87%8D%E7%82%B9%EF%BC%89"><span class="toc-number">1.12.</span> <span class="toc-text">print（重点）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#matrix"><span class="toc-number">1.12.1.</span> <span class="toc-text">matrix</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">1.13.</span> <span class="toc-text">参考</span></a></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
         
     </div>
 </aside>
@@ -997,6 +1030,42 @@
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Travel</a>
               </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">UEFI</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Objection</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Frida</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Unidbg</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">CodeQL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Pwn</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Proxy</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Comic</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Cars</a>
+              </li>
             
             <div class="clearfix"></div>
           </ul>
@@ -1244,7 +1313,7 @@
   }
 
   
-    var modelName = "hijiki";
+    var modelName = "haru/02";
   
 
   var modelJsonPath = "";
@@ -1263,7 +1332,7 @@
        width: 145, 
        height: 320, 
        hOffset: 50, 
-      
+       vOffset: -20 
     },
     mobile: {
        show: false, 

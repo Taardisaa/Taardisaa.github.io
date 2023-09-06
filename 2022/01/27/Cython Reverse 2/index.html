@@ -50,6 +50,9 @@
 
   
 
+<link rel="stylesheet" href="\assets\css\APlayer.min.css" class="aplayer-style-marker">
+<script src="\assets\js\APlayer.min.js" class="aplayer-script-marker"></script>
+<script src="\assets\js\Meting.min.js" class="meting-script-marker"></script>
 </head>
 
 <body>
@@ -108,20 +111,26 @@
 					<a class="mail" href="mailto:taardisaa@gmail.com" title="NULL" target="_blank"><i class="icon-mail"></i></a>
 		        
 			</div>
+		</nav>
+
 		
 			
 			
+		
+				
+		
 			
 			
-			<div>
-				<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="240" height="52" src="//music.163.com/outchain/player?type=2&id=1818064296&auto=0&height=32"></iframe>
+			<div id="aplayer-hjnObCgk" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="460528"
+					data-server="netease" data-type="song" data-loop="none"
+					data-order="random" data-lrctype="0" data-listfolded="true" 
+					data-fixed="true" data-autoplay="false" 
+					data-volume="0.4" data-mutex="true" 
+					data-listmaxheight="400px" data-preload="none" 
+					data-theme="">
 			</div>
 			
-				
-				<p style="font-size: 12px;">Enjoy the music!<p>
-			
 		
-		</nav>
 	</header>		
 </div>
 
@@ -180,20 +189,26 @@
 					<a class="mail" href="mailto:taardisaa@gmail.com" title="NULL" target="_blank"><i class="icon-mail"></i></a>
 		        
 			</div>
+		</nav>
+
 		
 			
 			
+		
+				
+		
 			
 			
-			<div>
-				<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="240" height="52" src="//music.163.com/outchain/player?type=2&id=1818064296&auto=0&height=32"></iframe>
+			<div id="aplayer-hjnObCgk" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="460528"
+					data-server="netease" data-type="song" data-loop="none"
+					data-order="random" data-lrctype="0" data-listfolded="true" 
+					data-fixed="true" data-autoplay="false" 
+					data-volume="0.4" data-mutex="true" 
+					data-listmaxheight="400px" data-preload="none" 
+					data-theme="">
 			</div>
 			
-				
-				<p style="font-size: 12px;">Enjoy the music!<p>
-			
 		
-		</nav>
 	</header>		
 </div>
 
@@ -324,6 +339,11 @@
   
   <div class="article-entry" itemprop="articleBody">
     
+    <!-- 
+<div id="toc">
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Cython%E7%A8%8B%E5%BA%8F%E5%88%86%E6%9E%90-2"><span class="toc-number">1.</span> <span class="toc-text">Cython程序分析_2</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%B7%E4%BE%8B%E4%BB%A3%E7%A0%81"><span class="toc-number">1.1.</span> <span class="toc-text">样例代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E6%9E%90"><span class="toc-number">1.2.</span> <span class="toc-text">分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#pyx-pymod-create"><span class="toc-number">1.2.1.</span> <span class="toc-text">__pyx_pymod_create()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pyx-pymod-exec-test2"><span class="toc-number">1.2.2.</span> <span class="toc-text">__pyx_pymod_exec_test2()</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A3%B0%E6%98%8E"><span class="toc-number">1.2.2.1.</span> <span class="toc-text">声明</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A1%A5%E5%85%85"><span class="toc-number">1.2.2.2.</span> <span class="toc-text">补充</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B0%83%E7%94%A8"><span class="toc-number">1.2.2.3.</span> <span class="toc-text">调用</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Pyx-GetModuleGlobalName-var-name-%E5%AE%8F"><span class="toc-number">1.2.2.3.1.</span> <span class="toc-text">__Pyx_GetModuleGlobalName(var, name)宏</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Pyx-GetModuleGlobalName"><span class="toc-number">1.2.2.3.2.</span> <span class="toc-text">__Pyx__GetModuleGlobalName()</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Pyx-GetBuiltin-%E5%87%BD%E6%95%B0"><span class="toc-number">1.2.2.3.3.</span> <span class="toc-text">__Pyx_GetBuiltin()函数</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%8C%E8%BF%9B%E5%88%B6"><span class="toc-number">1.2.2.4.</span> <span class="toc-text">二进制</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%A3%B0%E6%98%8E%E9%83%A8%E5%88%86"><span class="toc-number">1.2.2.4.1.</span> <span class="toc-text">声明部分</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%B0%83%E7%94%A8%E9%83%A8%E5%88%86"><span class="toc-number">1.2.2.4.2.</span> <span class="toc-text">调用部分</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%84%E5%87%BD%E6%95%B0%E8%A7%A3%E6%9E%90"><span class="toc-number">1.2.3.</span> <span class="toc-text">各函数解析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#func-DataType"><span class="toc-number">1.2.3.1.</span> <span class="toc-text">func_DataType()</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#int-1-114514"><span class="toc-number">1.2.3.1.1.</span> <span class="toc-text">int_1 &#x3D; 114514</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#float-1-191981-0"><span class="toc-number">1.2.3.1.2.</span> <span class="toc-text">float_1 &#x3D; 191981.0</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#bool-1-True"><span class="toc-number">1.2.3.1.3.</span> <span class="toc-text">bool_1 &#x3D; True</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#complex-1-1-2j"><span class="toc-number">1.2.3.1.4.</span> <span class="toc-text">complex_1 &#x3D; 1 + 2j</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#pyx-t-double-complex-from-parts"><span class="toc-number">1.2.3.1.4.1.</span> <span class="toc-text">__pyx_t_double_complex_from_parts()</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#pyx-t-double-complex%E5%A4%8D%E6%95%B0%E7%BB%93%E6%9E%84%E4%BD%93"><span class="toc-number">1.2.3.1.4.2.</span> <span class="toc-text">__pyx_t_double_complex复数结构体</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#print-int-1-2"><span class="toc-number">1.2.3.1.5.</span> <span class="toc-text">print(int_1 * 2)</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#PyNumber-Multiply"><span class="toc-number">1.2.3.1.5.1.</span> <span class="toc-text">PyNumber_Multiply()</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#print-float-1-1"><span class="toc-number">1.2.3.1.6.</span> <span class="toc-text">print(float_1 - 1)</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#PyFloat-FromDouble"><span class="toc-number">1.2.3.1.6.1.</span> <span class="toc-text">PyFloat_FromDouble()</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#print-bool-1"><span class="toc-number">1.2.3.1.7.</span> <span class="toc-text">print(bool_1)</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#Pyx-PyBool-FromLong"><span class="toc-number">1.2.3.1.7.1.</span> <span class="toc-text">__Pyx_PyBool_FromLong()</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#Py-True"><span class="toc-number">1.2.3.1.7.2.</span> <span class="toc-text">Py_True</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#print-complex-1-3"><span class="toc-number">1.2.3.1.8.</span> <span class="toc-text">print(complex_1 + 3)</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#Pyx-PyInt-AddObjC"><span class="toc-number">1.2.3.1.8.1.</span> <span class="toc-text">__Pyx_PyInt_AddObjC</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#func-Str"><span class="toc-number">1.2.3.2.</span> <span class="toc-text">func_Str()</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#str-1-quot-teststr1-quot-%E7%AD%89"><span class="toc-number">1.2.3.2.1.</span> <span class="toc-text">str_1 &#x3D; &quot;teststr1&quot; 等</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#print-str-1-0-4"><span class="toc-number">1.2.3.2.2.</span> <span class="toc-text">print(str_1[0:4])</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#Pyx-PyUnicode-Substring"><span class="toc-number">1.2.3.2.2.1.</span> <span class="toc-text">__Pyx_PyUnicode_Substring()</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#Pyx-PyObject-CallOneArg"><span class="toc-number">1.2.3.2.2.2.</span> <span class="toc-text">__Pyx_PyObject_CallOneArg()</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#print-str-1-4-1"><span class="toc-number">1.2.3.2.3.</span> <span class="toc-text">print(str_1[-4:-1])</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#print-str-1-0"><span class="toc-number">1.2.3.2.4.</span> <span class="toc-text">print(str_1[0])</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#Pyx-GetItemInt-Unicode"><span class="toc-number">1.2.3.2.4.1.</span> <span class="toc-text">__Pyx_GetItemInt_Unicode()</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#PyUnicode-FromOrdinal"><span class="toc-number">1.2.3.2.4.2.</span> <span class="toc-text">PyUnicode_FromOrdinal()</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#print-str-1-6"><span class="toc-number">1.2.3.2.5.</span> <span class="toc-text">print(str_1[6:])</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#print-str-3-0-7-2"><span class="toc-number">1.2.3.2.6.</span> <span class="toc-text">print(str_3[0:7:2])</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#Pyx-InitCachedConstants"><span class="toc-number">1.2.3.2.6.1.</span> <span class="toc-text">__Pyx_InitCachedConstants</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#Pyx-PyObject-GetItem"><span class="toc-number">1.2.3.2.6.2.</span> <span class="toc-text">__Pyx_PyObject_GetItem</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#IDA%E4%B8%AD"><span class="toc-number">1.2.3.2.6.3.</span> <span class="toc-text">IDA中</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#print-str-3-2"><span class="toc-number">1.2.3.2.7.</span> <span class="toc-text">print(str_3 * 2)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#print-str-2-str-1"><span class="toc-number">1.2.3.2.8.</span> <span class="toc-text">print(str_2 + str_1)</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#Pyx-PyUnicode-Concat"><span class="toc-number">1.2.3.2.8.1.</span> <span class="toc-text">__Pyx_PyUnicode_Concat()</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#print-str-2-index-quot-str2-quot"><span class="toc-number">1.2.3.2.9.</span> <span class="toc-text">print(str_2.index(&quot;str2&quot;))</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#Pyx-CallUnboundCMethod1"><span class="toc-number">1.2.3.2.9.1.</span> <span class="toc-text">__Pyx_CallUnboundCMethod1()</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#C%E6%96%87%E4%BB%B6"><span class="toc-number">1.2.3.2.9.2.</span> <span class="toc-text">C文件</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%9C%A8IDA%E4%B8%AD%E6%81%A2%E5%A4%8D"><span class="toc-number">1.2.3.2.9.3.</span> <span class="toc-text">如何在IDA中恢复</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#print-str-fmt-format-str-1-str-2"><span class="toc-number">1.2.3.2.10.</span> <span class="toc-text">print(str_fmt.format(str_1, str_2))</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#print-quot-No-endl-quot-end-quot-quot"><span class="toc-number">1.2.3.2.11.</span> <span class="toc-text">print(&quot;No endl&quot;, end&#x3D;&quot;&quot;)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#print-39-39"><span class="toc-number">1.2.3.2.12.</span> <span class="toc-text">print(&#39;&#39;)</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E4%B8%80%E4%B8%AA%E5%B0%8F%E5%8C%BA%E5%88%AB"><span class="toc-number">1.2.3.2.12.1.</span> <span class="toc-text">一个小区别</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#func-ImportModule"><span class="toc-number">1.2.3.3.</span> <span class="toc-text">func_ImportModule()</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93"><span class="toc-number">1.3.</span> <span class="toc-text">经验总结</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%A8exec%E5%87%BD%E6%95%B0%E4%B8%AD%E5%88%86%E6%9E%90%E5%A3%B0%E6%98%8E%E5%92%8C%E8%B0%83%E7%94%A8%E6%B5%81%E7%A8%8B"><span class="toc-number">1.3.1.</span> <span class="toc-text">在exec函数中分析声明和调用流程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F%E5%88%9D%E5%A7%8B%E5%8C%96%E9%83%A8%E5%88%86"><span class="toc-number">1.3.1.1.</span> <span class="toc-text">全局变量初始化部分</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A3%B0%E6%98%8E%E9%83%A8%E5%88%86-1"><span class="toc-number">1.3.1.2.</span> <span class="toc-text">声明部分</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B0%83%E7%94%A8%E9%83%A8%E5%88%86-1"><span class="toc-number">1.3.1.3.</span> <span class="toc-text">调用部分</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BE%85%E5%8A%9E"><span class="toc-number">1.4.</span> <span class="toc-text">待办</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B6%E4%BB%96"><span class="toc-number">1.5.</span> <span class="toc-text">其他</span></a></li></ol></li></ol>
+</div>
+ -->
     <p>下面从一些python的基本操作开始进行分析。总体流程准备跟着菜鸟教程上教的顺序走。</p>
 <span id="more"></span>
 
@@ -752,6 +772,19 @@
             </div>
         </div>
         
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Cython%E7%A8%8B%E5%BA%8F%E5%88%86%E6%9E%90-2"><span class="toc-number">1.</span> <span class="toc-text">Cython程序分析_2</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%B7%E4%BE%8B%E4%BB%A3%E7%A0%81"><span class="toc-number">1.1.</span> <span class="toc-text">样例代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E6%9E%90"><span class="toc-number">1.2.</span> <span class="toc-text">分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#pyx-pymod-create"><span class="toc-number">1.2.1.</span> <span class="toc-text">__pyx_pymod_create()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pyx-pymod-exec-test2"><span class="toc-number">1.2.2.</span> <span class="toc-text">__pyx_pymod_exec_test2()</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A3%B0%E6%98%8E"><span class="toc-number">1.2.2.1.</span> <span class="toc-text">声明</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A1%A5%E5%85%85"><span class="toc-number">1.2.2.2.</span> <span class="toc-text">补充</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B0%83%E7%94%A8"><span class="toc-number">1.2.2.3.</span> <span class="toc-text">调用</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Pyx-GetModuleGlobalName-var-name-%E5%AE%8F"><span class="toc-number">1.2.2.3.1.</span> <span class="toc-text">__Pyx_GetModuleGlobalName(var, name)宏</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Pyx-GetModuleGlobalName"><span class="toc-number">1.2.2.3.2.</span> <span class="toc-text">__Pyx__GetModuleGlobalName()</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Pyx-GetBuiltin-%E5%87%BD%E6%95%B0"><span class="toc-number">1.2.2.3.3.</span> <span class="toc-text">__Pyx_GetBuiltin()函数</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%8C%E8%BF%9B%E5%88%B6"><span class="toc-number">1.2.2.4.</span> <span class="toc-text">二进制</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%A3%B0%E6%98%8E%E9%83%A8%E5%88%86"><span class="toc-number">1.2.2.4.1.</span> <span class="toc-text">声明部分</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%B0%83%E7%94%A8%E9%83%A8%E5%88%86"><span class="toc-number">1.2.2.4.2.</span> <span class="toc-text">调用部分</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%84%E5%87%BD%E6%95%B0%E8%A7%A3%E6%9E%90"><span class="toc-number">1.2.3.</span> <span class="toc-text">各函数解析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#func-DataType"><span class="toc-number">1.2.3.1.</span> <span class="toc-text">func_DataType()</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#int-1-114514"><span class="toc-number">1.2.3.1.1.</span> <span class="toc-text">int_1 &#x3D; 114514</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#float-1-191981-0"><span class="toc-number">1.2.3.1.2.</span> <span class="toc-text">float_1 &#x3D; 191981.0</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#bool-1-True"><span class="toc-number">1.2.3.1.3.</span> <span class="toc-text">bool_1 &#x3D; True</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#complex-1-1-2j"><span class="toc-number">1.2.3.1.4.</span> <span class="toc-text">complex_1 &#x3D; 1 + 2j</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#pyx-t-double-complex-from-parts"><span class="toc-number">1.2.3.1.4.1.</span> <span class="toc-text">__pyx_t_double_complex_from_parts()</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#pyx-t-double-complex%E5%A4%8D%E6%95%B0%E7%BB%93%E6%9E%84%E4%BD%93"><span class="toc-number">1.2.3.1.4.2.</span> <span class="toc-text">__pyx_t_double_complex复数结构体</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#print-int-1-2"><span class="toc-number">1.2.3.1.5.</span> <span class="toc-text">print(int_1 * 2)</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#PyNumber-Multiply"><span class="toc-number">1.2.3.1.5.1.</span> <span class="toc-text">PyNumber_Multiply()</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#print-float-1-1"><span class="toc-number">1.2.3.1.6.</span> <span class="toc-text">print(float_1 - 1)</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#PyFloat-FromDouble"><span class="toc-number">1.2.3.1.6.1.</span> <span class="toc-text">PyFloat_FromDouble()</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#print-bool-1"><span class="toc-number">1.2.3.1.7.</span> <span class="toc-text">print(bool_1)</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#Pyx-PyBool-FromLong"><span class="toc-number">1.2.3.1.7.1.</span> <span class="toc-text">__Pyx_PyBool_FromLong()</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#Py-True"><span class="toc-number">1.2.3.1.7.2.</span> <span class="toc-text">Py_True</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#print-complex-1-3"><span class="toc-number">1.2.3.1.8.</span> <span class="toc-text">print(complex_1 + 3)</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#Pyx-PyInt-AddObjC"><span class="toc-number">1.2.3.1.8.1.</span> <span class="toc-text">__Pyx_PyInt_AddObjC</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#func-Str"><span class="toc-number">1.2.3.2.</span> <span class="toc-text">func_Str()</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#str-1-quot-teststr1-quot-%E7%AD%89"><span class="toc-number">1.2.3.2.1.</span> <span class="toc-text">str_1 &#x3D; &quot;teststr1&quot; 等</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#print-str-1-0-4"><span class="toc-number">1.2.3.2.2.</span> <span class="toc-text">print(str_1[0:4])</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#Pyx-PyUnicode-Substring"><span class="toc-number">1.2.3.2.2.1.</span> <span class="toc-text">__Pyx_PyUnicode_Substring()</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#Pyx-PyObject-CallOneArg"><span class="toc-number">1.2.3.2.2.2.</span> <span class="toc-text">__Pyx_PyObject_CallOneArg()</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#print-str-1-4-1"><span class="toc-number">1.2.3.2.3.</span> <span class="toc-text">print(str_1[-4:-1])</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#print-str-1-0"><span class="toc-number">1.2.3.2.4.</span> <span class="toc-text">print(str_1[0])</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#Pyx-GetItemInt-Unicode"><span class="toc-number">1.2.3.2.4.1.</span> <span class="toc-text">__Pyx_GetItemInt_Unicode()</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#PyUnicode-FromOrdinal"><span class="toc-number">1.2.3.2.4.2.</span> <span class="toc-text">PyUnicode_FromOrdinal()</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#print-str-1-6"><span class="toc-number">1.2.3.2.5.</span> <span class="toc-text">print(str_1[6:])</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#print-str-3-0-7-2"><span class="toc-number">1.2.3.2.6.</span> <span class="toc-text">print(str_3[0:7:2])</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#Pyx-InitCachedConstants"><span class="toc-number">1.2.3.2.6.1.</span> <span class="toc-text">__Pyx_InitCachedConstants</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#Pyx-PyObject-GetItem"><span class="toc-number">1.2.3.2.6.2.</span> <span class="toc-text">__Pyx_PyObject_GetItem</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#IDA%E4%B8%AD"><span class="toc-number">1.2.3.2.6.3.</span> <span class="toc-text">IDA中</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#print-str-3-2"><span class="toc-number">1.2.3.2.7.</span> <span class="toc-text">print(str_3 * 2)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#print-str-2-str-1"><span class="toc-number">1.2.3.2.8.</span> <span class="toc-text">print(str_2 + str_1)</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#Pyx-PyUnicode-Concat"><span class="toc-number">1.2.3.2.8.1.</span> <span class="toc-text">__Pyx_PyUnicode_Concat()</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#print-str-2-index-quot-str2-quot"><span class="toc-number">1.2.3.2.9.</span> <span class="toc-text">print(str_2.index(&quot;str2&quot;))</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#Pyx-CallUnboundCMethod1"><span class="toc-number">1.2.3.2.9.1.</span> <span class="toc-text">__Pyx_CallUnboundCMethod1()</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#C%E6%96%87%E4%BB%B6"><span class="toc-number">1.2.3.2.9.2.</span> <span class="toc-text">C文件</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%9C%A8IDA%E4%B8%AD%E6%81%A2%E5%A4%8D"><span class="toc-number">1.2.3.2.9.3.</span> <span class="toc-text">如何在IDA中恢复</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#print-str-fmt-format-str-1-str-2"><span class="toc-number">1.2.3.2.10.</span> <span class="toc-text">print(str_fmt.format(str_1, str_2))</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#print-quot-No-endl-quot-end-quot-quot"><span class="toc-number">1.2.3.2.11.</span> <span class="toc-text">print(&quot;No endl&quot;, end&#x3D;&quot;&quot;)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#print-39-39"><span class="toc-number">1.2.3.2.12.</span> <span class="toc-text">print(&#39;&#39;)</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E4%B8%80%E4%B8%AA%E5%B0%8F%E5%8C%BA%E5%88%AB"><span class="toc-number">1.2.3.2.12.1.</span> <span class="toc-text">一个小区别</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#func-ImportModule"><span class="toc-number">1.2.3.3.</span> <span class="toc-text">func_ImportModule()</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93"><span class="toc-number">1.3.</span> <span class="toc-text">经验总结</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%A8exec%E5%87%BD%E6%95%B0%E4%B8%AD%E5%88%86%E6%9E%90%E5%A3%B0%E6%98%8E%E5%92%8C%E8%B0%83%E7%94%A8%E6%B5%81%E7%A8%8B"><span class="toc-number">1.3.1.</span> <span class="toc-text">在exec函数中分析声明和调用流程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F%E5%88%9D%E5%A7%8B%E5%8C%96%E9%83%A8%E5%88%86"><span class="toc-number">1.3.1.1.</span> <span class="toc-text">全局变量初始化部分</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A3%B0%E6%98%8E%E9%83%A8%E5%88%86-1"><span class="toc-number">1.3.1.2.</span> <span class="toc-text">声明部分</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B0%83%E7%94%A8%E9%83%A8%E5%88%86-1"><span class="toc-number">1.3.1.3.</span> <span class="toc-text">调用部分</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BE%85%E5%8A%9E"><span class="toc-number">1.4.</span> <span class="toc-text">待办</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B6%E4%BB%96"><span class="toc-number">1.5.</span> <span class="toc-text">其他</span></a></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
         
     </div>
 </aside>
@@ -1218,6 +1251,42 @@
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Travel</a>
               </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">UEFI</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Objection</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Frida</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Unidbg</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">CodeQL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Pwn</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Proxy</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Comic</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Cars</a>
+              </li>
             
             <div class="clearfix"></div>
           </ul>
@@ -1465,7 +1534,7 @@
   }
 
   
-    var modelName = "hijiki";
+    var modelName = "haru/02";
   
 
   var modelJsonPath = "";
@@ -1484,7 +1553,7 @@
        width: 145, 
        height: 320, 
        hOffset: 50, 
-      
+       vOffset: -20 
     },
     mobile: {
        show: false, 
