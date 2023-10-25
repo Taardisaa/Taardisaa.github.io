@@ -18,7 +18,7 @@
 <meta property="og:description" content="这里把一些我个人总结的，觉得有用的IDAPython代码片段放出来。便于复习和快速利用。">
 <meta property="og:locale">
 <meta property="article:published_time" content="2023-06-05T07:17:32.000Z">
-<meta property="article:modified_time" content="2023-06-05T07:35:15.802Z">
+<meta property="article:modified_time" content="2023-10-18T05:39:12.293Z">
 <meta property="article:author" content="Taardis">
 <meta property="article:tag" content="Compiler">
 <meta property="article:tag" content="IDA">
@@ -322,7 +322,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">66字</span>
+      <span class="post-count">257字</span>
     </span>
   </span>
 
@@ -344,7 +344,7 @@
     
     <!-- 
 <div id="toc">
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#IDAPython-Helpful-Code-Snippets"><span class="toc-number">1.</span> <span class="toc-text">IDAPython-Helpful Code Snippets</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BE%97%E5%88%B0Names"><span class="toc-number">1.1.</span> <span class="toc-text">得到Names</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%BD%E6%95%B0"><span class="toc-number">1.2.</span> <span class="toc-text">函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BE%97%E5%88%B0%E6%89%80%E6%9C%89%E5%87%BD%E6%95%B0%E7%9A%84%E5%A4%B4%E5%9C%B0%E5%9D%80"><span class="toc-number">1.2.1.</span> <span class="toc-text">得到所有函数的头地址</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BE%97%E5%88%B0%E5%87%BD%E6%95%B0%E7%BB%93%E6%9E%84%E4%BD%93"><span class="toc-number">1.2.2.</span> <span class="toc-text">得到函数结构体</span></a></li></ol></li></ol></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#IDAPython-Helpful-Code-Snippets"><span class="toc-number">1.</span> <span class="toc-text">IDAPython-Helpful Code Snippets</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BE%97%E5%88%B0Names"><span class="toc-number">1.1.</span> <span class="toc-text">得到Names</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%BD%E6%95%B0"><span class="toc-number">1.2.</span> <span class="toc-text">函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BE%97%E5%88%B0%E6%89%80%E6%9C%89%E5%87%BD%E6%95%B0%E7%9A%84%E5%A4%B4%E5%9C%B0%E5%9D%80"><span class="toc-number">1.2.1.</span> <span class="toc-text">得到所有函数的头地址</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BE%97%E5%88%B0%E5%87%BD%E6%95%B0%E7%BB%93%E6%9E%84%E4%BD%93"><span class="toc-number">1.2.2.</span> <span class="toc-text">得到函数结构体</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%86%E6%8C%87%E4%BB%A4%E6%9F%93%E8%89%B2"><span class="toc-number">1.3.</span> <span class="toc-text">将指令染色</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#NOP%E6%B1%87%E7%BC%96"><span class="toc-number">1.4.</span> <span class="toc-text">NOP汇编</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-number">1.5.</span> <span class="toc-text">创建字符串</span></a></li></ol></li></ol>
 </div>
  -->
     <p>这里把一些我个人总结的，觉得有用的IDAPython代码片段放出来。便于复习和快速利用。</p>
@@ -354,7 +354,15 @@
 
 <h2 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h2><h3 id="得到所有函数的头地址"><a href="#得到所有函数的头地址" class="headerlink" title="得到所有函数的头地址"></a>得到所有函数的头地址</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">func_addrs = list(idautils.Functions())</span><br></pre></td></tr></table></figure>
 
-<h3 id="得到函数结构体"><a href="#得到函数结构体" class="headerlink" title="得到函数结构体"></a>得到函数结构体</h3>
+<h3 id="得到函数结构体"><a href="#得到函数结构体" class="headerlink" title="得到函数结构体"></a>得到函数结构体</h3><h2 id="将指令染色"><a href="#将指令染色" class="headerlink" title="将指令染色"></a>将指令染色</h2><p>用sark</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_46734340/article/details/118857038">Android逆向-实战so分析-某洲_v3.5.8_unidbg学习_android逆向so分析_哔哩哩!的博客-CSDN博客</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> sark</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">do_ollvm_bcf</span>():</span><br><span class="line">    <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">    ollvm虚假控制流处理</span></span><br><span class="line"><span class="string">    &#x27;&#x27;&#x27;</span></span><br><span class="line">    log_file = <span class="string">&quot;unidbgTrace.log&quot;</span></span><br><span class="line">    trace_addrs = []</span><br><span class="line">    <span class="comment"># 将trace指令的地址读取到trace_addrs列表中</span></span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(log_file, <span class="string">&quot;r&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">        lines = f.readlines()</span><br><span class="line">        <span class="keyword">for</span> line <span class="keyword">in</span> lines:</span><br><span class="line">            trace_addrs.append(<span class="built_in">int</span>(line.replace(<span class="string">&quot;\n&quot;</span>, <span class="string">&quot;&quot;</span>), <span class="number">16</span>))</span><br><span class="line">    <span class="keyword">for</span> addr <span class="keyword">in</span> trace_addrs:</span><br><span class="line">        line = sark.line.Line(addr)</span><br><span class="line">        line.color = <span class="number">0xEE82EE</span>   <span class="comment"># 将执行过的指令通过修改颜色来标记出来。</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    do_ollvm_bcf()</span><br></pre></td></tr></table></figure>
+
+<h2 id="NOP汇编"><a href="#NOP汇编" class="headerlink" title="NOP汇编"></a>NOP汇编</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">patch_nop</span>(<span class="params">addr</span>):</span><br><span class="line">    <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">    将指定地址的字节修改成nop</span></span><br><span class="line"><span class="string">    &#x27;&#x27;&#x27;</span></span><br><span class="line">    nop_code = [<span class="number">0x1f</span>, <span class="number">0x20</span>, <span class="number">0x03</span>, <span class="number">0xd5</span>]</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(nop_code)):</span><br><span class="line">        idc.patch_byte(addr+i, nop_code[i])</span><br></pre></td></tr></table></figure>
+
+<h2 id="创建字符串"><a href="#创建字符串" class="headerlink" title="创建字符串"></a>创建字符串</h2><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> ida_bytes</span><br><span class="line"><span class="keyword">import</span> ida_nalt</span><br><span class="line">ida_bytes.create_strlit(<span class="number">0x61028</span>, <span class="number">14</span>, ida_nalt.STRTYPE_C)</span><br></pre></td></tr></table></figure>
+
+
     
 
     
@@ -472,7 +480,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#IDAPython-Helpful-Code-Snippets"><span class="toc-number">1.</span> <span class="toc-text">IDAPython-Helpful Code Snippets</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BE%97%E5%88%B0Names"><span class="toc-number">1.1.</span> <span class="toc-text">得到Names</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%BD%E6%95%B0"><span class="toc-number">1.2.</span> <span class="toc-text">函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BE%97%E5%88%B0%E6%89%80%E6%9C%89%E5%87%BD%E6%95%B0%E7%9A%84%E5%A4%B4%E5%9C%B0%E5%9D%80"><span class="toc-number">1.2.1.</span> <span class="toc-text">得到所有函数的头地址</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BE%97%E5%88%B0%E5%87%BD%E6%95%B0%E7%BB%93%E6%9E%84%E4%BD%93"><span class="toc-number">1.2.2.</span> <span class="toc-text">得到函数结构体</span></a></li></ol></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#IDAPython-Helpful-Code-Snippets"><span class="toc-number">1.</span> <span class="toc-text">IDAPython-Helpful Code Snippets</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BE%97%E5%88%B0Names"><span class="toc-number">1.1.</span> <span class="toc-text">得到Names</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%BD%E6%95%B0"><span class="toc-number">1.2.</span> <span class="toc-text">函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BE%97%E5%88%B0%E6%89%80%E6%9C%89%E5%87%BD%E6%95%B0%E7%9A%84%E5%A4%B4%E5%9C%B0%E5%9D%80"><span class="toc-number">1.2.1.</span> <span class="toc-text">得到所有函数的头地址</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BE%97%E5%88%B0%E5%87%BD%E6%95%B0%E7%BB%93%E6%9E%84%E4%BD%93"><span class="toc-number">1.2.2.</span> <span class="toc-text">得到函数结构体</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%86%E6%8C%87%E4%BB%A4%E6%9F%93%E8%89%B2"><span class="toc-number">1.3.</span> <span class="toc-text">将指令染色</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#NOP%E6%B1%87%E7%BC%96"><span class="toc-number">1.4.</span> <span class="toc-text">NOP汇编</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-number">1.5.</span> <span class="toc-text">创建字符串</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -627,6 +635,10 @@
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Study</a>
+              </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Android</a>
@@ -981,14 +993,6 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Hook</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Dobby</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">CTF</a>
               </li>
              
@@ -1006,6 +1010,50 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Selenium</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">-Android</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Cmake</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Galgame</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Godot</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">LLVM</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Waydroid</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Anti-censorship</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">CSV</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">QEMU</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Wireshark</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Paper</a>
               </li>
             
             <div class="clearfix"></div>

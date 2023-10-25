@@ -18,7 +18,7 @@
 <meta property="og:description" content="有关如何检查加固壳，有什么类型的加固壳；如果有能力的话，还可能进一步研究具体怎么脱壳。">
 <meta property="og:locale">
 <meta property="article:published_time" content="2023-06-05T06:10:52.000Z">
-<meta property="article:modified_time" content="2023-06-05T06:25:47.247Z">
+<meta property="article:modified_time" content="2023-10-11T13:50:36.724Z">
 <meta property="article:author" content="Taardis">
 <meta property="article:tag" content="Android">
 <meta property="article:tag" content="Reverse">
@@ -320,7 +320,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">168字</span>
+      <span class="post-count">1.7k字</span>
     </span>
   </span>
 
@@ -329,7 +329,7 @@
     <span class="post-meta-item-icon">
       <i class="icon-book icon"></i>
       <span class="post-meta-item-text"> 阅读时长≈</span>
-      <span class="post-count">1分</span>
+      <span class="post-count">7分</span>
     </span>
   </span>
 </div>
@@ -342,18 +342,187 @@
     
     <!-- 
 <div id="toc">
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Android%E9%80%86%E5%90%91-%E5%8A%A0%E5%9B%BA%E5%A3%B3"><span class="toc-number">1.</span> <span class="toc-text">Android逆向-加固壳</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E5%A3%B3"><span class="toc-number">1.1.</span> <span class="toc-text">查壳</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E7%BD%91%E5%9D%80"><span class="toc-number">1.2.</span> <span class="toc-text">参考网址</span></a></li></ol></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Android%E9%80%86%E5%90%91-%E5%8A%A0%E5%9B%BA%E5%A3%B3"><span class="toc-number">1.</span> <span class="toc-text">Android逆向-加固壳</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E5%A3%B3"><span class="toc-number">1.1.</span> <span class="toc-text">查壳</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ApkScan-PKiD"><span class="toc-number">1.1.1.</span> <span class="toc-text">ApkScan-PKiD</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MT%E6%96%87%E4%BB%B6%E6%B5%8F%E8%A7%88%E5%99%A8%EF%BC%88%E6%8E%A8%E8%8D%90%EF%BC%89"><span class="toc-number">1.1.2.</span> <span class="toc-text">MT文件浏览器（推荐）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A3%80%E6%9F%A5Dex"><span class="toc-number">1.1.3.</span> <span class="toc-text">检查Dex</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A3%80%E6%9F%A5AndroidManifest-xml"><span class="toc-number">1.1.4.</span> <span class="toc-text">检查AndroidManifest.xml</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A3%80%E6%9F%A5lib"><span class="toc-number">1.1.5.</span> <span class="toc-text">检查lib</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E8%BF%B0%E4%BC%81%E4%B8%9A%E5%A3%B3%E5%8E%9F%E7%90%86"><span class="toc-number">1.2.</span> <span class="toc-text">简述企业壳原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A0%E5%9B%BA%E5%A3%B3%E5%8E%86%E5%8F%B2"><span class="toc-number">1.3.</span> <span class="toc-text">加固壳历史</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%84%B1%E5%A3%B3%E5%B7%A5%E5%85%B7"><span class="toc-number">1.4.</span> <span class="toc-text">脱壳工具</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#DexHunter%EF%BC%88deprecated%EF%BC%89"><span class="toc-number">1.4.1.</span> <span class="toc-text">DexHunter（deprecated）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#android-unpacker%EF%BC%88deprecated%EF%BC%89"><span class="toc-number">1.4.2.</span> <span class="toc-text">android-unpacker（deprecated）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#drizzleDumper%EF%BC%88deprecated%EF%BC%89"><span class="toc-number">1.4.3.</span> <span class="toc-text">drizzleDumper（deprecated）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#FRIDA-DEXDump"><span class="toc-number">1.4.4.</span> <span class="toc-text">FRIDA-DEXDump</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#inotifywait-for-Android"><span class="toc-number">1.4.5.</span> <span class="toc-text">inotifywait-for-Android</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Frida-Apk-Unpack%EF%BC%88deprecated%EF%BC%89%EF%BC%88Android%E7%89%88%E6%9C%AC%E5%A4%AA%E4%BD%8E%EF%BC%89"><span class="toc-number">1.4.6.</span> <span class="toc-text">Frida-Apk-Unpack（deprecated）（Android版本太低）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ZjDroid"><span class="toc-number">1.4.7.</span> <span class="toc-text">ZjDroid</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#dumpDex"><span class="toc-number">1.4.8.</span> <span class="toc-text">dumpDex</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#elfrebuild"><span class="toc-number">1.4.9.</span> <span class="toc-text">elfrebuild</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Dex2oatHunter"><span class="toc-number">1.4.10.</span> <span class="toc-text">Dex2oatHunter</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E5%B7%A5%E5%85%B7"><span class="toc-number">1.4.11.</span> <span class="toc-text">其他工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E8%84%B1%E5%A3%B3"><span class="toc-number">1.4.12.</span> <span class="toc-text">动态脱壳</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%84%B1%E5%A3%B3%E6%96%B9%E6%B3%95"><span class="toc-number">1.4.13.</span> <span class="toc-text">脱壳方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E7%BD%91%E5%9D%80"><span class="toc-number">1.5.</span> <span class="toc-text">参考网址</span></a></li></ol></li></ol>
 </div>
  -->
     <p>有关如何检查加固壳，有什么类型的加固壳；如果有能力的话，还可能进一步研究具体怎么脱壳。</p>
 <span id="more"></span>
 
-<h1 id="Android逆向-加固壳"><a href="#Android逆向-加固壳" class="headerlink" title="Android逆向-加固壳"></a>Android逆向-加固壳</h1><h2 id="查壳"><a href="#查壳" class="headerlink" title="查壳"></a>查壳</h2><p>一般用到的就是ApkScan-PKiD。</p>
-<p>这是Windows版本的下载链接：</p>
-<p> <a target="_blank" rel="noopener" href="https://www.jb51.net/softs/603472.html?spm=a2c6h.12873639.article-detail.15.213f3a2a0iB0EY#downintro2">apk查壳工具下载 apk查壳神器PKiD v0.12 中文绿色免费版 下载-脚本之家 (jb51.net)</a> </p>
+<h1 id="Android逆向-加固壳"><a href="#Android逆向-加固壳" class="headerlink" title="Android逆向-加固壳"></a>Android逆向-加固壳</h1><h2 id="查壳"><a href="#查壳" class="headerlink" title="查壳"></a>查壳</h2><h3 id="ApkScan-PKiD"><a href="#ApkScan-PKiD" class="headerlink" title="ApkScan-PKiD"></a>ApkScan-PKiD</h3><p>Windows平台上，一般用到的就是ApkScan-PKiD。</p>
+<p>这是Windows版本的下载链接：<a target="_blank" rel="noopener" href="https://www.jb51.net/softs/603472.html?spm=a2c6h.12873639.article-detail.15.213f3a2a0iB0EY#downintro2">apk查壳工具下载 apk查壳神器PKiD v0.12 中文绿色免费版 下载-脚本之家 (jb51.net)</a> </p>
+<h3 id="MT文件浏览器（推荐）"><a href="#MT文件浏览器（推荐）" class="headerlink" title="MT文件浏览器（推荐）"></a>MT文件浏览器（推荐）</h3><p>Android平台上直接用MT。</p>
+<h3 id="检查Dex"><a href="#检查Dex" class="headerlink" title="检查Dex"></a>检查Dex</h3><p>直接用Jadx等工具检查Dex，如果没有完整代码，那么就是被加壳了。</p>
+<h3 id="检查AndroidManifest-xml"><a href="#检查AndroidManifest-xml" class="headerlink" title="检查AndroidManifest.xml"></a>检查AndroidManifest.xml</h3><p>企业壳加固后，会在此文件里面添加一些特征，可以根据特征判断。</p>
+<p>反编译 AndroidManifest.xml 文件，然后遍历里面的 activity、service、broadcast、provider 等，看这几个 class 是否都存在于 classes.dex 文件里面。</p>
+<h3 id="检查lib"><a href="#检查lib" class="headerlink" title="检查lib"></a>检查lib</h3><p>直接引用这位爷的列表：<a target="_blank" rel="noopener" href="https://www.isisy.com/1420.html">安卓逆向-脱壳学习记录 - Is Yang’s Blog (isisy.com)</a></p>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">厂商</td>
+<td align="center">常见特征so文件或其它文件</td>
+<td align="center">常见java代码（反编译classes.dex）</td>
+</tr>
+<tr>
+<td align="center">娜迦</td>
+<td align="center">libchaosvmp.so、libddog.so、libfdog.so</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">娜迦企业版</td>
+<td align="center">libedog.so</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">爱加密</td>
+<td align="center">libexec.so、libexecmain.so、ijiami.dat</td>
+<td align="center">s.h.e.l.l.S</td>
+</tr>
+<tr>
+<td align="center">爱加密企业版</td>
+<td align="center">ijiami.ajm</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">梆梆免费版</td>
+<td align="center">libsecexe.so、libsecmain.so、libSecShell.so</td>
+<td align="center">com.secneo.apkwrapper.ApplicationWrapper、com.SecShell.SecShell.ApplicationWrapper、com.secneo.apkwrapper.AW</td>
+</tr>
+<tr>
+<td align="center">梆梆企业版</td>
+<td align="center">libDexHelper.so、libDexHelper-x86.so</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">360</td>
+<td align="center">libprotectClass.so、libjiagu.so、libjiagu_art.so、libjiagu_x86.so、libjiagu_x64.so、libjiagu_a64.so</td>
+<td align="center">com.stub.StubApp</td>
+</tr>
+<tr>
+<td align="center">通付盾</td>
+<td align="center">libegis.so、libNSaferOnly.so</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">网秦</td>
+<td align="center">libnqshield.so</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">百度</td>
+<td align="center">libbaiduprotect.so</td>
+<td align="center">com.baidu.protect.StubApplication</td>
+</tr>
+<tr>
+<td align="center">阿里聚安全</td>
+<td align="center">aliprotect.dat、libsgmain.so、libsgsecuritybody.so、libmobisec.so</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">腾讯</td>
+<td align="center">libtup.so、libexec.so、libshell.so、mix.dex、lib&#x2F;armeabi&#x2F;mix.dex、lib&#x2F;armeabi&#x2F;mixz.dex</td>
+<td align="center">com.tencent.StubShell.TxAppEntry</td>
+</tr>
+<tr>
+<td align="center">腾讯御安全</td>
+<td align="center">libtosprotection.armeabi.so、libtosprotection.armeabi-v7a.so、libtosprotection.x86.so</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">网易易盾</td>
+<td align="center">libnesec.so</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">APKProtect</td>
+<td align="center">libAPKProtect.so</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">几维安全</td>
+<td align="center">libkwscmm.so、libkwscr.so、libkwslinker.so</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">顶像科技</td>
+<td align="center">libx3g.so</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">盛大</td>
+<td align="center">libapssec.so</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">瑞星</td>
+<td align="center">librsprotect.so</td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+<h2 id="简述企业壳原理"><a href="#简述企业壳原理" class="headerlink" title="简述企业壳原理"></a>简述企业壳原理</h2><p>还是引用：<a target="_blank" rel="noopener" href="https://www.isisy.com/1420.html">安卓逆向-脱壳学习记录 - Is Yang’s Blog (isisy.com)</a></p>
+<p>360：将原有的 dex 文件加密后存储在 libjiagu.so、libjiagu_art.so，在运行时动态释放并解密。</p>
+<p>阿里：将原有的 dex 文件拆分为两部分，一部分主体保存为 libmobisecy.so，另一部分包含了一部分 class_data_item 和 code_item。在运行的时候将两部分释放在内存中，并修复相关的指针，恢复数据之间的连接关系。同时一些 annotation_off 被设置为无效的值。</p>
+<p>百度：将一些 class_data_item 存储在 dex 文件的外部，在运行时恢复与主体的 dex 的连接关系。在 dex 文件加载后，其头部的魔数，校验和以及签名值会被擦除。同时某些方法被改写，使得其在执行前相关的指令才会被恢复，在执行之后便立即擦除。</p>
+<p>梆梆：提前准备了一个 odex 或 oat 文件，并加密保存为外部的 jar 文件，运行时解密；同时 hook 了 libc.so 中的一些函数，如 read，write，mmap 等，监视其操作区域是否包含了 dex 的头部，保证无法使用这些函数对 dex 文件进行操作。</p>
+<p>爱加密：同样是加密原有的 dex 文件，在运行时整体释放并解密，只不过其释放的处于固定路径下的临时文件的名字是随机的。</p>
+<p>腾讯：提供选项可以指定需要保护的方法。如果某个方法被保护，则在 dex 文件中的相关 class_data_item 中无法看到其数据，即为一个假的 class_data_item；在运行时释放真正的 class_data_item 并连接到 dex 文件上，但是其 code_item 却一直存在于原有的 dex 文件中。同样，一些 annotation_off 和 debug_info_off 被填充为无效值来阻止静态反编译。只支持在 DVM 环境下运行。</p>
+<h2 id="加固壳历史"><a href="#加固壳历史" class="headerlink" title="加固壳历史"></a>加固壳历史</h2><p><a target="_blank" rel="noopener" href="https://www.isisy.com/1420.html">安卓逆向-脱壳学习记录 - Is Yang’s Blog (isisy.com)</a></p>
+<p>了解一下。作者将壳分为了四个阶段，其中从第二阶段开始，加固壳进入了基于Native SO的时代；第三阶段则在第二阶段的基础上，进一步增强反调试与混淆能力；第四阶段则使用起了高雅的VMP。</p>
+<h2 id="脱壳工具"><a href="#脱壳工具" class="headerlink" title="脱壳工具"></a>脱壳工具</h2><h3 id="DexHunter（deprecated）"><a href="#DexHunter（deprecated）" class="headerlink" title="DexHunter（deprecated）"></a>DexHunter（deprecated）</h3><p><a target="_blank" rel="noopener" href="https://github.com/zyq8709/DexHunter">https://github.com/zyq8709/DexHunter</a></p>
+<p>这是一个8年前的通用脱壳工具，主要作用于第二阶段的加固壳。</p>
+<h3 id="android-unpacker（deprecated）"><a href="#android-unpacker（deprecated）" class="headerlink" title="android-unpacker（deprecated）"></a>android-unpacker（deprecated）</h3><blockquote>
+<p>该工具的核心是通过 <code>find_magic_memory()</code> 方法读取 <code>/proc/xxx(pid)/maps</code> 内存映射表，找到 DEX 所在的内存起始位置，然后通过 <code>dump_memory()</code> 方法将内存 dump 下来。</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://github.com/strazzere/android-unpacker">strazzere&#x2F;android-unpacker: Android Unpacker presented at Defcon 22: Android Hacker Protection Level 0 (github.com)</a></p>
+<h3 id="drizzleDumper（deprecated）"><a href="#drizzleDumper（deprecated）" class="headerlink" title="drizzleDumper（deprecated）"></a>drizzleDumper（deprecated）</h3><p><a target="_blank" rel="noopener" href="https://github.com/DrizzleRisk/drizzleDumper">https://github.com/DrizzleRisk/drizzleDumper</a></p>
+<p>基于<code>android-unpacker</code>的改进版，本质还是内存dump。</p>
+<h3 id="FRIDA-DEXDump"><a href="#FRIDA-DEXDump" class="headerlink" title="FRIDA-DEXDump"></a>FRIDA-DEXDump</h3><p>2022年的时候archived了。</p>
+<p>可以暴力提取出不少加固的dex，但是提取出来的似乎不太适合重新打包，只能用于静态分析。</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/hluwa/FRIDA-DEXDump">hluwa&#x2F;frida-dexdump: A frida tool to dump dex in memory to support security engineers analyzing malware. (github.com)</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">frida-dexdump -FU	// 提取前台APP</span><br><span class="line">frida-dexdump -U -f com.app.pkgname //指定包名</span><br><span class="line"></span><br><span class="line">-o OUTPUT, --output OUTPUT  Output folder path, default is &#x27;./&lt;appname&gt;/&#x27;.</span><br><span class="line">-d, --deep-search           Enable deep search mode.</span><br><span class="line">--sleep SLEEP               Waiting times for start, spawn mode default is 5s.</span><br></pre></td></tr></table></figure>
+
+<h3 id="inotifywait-for-Android"><a href="#inotifywait-for-Android" class="headerlink" title="inotifywait-for-Android"></a>inotifywait-for-Android</h3><p><a target="_blank" rel="noopener" href="https://github.com/dstmath/inotifywait-for-Android">https://github.com/dstmath/inotifywait-for-Android</a></p>
+<p>基于文件监视法：即使用 dex 优化生成 odex 方法，监视 DexOpt 的输出。</p>
+<p>其实下载下来的repo里面有编译后的release。<del>主要是重新搭建编译环境太麻烦了</del></p>
+<h3 id="Frida-Apk-Unpack（deprecated）（Android版本太低）"><a href="#Frida-Apk-Unpack（deprecated）（Android版本太低）" class="headerlink" title="Frida-Apk-Unpack（deprecated）（Android版本太低）"></a>Frida-Apk-Unpack（deprecated）（Android版本太低）</h3><p><a target="_blank" rel="noopener" href="https://github.com/GuoQiang1993/Frida-Apk-Unpack#frida-apk-unpack">Frida-Apk-Unpack</a></p>
+<p>利用frida hook libart.so中的OpenMemory或OpenCommon(Android N以后)方法，拿到内存中dex的地址，计算出dex文件的大小，从内存中将dex导出。</p>
+<blockquote>
+<p>也是对安卓版本支持的太低了。后面可以考虑在模拟器里面用。</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/7245854874196475963#heading-6">Android 逆向之脱壳实战篇 - 掘金 (juejin.cn)</a></p>
+<h3 id="ZjDroid"><a href="#ZjDroid" class="headerlink" title="ZjDroid"></a>ZjDroid</h3><p>针对Dex脱壳的工具</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/halfkiss/ZjDroid">https://github.com/halfkiss/ZjDroid</a></p>
+<h3 id="dumpDex"><a href="#dumpDex" class="headerlink" title="dumpDex"></a>dumpDex</h3><p>针对Dex脱壳的工具</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/WrBug/dumpDex">https://github.com/WrBug/dumpDex</a></p>
+<h3 id="elfrebuild"><a href="#elfrebuild" class="headerlink" title="elfrebuild"></a>elfrebuild</h3><p>针对 So 脱壳工具</p>
+<p>原理：构造映射 soinfo ，然后对其进行重建</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/ylcangel/ElfRebuild">https://github.com/ylcangel/ElfRebuild</a></p>
+<h3 id="Dex2oatHunter"><a href="#Dex2oatHunter" class="headerlink" title="Dex2oatHunter"></a>Dex2oatHunter</h3><p>ART 模式下，dex2oat 生成 oat 时，内存中的 dex 是完整的，此时可以用修改后的 dex2oat 文件替换原系统的 dex2oat 文件。</p>
+<p>工具链接：<a target="_blank" rel="noopener" href="https://github.com/spriteviki/Dex2oatHunter">https://github.com/spriteviki/Dex2oatHunter</a></p>
+<h3 id="其他工具"><a href="#其他工具" class="headerlink" title="其他工具"></a>其他工具</h3><p>youpk：<a target="_blank" rel="noopener" href="https://github.com/youlor/unpacker">https://github.com/youlor/unpacker</a></p>
+<p>fart：<a target="_blank" rel="noopener" href="https://github.com/hanbinglengyue/FART">https://github.com/hanbinglengyue/FART</a></p>
+<p>（荐）BlackDex：<a target="_blank" rel="noopener" href="https://github.com/CodingGay/BlackDex">https://github.com/CodingGay/BlackDex</a></p>
+<h3 id="动态脱壳"><a href="#动态脱壳" class="headerlink" title="动态脱壳"></a>动态脱壳</h3><p><a target="_blank" rel="noopener" href="https://lunt3r.com/2020/04/15/%E8%8E%B7%E5%8F%96dex%E4%B9%8Bdump%E5%86%85%E5%AD%98/">获取dex之dump内存</a>、<a target="_blank" rel="noopener" href="https://www.52pojie.cn/forum.php?mod=viewthread&tid=778654&extra=page=1&filter=typeid&typeid=343">IDA动态调试脱壳步骤</a>、<a target="_blank" rel="noopener" href="https://lunt3r.com/2020/03/27/ida%E5%8A%A8%E6%80%81%E8%B0%83%E8%AF%95/">ida动态调试</a></p>
+<h3 id="脱壳方法"><a href="#脱壳方法" class="headerlink" title="脱壳方法"></a>脱壳方法</h3><p><a target="_blank" rel="noopener" href="https://www.isisy.com/1420.html">安卓逆向-脱壳学习记录 - Is Yang’s Blog (isisy.com)</a></p>
+<p>这边列个列表即可。具体还是得靠实战。</p>
+<ol>
+<li>内存Dump法</li>
+<li>文件监视法</li>
+<li>缓存脱壳法</li>
+<li>动态调试法</li>
+<li>内存重组法</li>
+<li>dex2oat法</li>
+<li>定制系统法</li>
+</ol>
 <h2 id="参考网址"><a href="#参考网址" class="headerlink" title="参考网址"></a>参考网址</h2><p> <a target="_blank" rel="noopener" href="https://developer.aliyun.com/article/1119579">ApkScan-PKID 查壳工具下载与使用-阿里云开发者社区 (aliyun.com)</a> </p>
 <p> <a target="_blank" rel="noopener" href="https://blog.51cto.com/u_13488278/3195231">Android逆向笔记之APK查壳工具PKID_51CTO博客_手机端apk逆向工具</a> </p>
 <p> <a target="_blank" rel="noopener" href="https://www.jb51.net/softs/603472.html?spm=a2c6h.12873639.article-detail.15.213f3a2a0iB0EY#downintro2">apk查壳工具下载 apk查壳神器PKiD v0.12 中文绿色免费版 下载-脚本之家 (jb51.net)</a> </p>
+<p><a target="_blank" rel="noopener" href="https://www.isisy.com/1420.html">安卓逆向-脱壳学习记录 - Is Yang’s Blog (isisy.com)</a></p>
 
     
 
@@ -464,7 +633,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Android%E9%80%86%E5%90%91-%E5%8A%A0%E5%9B%BA%E5%A3%B3"><span class="toc-number">1.</span> <span class="toc-text">Android逆向-加固壳</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E5%A3%B3"><span class="toc-number">1.1.</span> <span class="toc-text">查壳</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E7%BD%91%E5%9D%80"><span class="toc-number">1.2.</span> <span class="toc-text">参考网址</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Android%E9%80%86%E5%90%91-%E5%8A%A0%E5%9B%BA%E5%A3%B3"><span class="toc-number">1.</span> <span class="toc-text">Android逆向-加固壳</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E5%A3%B3"><span class="toc-number">1.1.</span> <span class="toc-text">查壳</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ApkScan-PKiD"><span class="toc-number">1.1.1.</span> <span class="toc-text">ApkScan-PKiD</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MT%E6%96%87%E4%BB%B6%E6%B5%8F%E8%A7%88%E5%99%A8%EF%BC%88%E6%8E%A8%E8%8D%90%EF%BC%89"><span class="toc-number">1.1.2.</span> <span class="toc-text">MT文件浏览器（推荐）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A3%80%E6%9F%A5Dex"><span class="toc-number">1.1.3.</span> <span class="toc-text">检查Dex</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A3%80%E6%9F%A5AndroidManifest-xml"><span class="toc-number">1.1.4.</span> <span class="toc-text">检查AndroidManifest.xml</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A3%80%E6%9F%A5lib"><span class="toc-number">1.1.5.</span> <span class="toc-text">检查lib</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E8%BF%B0%E4%BC%81%E4%B8%9A%E5%A3%B3%E5%8E%9F%E7%90%86"><span class="toc-number">1.2.</span> <span class="toc-text">简述企业壳原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A0%E5%9B%BA%E5%A3%B3%E5%8E%86%E5%8F%B2"><span class="toc-number">1.3.</span> <span class="toc-text">加固壳历史</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%84%B1%E5%A3%B3%E5%B7%A5%E5%85%B7"><span class="toc-number">1.4.</span> <span class="toc-text">脱壳工具</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#DexHunter%EF%BC%88deprecated%EF%BC%89"><span class="toc-number">1.4.1.</span> <span class="toc-text">DexHunter（deprecated）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#android-unpacker%EF%BC%88deprecated%EF%BC%89"><span class="toc-number">1.4.2.</span> <span class="toc-text">android-unpacker（deprecated）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#drizzleDumper%EF%BC%88deprecated%EF%BC%89"><span class="toc-number">1.4.3.</span> <span class="toc-text">drizzleDumper（deprecated）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#FRIDA-DEXDump"><span class="toc-number">1.4.4.</span> <span class="toc-text">FRIDA-DEXDump</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#inotifywait-for-Android"><span class="toc-number">1.4.5.</span> <span class="toc-text">inotifywait-for-Android</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Frida-Apk-Unpack%EF%BC%88deprecated%EF%BC%89%EF%BC%88Android%E7%89%88%E6%9C%AC%E5%A4%AA%E4%BD%8E%EF%BC%89"><span class="toc-number">1.4.6.</span> <span class="toc-text">Frida-Apk-Unpack（deprecated）（Android版本太低）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ZjDroid"><span class="toc-number">1.4.7.</span> <span class="toc-text">ZjDroid</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#dumpDex"><span class="toc-number">1.4.8.</span> <span class="toc-text">dumpDex</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#elfrebuild"><span class="toc-number">1.4.9.</span> <span class="toc-text">elfrebuild</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Dex2oatHunter"><span class="toc-number">1.4.10.</span> <span class="toc-text">Dex2oatHunter</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E5%B7%A5%E5%85%B7"><span class="toc-number">1.4.11.</span> <span class="toc-text">其他工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E8%84%B1%E5%A3%B3"><span class="toc-number">1.4.12.</span> <span class="toc-text">动态脱壳</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%84%B1%E5%A3%B3%E6%96%B9%E6%B3%95"><span class="toc-number">1.4.13.</span> <span class="toc-text">脱壳方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E7%BD%91%E5%9D%80"><span class="toc-number">1.5.</span> <span class="toc-text">参考网址</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -619,6 +788,10 @@
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Study</a>
+              </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Android</a>
@@ -973,14 +1146,6 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Hook</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Dobby</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">CTF</a>
               </li>
              
@@ -998,6 +1163,50 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Selenium</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">-Android</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Cmake</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Galgame</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Godot</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">LLVM</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Waydroid</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Anti-censorship</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">CSV</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">QEMU</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Wireshark</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Paper</a>
               </li>
             
             <div class="clearfix"></div>

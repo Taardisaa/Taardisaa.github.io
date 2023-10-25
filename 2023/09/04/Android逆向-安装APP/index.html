@@ -18,7 +18,7 @@
 <meta property="og:description" content="安装APP">
 <meta property="og:locale">
 <meta property="article:published_time" content="2023-09-04T02:29:06.000Z">
-<meta property="article:modified_time" content="2023-09-04T02:30:25.839Z">
+<meta property="article:modified_time" content="2023-10-17T09:29:09.591Z">
 <meta property="article:author" content="Taardis">
 <meta property="article:tag" content="Android">
 <meta name="twitter:card" content="summary">
@@ -318,7 +318,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">71字</span>
+      <span class="post-count">219字</span>
     </span>
   </span>
 
@@ -340,19 +340,26 @@
     
     <!-- 
 <div id="toc">
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Android%E9%80%86%E5%90%91-%E5%AE%89%E8%A3%85APP"><span class="toc-number">1.</span> <span class="toc-text">Android逆向-安装APP</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#adb%E5%AE%89%E8%A3%85%E6%97%B6%E5%87%BA%E7%8E%B0%E7%AD%BE%E5%90%8D%E9%AA%8C%E8%AF%81%E9%94%99%E8%AF%AF"><span class="toc-number">1.1.</span> <span class="toc-text">adb安装时出现签名验证错误</span></a></li></ol></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Android%E9%80%86%E5%90%91-%E5%AE%89%E8%A3%85APP"><span class="toc-number">1.</span> <span class="toc-text">Android逆向-安装APP</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#INSTALL-FAILED-VERIFICATION-FAILURE"><span class="toc-number">1.1.</span> <span class="toc-text">INSTALL_FAILED_VERIFICATION_FAILURE</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#INSTALL-FAILED-UPDATE-INCOMPATIBLE"><span class="toc-number">1.2.</span> <span class="toc-text">INSTALL_FAILED_UPDATE_INCOMPATIBLE</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#INSTALL-PARSE-FAILED-NO-CERTIFICATES"><span class="toc-number">1.3.</span> <span class="toc-text">INSTALL_PARSE_FAILED_NO_CERTIFICATES</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#INSTALL-FAILED-SHARED-USER-INCOMPATIBLE"><span class="toc-number">1.4.</span> <span class="toc-text">INSTALL_FAILED_SHARED_USER_INCOMPATIBLE</span></a></li></ol></li></ol>
 </div>
  -->
     <p>安装APP</p>
 <span id="more"></span>
 
-<h1 id="Android逆向-安装APP"><a href="#Android逆向-安装APP" class="headerlink" title="Android逆向-安装APP"></a>Android逆向-安装APP</h1><h2 id="adb安装时出现签名验证错误"><a href="#adb安装时出现签名验证错误" class="headerlink" title="adb安装时出现签名验证错误"></a>adb安装时出现签名验证错误</h2><p>比如：</p>
+<h1 id="Android逆向-安装APP"><a href="#Android逆向-安装APP" class="headerlink" title="Android逆向-安装APP"></a>Android逆向-安装APP</h1><h2 id="INSTALL-FAILED-VERIFICATION-FAILURE"><a href="#INSTALL-FAILED-VERIFICATION-FAILURE" class="headerlink" title="INSTALL_FAILED_VERIFICATION_FAILURE"></a>INSTALL_FAILED_VERIFICATION_FAILURE</h2><p>比如：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">PS D:\Android\Frida&gt; adb install .\twitter.apk</span><br><span class="line">Performing Streamed Install</span><br><span class="line">adb: failed to install .\twitter.apk: Failure [INSTALL_FAILED_VERIFICATION_FAILURE]</span><br></pre></td></tr></table></figure>
 
 <p>这里需要关闭安装时的签名验证机制：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb shell settings put global verifier_verify_adb_installs 0</span><br></pre></td></tr></table></figure>
 
 <p>再次安装即可成功。</p>
+<h2 id="INSTALL-FAILED-UPDATE-INCOMPATIBLE"><a href="#INSTALL-FAILED-UPDATE-INCOMPATIBLE" class="headerlink" title="INSTALL_FAILED_UPDATE_INCOMPATIBLE"></a>INSTALL_FAILED_UPDATE_INCOMPATIBLE</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">PS D:\Android\Frida\gadget&gt; adb install .\bs.apk</span><br><span class="line">Performing Incremental Install</span><br><span class="line">Serving...</span><br><span class="line">All files should be loaded. Notifying the device.</span><br><span class="line">Failure [INSTALL_FAILED_UPDATE_INCOMPATIBLE: Existing package com.baidu.naviauto signatures do not match newer version; ignoring!]</span><br><span class="line">Performing Streamed Install</span><br><span class="line">adb: failed to install .\bs.apk: Failure [INSTALL_FAILED_UPDATE_INCOMPATIBLE: Existing package com.baidu.naviauto signatures do not match newer version; ignoring!]</span><br></pre></td></tr></table></figure>
+
+<p>把现在安装在手机的APP卸载就好了。</p>
+<h2 id="INSTALL-PARSE-FAILED-NO-CERTIFICATES"><a href="#INSTALL-PARSE-FAILED-NO-CERTIFICATES" class="headerlink" title="INSTALL_PARSE_FAILED_NO_CERTIFICATES"></a>INSTALL_PARSE_FAILED_NO_CERTIFICATES</h2><p>缺签名了。</p>
+<p>用MT或者其他方式人工签一个就好了。</p>
+<h2 id="INSTALL-FAILED-SHARED-USER-INCOMPATIBLE"><a href="#INSTALL-FAILED-SHARED-USER-INCOMPATIBLE" class="headerlink" title="INSTALL_FAILED_SHARED_USER_INCOMPATIBLE"></a>INSTALL_FAILED_SHARED_USER_INCOMPATIBLE</h2><p>一般是AndroidManifest中的<code>sharedUserId</code>有问题。如果发现是system APP的话，就说明这个app不应该放在<code>/data/app</code>里面，而是放在<code>/system/app</code>，即系统级别应用。</p>
+<p>可以考虑通过Magisk模块来安装这些系统应用&amp;服务。</p>
 
     
 
@@ -455,7 +462,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Android%E9%80%86%E5%90%91-%E5%AE%89%E8%A3%85APP"><span class="toc-number">1.</span> <span class="toc-text">Android逆向-安装APP</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#adb%E5%AE%89%E8%A3%85%E6%97%B6%E5%87%BA%E7%8E%B0%E7%AD%BE%E5%90%8D%E9%AA%8C%E8%AF%81%E9%94%99%E8%AF%AF"><span class="toc-number">1.1.</span> <span class="toc-text">adb安装时出现签名验证错误</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Android%E9%80%86%E5%90%91-%E5%AE%89%E8%A3%85APP"><span class="toc-number">1.</span> <span class="toc-text">Android逆向-安装APP</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#INSTALL-FAILED-VERIFICATION-FAILURE"><span class="toc-number">1.1.</span> <span class="toc-text">INSTALL_FAILED_VERIFICATION_FAILURE</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#INSTALL-FAILED-UPDATE-INCOMPATIBLE"><span class="toc-number">1.2.</span> <span class="toc-text">INSTALL_FAILED_UPDATE_INCOMPATIBLE</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#INSTALL-PARSE-FAILED-NO-CERTIFICATES"><span class="toc-number">1.3.</span> <span class="toc-text">INSTALL_PARSE_FAILED_NO_CERTIFICATES</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#INSTALL-FAILED-SHARED-USER-INCOMPATIBLE"><span class="toc-number">1.4.</span> <span class="toc-text">INSTALL_FAILED_SHARED_USER_INCOMPATIBLE</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -610,6 +617,10 @@
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Study</a>
+              </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Android</a>
@@ -964,14 +975,6 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Hook</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Dobby</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">CTF</a>
               </li>
              
@@ -989,6 +992,50 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Selenium</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">-Android</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Cmake</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Galgame</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Godot</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">LLVM</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Waydroid</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Anti-censorship</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">CSV</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">QEMU</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Wireshark</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Paper</a>
               </li>
             
             <div class="clearfix"></div>

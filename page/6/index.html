@@ -293,7 +293,7 @@
             
 
   
-    <article id="post-Flutter逆向初探" class="article article-type-post  article-index" itemscope itemprop="blogPost" style="opacity:0.92">
+    <article id="post-Android逆向-Frida反调试及应对" class="article article-type-post  article-index" itemscope itemprop="blogPost" style="opacity:0.92">
   <div class="article-inner">
     
       <header class="article-header">
@@ -301,7 +301,7 @@
   
     <h1 itemprop="name">
 	
-	  <a class="article-title" href="/2023/05/28/Flutter%E9%80%86%E5%90%91%E5%88%9D%E6%8E%A2/" target="_blank" style="color:black">Flutter逆向初探</a>
+	  <a class="article-title" href="/2023/09/12/Android%E9%80%86%E5%90%91-Frida%E5%8F%8D%E8%B0%83%E8%AF%95%E5%8F%8A%E5%BA%94%E5%AF%B9/" target="_blank" style="color:black">Android逆向-Frida反调试及应对</a>
   
     </h1>
   
@@ -309,9 +309,9 @@
 
   
   
-<a href="/2023/05/28/Flutter%E9%80%86%E5%90%91%E5%88%9D%E6%8E%A2/" class="archive-article-date">
-        <!-- <time datetime="2023-05-28T07:02:07.000Z" itemprop="datePublished""><i class="icon-calendar icon"></i>2023-05-28</time> -->
-        <time datetime="2023-05-28T07:02:07.000Z" itemprop="datePublished" style="color:black"><i class="icon-calendar icon"></i>2023-05-28</time>
+<a href="/2023/09/12/Android%E9%80%86%E5%90%91-Frida%E5%8F%8D%E8%B0%83%E8%AF%95%E5%8F%8A%E5%BA%94%E5%AF%B9/" class="archive-article-date">
+        <!-- <time datetime="2023-09-12T03:54:52.000Z" itemprop="datePublished""><i class="icon-calendar icon"></i>2023-09-12</time> -->
+        <time datetime="2023-09-12T03:54:52.000Z" itemprop="datePublished" style="color:black"><i class="icon-calendar icon"></i>2023-09-12</time>
 </a>
 
   
@@ -323,9 +323,969 @@
   
   <div class="article-entry" itemprop="articleBody">
     
-    <p>Flutter逆向好恶心。</p>
+    <!-- 
+<div id="toc">
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Android%E9%80%86%E5%90%91-Frida%E5%8F%8D%E8%B0%83%E8%AF%95%E5%8F%8A%E5%BA%94%E5%AF%B9"><span class="toc-number">1.</span> <span class="toc-text">Android逆向-Frida反调试及应对</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A3%80%E6%B5%8Bfrida-server%E6%96%87%E4%BB%B6%E5%90%8D"><span class="toc-number">1.1.</span> <span class="toc-text">检测frida-server文件名</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A3%80%E6%9F%A527042%E7%AB%AF%E5%8F%A3"><span class="toc-number">1.2.</span> <span class="toc-text">检查27042端口</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%88%B6%E5%AD%90%E8%BF%9B%E7%A8%8B%E8%B0%83%E8%AF%95%EF%BC%88%E5%8F%8C%E8%BF%9B%E7%A8%8B%E4%BF%9D%E6%8A%A4%EF%BC%89"><span class="toc-number">1.3.</span> <span class="toc-text">父子进程调试（双进程保护）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TracerPid%E5%8F%8D%E8%B0%83%E8%AF%95"><span class="toc-number">1.4.</span> <span class="toc-text">TracerPid反调试</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%9F%E7%90%86"><span class="toc-number">1.4.1.</span> <span class="toc-text">原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A3%80%E6%B5%8BDemo"><span class="toc-number">1.4.2.</span> <span class="toc-text">检测Demo</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Frida-fgets%E5%8F%8D%E5%8F%8D%E8%B0%83%E8%AF%95"><span class="toc-number">1.4.3.</span> <span class="toc-text">Frida fgets反反调试</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A3%80%E6%B5%8BD-Bus"><span class="toc-number">1.5.</span> <span class="toc-text">检测D-Bus</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A3%80%E6%B5%8B-proc-pid-maps%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%EF%BC%88%E6%9C%AA%E8%A7%A3%E5%86%B3%EF%BC%89"><span class="toc-number">1.6.</span> <span class="toc-text">检测&#x2F;proc&#x2F;pid&#x2F;maps映射文件（未解决）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%9F%E7%90%86-1"><span class="toc-number">1.6.1.</span> <span class="toc-text">原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%A1%88%E4%B8%80"><span class="toc-number">1.6.2.</span> <span class="toc-text">方案一</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%A1%88%E4%BA%8C"><span class="toc-number">1.6.3.</span> <span class="toc-text">方案二</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A3%80%E6%B5%8B-proc-pid-task-tid-stat%E6%88%96proc-pid-task-tid-status%EF%BC%88%E6%9C%AA%E8%A7%A3%E5%86%B3%EF%BC%89"><span class="toc-number">1.7.</span> <span class="toc-text">检测&#x2F;proc&#x2F;pid&#x2F;task&#x2F;tid&#x2F;stat或proc&#x2F;pid&#x2F;task&#x2F;tid&#x2F;status（未解决）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%A1%88%E4%B8%80-1"><span class="toc-number">1.7.1.</span> <span class="toc-text">方案一</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#data-local-tmp%E6%A3%80%E6%9F%A5"><span class="toc-number">1.8.</span> <span class="toc-text">&#x2F;data&#x2F;local&#x2F;tmp检查</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B6%E4%BB%96"><span class="toc-number">1.9.</span> <span class="toc-text">其他</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Frida-LR%E5%AF%84%E5%AD%98%E5%99%A8%E6%BA%AF%E6%BA%90"><span class="toc-number">1.9.1.</span> <span class="toc-text">Frida-LR寄存器溯源</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A3%80%E6%B5%8BRPC%E8%B0%83%E7%94%A8"><span class="toc-number">1.10.</span> <span class="toc-text">检测RPC调用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A3%80%E6%9F%A5-plt%E8%A1%A8"><span class="toc-number">1.11.</span> <span class="toc-text">检查.plt表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Frida%E6%A3%80%E6%B5%8B"><span class="toc-number">1.12.</span> <span class="toc-text">Frida检测</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#strongR-frida-android%E2%AD%90"><span class="toc-number">1.13.</span> <span class="toc-text">strongR-frida-android⭐</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">1.14.</span> <span class="toc-text">参考</span></a></li></ol></li></ol>
+</div>
+ -->
+    <p>反调试及应对</p>
+<h1 id="Android逆向-Frida反调试及应对"><a href="#Android逆向-Frida反调试及应对" class="headerlink" title="Android逆向-Frida反调试及应对"></a>Android逆向-Frida反调试及应对</h1><h2 id="检测frida-server文件名"><a href="#检测frida-server文件名" class="headerlink" title="检测frida-server文件名"></a>检测<code>frida-server</code>文件名</h2><p>检测有没有叫做<code>frida-server</code>的文件或进程存在。比如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">checkRunningProcesses</span><span class="params">()</span> &#123;</span><br><span class="line">  <span class="type">boolean</span> <span class="variable">returnValue</span> <span class="operator">=</span> <span class="literal">false</span>;</span><br><span class="line">  <span class="comment">// Get currently running application processes</span></span><br><span class="line">  List&lt;RunningServiceInfo&gt; list = manager.getRunningServices(<span class="number">300</span>);</span><br><span class="line">  <span class="keyword">if</span>(list != <span class="literal">null</span>)&#123;</span><br><span class="line">    String tempName;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;list.size();++i)&#123;</span><br><span class="line">      tempName = list.get(i).process;</span><br><span class="line">      <span class="keyword">if</span>(tempName.contains(<span class="string">&quot;frida-server&quot;</span>)) &#123;</span><br><span class="line">        returnValue = <span class="literal">true</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> returnValue;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>绕过：改名字</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mv frida-server rf-server</span><br></pre></td></tr></table></figure>
+
+<h2 id="检查27042端口"><a href="#检查27042端口" class="headerlink" title="检查27042端口"></a>检查27042端口</h2><p>检查Frida默认27042端口，比如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">boolean <span class="title function_">is_frida_server_listening</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">sockaddr_in</span> <span class="title">sa</span>;</span></span><br><span class="line">    <span class="built_in">memset</span>(&amp;sa, <span class="number">0</span>, <span class="keyword">sizeof</span>(sa));</span><br><span class="line">    sa.sin_family = AF_INET;</span><br><span class="line">    sa.sin_port = htons(<span class="number">27047</span>);</span><br><span class="line">    inet_aton(<span class="string">&quot;127.0.0.1&quot;</span>, &amp;(sa.sin_addr));</span><br><span class="line">    <span class="type">int</span> sock = socket(AF_INET , SOCK_STREAM , <span class="number">0</span>);</span><br><span class="line">    <span class="keyword">if</span> (connect(sock , (<span class="keyword">struct</span> sockaddr*)&amp;sa , <span class="keyword">sizeof</span> sa) != <span class="number">-1</span>) &#123;</span><br><span class="line">      <span class="comment">/* Frida server detected. Do something… */</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>绕过：修改端口。</p>
+<p>在adb shell里面执行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./rf-server -l 0.0.0.0:11451</span><br></pre></td></tr></table></figure>
+
+<p>然后</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">adb forward tcp:11451 tcp:11451</span><br><span class="line">frida -H 127.0.0.1:11451 -f com.baidu.naviauto</span><br></pre></td></tr></table></figure>
+
+<p>即可。</p>
+<h2 id="父子进程调试（双进程保护）"><a href="#父子进程调试（双进程保护）" class="headerlink" title="父子进程调试（双进程保护）"></a>父子进程调试（双进程保护）</h2><p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/08ce756468e2">Frida反调试 - 简书 (jianshu.com)</a></p>
+<p>这个例子是子进程去Attach父进程。这里的解决方式比较简单：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">frida -U -f com.shark.tracerpidapp</span><br></pre></td></tr></table></figure>
+
+<p>让Frida去spawn APP父进程，让子进程没法提前Attach。</p>
+<p><strong>然后就可以再附上Frida脚本，提前对进程进行patch，从而实现反反调试。</strong></p>
+<h2 id="TracerPid反调试"><a href="#TracerPid反调试" class="headerlink" title="TracerPid反调试"></a>TracerPid反调试</h2><h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>首先ps查看进程号</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">frida-ps -U</span><br></pre></td></tr></table></figure>
+
+<p>然后看status</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">adb shell</span><br><span class="line">cat /proc/25421/status</span><br></pre></td></tr></table></figure>
+
+<p>比如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">redfin:/ $ cat /proc/25421/status</span><br><span class="line">Name:   .baidu.naviauto</span><br><span class="line">Umask:  0077</span><br><span class="line">State:  S (sleeping)</span><br><span class="line">Tgid:   25421</span><br><span class="line">Ngid:   0</span><br><span class="line">Pid:    25421</span><br><span class="line">PPid:   29984</span><br><span class="line">TracerPid:      0</span><br><span class="line">Uid:    10253   10253   10253   10253</span><br><span class="line">Gid:    10253   10253   10253   10253</span><br><span class="line">FDSize: 512</span><br><span class="line">Groups: 3001 3002 3003 9997 20253 50253</span><br><span class="line">VmPeak:  2345508 kB</span><br><span class="line">VmSize:  1659672 kB</span><br><span class="line">VmLck:         0 kB</span><br><span class="line">VmPin:         0 kB</span><br><span class="line">VmHWM:    513300 kB</span><br><span class="line">VmRSS:    249324 kB</span><br><span class="line">RssAnon:          120584 kB</span><br><span class="line">RssFile:          123048 kB</span><br><span class="line">RssShmem:           5692 kB</span><br><span class="line">VmData:   912304 kB</span><br><span class="line">VmStk:      8192 kB</span><br><span class="line">VmExe:        12 kB</span><br><span class="line">VmLib:    154680 kB</span><br><span class="line">VmPTE:      1552 kB</span><br><span class="line">VmSwap:        0 kB</span><br><span class="line">CoreDumping:    0</span><br><span class="line">Threads:        104</span><br><span class="line">SigQ:   0/28561</span><br><span class="line">SigPnd: 0000000000000000</span><br><span class="line">ShdPnd: 0000000000000000</span><br><span class="line">SigBlk: 0000000080001204</span><br><span class="line">SigIgn: 0000000000000001</span><br><span class="line">SigCgt: 0000006e400084f8</span><br><span class="line">CapInh: 0000000000000000</span><br><span class="line">CapPrm: 0000000000000000</span><br><span class="line">CapEff: 0000000000000000</span><br><span class="line">CapBnd: 0000000000000000</span><br><span class="line">CapAmb: 0000000000000000</span><br><span class="line">NoNewPrivs:     0</span><br><span class="line">Seccomp:        2</span><br><span class="line">Speculation_Store_Bypass:       thread vulnerable</span><br><span class="line">Cpus_allowed:   30</span><br><span class="line">Cpus_allowed_list:      4-5</span><br><span class="line">Mems_allowed:   1</span><br><span class="line">Mems_allowed_list:      0</span><br><span class="line">voluntary_ctxt_switches:        3317</span><br><span class="line">nonvoluntary_ctxt_switches:     413</span><br></pre></td></tr></table></figure>
+
+<p><strong>TracerPid就是调试此进程的pid，在同一时刻只能有一个进程调试本进程</strong></p>
+<p>在使用IDA android_server对进程进行调试的时候，这个<code>TracerPid</code>就会变成server的PID。</p>
+<h3 id="检测Demo"><a href="#检测Demo" class="headerlink" title="检测Demo"></a>检测Demo</h3><p>这是一个检测demo：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;jni.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;antidebug.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> NULL 0</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> CHECK_TIME 10</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> LOGI(...) __android_log_print(ANDROID_LOG_INFO, <span class="string">&quot;shark chilli&quot;</span>, __VA_ARGS__)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> LOGE(...) __android_log_print(ANDROID_LOG_ERROR, <span class="string">&quot;shark chilli&quot;</span>, __VA_ARGS__)</span></span><br><span class="line"></span><br><span class="line"><span class="type">pthread_t</span> id_anti_debug = <span class="literal">NULL</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">readStatus</span><span class="params">()</span> &#123;</span><br><span class="line">    FILE *fd;</span><br><span class="line">    <span class="type">char</span> filename[<span class="number">128</span>];</span><br><span class="line">    <span class="type">char</span> line[<span class="number">128</span>];</span><br><span class="line">    <span class="type">pid_t</span> pid = syscall(__NR_getpid);</span><br><span class="line">    LOGI(<span class="string">&quot;PID : %d&quot;</span>, pid);</span><br><span class="line">    <span class="built_in">sprintf</span>(filename, <span class="string">&quot;/proc/%d/status&quot;</span>, pid);<span class="comment">// 读取proc/pid/status中的TracerPid</span></span><br><span class="line">    <span class="keyword">while</span> (<span class="number">1</span>) &#123;</span><br><span class="line">        fd = fopen(filename, <span class="string">&quot;r&quot;</span>);</span><br><span class="line">        <span class="keyword">while</span> (fgets(line, <span class="number">128</span>, fd)) &#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="built_in">strncmp</span>(line, <span class="string">&quot;TracerPid&quot;</span>, <span class="number">9</span>) == <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="comment">//TracerPid值</span></span><br><span class="line">                <span class="type">int</span> status = atoi(&amp;line[<span class="number">10</span>]);</span><br><span class="line">                LOGI(<span class="string">&quot;########## status = %d, %s&quot;</span>, status, line);</span><br><span class="line">                fclose(fd);</span><br><span class="line">                syscall(__NR_close, fd);</span><br><span class="line">                <span class="keyword">if</span> (status != <span class="number">0</span>) &#123;</span><br><span class="line">                    LOGI(<span class="string">&quot;########## FBI WARNING ##########&quot;</span>);</span><br><span class="line">                    LOGI(<span class="string">&quot;######### FIND DEBUGGER #########&quot;</span>);</span><br><span class="line">                    kill(pid, SIGKILL);</span><br><span class="line">                    <span class="keyword">return</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        sleep(CHECK_TIME);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">checkAnti</span><span class="params">()</span> &#123;</span><br><span class="line">    LOGI(<span class="string">&quot;Call readStatus...&quot;</span>);</span><br><span class="line">    readStatus();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">anti_debug</span><span class="params">()</span> &#123;</span><br><span class="line">    LOGI(<span class="string">&quot;Call anti_debug...&quot;</span>);</span><br><span class="line">    <span class="comment">//创建线程</span></span><br><span class="line">    <span class="keyword">if</span> (pthread_create(&amp;id_anti_debug, <span class="literal">NULL</span>, (<span class="type">void</span> *(*)(<span class="type">void</span> *)) &amp;checkAnti, <span class="literal">NULL</span>) != <span class="number">0</span>) &#123;</span><br><span class="line">        LOGE(<span class="string">&quot;Failed to create a debug checking thread!&quot;</span>);</span><br><span class="line">        <span class="built_in">exit</span>(<span class="number">-1</span>);</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="comment">//线程分离 释放资源</span></span><br><span class="line">    pthread_detach(id_anti_debug);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span> JNIEXPORT <span class="type">void</span> JNICALL</span><br><span class="line"><span class="title function_">Java_com_shark_tracerpidapp_MainActivity_checkTracerPid</span><span class="params">(</span></span><br><span class="line"><span class="params">        JNIEnv *env,</span></span><br><span class="line"><span class="params">        jobject <span class="comment">/* this */</span>)</span> &#123;</span><br><span class="line">    anti_debug();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Frida-fgets反反调试"><a href="#Frida-fgets反反调试" class="headerlink" title="Frida fgets反反调试"></a>Frida fgets反反调试</h3><p>通过Hook <code>libc.so</code>的<code>fgets</code>函数来检查。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> anti_fgets = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="comment">// dmLogout(&quot;anti_fgets&quot;);</span></span><br><span class="line">    <span class="keyword">var</span> fgetsPtr = <span class="title class_">Module</span>.<span class="title function_">findExportByName</span>(<span class="string">&quot;libc.so&quot;</span>, <span class="string">&quot;fgets&quot;</span>);</span><br><span class="line">    <span class="keyword">var</span> fgets = <span class="keyword">new</span> <span class="title class_">NativeFunction</span>(fgetsPtr, <span class="string">&#x27;pointer&#x27;</span>, [<span class="string">&#x27;pointer&#x27;</span>, <span class="string">&#x27;int&#x27;</span>, <span class="string">&#x27;pointer&#x27;</span>]);</span><br><span class="line">    <span class="title class_">Interceptor</span>.<span class="title function_">replace</span>(fgetsPtr, <span class="keyword">new</span> <span class="title class_">NativeCallback</span>(<span class="keyword">function</span> (<span class="params">buffer, size, fp</span>) &#123;</span><br><span class="line">        <span class="keyword">var</span> retval = <span class="title function_">fgets</span>(buffer, size, fp);</span><br><span class="line">        <span class="keyword">var</span> bufstr = <span class="title class_">Memory</span>.<span class="title function_">readUtf8String</span>(buffer);</span><br><span class="line">        <span class="keyword">if</span> (bufstr.<span class="title function_">indexOf</span>(<span class="string">&quot;TracerPid:&quot;</span>) &gt; -<span class="number">1</span>) &#123;</span><br><span class="line">            <span class="title class_">Memory</span>.<span class="title function_">writeUtf8String</span>(buffer, <span class="string">&quot;TracerPid:\t0&quot;</span>);</span><br><span class="line">            <span class="comment">// dmLogout(&quot;tracerpid replaced: &quot; + Memory.readUtf8String(buffer));</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> retval;</span><br><span class="line">    &#125;, <span class="string">&#x27;pointer&#x27;</span>, [<span class="string">&#x27;pointer&#x27;</span>, <span class="string">&#x27;int&#x27;</span>, <span class="string">&#x27;pointer&#x27;</span>]));</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="检测D-Bus"><a href="#检测D-Bus" class="headerlink" title="检测D-Bus"></a>检测D-Bus</h2><p><code>frida-server</code>使用D-Bus协议通信，我们为每个开放的端口发送D-Bus的认证消息，哪个端口回复了哪个就是<code>frida-server</code>。比如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * Mini-portscan to detect frida-server on any local port.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">for</span>(i = <span class="number">0</span> ; i &lt;= <span class="number">65535</span> ; i++) &#123;</span><br><span class="line">    sock = socket(AF_INET , SOCK_STREAM , <span class="number">0</span>);</span><br><span class="line">    sa.sin_port = htons(i);</span><br><span class="line">    <span class="keyword">if</span> (connect(sock , (struct sockaddr*)&amp;sa , sizeof sa) != -<span class="number">1</span>) &#123;</span><br><span class="line">        __android_log_print(ANDROID_LOG_VERBOSE, APPNAME,  <span class="string">&quot;FRIDA DETECTION [1]: Open Port: %d&quot;</span>, i);</span><br><span class="line">        memset(res, <span class="number">0</span> , <span class="number">7</span>);</span><br><span class="line">        <span class="comment">// send a D-Bus AUTH message. Expected answer is “REJECT&quot;</span></span><br><span class="line">        send(sock, <span class="string">&quot;\x00&quot;</span>, <span class="number">1</span>, NULL);</span><br><span class="line">        send(sock, <span class="string">&quot;AUTH\r\n&quot;</span>, <span class="number">6</span>, NULL);</span><br><span class="line">        usleep(<span class="number">100</span>);</span><br><span class="line">        <span class="keyword">if</span> (ret = recv(sock, res, <span class="number">6</span>, MSG_DONTWAIT) != -<span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (strcmp(res, <span class="string">&quot;REJECT&quot;</span>) == <span class="number">0</span>) &#123;</span><br><span class="line">               <span class="comment">/* Frida server detected. Do something… */</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    close(sock);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这串代码通过遍历所有端口，向其中开放的端口发送DBus通信来检测是否有Frida存在，而其中最核心的判定点其实是<code>strcmp(res, &quot;REJECT&quot;);</code>，因此可以通过**Hook系统库<code>strstr</code>，<code>strcmp</code>**等字符串比对函数来进行绕过。</p>
+<p><strong>不过这种字符串比对函数确实没什么设计上的难度，因此如果遇到了自行实现字符串比对的代码的话，那就没戏了。</strong></p>
+<h2 id="检测-proc-pid-maps映射文件（未解决）"><a href="#检测-proc-pid-maps映射文件（未解决）" class="headerlink" title="检测/proc/pid/maps映射文件（未解决）"></a>检测<code>/proc/pid/maps</code>映射文件（未解决）</h2><h3 id="原理-1"><a href="#原理-1" class="headerlink" title="原理"></a>原理</h3><p>首先手动测试一下，在没有Frida的APP上：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">adb shell</span><br><span class="line">su</span><br><span class="line">cat /proc/17637/maps</span><br></pre></td></tr></table></figure>
+
+<p>然后打印：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">redfin:/ # cat /proc/17637/maps</span><br><span class="line">08bf0000-08bf2000 r--p 00000000 fd:08 152                                /system/bin/app_process32</span><br><span class="line">08bf2000-08bf3000 r-xp 00001000 fd:08 152                                /system/bin/app_process32</span><br><span class="line">08bf3000-08bf4000 r--p 00001000 fd:08 152                                /system/bin/app_process32</span><br><span class="line">12c00000-32c00000 rw-p 00000000 00:00 0                                  [anon:dalvik-main space (region space)]</span><br><span class="line">6fdce000-6ffb4000 rw-p 00000000 00:00 0                                  [anon:dalvik-/system/framework/boot.art]</span><br><span class="line">6ffb4000-6ffe6000 rw-p 00000000 00:00 0                                  [anon:dalvik-/system/framework/boot-core-libart.art]</span><br><span class="line">6ffe6000-70005000 rw-p 00000000 00:00 0                                  [anon:dalvik-/system/framework/boot-okhttp.art]70005000-7003a000 rw-p 00000000 00:00 0                                  [anon:dalvik-/system/framework/boot-bouncycastle.art]</span><br><span class="line">7003a000-7003b000 rw-p 00000000 00:00 0                                  [anon:dalvik-/system/framework/boot-apache-xml.art]</span><br><span class="line">7003b000-700c9000 r--p 00000000 fd:08 1184                               /system/framework/arm/boot.oat</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>等很多很多的玩意出来，表明了进程中内存的分布。</p>
+<p>然后再使用Frida的spawn模式去打开APP：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">frida -U -f com.baidu.naviauto</span><br></pre></td></tr></table></figure>
+
+<p>然后用同样的方式拿到maps，<strong>经过搜索会发现有<code>frida</code>相关的字符串</strong>。因此判断代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> line[<span class="number">512</span>];</span><br><span class="line">FILE* fp;</span><br><span class="line">fp = fopen(<span class="string">&quot;/proc/self/maps&quot;</span>, <span class="string">&quot;r&quot;</span>);</span><br><span class="line"><span class="keyword">if</span> (fp) &#123;</span><br><span class="line">    <span class="keyword">while</span> (fgets(line, <span class="number">512</span>, fp)) &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">strstr</span>(line, <span class="string">&quot;frida&quot;</span>)) &#123;</span><br><span class="line">            <span class="comment">/* Evil library is loaded. Do something… */</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    fclose(fp);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">       <span class="comment">/* Error opening /proc/self/maps. If this happens, something is off. */</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>还有一种改进版本，就是通过进一步进行内存字符串搜索，来检查Frida库特征，比如<code>LIBFRIDA</code>：<a target="_blank" rel="noopener" href="https://github.com/b-mueller/frida-detection-demo/blob/master/AntiFrida/app/src/main/cpp/native-lib.cpp">https://github.com/b-mueller/frida-detection-demo/blob/master/AntiFrida/app/src/main/cpp/native-lib.cpp</a></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> <span class="type">char</span> keyword[] = <span class="string">&quot;LIBFRIDA&quot;</span>;</span><br><span class="line">num_found = <span class="number">0</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">scan_executable_segments</span><span class="params">(<span class="type">char</span> * <span class="built_in">map</span>)</span> &#123;</span><br><span class="line">    <span class="type">char</span> buf[<span class="number">512</span>];</span><br><span class="line">    <span class="type">unsigned</span> <span class="type">long</span> start, end;</span><br><span class="line">    <span class="built_in">sscanf</span>(<span class="built_in">map</span>, <span class="string">&quot;%lx-%lx %s&quot;</span>, &amp;start, &amp;end, buf);</span><br><span class="line">    <span class="keyword">if</span> (buf[<span class="number">2</span>] == <span class="string">&#x27;x&#x27;</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> (find_mem_string(start, end, (<span class="type">char</span>*)keyword, <span class="number">8</span>) == <span class="number">1</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">void</span> <span class="title function_">scan</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> ((fd = my_openat(AT_FDCWD, <span class="string">&quot;/proc/self/maps&quot;</span>, O_RDONLY, <span class="number">0</span>)) &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="keyword">while</span> ((read_one_line(fd, <span class="built_in">map</span>, MAX_LINE)) &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (scan_executable_segments(<span class="built_in">map</span>) == <span class="number">1</span>) &#123;</span><br><span class="line">            num_found++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (num_found &gt; <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="comment">/* Frida Detected */</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/f679cb404524">Android逆向 多种特征检测 Frida - 简书 (jianshu.com)</a></p>
+<blockquote>
+<p>注意 <code>my_openat()</code> 等函数，它们并非平常的 libc 库函数，是自定义实现的，但是功能和 libc 中的一样，设置了系统调用的参数，执行了软中断。因为直接调用公共 API 并不可靠，这样不容易被 hook。完整的实现在 <a target="_blank" rel="noopener" href="https://links.jianshu.com/go?to=https://github.com/b-mueller/frida-detection-demo/blob/master/AntiFrida/app/src/main/cpp/syscall.S">https://github.com/b-mueller/frida-detection-demo/blob/master/AntiFrida/app/src/main/cpp/syscall.S</a> 。下面是 my_openat 的代码：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &quot;bionic_asm.h&quot;</span></span><br><span class="line">.text</span><br><span class="line">    .globl my_openat</span><br><span class="line">    .<span class="built_in">type</span> my_openat,<span class="keyword">function</span></span><br><span class="line">my_openat:</span><br><span class="line">    .cfi_startproc</span><br><span class="line">    mov ip, r7</span><br><span class="line">    .cfi_register r7, ip</span><br><span class="line">    ldr r7, =__NR_openat</span><br><span class="line">    swi <span class="comment">#0</span></span><br><span class="line">    mov r7, ip</span><br><span class="line">    .cfi_restore r7</span><br><span class="line">    cmn r0, <span class="comment">#(4095 + 1)</span></span><br><span class="line">    bxls lr</span><br><span class="line">    neg r0, r0</span><br><span class="line">    b __set_errno_internal</span><br><span class="line">    .cfi_endproc</span><br><span class="line">    .size my_openat, .-my_openat;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p>同时也会有<code>/data/local/tmp</code>的这一串路径名存在。关于这个的解决方法放在另外一个章节。</p>
+</blockquote>
+<h3 id="方案一"><a href="#方案一" class="headerlink" title="方案一"></a>方案一</h3><p>直接使用<code>Hluda Frida Server</code>是一种方案。</p>
+<h3 id="方案二"><a href="#方案二" class="headerlink" title="方案二"></a>方案二</h3><h2 id="检测-proc-pid-task-tid-stat或proc-pid-task-tid-status（未解决）"><a href="#检测-proc-pid-task-tid-stat或proc-pid-task-tid-status（未解决）" class="headerlink" title="检测/proc/pid/task/tid/stat或proc/pid/task/tid/status（未解决）"></a>检测<code>/proc/pid/task/tid/stat</code>或<code>proc/pid/task/tid/status</code>（未解决）</h2><h3 id="方案一-1"><a href="#方案一-1" class="headerlink" title="方案一"></a>方案一</h3><p>直接使用<code>Hluda Frida Server</code>是一种方案。</p>
+<h2 id="data-local-tmp检查"><a href="#data-local-tmp检查" class="headerlink" title="/data/local/tmp检查"></a><code>/data/local/tmp</code>检查</h2><p>Hook open与read来绕过对maps中<code>/data/local/tmp</code>的检查。</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_56039202/article/details/125550281">过某交友软件frida反调试_马到成功~的博客-CSDN博客</a></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">main</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> openPtr = <span class="title class_">Module</span>.<span class="title function_">getExportByName</span>(<span class="string">&#x27;libc.so&#x27;</span>, <span class="string">&#x27;open&#x27;</span>);</span><br><span class="line">    <span class="keyword">const</span> open = <span class="keyword">new</span> <span class="title class_">NativeFunction</span>(openPtr, <span class="string">&#x27;int&#x27;</span>, [<span class="string">&#x27;pointer&#x27;</span>, <span class="string">&#x27;int&#x27;</span>]);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">var</span> readPtr = <span class="title class_">Module</span>.<span class="title function_">findExportByName</span>(<span class="string">&quot;libc.so&quot;</span>, <span class="string">&quot;read&quot;</span>);</span><br><span class="line">    <span class="keyword">var</span> read = <span class="keyword">new</span> <span class="title class_">NativeFunction</span>(readPtr, <span class="string">&#x27;int&#x27;</span>, [<span class="string">&#x27;int&#x27;</span>, <span class="string">&#x27;pointer&#x27;</span>, <span class="string">&quot;int&quot;</span>]);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">var</span> fakePath = <span class="string">&quot;/data/data/com.xyz.qingtian/maps&quot;</span>;</span><br><span class="line">    <span class="keyword">var</span> file = <span class="keyword">new</span> <span class="title class_">File</span>(fakePath, <span class="string">&quot;w&quot;</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">var</span> buffer = <span class="title class_">Memory</span>.<span class="title function_">alloc</span>(<span class="number">512</span>);</span><br><span class="line">    <span class="title class_">Interceptor</span>.<span class="title function_">replace</span>(openPtr, <span class="keyword">new</span> <span class="title class_">NativeCallback</span>(<span class="keyword">function</span> (<span class="params">pathnameptr, flag</span>) &#123;</span><br><span class="line">        <span class="keyword">var</span> pathname = <span class="title class_">Memory</span>.<span class="title function_">readUtf8String</span>(pathnameptr);</span><br><span class="line">        <span class="keyword">var</span> realFd = <span class="title function_">open</span>(pathnameptr, flag);</span><br><span class="line">        <span class="keyword">if</span> (pathname.<span class="title function_">indexOf</span>(<span class="string">&quot;maps&quot;</span>) &gt;= <span class="number">0</span>) &#123;	<span class="comment">// 是在读maps则搞些操作</span></span><br><span class="line">            <span class="keyword">while</span> (<span class="built_in">parseInt</span>(<span class="title function_">read</span>(realFd, buffer, <span class="number">512</span>)) !== <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">var</span> oneLine = <span class="title class_">Memory</span>.<span class="title function_">readCString</span>(buffer);</span><br><span class="line">                <span class="keyword">if</span> (oneLine.<span class="title function_">indexOf</span>(<span class="string">&quot;tmp&quot;</span>) === -<span class="number">1</span>) &#123;	<span class="comment">// 跳过与tmp文件夹有关的字符串</span></span><br><span class="line">                    file.<span class="title function_">write</span>(oneLine);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">var</span> filename = <span class="title class_">Memory</span>.<span class="title function_">allocUtf8String</span>(fakePath);</span><br><span class="line">            <span class="keyword">return</span> <span class="title function_">open</span>(filename, flag);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">var</span> fd = <span class="title function_">open</span>(pathnameptr, flag);</span><br><span class="line">        <span class="keyword">return</span> fd;</span><br><span class="line">    &#125;, <span class="string">&#x27;int&#x27;</span>, [<span class="string">&#x27;pointer&#x27;</span>, <span class="string">&#x27;int&#x27;</span>]));</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">setImmediate</span>(main)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><h3 id="Frida-LR寄存器溯源"><a href="#Frida-LR寄存器溯源" class="headerlink" title="Frida-LR寄存器溯源"></a>Frida-LR寄存器溯源</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> anti_antiDebug = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> funcPtr = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">    funcPtr = <span class="title class_">Module</span>.<span class="title function_">findExportByName</span>(<span class="string">&quot;xxxx.so&quot;</span>, <span class="string">&quot;p57F7418DCD0C22CD8909F9B22F0991D3&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;anti_antiDebug &quot;</span> + funcPtr);</span><br><span class="line">    <span class="title class_">Interceptor</span>.<span class="title function_">replace</span>(funcPtr, <span class="keyword">new</span> <span class="title class_">NativeCallback</span>(<span class="keyword">function</span> (<span class="params">pathPtr, flags</span>) &#123;</span><br><span class="line">        <span class="title function_">dmLogout</span>(<span class="string">&quot;anti-debug LR: &quot;</span> + <span class="variable language_">this</span>.<span class="property">context</span>.<span class="property">lr</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;, <span class="string">&#x27;int&#x27;</span>, [<span class="string">&#x27;int&#x27;</span>, <span class="string">&#x27;int&#x27;</span>]));</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="检测RPC调用"><a href="#检测RPC调用" class="headerlink" title="检测RPC调用"></a>检测RPC调用</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">looperclazz = (*env)-&gt;FindClass(env, &amp;xmmword_39010);<span class="comment">// android/os/Looper</span></span><br><span class="line"> myLooper_methodID = (*env)-&gt;GetStaticMethodID(env, looperclazz, &amp;qword_39028, &amp;xmmword_39040);<span class="comment">// myLooper</span></span><br><span class="line"> <span class="keyword">if</span> ( !CallStaticObjectMethodV_(env, (__int64)looperclazz, (__int64)myLooper_methodID) )</span><br></pre></td></tr></table></figure>
+
+<p>在 so 中调用<code>android.os.Looper.myLooper()</code>, 如果是正常的调用, 则通过<code>CallStaticObjectMethodV</code>调用的结果为非 0; 如果是通过 frida 的主动调用, 则返回结果为 0; 因为 frida 的主动调用不在主线程中; 可以作为一个主动调用的检测点。</p>
+<h2 id="检查-plt表"><a href="#检查-plt表" class="headerlink" title="检查.plt表"></a>检查.plt表</h2><p><a target="_blank" rel="noopener" href="https://romainthomas.fr/post/20-09-r2con-obfuscated-whitebox-part1/">r2-pay: anti-debug, anti-root &amp; anti-frida (part 1) | Romain Thomas</a></p>
+<p>遍历<code>.plt</code>表来检查libc有没有被Frida给Hook了。</p>
+<p>检查后再去调用libc函数，比如<code>pthread_create</code>函数。</p>
+<h2 id="Frida检测"><a href="#Frida检测" class="headerlink" title="Frida检测"></a>Frida检测</h2><p><a target="_blank" rel="noopener" href="https://github.com/muellerberndt/frida-detection">muellerberndt&#x2F;frida-detection: A couple of methods for detecting Frida on Android. (github.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/xyxdaily/frida-detect-protect">xyxdaily&#x2F;frida-detect-protect (github.com)</a></p>
+<h2 id="strongR-frida-android⭐"><a href="#strongR-frida-android⭐" class="headerlink" title="strongR-frida-android⭐"></a>strongR-frida-android⭐</h2><p><a target="_blank" rel="noopener" href="https://github.com/hzzheyang/strongR-frida-android">hzzheyang&#x2F;strongR-frida-android: An anti detection version frida-server for android. (github.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/hluwa/Patchs/tree/master/strongR-frida/frida-core">Patchs&#x2F;strongR-frida&#x2F;frida-core at master · hluwa&#x2F;Patchs (github.com)</a></p>
+<p><strong>这是一个将frida源码进行patch魔改，实现掩盖frida特征的一个项目。</strong></p>
+<p>可以偷懒直接下载它提供的release，但也最好自己试试魔改。</p>
+<p><strong>frida编译与魔改放在了另一个blog。</strong></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/56702055">FRIDA 实用手册 - 知乎 (zhihu.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://kevinspider.github.io/frida/frida-hook-java/">分类: frida | 凡墙总是门 (kevinspider.github.io)</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_56039202/article/details/125550281">过某交友软件frida反调试_马到成功~的博客-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_42840266/article/details/132628782">安卓逆向 - Frida反调试绕过_小馒头yy的博客-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/557713016">一例简单的frida反调试绕过 - 知乎 (zhihu.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/cae682a27f0c">TracerPid反调试 - 简书 (jianshu.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/f679cb404524">Android逆向 多种特征检测 Frida - 简书 (jianshu.com)</a></p>
+
     
-    <a class="article-more-a" href="/2023/05/28/Flutter%E9%80%86%E5%90%91%E5%88%9D%E6%8E%A2/#more">more >></a>
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<!-- <a href="/categories/Study//" class="article-tag-list-link color1">Study</a> -->
+        			<a href="/categories/Study/" class="article-tag-list-link color1">Study</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2023/09/12/Android%E9%80%86%E5%90%91-Frida%E5%8F%8D%E8%B0%83%E8%AF%95%E5%8F%8A%E5%BA%94%E5%AF%B9/">More >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Galgame-壳之少女" class="article article-type-post  article-index" itemscope itemprop="blogPost" style="opacity:0.92">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2023/09/11/Galgame-%E5%A3%B3%E4%B9%8B%E5%B0%91%E5%A5%B3/" target="_blank" style="color:black">Galgame-壳之少女</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2023/09/11/Galgame-%E5%A3%B3%E4%B9%8B%E5%B0%91%E5%A5%B3/" class="archive-article-date">
+        <!-- <time datetime="2023-09-11T03:17:31.000Z" itemprop="datePublished""><i class="icon-calendar icon"></i>2023-09-11</time> -->
+        <time datetime="2023-09-11T03:17:31.000Z" itemprop="datePublished" style="color:black"><i class="icon-calendar icon"></i>2023-09-11</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <p>壳之少女HD on Steam.</p>
+    
+    <a class="article-more-a" href="/2023/09/11/Galgame-%E5%A3%B3%E4%B9%8B%E5%B0%91%E5%A5%B3/#more">more >></a>
+    
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Galgame</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<!-- <a href="/categories/Game//" class="article-tag-list-link color5">Game</a> -->
+        			<a href="/categories/Game/" class="article-tag-list-link color5">Game</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2023/09/11/Galgame-%E5%A3%B3%E4%B9%8B%E5%B0%91%E5%A5%B3/">More >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Android逆向-APP签名" class="article article-type-post  article-index" itemscope itemprop="blogPost" style="opacity:0.92">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2023/09/08/Android%E9%80%86%E5%90%91-APP%E7%AD%BE%E5%90%8D/" target="_blank" style="color:black">Android逆向-获取APP签名</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2023/09/08/Android%E9%80%86%E5%90%91-APP%E7%AD%BE%E5%90%8D/" class="archive-article-date">
+        <!-- <time datetime="2023-09-08T08:28:31.000Z" itemprop="datePublished""><i class="icon-calendar icon"></i>2023-09-08</time> -->
+        <time datetime="2023-09-08T08:28:31.000Z" itemprop="datePublished" style="color:black"><i class="icon-calendar icon"></i>2023-09-08</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <p>很久以前开的blog，关于如何获取APP签名。不知道为啥要写这个了。</p>
+    
+    <a class="article-more-a" href="/2023/09/08/Android%E9%80%86%E5%90%91-APP%E7%AD%BE%E5%90%8D/#more">more >></a>
+    
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<!-- <a href="/categories/Study//" class="article-tag-list-link color1">Study</a> -->
+        			<a href="/categories/Study/" class="article-tag-list-link color1">Study</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2023/09/08/Android%E9%80%86%E5%90%91-APP%E7%AD%BE%E5%90%8D/">More >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Linux安装Steam游戏" class="article article-type-post  article-index" itemscope itemprop="blogPost" style="opacity:0.92">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2023/09/08/Linux%E5%AE%89%E8%A3%85Steam%E6%B8%B8%E6%88%8F/" target="_blank" style="color:black">Linux安装Steam游戏</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2023/09/08/Linux%E5%AE%89%E8%A3%85Steam%E6%B8%B8%E6%88%8F/" class="archive-article-date">
+        <!-- <time datetime="2023-09-08T08:11:02.000Z" itemprop="datePublished""><i class="icon-calendar icon"></i>2023-09-08</time> -->
+        <time datetime="2023-09-08T08:11:02.000Z" itemprop="datePublished" style="color:black"><i class="icon-calendar icon"></i>2023-09-08</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <p>Linux安装Steam游戏</p>
+    
+    <a class="article-more-a" href="/2023/09/08/Linux%E5%AE%89%E8%A3%85Steam%E6%B8%B8%E6%88%8F/#more">more >></a>
+    
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Steam</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<!-- <a href="/categories/Study//" class="article-tag-list-link color1">Study</a> -->
+        			<a href="/categories/Study/" class="article-tag-list-link color1">Study</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2023/09/08/Linux%E5%AE%89%E8%A3%85Steam%E6%B8%B8%E6%88%8F/">More >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-ひぐらしのなく頃に奉——中文翻译" class="article article-type-post  article-index" itemscope itemprop="blogPost" style="opacity:0.92">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2023/09/08/%E3%81%B2%E3%81%90%E3%82%89%E3%81%97%E3%81%AE%E3%81%AA%E3%81%8F%E9%A0%83%E3%81%AB%E5%A5%89%E2%80%94%E2%80%94%E4%B8%AD%E6%96%87%E7%BF%BB%E8%AF%91/" target="_blank" style="color:black">ひぐらしのなく頃に奉——汉化</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2023/09/08/%E3%81%B2%E3%81%90%E3%82%89%E3%81%97%E3%81%AE%E3%81%AA%E3%81%8F%E9%A0%83%E3%81%AB%E5%A5%89%E2%80%94%E2%80%94%E4%B8%AD%E6%96%87%E7%BF%BB%E8%AF%91/" class="archive-article-date">
+        <!-- <time datetime="2023-09-08T05:38:44.000Z" itemprop="datePublished""><i class="icon-calendar icon"></i>2023-09-08</time> -->
+        <time datetime="2023-09-08T05:38:44.000Z" itemprop="datePublished" style="color:black"><i class="icon-calendar icon"></i>2023-09-08</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <p>「ひぐらしのなく頃に奉」，即”寒蝉鸣泣之时-奉”，是Switch日服的一款Galgame。尝试翻译。</p>
+    
+    <a class="article-more-a" href="/2023/09/08/%E3%81%B2%E3%81%90%E3%82%89%E3%81%97%E3%81%AE%E3%81%AA%E3%81%8F%E9%A0%83%E3%81%AB%E5%A5%89%E2%80%94%E2%80%94%E4%B8%AD%E6%96%87%E7%BF%BB%E8%AF%91/#more">more >></a>
+    
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Japanese</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Higurashi</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<!-- <a href="/categories/Study//" class="article-tag-list-link color1">Study</a> -->
+        			<a href="/categories/Study/" class="article-tag-list-link color1">Study</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2023/09/08/%E3%81%B2%E3%81%90%E3%82%89%E3%81%97%E3%81%AE%E3%81%AA%E3%81%8F%E9%A0%83%E3%81%AB%E5%A5%89%E2%80%94%E2%80%94%E4%B8%AD%E6%96%87%E7%BF%BB%E8%AF%91/">More >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Android逆向解题-ill-intentions" class="article article-type-post  article-index" itemscope itemprop="blogPost" style="opacity:0.92">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2023/09/07/Android%E9%80%86%E5%90%91%E8%A7%A3%E9%A2%98-ill-intentions/" target="_blank" style="color:black">Android逆向解题-[ill-intentions]</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2023/09/07/Android%E9%80%86%E5%90%91%E8%A7%A3%E9%A2%98-ill-intentions/" class="archive-article-date">
+        <!-- <time datetime="2023-09-07T06:33:32.000Z" itemprop="datePublished""><i class="icon-calendar icon"></i>2023-09-07</time> -->
+        <time datetime="2023-09-07T06:33:32.000Z" itemprop="datePublished" style="color:black"><i class="icon-calendar icon"></i>2023-09-07</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <!-- 
+<div id="toc">
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Android%E9%80%86%E5%90%91%E8%A7%A3%E9%A2%98-ill-intentions"><span class="toc-number">1.</span> <span class="toc-text">Android逆向解题-[ill-intentions]</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">1.1.</span> <span class="toc-text">参考</span></a></li></ol></li></ol>
+</div>
+ -->
+    <p>ill intentions</p>
+<h1 id="Android逆向解题-ill-intentions"><a href="#Android逆向解题-ill-intentions" class="headerlink" title="Android逆向解题-[ill-intentions]"></a>Android逆向解题-[ill-intentions]</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">objection -g com.example.hellojni explore</span><br><span class="line">android hooking list activities</span><br></pre></td></tr></table></figure>
+
+<p>看一下有什么Activities：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">com.example.application.DefinitelyNotThisOne</span><br><span class="line">com.example.application.IsThisTheRealOne</span><br><span class="line">com.example.application.MainActivity</span><br><span class="line">com.example.application.ThisIsTheRealOne</span><br></pre></td></tr></table></figure>
+
+<p>强制开启一个Activity：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">android intent launch_activity com.example.application.ThisIsTheRealOne</span><br></pre></td></tr></table></figure>
+
+<p>里面调用了<code>orThat</code>方法。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">android hooking watch class_method com.example.application.ThisIsTheRealOne.orThat --dump-args --dump-backtrace --dump-return</span><br></pre></td></tr></table></figure>
+
+<p>点击一下按钮，调用函数：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">com.example.hellojni on (google: 13) [usb] # android hooking watch class_method com.example.application.ThisIs</span><br><span class="line">TheRealOne.orThat --dump-args --dump-backtrace --dump-return</span><br><span class="line">(agent) Attempting to watch class com.example.application.ThisIsTheRealOne and method orThat.</span><br><span class="line">(agent) Hooking com.example.application.ThisIsTheRealOne.orThat(java.lang.String, java.lang.String, java.lang.String)</span><br><span class="line">(agent) Registering job 317785. Type: watch-method for: com.example.application.ThisIsTheRealOne.orThat</span><br><span class="line">com.example.hellojni on (google: 13) [usb] # (agent) [317785] Called com.example.application.ThisIsTheRealOne.orThat(java.lang.String, java.lang.String, java.lang.String)</span><br><span class="line">(agent) [317785] Backtrace:</span><br><span class="line">        com.example.application.ThisIsTheRealOne.orThat(Native Method)</span><br><span class="line">        com.example.application.ThisIsTheRealOne$1.onClick(ThisIsTheRealOne.java:31)</span><br><span class="line">        android.view.View.performClick(View.java:7506)</span><br><span class="line">        android.view.View.performClickInternal(View.java:7483)</span><br><span class="line">        android.view.View.-$$Nest$mperformClickInternal(Unknown Source:0)</span><br><span class="line">        android.view.View$PerformClick.run(View.java:29341)</span><br><span class="line">        android.os.Handler.handleCallback(Handler.java:942)</span><br><span class="line">        android.os.Handler.dispatchMessage(Handler.java:99)</span><br><span class="line">        android.os.Looper.loopOnce(Looper.java:201)</span><br><span class="line">        android.os.Looper.loop(Looper.java:288)</span><br><span class="line">        android.app.ActivityThread.main(ActivityThread.java:7872)</span><br><span class="line">        java.lang.reflect.Method.invoke(Native Method)</span><br><span class="line">        com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:548)</span><br><span class="line">        com.android.internal.os.ZygoteInit.main(ZygoteInit.java:936)</span><br><span class="line"></span><br><span class="line">(agent) [317785] Arguments com.example.application.ThisIsTheRealOne.orThat(IIjsWa&#125;iyYSmks, ODBkNTNhZjRmMGZmMWYtMzhhMDIzMmMwYjcwNzlhMTUwMDczOWNlYjhjMhUWYWYeMzYiZDFkMTY?</span><br><span class="line">, MhMhMGJhMTUhOGYWZThlZDQaYWJkYzkWZTktMTQhMjYhOTgiOTZkODgaNWRkZmFiZTciOGNlNDI?</span><br><span class="line">)</span><br><span class="line">(agent) [317785] Return Value: KeepTryingThisIsNotTheActivityYouAreLookingForButHereHaveSomeInternetPoints!</span><br></pre></td></tr></table></figure>
+
+<p>不是这个Activity，因此换一个。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">android intent launch_activity com.example.application.IsThisTheRealOne</span><br><span class="line">android hooking watch class_method com.example.application.IsThisTheRealOne.orThat --dump-args --dump-backtrace --dump-return</span><br></pre></td></tr></table></figure>
+
+<p>得到：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">(agent) Registering job 208845. Type: watch-method for: com.example.application.IsThisTheRealOne.orThat</span><br><span class="line">com.example.hellojni on (google: 13) [usb] # android hooking watch class_method com.example.application.IsThis</span><br><span class="line">TheRealOne.perhapsThis --dump-args --dump-backtrace --dump-return</span><br><span class="line">(agent) Attempting to watch class com.example.application.IsThisTheRealOne and method perhapsThis.</span><br><span class="line">(agent) Hooking com.example.application.IsThisTheRealOne.perhapsThis(java.lang.String, java.lang.String, java.lang.String)</span><br><span class="line">(agent) Registering job 771144. Type: watch-method for: com.example.application.IsThisTheRealOne.perhapsThis</span><br><span class="line">com.example.hellojni on (google: 13) [usb] # (agent) [771144] Called com.example.application.IsThisTheRealOne.perhapsThis(java.lang.String, java.lang.String, java.lang.String)</span><br><span class="line">(agent) [771144] Backtrace:</span><br><span class="line">        com.example.application.IsThisTheRealOne.perhapsThis(Native Method)</span><br><span class="line">        com.example.application.IsThisTheRealOne$1.onClick(IsThisTheRealOne.java:33)</span><br><span class="line">        android.view.View.performClick(View.java:7506)</span><br><span class="line">        android.view.View.performClickInternal(View.java:7483)</span><br><span class="line">        android.view.View.-$$Nest$mperformClickInternal(Unknown Source:0)</span><br><span class="line">        android.view.View$PerformClick.run(View.java:29341)</span><br><span class="line">        android.os.Handler.handleCallback(Handler.java:942)</span><br><span class="line">        android.os.Handler.dispatchMessage(Handler.java:99)</span><br><span class="line">        android.os.Looper.loopOnce(Looper.java:201)</span><br><span class="line">        android.os.Looper.loop(Looper.java:288)</span><br><span class="line">        android.app.ActivityThread.main(ActivityThread.java:7872)</span><br><span class="line">        java.lang.reflect.Method.invoke(Native Method)</span><br><span class="line">        com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:548)</span><br><span class="line">        com.android.internal.os.ZygoteInit.main(ZygoteInit.java:936)</span><br><span class="line"></span><br><span class="line">(agent) [771144] Arguments com.example.application.IsThisTheRealOne.perhapsThis(TRytfrgooq|F&#123;i-JovFBungFk\VlphgQbwvj~HuDgaeTzuSt.@Lex^~, ZGFkNGIwYzIWYjEzMTUWNjVjNTVlNjZhOGJkNhYtODIyOGEaMTMWNmQaOTVjZjkhMzRjYmUzZGE?</span><br><span class="line">, MzQxZTZmZjAxMmIiMWUzNjUxMmRiYjIxNDUwYTUxMWItZGQzNWUtMzkyOWYyMmQeYjZmMzEaNDQ?</span><br><span class="line">)</span><br><span class="line">(agent) [771144] Return Value: Congratulation!YouFoundTheRightActivityHereYouGo-CTF&#123;IDontHaveABadjokeSorry&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/hktk1643/p/15187619.html">ill-intentions - hktk1643 - 博客园 (cnblogs.com)</a></p>
+
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Objection</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">CTF</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<!-- <a href="/categories/Study//" class="article-tag-list-link color1">Study</a> -->
+        			<a href="/categories/Study/" class="article-tag-list-link color1">Study</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2023/09/07/Android%E9%80%86%E5%90%91%E8%A7%A3%E9%A2%98-ill-intentions/">More >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Web爬虫开发" class="article article-type-post  article-index" itemscope itemprop="blogPost" style="opacity:0.92">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2023/09/07/Web%E7%88%AC%E8%99%AB%E5%BC%80%E5%8F%91/" target="_blank" style="color:black">Web爬虫开发</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2023/09/07/Web%E7%88%AC%E8%99%AB%E5%BC%80%E5%8F%91/" class="archive-article-date">
+        <!-- <time datetime="2023-09-07T02:47:11.000Z" itemprop="datePublished""><i class="icon-calendar icon"></i>2023-09-07</time> -->
+        <time datetime="2023-09-07T02:47:11.000Z" itemprop="datePublished" style="color:black"><i class="icon-calendar icon"></i>2023-09-07</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <p>Web爬虫开发。为了实验的数据集，准备写个爬虫来搞。为了防止反爬机制，因而使用Selenium来处理。</p>
+    
+    <a class="article-more-a" href="/2023/09/07/Web%E7%88%AC%E8%99%AB%E5%BC%80%E5%8F%91/#more">more >></a>
+    
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Web</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Selenium</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<!-- <a href="/categories/Study//" class="article-tag-list-link color1">Study</a> -->
+        			<a href="/categories/Study/" class="article-tag-list-link color1">Study</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2023/09/07/Web%E7%88%AC%E8%99%AB%E5%BC%80%E5%8F%91/">More >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Electron逆向-Typora分析" class="article article-type-post  article-index" itemscope itemprop="blogPost" style="opacity:0.92">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2023/09/06/Electron%E9%80%86%E5%90%91-Typora%E5%88%86%E6%9E%90/" target="_blank" style="color:black">Electron逆向-Typora分析</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2023/09/06/Electron%E9%80%86%E5%90%91-Typora%E5%88%86%E6%9E%90/" class="archive-article-date">
+        <!-- <time datetime="2023-09-06T05:45:15.000Z" itemprop="datePublished""><i class="icon-calendar icon"></i>2023-09-06</time> -->
+        <time datetime="2023-09-06T05:45:15.000Z" itemprop="datePublished" style="color:black"><i class="icon-calendar icon"></i>2023-09-06</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    Here's something encrypted, password is required to continue reading.
+    
+    <a class="article-more-a" href="/2023/09/06/Electron%E9%80%86%E5%90%91-Typora%E5%88%86%E6%9E%90/#more">more >></a>
+    
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Electron</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Frida</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<!-- <a href="/categories/Study//" class="article-tag-list-link color1">Study</a> -->
+        			<a href="/categories/Study/" class="article-tag-list-link color1">Study</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2023/09/06/Electron%E9%80%86%E5%90%91-Typora%E5%88%86%E6%9E%90/">More >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Android逆向-Objection" class="article article-type-post  article-index" itemscope itemprop="blogPost" style="opacity:0.92">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2023/09/05/Android%E9%80%86%E5%90%91-Objection/" target="_blank" style="color:black">Android逆向-Objection</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2023/09/05/Android%E9%80%86%E5%90%91-Objection/" class="archive-article-date">
+        <!-- <time datetime="2023-09-05T06:47:42.000Z" itemprop="datePublished""><i class="icon-calendar icon"></i>2023-09-05</time> -->
+        <time datetime="2023-09-05T06:47:42.000Z" itemprop="datePublished" style="color:black"><i class="icon-calendar icon"></i>2023-09-05</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <p>Objection</p>
+    
+    <a class="article-more-a" href="/2023/09/05/Android%E9%80%86%E5%90%91-Objection/#more">more >></a>
     
     
 
@@ -346,7 +1306,7 @@
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Flutter</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Objection</a>
         		</li>
       		
 		</ul>
@@ -368,7 +1328,7 @@
 
     
     <p class="article-more-link">
-      <a class="article-more-a" href="/2023/05/28/Flutter%E9%80%86%E5%90%91%E5%88%9D%E6%8E%A2/">More >></a>
+      <a class="article-more-a" href="/2023/09/05/Android%E9%80%86%E5%90%91-Objection/">More >></a>
     </p>
     
 
@@ -398,7 +1358,7 @@
 
 
   
-    <article id="post-编译原理-Ch2-一个简单的语法制导翻译器" class="article article-type-post  article-index" itemscope itemprop="blogPost" style="opacity:0.92">
+    <article id="post-Android逆向-例子hookinunidbg" class="article article-type-post  article-index" itemscope itemprop="blogPost" style="opacity:0.92">
   <div class="article-inner">
     
       <header class="article-header">
@@ -406,7 +1366,7 @@
   
     <h1 itemprop="name">
 	
-	  <a class="article-title" href="/2023/05/26/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-Ch2-%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E8%AF%AD%E6%B3%95%E5%88%B6%E5%AF%BC%E7%BF%BB%E8%AF%91%E5%99%A8/" target="_blank" style="color:black">编译原理--Ch2.一个简单的语法制导翻译器</a>
+	  <a class="article-title" href="/2023/09/05/Android%E9%80%86%E5%90%91-%E4%BE%8B%E5%AD%90hookinunidbg/" target="_blank" style="color:black">Android逆向-例子hookinunidbg</a>
   
     </h1>
   
@@ -414,9 +1374,9 @@
 
   
   
-<a href="/2023/05/26/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-Ch2-%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E8%AF%AD%E6%B3%95%E5%88%B6%E5%AF%BC%E7%BF%BB%E8%AF%91%E5%99%A8/" class="archive-article-date">
-        <!-- <time datetime="2023-05-26T12:54:53.000Z" itemprop="datePublished""><i class="icon-calendar icon"></i>2023-05-26</time> -->
-        <time datetime="2023-05-26T12:54:53.000Z" itemprop="datePublished" style="color:black"><i class="icon-calendar icon"></i>2023-05-26</time>
+<a href="/2023/09/05/Android%E9%80%86%E5%90%91-%E4%BE%8B%E5%AD%90hookinunidbg/" class="archive-article-date">
+        <!-- <time datetime="2023-09-05T03:38:52.000Z" itemprop="datePublished""><i class="icon-calendar icon"></i>2023-09-05</time> -->
+        <time datetime="2023-09-05T03:38:52.000Z" itemprop="datePublished" style="color:black"><i class="icon-calendar icon"></i>2023-09-05</time>
 </a>
 
   
@@ -428,10 +1388,9 @@
   
   <div class="article-entry" itemprop="articleBody">
     
-    <p>编译原理–Ch2–一个简单的语法制导翻译器。</p>
-<p>《编译原理》龙书Chapter2——一个简单的语法制导翻译器。</p>
+    <p>hookinunidbg</p>
     
-    <a class="article-more-a" href="/2023/05/26/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-Ch2-%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E8%AF%AD%E6%B3%95%E5%88%B6%E5%AF%BC%E7%BF%BB%E8%AF%91%E5%99%A8/#more">more >></a>
+    <a class="article-more-a" href="/2023/09/05/Android%E9%80%86%E5%90%91-%E4%BE%8B%E5%AD%90hookinunidbg/#more">more >></a>
     
     
 
@@ -448,7 +1407,15 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Compiler</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Frida</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Unidbg</a>
         		</li>
       		
 		</ul>
@@ -470,836 +1437,7 @@
 
     
     <p class="article-more-link">
-      <a class="article-more-a" href="/2023/05/26/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-Ch2-%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E8%AF%AD%E6%B3%95%E5%88%B6%E5%AF%BC%E7%BF%BB%E8%AF%91%E5%99%A8/">More >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-近期想要干的事情" class="article article-type-post  article-index" itemscope itemprop="blogPost" style="opacity:0.92">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2023/05/26/%E8%BF%91%E6%9C%9F%E6%83%B3%E8%A6%81%E5%B9%B2%E7%9A%84%E4%BA%8B%E6%83%85/" target="_blank" style="color:black">近期想要干的事情</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2023/05/26/%E8%BF%91%E6%9C%9F%E6%83%B3%E8%A6%81%E5%B9%B2%E7%9A%84%E4%BA%8B%E6%83%85/" class="archive-article-date">
-        <!-- <time datetime="2023-05-26T07:24:49.000Z" itemprop="datePublished""><i class="icon-calendar icon"></i>2023-05-26</time> -->
-        <time datetime="2023-05-26T07:24:49.000Z" itemprop="datePublished" style="color:black"><i class="icon-calendar icon"></i>2023-05-26</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p>记一下最近想要实现的事情。</p>
-    
-    <a class="article-more-a" href="/2023/05/26/%E8%BF%91%E6%9C%9F%E6%83%B3%E8%A6%81%E5%B9%B2%E7%9A%84%E4%BA%8B%E6%83%85/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<!-- <a href="/categories/Thoughts//" class="article-tag-list-link color4">Thoughts</a> -->
-        			<a href="/categories/Thoughts/" class="article-tag-list-link color4">Thoughts</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2023/05/26/%E8%BF%91%E6%9C%9F%E6%83%B3%E8%A6%81%E5%B9%B2%E7%9A%84%E4%BA%8B%E6%83%85/">More >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-PlayStation5评测-次世代游戏体验" class="article article-type-post  article-index" itemscope itemprop="blogPost" style="opacity:0.92">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2023/05/26/PlayStation5%E8%AF%84%E6%B5%8B-%E6%AC%A1%E4%B8%96%E4%BB%A3%E6%B8%B8%E6%88%8F%E4%BD%93%E9%AA%8C/" target="_blank" style="color:black">PlayStation5评测--次世代游戏体验</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2023/05/26/PlayStation5%E8%AF%84%E6%B5%8B-%E6%AC%A1%E4%B8%96%E4%BB%A3%E6%B8%B8%E6%88%8F%E4%BD%93%E9%AA%8C/" class="archive-article-date">
-        <!-- <time datetime="2023-05-26T06:50:04.000Z" itemprop="datePublished""><i class="icon-calendar icon"></i>2023-05-26</time> -->
-        <time datetime="2023-05-26T06:50:04.000Z" itemprop="datePublished" style="color:black"><i class="icon-calendar icon"></i>2023-05-26</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p>PlayStation5主机从2月份开学买回宿舍以来也陆陆续续玩了3个多月了。谈谈感受。</p>
-    
-    <a class="article-more-a" href="/2023/05/26/PlayStation5%E8%AF%84%E6%B5%8B-%E6%AC%A1%E4%B8%96%E4%BB%A3%E6%B8%B8%E6%88%8F%E4%BD%93%E9%AA%8C/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">PlayStation</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<!-- <a href="/categories/Game//" class="article-tag-list-link color5">Game</a> -->
-        			<a href="/categories/Game/" class="article-tag-list-link color5">Game</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2023/05/26/PlayStation5%E8%AF%84%E6%B5%8B-%E6%AC%A1%E4%B8%96%E4%BB%A3%E6%B8%B8%E6%88%8F%E4%BD%93%E9%AA%8C/">More >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Nintendo-Switch评测-惊喜与失望并存" class="article article-type-post  article-index" itemscope itemprop="blogPost" style="opacity:0.92">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2023/05/25/Nintendo-Switch%E8%AF%84%E6%B5%8B-%E6%83%8A%E5%96%9C%E4%B8%8E%E5%A4%B1%E6%9C%9B%E5%B9%B6%E5%AD%98/" target="_blank" style="color:black">Nintendo Switch评测--惊喜与失望并存</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2023/05/25/Nintendo-Switch%E8%AF%84%E6%B5%8B-%E6%83%8A%E5%96%9C%E4%B8%8E%E5%A4%B1%E6%9C%9B%E5%B9%B6%E5%AD%98/" class="archive-article-date">
-        <!-- <time datetime="2023-05-25T13:14:19.000Z" itemprop="datePublished""><i class="icon-calendar icon"></i>2023-05-25</time> -->
-        <time datetime="2023-05-25T13:14:19.000Z" itemprop="datePublished" style="color:black"><i class="icon-calendar icon"></i>2023-05-25</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p>最近算是半个跟风，正好在王国之泪大火的时候，入手了一个Nintendo Switch来玩。（同时还给我表弟送了一个双系统版本的）玩了大概有一周，说说我对这个游戏掌机的感受。</p>
-    
-    <a class="article-more-a" href="/2023/05/25/Nintendo-Switch%E8%AF%84%E6%B5%8B-%E6%83%8A%E5%96%9C%E4%B8%8E%E5%A4%B1%E6%9C%9B%E5%B9%B6%E5%AD%98/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Nintendo Switch</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<!-- <a href="/categories/Game//" class="article-tag-list-link color5">Game</a> -->
-        			<a href="/categories/Game/" class="article-tag-list-link color5">Game</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2023/05/25/Nintendo-Switch%E8%AF%84%E6%B5%8B-%E6%83%8A%E5%96%9C%E4%B8%8E%E5%A4%B1%E6%9C%9B%E5%B9%B6%E5%AD%98/">More >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Malware-Analysis-Trochilus" class="article article-type-post  article-index" itemscope itemprop="blogPost" style="opacity:0.92">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2023/05/21/Malware-Analysis-Trochilus/" target="_blank" style="color:black">Malware Analysis -- Trochilus</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2023/05/21/Malware-Analysis-Trochilus/" class="archive-article-date">
-        <!-- <time datetime="2023-05-21T06:21:53.000Z" itemprop="datePublished""><i class="icon-calendar icon"></i>2023-05-21</time> -->
-        <time datetime="2023-05-21T06:21:53.000Z" itemprop="datePublished" style="color:black"><i class="icon-calendar icon"></i>2023-05-21</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p>Analysis of Trochilus.</p>
-    
-    <a class="article-more-a" href="/2023/05/21/Malware-Analysis-Trochilus/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Malware</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Trochilus</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<!-- <a href="/categories/Sutdy//" class="article-tag-list-link color1">Sutdy</a> -->
-        			<a href="/categories/Sutdy/" class="article-tag-list-link color1">Sutdy</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2023/05/21/Malware-Analysis-Trochilus/">More >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-CV" class="article article-type-post  article-index" itemscope itemprop="blogPost" style="opacity:0.92">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2023/05/07/CV/" target="_blank" style="color:black">Hao Ren&#39;s CV--version-2023-04-24</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2023/05/07/CV/" class="archive-article-date">
-        <!-- <time datetime="2023-05-07T01:45:15.000Z" itemprop="datePublished""><i class="icon-calendar icon"></i>2023-05-07</time> -->
-        <time datetime="2023-05-07T01:45:15.000Z" itemprop="datePublished" style="color:black"><i class="icon-calendar icon"></i>2023-05-07</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p>This is my CV for the time being.</p>
-    
-    <a class="article-more-a" href="/2023/05/07/CV/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">CV</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<!-- <a href="/categories/CV//" class="article-tag-list-link color3">CV</a> -->
-        			<a href="/categories/CV/" class="article-tag-list-link color3">CV</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2023/05/07/CV/">More >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Hexo-blog-personalization" class="article article-type-post  article-index" itemscope itemprop="blogPost" style="opacity:0.92">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2023/05/07/Hexo-blog-personalization/" target="_blank" style="color:black">Hexo blog personalization</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2023/05/07/Hexo-blog-personalization/" class="archive-article-date">
-        <!-- <time datetime="2023-05-07T01:45:15.000Z" itemprop="datePublished""><i class="icon-calendar icon"></i>2023-05-07</time> -->
-        <time datetime="2023-05-07T01:45:15.000Z" itemprop="datePublished" style="color:black"><i class="icon-calendar icon"></i>2023-05-07</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p>Today I am going to switch my blog’s theme from <code>next</code> to <code>yilia-plus</code>. This blog records some steps I’ve taken to do the job.</p>
-    
-    <a class="article-more-a" href="/2023/05/07/Hexo-blog-personalization/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Hexo</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Personalization</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<!-- <a href="/categories/Study//" class="article-tag-list-link color1">Study</a> -->
-        			<a href="/categories/Study/" class="article-tag-list-link color1">Study</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2023/05/07/Hexo-blog-personalization/">More >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-How-to-become-a-WEEB" class="article article-type-post  article-index" itemscope itemprop="blogPost" style="opacity:0.92">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2023/05/07/How-to-become-a-WEEB/" target="_blank" style="color:black">How to become a WEEB</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2023/05/07/How-to-become-a-WEEB/" class="archive-article-date">
-        <!-- <time datetime="2023-05-07T01:42:21.000Z" itemprop="datePublished""><i class="icon-calendar icon"></i>2023-05-07</time> -->
-        <time datetime="2023-05-07T01:42:21.000Z" itemprop="datePublished" style="color:black"><i class="icon-calendar icon"></i>2023-05-07</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    Here's something encrypted, password is required to continue reading.
-    
-    <a class="article-more-a" href="/2023/05/07/How-to-become-a-WEEB/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Weeb</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Entertainment</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<!-- <a href="/categories/Thoughts//" class="article-tag-list-link color4">Thoughts</a> -->
-        			<a href="/categories/Thoughts/" class="article-tag-list-link color4">Thoughts</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2023/05/07/How-to-become-a-WEEB/">More >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Reading-the-source-code-of-Lucid-the-IDA-microcode-explorer" class="article article-type-post  article-index" itemscope itemprop="blogPost" style="opacity:0.92">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2023/04/24/Reading-the-source-code-of-Lucid-the-IDA-microcode-explorer/" target="_blank" style="color:black">Reading the source code of Lucid - the IDA microcode explorer</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2023/04/24/Reading-the-source-code-of-Lucid-the-IDA-microcode-explorer/" class="archive-article-date">
-        <!-- <time datetime="2023-04-24T12:06:48.000Z" itemprop="datePublished""><i class="icon-calendar icon"></i>2023-04-24</time> -->
-        <time datetime="2023-04-24T12:06:48.000Z" itemprop="datePublished" style="color:black"><i class="icon-calendar icon"></i>2023-04-24</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p>This blog is supposed to write something about the <code>Lucid</code> plugin for IDAPython. Havn’t started yet.</p>
-    
-    <a class="article-more-a" href="/2023/04/24/Reading-the-source-code-of-Lucid-the-IDA-microcode-explorer/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Assembly</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">IDA</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">IDAPython</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Plugin</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Decompiler</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Microcode</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<!-- <a href="/categories/Study//" class="article-tag-list-link color1">Study</a> -->
-        			<a href="/categories/Study/" class="article-tag-list-link color1">Study</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2023/04/24/Reading-the-source-code-of-Lucid-the-IDA-microcode-explorer/">More >></a>
+      <a class="article-more-a" href="/2023/09/05/Android%E9%80%86%E5%90%91-%E4%BE%8B%E5%AD%90hookinunidbg/">More >></a>
     </p>
     
 
@@ -1331,7 +1469,7 @@
   
   
     <nav id="page-nav" style="background:url(/img/overlay.jpg);">
-      <a class="extend prev" rel="prev" href="/page/5/">« Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/7/">Next »</a>
+      <a class="extend prev" rel="prev" href="/page/5/">« Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/7/">Next »</a>
     </nav>
   
 
@@ -1469,6 +1607,10 @@
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Study</a>
+              </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Android</a>
@@ -1823,14 +1965,6 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Hook</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Dobby</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">CTF</a>
               </li>
              
@@ -1848,6 +1982,50 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Selenium</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">-Android</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Cmake</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Galgame</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Godot</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">LLVM</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Waydroid</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Anti-censorship</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">CSV</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">QEMU</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Wireshark</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Paper</a>
               </li>
             
             <div class="clearfix"></div>

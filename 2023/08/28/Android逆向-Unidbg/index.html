@@ -18,7 +18,7 @@
 <meta property="og:description" content="学习一下Unidbg。这是基于Unicorn的，用于模拟Android系统环境的模拟器。">
 <meta property="og:locale">
 <meta property="article:published_time" content="2023-08-28T05:13:06.000Z">
-<meta property="article:modified_time" content="2023-09-05T02:16:11.343Z">
+<meta property="article:modified_time" content="2023-10-18T08:16:46.364Z">
 <meta property="article:author" content="Taardis">
 <meta property="article:tag" content="Android">
 <meta property="article:tag" content="Unidbg">
@@ -319,7 +319,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">3.3k字</span>
+      <span class="post-count">3.8k字</span>
     </span>
   </span>
 
@@ -328,7 +328,7 @@
     <span class="post-meta-item-icon">
       <i class="icon-book icon"></i>
       <span class="post-meta-item-text"> 阅读时长≈</span>
-      <span class="post-count">15分</span>
+      <span class="post-count">17分</span>
     </span>
   </span>
 </div>
@@ -341,7 +341,7 @@
     
     <!-- 
 <div id="toc">
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Android%E9%80%86%E5%90%91-Unidbg"><span class="toc-number">1.</span> <span class="toc-text">Android逆向-Unidbg</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E5%9C%B0%E5%9D%80"><span class="toc-number">1.1.</span> <span class="toc-text">项目地址</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="toc-number">1.2.</span> <span class="toc-text">环境搭建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B0%83%E8%AF%95%E6%A8%A1%E5%BC%8F%EF%BC%88%E8%BF%98%E6%B2%A1%E8%AF%95%EF%BC%89"><span class="toc-number">1.3.</span> <span class="toc-text">调试模式（还没试）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Unidbg%E7%9A%84%E7%94%A8%E5%A4%84"><span class="toc-number">1.4.</span> <span class="toc-text">Unidbg的用处</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Unidbg%E5%88%86%E6%9E%90%E6%B5%81%E7%A8%8B"><span class="toc-number">1.5.</span> <span class="toc-text">Unidbg分析流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Unidbg%E8%A1%A5%E7%8E%AF%E5%A2%83"><span class="toc-number">1.6.</span> <span class="toc-text">Unidbg补环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="toc-number">1.7.</span> <span class="toc-text">基本使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IDA%E5%8A%A8%E8%B0%83%EF%BC%88%E6%B2%A1%E8%A7%A3%E5%86%B3%EF%BC%89"><span class="toc-number">1.8.</span> <span class="toc-text">IDA动调（没解决）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E6%89%93%E5%8C%85%E6%88%90Jar"><span class="toc-number">1.9.</span> <span class="toc-text">项目打包成Jar</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Unidbg%E6%89%A7%E8%A1%8C%E5%BC%95%E6%93%8E%EF%BC%88%E6%B2%A1%E8%A7%A3%E5%86%B3%EF%BC%89"><span class="toc-number">1.10.</span> <span class="toc-text">Unidbg执行引擎（没解决）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AEDemo%E5%88%86%E6%9E%90"><span class="toc-number">1.11.</span> <span class="toc-text">项目Demo分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#anjuke-mobile-sign-SignUtil"><span class="toc-number">1.11.1.</span> <span class="toc-text">anjuke.mobile.sign.SignUtil</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#bytedance-frameworks-core-encrypt"><span class="toc-number">1.11.2.</span> <span class="toc-text">bytedance.frameworks.core.encrypt</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#TTEncrypt"><span class="toc-number">1.11.2.1.</span> <span class="toc-text">TTEncrypt</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#HookZz"><span class="toc-number">1.11.2.1.1.</span> <span class="toc-text">HookZz</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Dobby"><span class="toc-number">1.11.2.1.2.</span> <span class="toc-text">Dobby</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#xHook"><span class="toc-number">1.11.2.1.3.</span> <span class="toc-text">xHook</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#TTEncryptWorker%EF%BC%88%E5%A4%9A%E7%BA%BF%E7%A8%8B%EF%BC%8C%E6%B2%A1%E7%A0%94%E7%A9%B6%EF%BC%89"><span class="toc-number">1.11.2.2.</span> <span class="toc-text">TTEncryptWorker（多线程，没研究）</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">1.12.</span> <span class="toc-text">参考</span></a></li></ol></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Android%E9%80%86%E5%90%91-Unidbg"><span class="toc-number">1.</span> <span class="toc-text">Android逆向-Unidbg</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E5%9C%B0%E5%9D%80"><span class="toc-number">1.1.</span> <span class="toc-text">项目地址</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="toc-number">1.2.</span> <span class="toc-text">环境搭建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B0%83%E8%AF%95%E6%A8%A1%E5%BC%8F%EF%BC%88%E8%BF%98%E6%B2%A1%E8%AF%95%EF%BC%89"><span class="toc-number">1.3.</span> <span class="toc-text">调试模式（还没试）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Unidbg%E7%9A%84%E7%94%A8%E5%A4%84"><span class="toc-number">1.4.</span> <span class="toc-text">Unidbg的用处</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Unidbg%E5%88%86%E6%9E%90%E6%B5%81%E7%A8%8B"><span class="toc-number">1.5.</span> <span class="toc-text">Unidbg分析流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Unidbg%E8%A1%A5%E7%8E%AF%E5%A2%83"><span class="toc-number">1.6.</span> <span class="toc-text">Unidbg补环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="toc-number">1.7.</span> <span class="toc-text">基本使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IDA%E5%8A%A8%E8%B0%83%EF%BC%88%E6%B2%A1%E8%A7%A3%E5%86%B3%EF%BC%89"><span class="toc-number">1.8.</span> <span class="toc-text">IDA动调（没解决）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E6%89%93%E5%8C%85%E6%88%90Jar"><span class="toc-number">1.9.</span> <span class="toc-text">项目打包成Jar</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Unidbg%E6%89%A7%E8%A1%8C%E5%BC%95%E6%93%8E%EF%BC%88%E6%B2%A1%E8%A7%A3%E5%86%B3%EF%BC%89"><span class="toc-number">1.10.</span> <span class="toc-text">Unidbg执行引擎（没解决）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AEDemo%E5%88%86%E6%9E%90"><span class="toc-number">1.11.</span> <span class="toc-text">项目Demo分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#anjuke-mobile-sign-SignUtil"><span class="toc-number">1.11.1.</span> <span class="toc-text">anjuke.mobile.sign.SignUtil</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#bytedance-frameworks-core-encrypt"><span class="toc-number">1.11.2.</span> <span class="toc-text">bytedance.frameworks.core.encrypt</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#TTEncrypt"><span class="toc-number">1.11.2.1.</span> <span class="toc-text">TTEncrypt</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#HookZz"><span class="toc-number">1.11.2.1.1.</span> <span class="toc-text">HookZz</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Dobby"><span class="toc-number">1.11.2.1.2.</span> <span class="toc-text">Dobby</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#xHook"><span class="toc-number">1.11.2.1.3.</span> <span class="toc-text">xHook</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#TTEncryptWorker%EF%BC%88%E5%A4%9A%E7%BA%BF%E7%A8%8B%EF%BC%8C%E6%B2%A1%E7%A0%94%E7%A9%B6%EF%BC%89"><span class="toc-number">1.11.2.2.</span> <span class="toc-text">TTEncryptWorker（多线程，没研究）</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E4%BE%8B%E5%AD%90"><span class="toc-number">1.12.</span> <span class="toc-text">其他例子</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E9%A1%B9%E7%9B%AE"><span class="toc-number">1.13.</span> <span class="toc-text">其他项目</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ExAndroidNativeEmu"><span class="toc-number">1.13.1.</span> <span class="toc-text">ExAndroidNativeEmu</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E6%95%99%E7%A8%8B"><span class="toc-number">1.14.</span> <span class="toc-text">参考教程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#oasis"><span class="toc-number">1.14.1.</span> <span class="toc-text">oasis</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#calculateS"><span class="toc-number">1.14.2.</span> <span class="toc-text">calculateS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#right573"><span class="toc-number">1.14.3.</span> <span class="toc-text">right573</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mfw-so"><span class="toc-number">1.14.4.</span> <span class="toc-text">mfw_so</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#s"><span class="toc-number">1.14.5.</span> <span class="toc-text">s</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">1.15.</span> <span class="toc-text">参考</span></a></li></ol></li></ol>
 </div>
  -->
     <p>学习一下Unidbg。这是基于Unicorn的，用于模拟Android系统环境的模拟器。</p>
@@ -432,10 +432,34 @@
 
 
 
+<h2 id="其他例子"><a href="#其他例子" class="headerlink" title="其他例子"></a>其他例子</h2><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_38927522/article/details/127776656">unidbg非反射调用demo(一)_unidbg demo_Codeooo的博客-CSDN博客</a></p>
+<h2 id="其他项目"><a href="#其他项目" class="headerlink" title="其他项目"></a>其他项目</h2><h3 id="ExAndroidNativeEmu"><a href="#ExAndroidNativeEmu" class="headerlink" title="ExAndroidNativeEmu"></a>ExAndroidNativeEmu</h3><p><a target="_blank" rel="noopener" href="https://github.com/maiyao1988/ExAndroidNativeEmu">maiyao1988&#x2F;ExAndroidNativeEmu: An improved version of AndroidNativeEmu,Allow running android elf on PC (github.com)</a></p>
+<p>一个基于Python的安卓so模拟器。用Python补环境的时候会很麻烦，不过简单代码模拟的时候会方便一点。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 因为和angr环境冲突了所以创建个venv</span><br><span class="line">python -m venv naemu</span><br><span class="line">.\naemu\Scripts\Activate.ps1</span><br><span class="line">pip install -r requirements.txt</span><br><span class="line">python example_jni.py</span><br></pre></td></tr></table></figure>
+
+<p>还是写了一个新的blog来记录。</p>
+<h2 id="参考教程"><a href="#参考教程" class="headerlink" title="参考教程"></a>参考教程</h2><h3 id="oasis"><a href="#oasis" class="headerlink" title="oasis"></a>oasis</h3><p>学习代码也被我放在了Unidbg项目里面</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_38851536/article/details/117418582">SO逆向入门实战教程一：OASIS-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_46734340/article/details/118857038">Android逆向-实战so分析-某洲_v3.5.8_unidbg学习_android逆向so分析_哔哩哩!的博客-CSDN博客</a></p>
+<h3 id="calculateS"><a href="#calculateS" class="headerlink" title="calculateS"></a>calculateS</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_38851536/article/details/117419041">SO逆向入门实战教程二：calculateS_nativenewcalculates 算法_白龙~的博客-CSDN博客</a></p>
+<p>值得注意的一个点，博主在第一次尝试直接模拟执行<code>calculateS</code>JNI函数的时候遇到Unidbg报错了，在0x2C8D处。</p>
+<p>因为这个函数确确实实的使用了第二个class参数：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jbyte *__fastcall sub_2C3C(JNIEnv *a1, jclass a2)</span><br></pre></td></tr></table></figure>
+
+<p>然而偷懒，a2传的是Null。因此就触发了空指针解引用。</p>
+<p>不过最后看Java层的话确实有点麻烦，所以除非考虑先用Frida去Hook，拿到具体的class，再到这里来做解析，否则就最好选择直接patch掉这一块代码。</p>
+<h3 id="right573"><a href="#right573" class="headerlink" title="right573"></a>right573</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_38851536/article/details/117533396">【精选】SO逆向入门实战教程三：V2-Sign_unidbg context_白龙~的博客-CSDN博客</a></p>
+<p>这补环境就纯玄学</p>
+<h3 id="mfw-so"><a href="#mfw-so" class="headerlink" title="mfw_so"></a>mfw_so</h3><p>主要是分析SHA1算法魔改。</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_38851536/article/details/117550316">SO逆向入门实战教程四：mfw_so算法还原-CSDN博客</a></p>
+<h3 id="s"><a href="#s" class="headerlink" title="s"></a>s</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_38851536/article/details/117923970">【精选】SO逆向入门实战教程六：s_undibg调用安卓_白龙~的博客-CSDN博客</a></p>
+<p>增加了Java反射的方法，相比嗯加Jni方法可能会轻松点</p>
+<p>不过补环境的时候还是很折磨</p>
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p> <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_41179280/article/details/121771586">Unidbg(一)环境安装及配置_unidbg环境配置_FalsePlus的博客-CSDN博客</a> </p>
 <p> <a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1936082">Crack App | 初试 Unidbg 环境搭建-腾讯云开发者社区-腾讯云 (tencent.com)</a> </p>
 <p> <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/574949071">unidbg 入门-1 - 知乎 (zhihu.com)</a> </p>
 <p> <a target="_blank" rel="noopener" href="https://blog.csdn.net/freeking101/article/details/128519449">unidbg 简介、基本使用、调用so中方法、unidbg-web_unicorn unidbg_擒贼先擒王的博客-CSDN博客</a> </p>
+<p><a target="_blank" rel="noopener" href="https://github.com/zhkl0228/unidbg">zhkl0228&#x2F;unidbg: Allows you to emulate an Android native library, and an experimental iOS emulation (github.com)</a></p>
 
     
 
@@ -542,7 +566,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Android%E9%80%86%E5%90%91-Unidbg"><span class="toc-number">1.</span> <span class="toc-text">Android逆向-Unidbg</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E5%9C%B0%E5%9D%80"><span class="toc-number">1.1.</span> <span class="toc-text">项目地址</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="toc-number">1.2.</span> <span class="toc-text">环境搭建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B0%83%E8%AF%95%E6%A8%A1%E5%BC%8F%EF%BC%88%E8%BF%98%E6%B2%A1%E8%AF%95%EF%BC%89"><span class="toc-number">1.3.</span> <span class="toc-text">调试模式（还没试）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Unidbg%E7%9A%84%E7%94%A8%E5%A4%84"><span class="toc-number">1.4.</span> <span class="toc-text">Unidbg的用处</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Unidbg%E5%88%86%E6%9E%90%E6%B5%81%E7%A8%8B"><span class="toc-number">1.5.</span> <span class="toc-text">Unidbg分析流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Unidbg%E8%A1%A5%E7%8E%AF%E5%A2%83"><span class="toc-number">1.6.</span> <span class="toc-text">Unidbg补环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="toc-number">1.7.</span> <span class="toc-text">基本使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IDA%E5%8A%A8%E8%B0%83%EF%BC%88%E6%B2%A1%E8%A7%A3%E5%86%B3%EF%BC%89"><span class="toc-number">1.8.</span> <span class="toc-text">IDA动调（没解决）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E6%89%93%E5%8C%85%E6%88%90Jar"><span class="toc-number">1.9.</span> <span class="toc-text">项目打包成Jar</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Unidbg%E6%89%A7%E8%A1%8C%E5%BC%95%E6%93%8E%EF%BC%88%E6%B2%A1%E8%A7%A3%E5%86%B3%EF%BC%89"><span class="toc-number">1.10.</span> <span class="toc-text">Unidbg执行引擎（没解决）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AEDemo%E5%88%86%E6%9E%90"><span class="toc-number">1.11.</span> <span class="toc-text">项目Demo分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#anjuke-mobile-sign-SignUtil"><span class="toc-number">1.11.1.</span> <span class="toc-text">anjuke.mobile.sign.SignUtil</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#bytedance-frameworks-core-encrypt"><span class="toc-number">1.11.2.</span> <span class="toc-text">bytedance.frameworks.core.encrypt</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#TTEncrypt"><span class="toc-number">1.11.2.1.</span> <span class="toc-text">TTEncrypt</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#HookZz"><span class="toc-number">1.11.2.1.1.</span> <span class="toc-text">HookZz</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Dobby"><span class="toc-number">1.11.2.1.2.</span> <span class="toc-text">Dobby</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#xHook"><span class="toc-number">1.11.2.1.3.</span> <span class="toc-text">xHook</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#TTEncryptWorker%EF%BC%88%E5%A4%9A%E7%BA%BF%E7%A8%8B%EF%BC%8C%E6%B2%A1%E7%A0%94%E7%A9%B6%EF%BC%89"><span class="toc-number">1.11.2.2.</span> <span class="toc-text">TTEncryptWorker（多线程，没研究）</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">1.12.</span> <span class="toc-text">参考</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Android%E9%80%86%E5%90%91-Unidbg"><span class="toc-number">1.</span> <span class="toc-text">Android逆向-Unidbg</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E5%9C%B0%E5%9D%80"><span class="toc-number">1.1.</span> <span class="toc-text">项目地址</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="toc-number">1.2.</span> <span class="toc-text">环境搭建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B0%83%E8%AF%95%E6%A8%A1%E5%BC%8F%EF%BC%88%E8%BF%98%E6%B2%A1%E8%AF%95%EF%BC%89"><span class="toc-number">1.3.</span> <span class="toc-text">调试模式（还没试）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Unidbg%E7%9A%84%E7%94%A8%E5%A4%84"><span class="toc-number">1.4.</span> <span class="toc-text">Unidbg的用处</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Unidbg%E5%88%86%E6%9E%90%E6%B5%81%E7%A8%8B"><span class="toc-number">1.5.</span> <span class="toc-text">Unidbg分析流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Unidbg%E8%A1%A5%E7%8E%AF%E5%A2%83"><span class="toc-number">1.6.</span> <span class="toc-text">Unidbg补环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="toc-number">1.7.</span> <span class="toc-text">基本使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IDA%E5%8A%A8%E8%B0%83%EF%BC%88%E6%B2%A1%E8%A7%A3%E5%86%B3%EF%BC%89"><span class="toc-number">1.8.</span> <span class="toc-text">IDA动调（没解决）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E6%89%93%E5%8C%85%E6%88%90Jar"><span class="toc-number">1.9.</span> <span class="toc-text">项目打包成Jar</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Unidbg%E6%89%A7%E8%A1%8C%E5%BC%95%E6%93%8E%EF%BC%88%E6%B2%A1%E8%A7%A3%E5%86%B3%EF%BC%89"><span class="toc-number">1.10.</span> <span class="toc-text">Unidbg执行引擎（没解决）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AEDemo%E5%88%86%E6%9E%90"><span class="toc-number">1.11.</span> <span class="toc-text">项目Demo分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#anjuke-mobile-sign-SignUtil"><span class="toc-number">1.11.1.</span> <span class="toc-text">anjuke.mobile.sign.SignUtil</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#bytedance-frameworks-core-encrypt"><span class="toc-number">1.11.2.</span> <span class="toc-text">bytedance.frameworks.core.encrypt</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#TTEncrypt"><span class="toc-number">1.11.2.1.</span> <span class="toc-text">TTEncrypt</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#HookZz"><span class="toc-number">1.11.2.1.1.</span> <span class="toc-text">HookZz</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Dobby"><span class="toc-number">1.11.2.1.2.</span> <span class="toc-text">Dobby</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#xHook"><span class="toc-number">1.11.2.1.3.</span> <span class="toc-text">xHook</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#TTEncryptWorker%EF%BC%88%E5%A4%9A%E7%BA%BF%E7%A8%8B%EF%BC%8C%E6%B2%A1%E7%A0%94%E7%A9%B6%EF%BC%89"><span class="toc-number">1.11.2.2.</span> <span class="toc-text">TTEncryptWorker（多线程，没研究）</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E4%BE%8B%E5%AD%90"><span class="toc-number">1.12.</span> <span class="toc-text">其他例子</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E9%A1%B9%E7%9B%AE"><span class="toc-number">1.13.</span> <span class="toc-text">其他项目</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ExAndroidNativeEmu"><span class="toc-number">1.13.1.</span> <span class="toc-text">ExAndroidNativeEmu</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E6%95%99%E7%A8%8B"><span class="toc-number">1.14.</span> <span class="toc-text">参考教程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#oasis"><span class="toc-number">1.14.1.</span> <span class="toc-text">oasis</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#calculateS"><span class="toc-number">1.14.2.</span> <span class="toc-text">calculateS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#right573"><span class="toc-number">1.14.3.</span> <span class="toc-text">right573</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mfw-so"><span class="toc-number">1.14.4.</span> <span class="toc-text">mfw_so</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#s"><span class="toc-number">1.14.5.</span> <span class="toc-text">s</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">1.15.</span> <span class="toc-text">参考</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -697,6 +721,10 @@
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Study</a>
+              </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Android</a>
@@ -1051,14 +1079,6 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Hook</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Dobby</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">CTF</a>
               </li>
              
@@ -1076,6 +1096,50 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Selenium</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">-Android</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Cmake</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Galgame</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Godot</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">LLVM</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Waydroid</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Anti-censorship</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">CSV</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">QEMU</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Wireshark</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Paper</a>
               </li>
             
             <div class="clearfix"></div>

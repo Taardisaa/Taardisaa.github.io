@@ -18,7 +18,7 @@
 <meta property="og:description" content="开始复习Frida的使用。">
 <meta property="og:locale">
 <meta property="article:published_time" content="2023-09-03T05:31:49.000Z">
-<meta property="article:modified_time" content="2023-09-06T02:48:47.030Z">
+<meta property="article:modified_time" content="2023-10-17T05:49:44.272Z">
 <meta property="article:author" content="Taardis">
 <meta property="article:tag" content="Android">
 <meta property="article:tag" content="Frida">
@@ -319,7 +319,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">846字</span>
+      <span class="post-count">3k字</span>
     </span>
   </span>
 
@@ -328,7 +328,7 @@
     <span class="post-meta-item-icon">
       <i class="icon-book icon"></i>
       <span class="post-meta-item-text"> 阅读时长≈</span>
-      <span class="post-count">3分</span>
+      <span class="post-count">13分</span>
     </span>
   </span>
 </div>
@@ -341,7 +341,7 @@
     
     <!-- 
 <div id="toc">
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Android%E9%80%86%E5%90%91-Frida"><span class="toc-number">1.</span> <span class="toc-text">Android逆向-Frida</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-number">1.1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8"><span class="toc-number">1.2.</span> <span class="toc-text">使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Frida-IDA%E5%8A%A8%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E6%B5%81%E7%A8%8B"><span class="toc-number">1.3.</span> <span class="toc-text">Frida+IDA动静态分析流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%B0%E6%88%90%E5%B7%A5%E5%85%B7"><span class="toc-number">1.4.</span> <span class="toc-text">现成工具</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#frida-ps"><span class="toc-number">1.4.1.</span> <span class="toc-text">frida-ps</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#frida-trace"><span class="toc-number">1.4.2.</span> <span class="toc-text">frida-trace</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#jnitrace"><span class="toc-number">1.4.3.</span> <span class="toc-text">jnitrace</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Objection"><span class="toc-number">1.4.4.</span> <span class="toc-text">Objection</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#VSCode-nodejs-Frida-js%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83"><span class="toc-number">1.5.</span> <span class="toc-text">VSCode + nodejs + Frida js开发环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9B%E9%98%B6%EF%BC%88%E6%9C%AA%E5%AD%A6%E4%B9%A0%EF%BC%89"><span class="toc-number">1.6.</span> <span class="toc-text">进阶（未学习）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">1.7.</span> <span class="toc-text">参考</span></a></li></ol></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Android%E9%80%86%E5%90%91-Frida"><span class="toc-number">1.</span> <span class="toc-text">Android逆向-Frida</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-number">1.1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%96%E8%AF%91%E4%B8%8E%E9%AD%94%E6%94%B9"><span class="toc-number">1.2.</span> <span class="toc-text">编译与魔改</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8"><span class="toc-number">1.3.</span> <span class="toc-text">使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Frida-IDA%E5%8A%A8%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E6%B5%81%E7%A8%8B"><span class="toc-number">1.4.</span> <span class="toc-text">Frida+IDA动静态分析流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%B0%E6%88%90%E5%B7%A5%E5%85%B7"><span class="toc-number">1.5.</span> <span class="toc-text">现成工具</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#frida-ps"><span class="toc-number">1.5.1.</span> <span class="toc-text">frida-ps</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#frida-trace"><span class="toc-number">1.5.2.</span> <span class="toc-text">frida-trace</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#jnitrace"><span class="toc-number">1.5.3.</span> <span class="toc-text">jnitrace</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Objection"><span class="toc-number">1.5.4.</span> <span class="toc-text">Objection</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#VSCode-nodejs-Frida-js%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%EF%BC%88%E8%BF%87%E6%97%B6%EF%BC%89"><span class="toc-number">1.6.</span> <span class="toc-text">VSCode + nodejs + Frida js开发环境（过时）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TypeScript-Frida%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83"><span class="toc-number">1.7.</span> <span class="toc-text">TypeScript+Frida开发环境</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8%E5%AE%9E%E6%97%B6%E7%BC%96%E8%AF%91"><span class="toc-number">1.7.1.</span> <span class="toc-text">启动实时编译</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-1"><span class="toc-number">1.7.2.</span> <span class="toc-text">使用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%95%E6%AD%A5%E8%B0%83%E8%AF%95%E2%AD%90"><span class="toc-number">1.8.</span> <span class="toc-text">单步调试⭐</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%90%E8%A1%8CFrida%E8%84%9A%E6%9C%AC"><span class="toc-number">1.8.1.</span> <span class="toc-text">运行Frida脚本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%93%E5%BC%80Chrome%E8%B0%83%E8%AF%95%E5%B7%A5%E5%85%B7"><span class="toc-number">1.8.2.</span> <span class="toc-text">打开Chrome调试工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A9%E7%94%A8PyCharm%E8%B0%83%E8%AF%95%EF%BC%88%E6%B2%A1%E5%AE%9E%E9%AA%8C%EF%BC%89"><span class="toc-number">1.8.3.</span> <span class="toc-text">利用PyCharm调试（没实验）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0"><span class="toc-number">1.9.</span> <span class="toc-text">入门学习</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#frida-android-examples"><span class="toc-number">1.9.1.</span> <span class="toc-text">frida-android-examples</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9B%E9%98%B6%EF%BC%88%E6%9C%AA%E5%AD%A6%E4%B9%A0%EF%BC%89"><span class="toc-number">1.10.</span> <span class="toc-text">进阶（未学习）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%A8%E9%9D%9Eroot%E8%AE%BE%E5%A4%87%E4%B8%8A%E8%BF%90%E8%A1%8C"><span class="toc-number">1.11.</span> <span class="toc-text">在非root设备上运行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Frida-gadget"><span class="toc-number">1.12.</span> <span class="toc-text">Frida-gadget</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E8%84%9A%E6%9C%AC"><span class="toc-number">1.13.</span> <span class="toc-text">常用脚本</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#bypass-ssl-example"><span class="toc-number">1.13.1.</span> <span class="toc-text">bypass_ssl_example</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#frida-dump"><span class="toc-number">1.13.2.</span> <span class="toc-text">frida_dump</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#frida-hook-libart"><span class="toc-number">1.13.3.</span> <span class="toc-text">frida_hook_libart</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#frida-replace-fun"><span class="toc-number">1.13.4.</span> <span class="toc-text">frida_replace_fun</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#frida-trace-1"><span class="toc-number">1.13.5.</span> <span class="toc-text">frida_trace</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#frida-%E5%8F%8D%E8%B0%83%E8%AF%95"><span class="toc-number">1.13.6.</span> <span class="toc-text">frida_反调试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#hook-commonFun"><span class="toc-number">1.13.7.</span> <span class="toc-text">hook_commonFun</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%94%B9%E8%BF%9B%E6%83%B3%E6%B3%95"><span class="toc-number">1.13.8.</span> <span class="toc-text">改进想法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FridaContainer"><span class="toc-number">1.14.</span> <span class="toc-text">FridaContainer</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Android%E6%96%87%E6%A1%A3"><span class="toc-number">1.14.1.</span> <span class="toc-text">Android文档</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#JSON"><span class="toc-number">1.14.1.1.</span> <span class="toc-text">JSON</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%8D%E8%B0%83%E8%AF%95"><span class="toc-number">1.14.1.2.</span> <span class="toc-text">反调试</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Trace-Java-methods"><span class="toc-number">1.14.1.3.</span> <span class="toc-text">Trace Java methods</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Trace-JNI"><span class="toc-number">1.14.1.4.</span> <span class="toc-text">Trace JNI</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Multi-Dex-Hook"><span class="toc-number">1.14.1.5.</span> <span class="toc-text">Multi Dex Hook</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%89%93%E5%8D%B0%E5%A0%86%E6%A0%88"><span class="toc-number">1.14.1.6.</span> <span class="toc-text">打印堆栈</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Dump-Dex%E6%96%B9%E6%B3%95"><span class="toc-number">1.14.1.7.</span> <span class="toc-text">Dump Dex方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8A%A0%E8%BD%BD%E8%87%AA%E5%AE%9A%E4%B9%89-ssl-%E8%AF%81%E4%B9%A6"><span class="toc-number">1.14.1.8.</span> <span class="toc-text">加载自定义 ssl 证书</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ssl-unpinning"><span class="toc-number">1.14.1.9.</span> <span class="toc-text">ssl unpinning</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#chrome-cronet-bypass"><span class="toc-number">1.14.1.10.</span> <span class="toc-text">chrome cronet bypass</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Hook-JNI"><span class="toc-number">1.14.1.11.</span> <span class="toc-text">Hook JNI</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%89%93%E5%8D%B0-registNatives"><span class="toc-number">1.14.1.12.</span> <span class="toc-text">打印 registNatives</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E5%8A%A0%E8%BD%BD-dex"><span class="toc-number">1.14.1.13.</span> <span class="toc-text">动态加载 dex</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B6%E5%AE%83"><span class="toc-number">1.14.1.14.</span> <span class="toc-text">其它</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Frida-Dynamic-Hooking"><span class="toc-number">1.15.</span> <span class="toc-text">Frida Dynamic Hooking</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Frida-CodeShare"><span class="toc-number">1.16.</span> <span class="toc-text">Frida CodeShare</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#fridaUiTools"><span class="toc-number">1.17.</span> <span class="toc-text">fridaUiTools</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#strongR-frida-android%E2%AD%90"><span class="toc-number">1.18.</span> <span class="toc-text">strongR-frida-android⭐</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Stalker"><span class="toc-number">1.19.</span> <span class="toc-text">Stalker</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B6%E4%BB%96"><span class="toc-number">1.20.</span> <span class="toc-text">其他</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">1.21.</span> <span class="toc-text">参考</span></a></li></ol></li></ol>
 </div>
  -->
     <p>开始复习Frida的使用。</p>
@@ -351,6 +351,7 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pip install -U frida</span><br><span class="line">pip install -U frida-tools</span><br></pre></td></tr></table></figure>
 
 <p>然后再从 <a target="_blank" rel="noopener" href="https://github.com/frida/frida/releases">Releases · frida&#x2F;frida (github.com)</a> 下载对应版本的<code>frida-server</code>。</p>
+<h2 id="编译与魔改"><a href="#编译与魔改" class="headerlink" title="编译与魔改"></a>编译与魔改</h2><p>放在另一个blog。</p>
 <h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>将<code>frida-server</code>放到<code>/data/local/tmp</code>，<code>chmod 777</code>然后执行 </p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">adb push .\frida-server-16.1.4-android-arm64\frida-server</span><br><span class="line">adb shell</span><br><span class="line">cd /data/local/tmp</span><br><span class="line">chmod 777 ./frida-server</span><br><span class="line">su</span><br><span class="line">./frida-server</span><br></pre></td></tr></table></figure>
 
@@ -383,17 +384,178 @@
 </ul>
 <h3 id="Objection"><a href="#Objection" class="headerlink" title="Objection"></a>Objection</h3><p> <a target="_blank" rel="noopener" href="https://www.cnblogs.com/qiaorui/p/13455420.html">Objection的安装和简单使用 - 乔瑞 - 博客园 (cnblogs.com)</a> </p>
 <p><strong>内容比较多，放在另一个blog了。</strong></p>
-<h2 id="VSCode-nodejs-Frida-js开发环境"><a href="#VSCode-nodejs-Frida-js开发环境" class="headerlink" title="VSCode + nodejs + Frida js开发环境"></a>VSCode + nodejs + Frida js开发环境</h2><p> <a target="_blank" rel="noopener" href="https://blog.csdn.net/u013667796/article/details/125041346">(114条消息) 【原创】vscode+Frida开发环境搭建_赵庆明老师的博客-CSDN博客_frida vscode</a> </p>
+<h2 id="VSCode-nodejs-Frida-js开发环境（过时）"><a href="#VSCode-nodejs-Frida-js开发环境（过时）" class="headerlink" title="VSCode + nodejs + Frida js开发环境（过时）"></a>VSCode + nodejs + Frida js开发环境（过时）</h2><p> <a target="_blank" rel="noopener" href="https://blog.csdn.net/u013667796/article/details/125041346">(114条消息) 【原创】vscode+Frida开发环境搭建_赵庆明老师的博客-CSDN博客_frida vscode</a> </p>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/u010671061/article/details/122166410">Frida 代码自动补全_frida代码提示_移动安全星球的博客-CSDN博客</a></p>
 <p>创建一个文件夹用于专门编写Frida js脚本。在里面执行：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm install @types/frida-gum</span><br><span class="line">npm install @types/node </span><br><span class="line">npm install frida-compile</span><br></pre></td></tr></table></figure>
 
 <p>装了这几个库即可自动提示+染色</p>
 <p><strong>注意，请在具有管理员权限的Powershell里面执行。同时最好为terminal设置好proxy。</strong></p>
+<blockquote>
+<p><strong>里面的API Doc可能不太全，因为版本太老了。</strong></p>
+</blockquote>
+<h2 id="TypeScript-Frida开发环境"><a href="#TypeScript-Frida开发环境" class="headerlink" title="TypeScript+Frida开发环境"></a>TypeScript+Frida开发环境</h2><p>[<a target="_blank" rel="noopener" href="https://bbs.kanxue.com/thread-265160.htm">原创]FRIDA 使用经验交流分享-Android安全-看雪-安全社区|安全招聘|kanxue.com</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/oleavr/frida-agent-example.git</span><br><span class="line">cd frida-agent-example</span><br><span class="line">npm install</span><br></pre></td></tr></table></figure>
+
+<p>实际上就是利用 <code>frida-compile</code> 编译脚本 <code>frida-compile agent/index.ts -o _agent.js -c</code>。</p>
+<p>然后用IDE打开（比如VSCode）这个文件夹，就有自动补全了。</p>
+<h3 id="启动实时编译"><a href="#启动实时编译" class="headerlink" title="启动实时编译"></a>启动实时编译</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm run watch</span><br><span class="line">或者：</span><br><span class="line">frida-compile agent/index.ts -o _agent.js -w</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用-1"><a href="#使用-1" class="headerlink" title="使用"></a>使用</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">frida -U -f com.example.android --no-pause -l _agent.js</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>其实主要就是自动补全。</p>
+</blockquote>
+<h2 id="单步调试⭐"><a href="#单步调试⭐" class="headerlink" title="单步调试⭐"></a>单步调试⭐</h2><blockquote>
+<p>还是有一些小缺点，只能以attach方式附加到脚本上，有的需要在APP刚刚启动时就Hook的脚本就完全没法调试了；偶尔会崩溃；</p>
+</blockquote>
+<h3 id="运行Frida脚本"><a href="#运行Frida脚本" class="headerlink" title="运行Frida脚本"></a>运行Frida脚本</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">frida -l &lt;/Users/name/path/test.js&gt; --debug --runtime=v8 &lt;port/name&gt;</span><br></pre></td></tr></table></figure>
+
+<p>或者</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">session = dev.attach(app.pid)</span><br><span class="line">script = session.create_script(jscode, runtime=&quot;v8&quot;)</span><br><span class="line">session.enable_debugger()</span><br></pre></td></tr></table></figure>
+
+<p>启动后会回显 Inspector 正在监听 9229 默认端口</p>
+<h3 id="打开Chrome调试工具"><a href="#打开Chrome调试工具" class="headerlink" title="打开Chrome调试工具"></a>打开Chrome调试工具</h3><p>打开 <code>chrome://inspect</code>, 点击 <code>Open dedicated DevTools for Node</code></p>
+<p>此时 debug 已经连接，切换至 <code>Sources</code>，按 <code>Command + P</code> 加载要调试的脚本，即可下断调试了。</p>
+<h3 id="利用PyCharm调试（没实验）"><a href="#利用PyCharm调试（没实验）" class="headerlink" title="利用PyCharm调试（没实验）"></a>利用PyCharm调试（没实验）</h3><ol>
+<li>首先安装 Node.js 插件，重启</li>
+<li>添加调试器 <code>Attaching to Node.js/Chrome</code>，端口默认即可。<code>Attach to</code> 应选择 <code>Node.js &lt; 8 started with --debug</code>， 下面的自动重连选项可选可不选。</li>
+<li>触发断点需要在 debug 窗口切换到 script 选项卡，右键要调试的脚本，选择 Open Actual Source，在新打开的 Actual Source 窗口设置好断点后，需要再取消&#x2F;启用一次所有断点作为激活，发现断点上打上对勾才真正可用了。</li>
+</ol>
+<p>优缺点：</p>
+<ol>
+<li>用 Chrome 调试支持的更为顺滑，调试脚本自动重加载，断点也能正确响应。</li>
+<li>用 PyCharm 调试断点有时需要手动激活有点麻烦，纯粹是个人偏爱PyCharm 的Debug 窗口和快捷键。</li>
+<li>PyCharm 使用 ts 环境，调试时可以直接在 ts 文件上下断，也不需要手动激活断点，比较顺畅。</li>
+</ol>
+<h2 id="入门学习"><a href="#入门学习" class="headerlink" title="入门学习"></a>入门学习</h2><h3 id="frida-android-examples"><a href="#frida-android-examples" class="headerlink" title="frida-android-examples"></a>frida-android-examples</h3><p><a target="_blank" rel="noopener" href="https://github.com/11x256/frida-android-examples/tree/master">11x256&#x2F;frida-android-examples: Examples of using frida to hook android apps (github.com)</a></p>
+<p><a target="_blank" rel="noopener" href="http://www.infosec-blog.com/frida/Frida-hooking-android-part-1/">Frida hooking android part 1 - 11x256’s Infosec blog (infosec-blog.com)</a></p>
 <h2 id="进阶（未学习）"><a href="#进阶（未学习）" class="headerlink" title="进阶（未学习）"></a>进阶（未学习）</h2><p> <a target="_blank" rel="noopener" href="https://bbs.kanxue.com/thread-278525.htm">frida全流程分析-Android安全-看雪-安全社区|安全招聘|kanxue.com</a> </p>
+<h2 id="在非root设备上运行"><a href="#在非root设备上运行" class="headerlink" title="在非root设备上运行"></a>在非root设备上运行</h2><p><a target="_blank" rel="noopener" href="https://koz.io/using-frida-on-android-without-root/">Using Frida on Android without root · Yiannis Kozyrakis ~ blog</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/d2d7da75990a">免Root使用Frida的一种简易方案 - 简书 (jianshu.com)</a></p>
+<p>[<a target="_blank" rel="noopener" href="https://bbs.kanxue.com/thread-268175.htm#msg_header_h2_2">原创]非root环境下frida持久化的两种方式及脚本-Android安全-看雪-安全社区|安全招聘|kanxue.com</a></p>
+<p>单独放一个blog。</p>
+<h2 id="Frida-gadget"><a href="#Frida-gadget" class="headerlink" title="Frida-gadget"></a>Frida-gadget</h2><p>主要看<code>非root环境运行Frida</code>的blog。这里列一下gadget的运作方式：</p>
+<ul>
+<li><code>Listing</code>：交互和<code>frida-server</code>一样</li>
+<li><code>Script</code>：使用配置文件中指定的JS脚本进行交互</li>
+<li><code>ScriptDirectory</code>：和<code>Script</code>一样，但可以指定多个应用和多个脚本</li>
+</ul>
+<p><code>Listing</code>交互方式需要<code>android.permission.INTERNET</code>权限。我们可以通过修改<code>manifest</code>文件添加这个权限。不过，如果我们使用的是<code>Script</code>这种交互方式就不需要这一权限。</p>
+<h2 id="常用脚本"><a href="#常用脚本" class="headerlink" title="常用脚本"></a>常用脚本</h2><p><a target="_blank" rel="noopener" href="https://github.com/lasting-yang/frida_hook_libart">lasting-yang&#x2F;frida_hook_libart: Frida hook some jni functions (github.com)</a></p>
+<h3 id="bypass-ssl-example"><a href="#bypass-ssl-example" class="headerlink" title="bypass_ssl_example"></a>bypass_ssl_example</h3><h3 id="frida-dump"><a href="#frida-dump" class="headerlink" title="frida_dump"></a>frida_dump</h3><h3 id="frida-hook-libart"><a href="#frida-hook-libart" class="headerlink" title="frida_hook_libart"></a>frida_hook_libart</h3><ul>
+<li>hook_art.js：具体而言，用于跟踪指定so库中以下JNI函数的调用情况：<ol>
+<li><code>GetStringUTFChars</code></li>
+<li><code>NewStringUTF</code></li>
+<li><code>FindClass</code></li>
+<li><code>GetMethodID</code></li>
+<li><code>GetStaticMethodID</code></li>
+<li><code>GetFieldID</code></li>
+<li><code>GetStaticFieldID</code></li>
+<li><code>RegisterNatives</code></li>
+<li>此外还有<code>CallNonvirtual</code>与<code>Call&lt;&gt;</code>等方法。</li>
+</ol>
+</li>
+<li>hook_artmethod.js：用于Hook 实现原理是通过Hook<code>dlopen</code>，在每一个so加载完成后，都去遍历<code>liart.so</code>的符号，找到其中与调用<code>ArtMethod</code>有关的函数并Hook，使得每次<code>java</code>或<code>android</code>字符串有关联的函数被调用的时候就会打印出来。<strong>简单来说，能够检查现在在调用什么方法。</strong></li>
+<li>hook_RegisterNatives.js：有的so不会直接静态导出函数，而是会通过<code>RegisterNatives</code>JNI方法动态注册导出函数。这个脚本即用于打印出so到底导出了什么玩意。</li>
+</ul>
+<h3 id="frida-replace-fun"><a href="#frida-replace-fun" class="headerlink" title="frida_replace_fun"></a>frida_replace_fun</h3><ul>
+<li>frida_replace_fun.js</li>
+</ul>
+<h3 id="frida-trace-1"><a href="#frida-trace-1" class="headerlink" title="frida_trace"></a>frida_trace</h3><ul>
+<li>raptor_frida_android_enum.js</li>
+<li>raptor_frida_android_trace.js</li>
+</ul>
+<h3 id="frida-反调试"><a href="#frida-反调试" class="headerlink" title="frida_反调试"></a>frida_反调试</h3><h3 id="hook-commonFun"><a href="#hook-commonFun" class="headerlink" title="hook_commonFun"></a>hook_commonFun</h3><ul>
+<li>frida_common_funs.js</li>
+</ul>
+<h3 id="改进想法"><a href="#改进想法" class="headerlink" title="改进想法"></a>改进想法</h3><ul>
+<li><code>frida_hook_libart/hook_art.js</code>：<ol>
+<li>使用<code>console.log</code>大量打印字符串严重拖慢了进程本身的速度，容易崩溃和卡顿。建议后面用RPC传参，直接写文件等方式。</li>
+</ol>
+</li>
+<li><code>frida_hook_libart/hook_artmethod.js</code>：<ol>
+<li>每次ArtMethod的调用都会打印stacktrace，没什么用处，应该删掉。（已完成）</li>
+<li>不用<code>console.log</code></li>
+</ol>
+</li>
+</ul>
+<h2 id="FridaContainer"><a href="#FridaContainer" class="headerlink" title="FridaContainer"></a>FridaContainer</h2><p><a target="_blank" rel="noopener" href="https://github.com/deathmemory/FridaContainer">deathmemory&#x2F;FridaContainer: FridaContainer 整合了网上流行的和自己编写的常用的 frida 脚本，为逆向工作提效之用。 frida 脚本模块化，Java &amp; Jni Trace。 (github.com)</a></p>
+<p>这是一个整合了网上大部分Frida现成脚本的仓库。</p>
+<p>下载使用：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ git clone https://github.com/deathmemory/FridaContainer.git</span><br><span class="line">$ cd FridaContainer/</span><br><span class="line">$ npm install</span><br><span class="line">## 开发在index.ts里面</span><br><span class="line">$ npm run build</span><br><span class="line">$ frida -U -f com.example.android --no-pause -l _fcagent.js</span><br></pre></td></tr></table></figure>
+
+<p>开发实时编译：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run watch</span><br></pre></td></tr></table></figure>
+
+<p>安装<code>gson</code>第三方JSON库：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ python setupAndroid.py</span><br></pre></td></tr></table></figure>
+
+<h3 id="Android文档"><a href="#Android文档" class="headerlink" title="Android文档"></a>Android文档</h3><p><a target="_blank" rel="noopener" href="https://github.com/deathmemory/FridaContainer/blob/master/docs/android.md">FridaContainer&#x2F;docs&#x2F;android.md at master · deathmemory&#x2F;FridaContainer (github.com)</a></p>
+<blockquote>
+<p>为了方便搜索，复制粘贴是我的好习惯。</p>
+</blockquote>
+<h4 id="JSON"><a href="#JSON" class="headerlink" title="JSON"></a>JSON</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">FCAnd.toJSONString(javaObject);</span><br></pre></td></tr></table></figure>
+
+<h4 id="反调试"><a href="#反调试" class="headerlink" title="反调试"></a>反调试</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">FCAnd.anti.anti_debug();</span><br></pre></td></tr></table></figure>
+
+<h4 id="Trace-Java-methods"><a href="#Trace-Java-methods" class="headerlink" title="Trace Java methods"></a>Trace Java methods</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * java 方法追踪</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> clazzes 要追踪类数组 [&#x27;M:Base64&#x27;, &#x27;E:java.lang.String&#x27;] ，类前面的 M 代表 match 模糊匹配，E 代表 equal 精确匹配</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> whitelist 指定某类方法 Hook 细则，可按白名单或黑名单过滤方法。</span></span><br><span class="line"><span class="comment"> *                  &#123; &#x27;类名&#x27;: &#123;white: true, methods: [&#x27;toString&#x27;, &#x27;getBytes&#x27;]&#125; &#125;</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@stackFilter</span> 按匹配字串打印堆栈。如果要匹配 bytes 数组需要十进制无空格字串，例如：&quot;104,113,-105&quot;</span></span><br><span class="line"><span class="comment"> * traceArtMethods 改为 traceJavaMethods 的别称存在</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="title class_">FCAnd</span>.<span class="title function_">traceJavaMethods</span>(</span><br><span class="line">    [<span class="string">&#x27;M:MainActivity&#x27;</span>, <span class="string">&#x27;E:java.lang.String&#x27;</span>],</span><br><span class="line">    &#123;<span class="string">&#x27;java.lang.String&#x27;</span>: &#123;<span class="attr">white</span>: <span class="literal">true</span>, <span class="attr">methods</span>:[<span class="string">&#x27;substring&#x27;</span>, <span class="string">&#x27;getChars&#x27;</span>]&#125;&#125;,</span><br><span class="line">    <span class="string">&quot;match_str_show_stacks&quot;</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<h4 id="Trace-JNI"><a href="#Trace-JNI" class="headerlink" title="Trace JNI"></a>Trace JNI</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">FCAnd</span>.<span class="property">jni</span>.<span class="title function_">traceAllJNISimply</span>();</span><br></pre></td></tr></table></figure>
+
+<h4 id="Multi-Dex-Hook"><a href="#Multi-Dex-Hook" class="headerlink" title="Multi Dex Hook"></a>Multi Dex Hook</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">FCAnd</span>.<span class="title function_">useWithDexClassLoader</span>(<span class="string">&#x27;com.cls.name&#x27;</span>, <span class="keyword">function</span> (<span class="params">cls: Wrapper</span>) &#123;</span><br><span class="line">    <span class="title class_">DMLog</span>.<span class="title function_">i</span>(<span class="string">&#x27;tag&#x27;</span>, <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(cls));</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="title class_">FCAnd</span>.<span class="title function_">useWithInMemoryDexClassLoader</span>(<span class="string">&#x27;com.cls.name&#x27;</span>, <span class="keyword">function</span> (<span class="params">cls: Wrapper</span>) &#123;</span><br><span class="line">    <span class="title class_">DMLog</span>.<span class="title function_">i</span>(<span class="string">&#x27;tag&#x27;</span>, <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(cls));</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="title class_">FCAnd</span>.<span class="title function_">useWithBaseDexClassLoader</span>(<span class="string">&#x27;com.cls.name&#x27;</span>, <span class="keyword">function</span> (<span class="params">cls: Wrapper</span>) &#123;</span><br><span class="line">    <span class="title class_">DMLog</span>.<span class="title function_">i</span>(<span class="string">&#x27;tag&#x27;</span>, <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(cls));</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="title class_">FCAnd</span>.<span class="title function_">useWhenLoadClass</span>(<span class="string">&#x27;com.cls.name&#x27;</span>, <span class="keyword">function</span> (<span class="params">cls: Wrapper</span>) &#123;</span><br><span class="line">    <span class="title class_">DMLog</span>.<span class="title function_">i</span>(<span class="string">&#x27;tag&#x27;</span>, <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(cls));</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h4 id="打印堆栈"><a href="#打印堆栈" class="headerlink" title="打印堆栈"></a>打印堆栈</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">FCAnd</span>.<span class="title function_">showStacks</span>();</span><br></pre></td></tr></table></figure>
+
+<h4 id="Dump-Dex方法"><a href="#Dump-Dex方法" class="headerlink" title="Dump Dex方法"></a>Dump Dex方法</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">FCAnd.dump_dex_common();</span><br></pre></td></tr></table></figure>
+
+<h4 id="加载自定义-ssl-证书"><a href="#加载自定义-ssl-证书" class="headerlink" title="加载自定义 ssl 证书"></a>加载自定义 ssl 证书</h4><p>将证书 <code>cert-der.crt</code> 传到手机，然后调用下面的语句</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">FCAnd.anti.anti_sslLoadCert(&quot;/data/local/tmp/cert-der.crt&quot;);</span><br></pre></td></tr></table></figure>
+
+<h4 id="ssl-unpinning"><a href="#ssl-unpinning" class="headerlink" title="ssl unpinning"></a>ssl unpinning</h4><p>相当于 frida 版的 JustTrustMe</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">FCAnd.anti.anti_ssl_unpinning();</span><br></pre></td></tr></table></figure>
+
+<h4 id="chrome-cronet-bypass"><a href="#chrome-cronet-bypass" class="headerlink" title="chrome cronet bypass"></a>chrome cronet bypass</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import &#123;FCAnd&#125; from &quot;./FCAnd&quot;;</span><br><span class="line"></span><br><span class="line">FCAnd.anti.anti_ssl_cronet_32();</span><br></pre></td></tr></table></figure>
+
+<h4 id="Hook-JNI"><a href="#Hook-JNI" class="headerlink" title="Hook JNI"></a>Hook JNI</h4><p>方便的 JNI Hook</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">FCAnd.jni.hookJNI(&#x27;NewStringUTF&#x27;, &#123;</span><br><span class="line">    onEnter: function (args) &#123;</span><br><span class="line">        var str = args[1].readCString();</span><br><span class="line">        DMLog.i(&#x27;NewStringUTF&#x27;, &#x27;str: &#x27; + str);</span><br><span class="line">        if (null != str) &#123;</span><br><span class="line">            if (str == &#x27;mesh&#x27; || str.startsWith(&#x27;6962&#x27;)) &#123;</span><br><span class="line">                var lr =  FCAnd.getLR(this.context);</span><br><span class="line">                DMLog.i(&#x27;NewStringUTF&#x27;, &#x27;(&#x27; + Process.arch + &#x27;)lr: &#x27; + lr</span><br><span class="line">                    + &#x27;, foundso:&#x27; + FCAnd.getModuleByAddr(lr) );</span><br><span class="line">                // FCCommon.getStacksModInfo(this.context, 100);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h4 id="打印-registNatives"><a href="#打印-registNatives" class="headerlink" title="打印 registNatives"></a>打印 registNatives</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">FCAnd.jni.hook_registNatives();</span><br></pre></td></tr></table></figure>
+
+<p>该功能拆分出了一个独立模块，使用频率高的朋友可以使用独立模块 地址：<a target="_blank" rel="noopener" href="https://github.com/deathmemory/fridaRegstNtv">https://github.com/deathmemory/fridaRegstNtv</a></p>
+<h4 id="动态加载-dex"><a href="#动态加载-dex" class="headerlink" title="动态加载 dex"></a>动态加载 dex</h4><p>在利用 InMemoryDexClassLoader 加载内存 Dex 找不到类的情况下适用。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">FCAnd.anti.anti_InMemoryDexClassLoader(function()&#123;</span><br><span class="line">    const cls = Java.use(&quot;find/same/multi/dex/class&quot;);</span><br><span class="line">    // ...</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h4 id="其它"><a href="#其它" class="headerlink" title="其它"></a>其它</h4><ol>
+<li>根据地址获取所在 module 的信息</li>
+<li>获取模块地址</li>
+<li>获取 LR 寄存器值</li>
+<li>现成的 Hook url&#x2F;json&#x2F;map …</li>
+</ol>
+<h2 id="Frida-Dynamic-Hooking"><a href="#Frida-Dynamic-Hooking" class="headerlink" title="Frida Dynamic Hooking"></a>Frida Dynamic Hooking</h2><p><a target="_blank" rel="noopener" href="https://github.com/mame82/frida-dynamic-hooking/tree/master">mame82&#x2F;frida-dynamic-hooking: Frida: callback based hooking of Java classes loaded at runtime (github.com)</a></p>
+<p><code>Java.use</code>必须用在已经加载好的类上面，否则会报错。这个项目提供了一个基于callback实现动态加载Java类的方法<code>JavaUseOnceLoaded</code>。</p>
+<p>具体而言，先Hook了<code>ClassLoader</code>的<code>loadClass</code>方法，对它进行了监视，如果传入里面需要加载的类名是用户想要Hook的类，那么就会通过ClassLoader生成出一个类示例，然后进行Hook。</p>
+<h2 id="Frida-CodeShare"><a href="#Frida-CodeShare" class="headerlink" title="Frida CodeShare"></a>Frida CodeShare</h2><p><a target="_blank" rel="noopener" href="https://codeshare.frida.re/">Frida CodeShare</a></p>
+<h2 id="fridaUiTools"><a href="#fridaUiTools" class="headerlink" title="fridaUiTools"></a>fridaUiTools</h2><p><a target="_blank" rel="noopener" href="https://github.com/dqzg12300/fridaUiTools">dqzg12300&#x2F;fridaUiTools: frida工具的缝合怪 (github.com)</a></p>
+<h2 id="strongR-frida-android⭐"><a href="#strongR-frida-android⭐" class="headerlink" title="strongR-frida-android⭐"></a>strongR-frida-android⭐</h2><p><a target="_blank" rel="noopener" href="https://github.com/hzzheyang/strongR-frida-android">hzzheyang&#x2F;strongR-frida-android: An anti detection version frida-server for android. (github.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/hluwa/Patchs/tree/master/strongR-frida/frida-core">Patchs&#x2F;strongR-frida&#x2F;frida-core at master · hluwa&#x2F;Patchs (github.com)</a></p>
+<p><strong>这是一个将frida源码进行patch魔改，实现掩盖frida特征的一个项目。</strong></p>
+<p>可以偷懒直接下载它提供的release，但也最好自己试试魔改。</p>
+<h2 id="Stalker"><a href="#Stalker" class="headerlink" title="Stalker"></a>Stalker</h2><p>[<a target="_blank" rel="noopener" href="https://bbs.kanxue.com/thread-264680.htm">原创] sktrace：基于 Frida Stalker 的 trace 工具-Android安全-看雪-安全社区|安全招聘|kanxue.com</a></p>
+<p><a target="_blank" rel="noopener" href="https://frida.re/docs/stalker/">Stalker | Frida • A world-class dynamic instrumentation toolkit</a></p>
+<p><a target="_blank" rel="noopener" href="https://medium.com/@oleavr/anatomy-of-a-code-tracer-b081aadb0df8">Anatomy of a code tracer | by Ole André Vadla Ravnås | Medium</a></p>
+<p><strong>单独放一个Blog吧。感觉有不少好玩的东西。</strong></p>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p><a target="_blank" rel="noopener" href="https://qbdi.readthedocs.io/en/stable/intro.html">Introduction — QBDI 0.10.0 documentation</a></p>
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://frida.re/">Frida • A world-class dynamic instrumentation framework | Inject JavaScript to explore native apps on Windows, macOS, GNU&#x2F;Linux, iOS, Android, and QNX</a> </p>
 <p> <a target="_blank" rel="noopener" href="http://www.infosec-blog.com/">11x256’s Infosec blog (infosec-blog.com)</a> </p>
 <p> <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/370638682">全！Frida 入门全教程 - 知乎 (zhihu.com)</a> </p>
+<p>[<a target="_blank" rel="noopener" href="https://bbs.kanxue.com/thread-265160.htm">原创]FRIDA 使用经验交流分享-Android安全-看雪-安全社区|安全招聘|kanxue.com</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.52pojie.cn/forum.php?mod=viewthread&tid=1264025&extra=&highlight=frida+3&page=1">frida学习笔记3–hook so中的方法 - 『移动安全区』 - 吾爱破解 - LCG - LSG |安卓破解|病毒分析|www.52pojie.cn</a></p>
+<p><a target="_blank" rel="noopener" href="https://paper.seebug.org/papers/Archive/drops2/Frida-%E8%B7%A8%E5%B9%B3%E5%8F%B0%E6%B3%A8%E5%85%A5%E5%B7%A5%E5%85%B7%E5%9F%BA%E7%A1%80%E7%AF%87.html">Frida-跨平台注入工具基础篇 - 瘦蛟舞 (seebug.org)</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/deathmemory/FridaContainer/blob/master/docs/android.md">FridaContainer&#x2F;docs&#x2F;android.md at master · deathmemory&#x2F;FridaContainer (github.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/mame82/frida-dynamic-hooking/tree/master">mame82&#x2F;frida-dynamic-hooking: Frida: callback based hooking of Java classes loaded at runtime (github.com)</a></p>
+<p>[<a target="_blank" rel="noopener" href="https://bbs.kanxue.com/thread-248848.htm">原创]介召几个frida在安卓逆向中使用的脚本以及延时Hook手法-Android安全-看雪-安全社区|安全招聘|kanxue.com</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/frida/cryptoshark">frida&#x2F;cryptoshark: Self-optimizing cross-platform code tracer based on dynamic recompilation (github.com)</a></p>
 
     
 
@@ -500,7 +662,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Android%E9%80%86%E5%90%91-Frida"><span class="toc-number">1.</span> <span class="toc-text">Android逆向-Frida</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-number">1.1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8"><span class="toc-number">1.2.</span> <span class="toc-text">使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Frida-IDA%E5%8A%A8%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E6%B5%81%E7%A8%8B"><span class="toc-number">1.3.</span> <span class="toc-text">Frida+IDA动静态分析流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%B0%E6%88%90%E5%B7%A5%E5%85%B7"><span class="toc-number">1.4.</span> <span class="toc-text">现成工具</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#frida-ps"><span class="toc-number">1.4.1.</span> <span class="toc-text">frida-ps</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#frida-trace"><span class="toc-number">1.4.2.</span> <span class="toc-text">frida-trace</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#jnitrace"><span class="toc-number">1.4.3.</span> <span class="toc-text">jnitrace</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Objection"><span class="toc-number">1.4.4.</span> <span class="toc-text">Objection</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#VSCode-nodejs-Frida-js%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83"><span class="toc-number">1.5.</span> <span class="toc-text">VSCode + nodejs + Frida js开发环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9B%E9%98%B6%EF%BC%88%E6%9C%AA%E5%AD%A6%E4%B9%A0%EF%BC%89"><span class="toc-number">1.6.</span> <span class="toc-text">进阶（未学习）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">1.7.</span> <span class="toc-text">参考</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Android%E9%80%86%E5%90%91-Frida"><span class="toc-number">1.</span> <span class="toc-text">Android逆向-Frida</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-number">1.1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%96%E8%AF%91%E4%B8%8E%E9%AD%94%E6%94%B9"><span class="toc-number">1.2.</span> <span class="toc-text">编译与魔改</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8"><span class="toc-number">1.3.</span> <span class="toc-text">使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Frida-IDA%E5%8A%A8%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E6%B5%81%E7%A8%8B"><span class="toc-number">1.4.</span> <span class="toc-text">Frida+IDA动静态分析流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%B0%E6%88%90%E5%B7%A5%E5%85%B7"><span class="toc-number">1.5.</span> <span class="toc-text">现成工具</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#frida-ps"><span class="toc-number">1.5.1.</span> <span class="toc-text">frida-ps</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#frida-trace"><span class="toc-number">1.5.2.</span> <span class="toc-text">frida-trace</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#jnitrace"><span class="toc-number">1.5.3.</span> <span class="toc-text">jnitrace</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Objection"><span class="toc-number">1.5.4.</span> <span class="toc-text">Objection</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#VSCode-nodejs-Frida-js%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%EF%BC%88%E8%BF%87%E6%97%B6%EF%BC%89"><span class="toc-number">1.6.</span> <span class="toc-text">VSCode + nodejs + Frida js开发环境（过时）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TypeScript-Frida%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83"><span class="toc-number">1.7.</span> <span class="toc-text">TypeScript+Frida开发环境</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8%E5%AE%9E%E6%97%B6%E7%BC%96%E8%AF%91"><span class="toc-number">1.7.1.</span> <span class="toc-text">启动实时编译</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-1"><span class="toc-number">1.7.2.</span> <span class="toc-text">使用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%95%E6%AD%A5%E8%B0%83%E8%AF%95%E2%AD%90"><span class="toc-number">1.8.</span> <span class="toc-text">单步调试⭐</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%90%E8%A1%8CFrida%E8%84%9A%E6%9C%AC"><span class="toc-number">1.8.1.</span> <span class="toc-text">运行Frida脚本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%93%E5%BC%80Chrome%E8%B0%83%E8%AF%95%E5%B7%A5%E5%85%B7"><span class="toc-number">1.8.2.</span> <span class="toc-text">打开Chrome调试工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A9%E7%94%A8PyCharm%E8%B0%83%E8%AF%95%EF%BC%88%E6%B2%A1%E5%AE%9E%E9%AA%8C%EF%BC%89"><span class="toc-number">1.8.3.</span> <span class="toc-text">利用PyCharm调试（没实验）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0"><span class="toc-number">1.9.</span> <span class="toc-text">入门学习</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#frida-android-examples"><span class="toc-number">1.9.1.</span> <span class="toc-text">frida-android-examples</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9B%E9%98%B6%EF%BC%88%E6%9C%AA%E5%AD%A6%E4%B9%A0%EF%BC%89"><span class="toc-number">1.10.</span> <span class="toc-text">进阶（未学习）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%A8%E9%9D%9Eroot%E8%AE%BE%E5%A4%87%E4%B8%8A%E8%BF%90%E8%A1%8C"><span class="toc-number">1.11.</span> <span class="toc-text">在非root设备上运行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Frida-gadget"><span class="toc-number">1.12.</span> <span class="toc-text">Frida-gadget</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E8%84%9A%E6%9C%AC"><span class="toc-number">1.13.</span> <span class="toc-text">常用脚本</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#bypass-ssl-example"><span class="toc-number">1.13.1.</span> <span class="toc-text">bypass_ssl_example</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#frida-dump"><span class="toc-number">1.13.2.</span> <span class="toc-text">frida_dump</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#frida-hook-libart"><span class="toc-number">1.13.3.</span> <span class="toc-text">frida_hook_libart</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#frida-replace-fun"><span class="toc-number">1.13.4.</span> <span class="toc-text">frida_replace_fun</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#frida-trace-1"><span class="toc-number">1.13.5.</span> <span class="toc-text">frida_trace</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#frida-%E5%8F%8D%E8%B0%83%E8%AF%95"><span class="toc-number">1.13.6.</span> <span class="toc-text">frida_反调试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#hook-commonFun"><span class="toc-number">1.13.7.</span> <span class="toc-text">hook_commonFun</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%94%B9%E8%BF%9B%E6%83%B3%E6%B3%95"><span class="toc-number">1.13.8.</span> <span class="toc-text">改进想法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FridaContainer"><span class="toc-number">1.14.</span> <span class="toc-text">FridaContainer</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Android%E6%96%87%E6%A1%A3"><span class="toc-number">1.14.1.</span> <span class="toc-text">Android文档</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#JSON"><span class="toc-number">1.14.1.1.</span> <span class="toc-text">JSON</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%8D%E8%B0%83%E8%AF%95"><span class="toc-number">1.14.1.2.</span> <span class="toc-text">反调试</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Trace-Java-methods"><span class="toc-number">1.14.1.3.</span> <span class="toc-text">Trace Java methods</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Trace-JNI"><span class="toc-number">1.14.1.4.</span> <span class="toc-text">Trace JNI</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Multi-Dex-Hook"><span class="toc-number">1.14.1.5.</span> <span class="toc-text">Multi Dex Hook</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%89%93%E5%8D%B0%E5%A0%86%E6%A0%88"><span class="toc-number">1.14.1.6.</span> <span class="toc-text">打印堆栈</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Dump-Dex%E6%96%B9%E6%B3%95"><span class="toc-number">1.14.1.7.</span> <span class="toc-text">Dump Dex方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8A%A0%E8%BD%BD%E8%87%AA%E5%AE%9A%E4%B9%89-ssl-%E8%AF%81%E4%B9%A6"><span class="toc-number">1.14.1.8.</span> <span class="toc-text">加载自定义 ssl 证书</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ssl-unpinning"><span class="toc-number">1.14.1.9.</span> <span class="toc-text">ssl unpinning</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#chrome-cronet-bypass"><span class="toc-number">1.14.1.10.</span> <span class="toc-text">chrome cronet bypass</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Hook-JNI"><span class="toc-number">1.14.1.11.</span> <span class="toc-text">Hook JNI</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%89%93%E5%8D%B0-registNatives"><span class="toc-number">1.14.1.12.</span> <span class="toc-text">打印 registNatives</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E5%8A%A0%E8%BD%BD-dex"><span class="toc-number">1.14.1.13.</span> <span class="toc-text">动态加载 dex</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B6%E5%AE%83"><span class="toc-number">1.14.1.14.</span> <span class="toc-text">其它</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Frida-Dynamic-Hooking"><span class="toc-number">1.15.</span> <span class="toc-text">Frida Dynamic Hooking</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Frida-CodeShare"><span class="toc-number">1.16.</span> <span class="toc-text">Frida CodeShare</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#fridaUiTools"><span class="toc-number">1.17.</span> <span class="toc-text">fridaUiTools</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#strongR-frida-android%E2%AD%90"><span class="toc-number">1.18.</span> <span class="toc-text">strongR-frida-android⭐</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Stalker"><span class="toc-number">1.19.</span> <span class="toc-text">Stalker</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B6%E4%BB%96"><span class="toc-number">1.20.</span> <span class="toc-text">其他</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">1.21.</span> <span class="toc-text">参考</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -655,6 +817,10 @@
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Study</a>
+              </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Android</a>
@@ -1009,14 +1175,6 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Hook</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Dobby</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">CTF</a>
               </li>
              
@@ -1034,6 +1192,50 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Selenium</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">-Android</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Cmake</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Galgame</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Godot</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">LLVM</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Waydroid</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Anti-censorship</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">CSV</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">QEMU</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Wireshark</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Paper</a>
               </li>
             
             <div class="clearfix"></div>

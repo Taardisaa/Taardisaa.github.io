@@ -18,7 +18,7 @@
 <meta property="og:description" content="Android开发">
 <meta property="og:locale">
 <meta property="article:published_time" content="2023-09-04T03:45:31.000Z">
-<meta property="article:modified_time" content="2023-09-08T05:41:23.861Z">
+<meta property="article:modified_time" content="2023-09-22T06:22:20.450Z">
 <meta property="article:author" content="Taardis">
 <meta property="article:tag" content="Android">
 <meta name="twitter:card" content="summary">
@@ -318,7 +318,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">283字</span>
+      <span class="post-count">595字</span>
     </span>
   </span>
 
@@ -327,7 +327,7 @@
     <span class="post-meta-item-icon">
       <i class="icon-book icon"></i>
       <span class="post-meta-item-text"> 阅读时长≈</span>
-      <span class="post-count">1分</span>
+      <span class="post-count">3分</span>
     </span>
   </span>
 </div>
@@ -340,7 +340,7 @@
     
     <!-- 
 <div id="toc">
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Android%E9%80%86%E5%90%91-Android%E5%BC%80%E5%8F%91"><span class="toc-number">1.</span> <span class="toc-text">Android逆向-Android开发</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#AAR-metadata%E6%8A%A5%E9%94%99"><span class="toc-number">1.1.</span> <span class="toc-text">AAR metadata报错</span></a></li></ol></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Android%E9%80%86%E5%90%91-Android%E5%BC%80%E5%8F%91"><span class="toc-number">1.</span> <span class="toc-text">Android逆向-Android开发</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#AAR-metadata%E6%8A%A5%E9%94%99"><span class="toc-number">1.1.</span> <span class="toc-text">AAR metadata报错</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Could-not-find-method-compile"><span class="toc-number">1.2.</span> <span class="toc-text">Could not find method compile()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#cvc-complex-type-2-4-a-Invalid-content-was-found%E2%80%A6"><span class="toc-number">1.3.</span> <span class="toc-text">[cvc-complex-type.2.4.a: Invalid content was found…</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Task-%E2%80%98prepareKotlinBuildScriptModel%E2%80%99-not-found-in-project-%E2%80%98-app%E2%80%99"><span class="toc-number">1.4.</span> <span class="toc-text">Task ‘prepareKotlinBuildScriptModel’ not found in project ‘:app’</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Task-%E2%80%98wrapper%E2%80%99-not-found-in-project-%E2%80%98-app%E2%80%99"><span class="toc-number">1.5.</span> <span class="toc-text">Task ‘wrapper’ not found in project ‘:app’</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Could-not-get-unknown-property-%E2%80%98arm64-v8a%E2%80%99-for-object-of-type-com-android-build-gradle-internal-dsl-NdkOptions"><span class="toc-number">1.6.</span> <span class="toc-text">Could not get unknown property ‘arm64-v8a’ for object of type com.android.build.gradle.internal.dsl.NdkOptions</span></a></li></ol></li></ol>
 </div>
  -->
     <p>Android开发</p>
@@ -355,6 +355,38 @@
 <p>这是我现在的gradle文件：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">plugins &#123;</span><br><span class="line">    id &#x27;com.android.application&#x27;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">android &#123;</span><br><span class="line">    compileSdk 33</span><br><span class="line"></span><br><span class="line">    defaultConfig &#123;</span><br><span class="line">        applicationId &quot;com.example.a11x256.frida_test&quot;</span><br><span class="line">        minSdk 29</span><br><span class="line">        targetSdk 32</span><br><span class="line">        versionCode 1</span><br><span class="line">        versionName &quot;1.0&quot;</span><br><span class="line"></span><br><span class="line">        testInstrumentationRunner &quot;androidx.test.runner.AndroidJUnitRunner&quot;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    buildTypes &#123;</span><br><span class="line">        release &#123;</span><br><span class="line">            minifyEnabled false</span><br><span class="line">            proguardFiles getDefaultProguardFile(&#x27;proguard-android-optimize.txt&#x27;), &#x27;proguard-rules.pro&#x27;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    compileOptions &#123;</span><br><span class="line">        sourceCompatibility JavaVersion.VERSION_1_8</span><br><span class="line">        targetCompatibility JavaVersion.VERSION_1_8</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">dependencies &#123;</span><br><span class="line"></span><br><span class="line">    implementation &#x27;androidx.appcompat:appcompat:1.6.1&#x27;</span><br><span class="line">    implementation &#x27;com.google.android.material:material:1.9.0&#x27;</span><br><span class="line">    implementation &#x27;androidx.constraintlayout:constraintlayout:2.1.4&#x27;</span><br><span class="line">    testImplementation &#x27;junit:junit:4.13.2&#x27;</span><br><span class="line">    androidTestImplementation &#x27;androidx.test.ext:junit:1.1.5&#x27;</span><br><span class="line">    androidTestImplementation &#x27;androidx.test.espresso:espresso-core:3.5.1&#x27;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<h2 id="Could-not-find-method-compile"><a href="#Could-not-find-method-compile" class="headerlink" title="Could not find method compile()"></a>Could not find method compile()</h2><p>[android - Full error : Could not find method compile() for arguments <a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/72065323/full-error-could-not-find-method-compile-for-arguments-directory-libs-on">directory ‘libs’] on object of type org.gradle.api.internal.artifacts.dsl.dependencies.Def - Stack Overflow</a></p>
+<p>解决方法：将<code>build.gradle</code>中的<code>dependencies</code>中的<code>compile</code>改成<code>implementation</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dependencies &#123;</span><br><span class="line">    implementation fileTree(dir: &#x27;libs&#x27;, include: [&#x27;*.jar&#x27;])</span><br><span class="line">    implementation &#x27;com.android.support:appcompat-v7:22.1.1&#x27;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="cvc-complex-type-2-4-a-Invalid-content-was-found…"><a href="#cvc-complex-type-2-4-a-Invalid-content-was-found…" class="headerlink" title="[cvc-complex-type.2.4.a: Invalid content was found…"></a>[cvc-complex-type.2.4.a: Invalid content was found…</h2><p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/71658373/cvc-complex-type-2-4-a-invalid-content-was-found-starting-with-element-base-ex">android - cvc-complex-type.2.4.a: Invalid content was found starting with element ‘base-extension’. One of ‘{layoutlib}’ is expected - Stack Overflow</a></p>
+<p>打开<code>Project Structure</code>，对Gradle Plugin和Gradle进行升级。具体版本看玄学。</p>
+<h2 id="Task-‘prepareKotlinBuildScriptModel’-not-found-in-project-‘-app’"><a href="#Task-‘prepareKotlinBuildScriptModel’-not-found-in-project-‘-app’" class="headerlink" title="Task ‘prepareKotlinBuildScriptModel’ not found in project ‘:app’"></a>Task ‘prepareKotlinBuildScriptModel’ not found in project ‘:app’</h2><p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/64290545/task-preparekotlinbuildscriptmodel-not-found-in-project-app">android - Task ‘prepareKotlinBuildScriptModel’ not found in project ‘:app’ - Stack Overflow</a></p>
+<p>添加：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">task prepareKotlinBuildScriptModel &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Task-‘wrapper’-not-found-in-project-‘-app’"><a href="#Task-‘wrapper’-not-found-in-project-‘-app’" class="headerlink" title="Task ‘wrapper’ not found in project ‘:app’"></a>Task ‘wrapper’ not found in project ‘:app’</h2><p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/69389145/how-do-i-fix-this-error-task-wrapper-not-found-in-project-app">java - How do I fix this error: Task ‘wrapper’ not found in project ‘:app’ - Stack Overflow</a></p>
+<p>在<code>build.gradle</code>里面添加：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">task wrapper(type: Wrapper)&#123;</span><br><span class="line">   gradleVersion = &#x27;7.2&#x27;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Could-not-get-unknown-property-‘arm64-v8a’-for-object-of-type-com-android-build-gradle-internal-dsl-NdkOptions"><a href="#Could-not-get-unknown-property-‘arm64-v8a’-for-object-of-type-com-android-build-gradle-internal-dsl-NdkOptions" class="headerlink" title="Could not get unknown property ‘arm64-v8a’ for object of type com.android.build.gradle.internal.dsl.NdkOptions"></a>Could not get unknown property ‘arm64-v8a’ for object of type com.android.build.gradle.internal.dsl.NdkOptions</h2><blockquote>
+<p>现在好像强制需要添加<code>arm64-v8a</code>ABI。</p>
+<p><a target="_blank" rel="noopener" href="https://android-developers.googleblog.com/2019/01/get-your-apps-ready-for-64-bit.html">Android Developers Blog: Get your apps ready for the 64-bit requirement (googleblog.com)</a></p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/60162523/could-not-get-unknown-property-arm64-v8a-for-object-of-type-com-android-build">Could not get unknown property ‘arm64-v8a’ for object of type com.android.build.gradle.internal.dsl.NdkOptions - Stack Overflow</a></p>
+<p><strong>一开始报错的时候是这样</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">defaultConfig &#123;</span><br><span class="line">  ...</span><br><span class="line"></span><br><span class="line">  ndk &#123;</span><br><span class="line">        abiFilters &#x27;armeabi&#x27;  &#x27;arm64-v8a&#x27;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>解决：加个逗号就OK了：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ndk &#123;</span><br><span class="line">    abiFilters &#x27;armeabi&#x27;, &#x27;arm64-v8a&#x27;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<p>至于具体能加的：<a target="_blank" rel="noopener" href="https://developer.android.com/ndk/guides/abis?hl=zh-cn">Android ABI  | Android NDK  | Android Developers</a></p>
+<ul>
+<li>armeabi-v7a</li>
+<li>arm64-v8a</li>
+<li>x86</li>
+<li>x86_64</li>
+</ul>
 
     
 
@@ -457,7 +489,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Android%E9%80%86%E5%90%91-Android%E5%BC%80%E5%8F%91"><span class="toc-number">1.</span> <span class="toc-text">Android逆向-Android开发</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#AAR-metadata%E6%8A%A5%E9%94%99"><span class="toc-number">1.1.</span> <span class="toc-text">AAR metadata报错</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Android%E9%80%86%E5%90%91-Android%E5%BC%80%E5%8F%91"><span class="toc-number">1.</span> <span class="toc-text">Android逆向-Android开发</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#AAR-metadata%E6%8A%A5%E9%94%99"><span class="toc-number">1.1.</span> <span class="toc-text">AAR metadata报错</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Could-not-find-method-compile"><span class="toc-number">1.2.</span> <span class="toc-text">Could not find method compile()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#cvc-complex-type-2-4-a-Invalid-content-was-found%E2%80%A6"><span class="toc-number">1.3.</span> <span class="toc-text">[cvc-complex-type.2.4.a: Invalid content was found…</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Task-%E2%80%98prepareKotlinBuildScriptModel%E2%80%99-not-found-in-project-%E2%80%98-app%E2%80%99"><span class="toc-number">1.4.</span> <span class="toc-text">Task ‘prepareKotlinBuildScriptModel’ not found in project ‘:app’</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Task-%E2%80%98wrapper%E2%80%99-not-found-in-project-%E2%80%98-app%E2%80%99"><span class="toc-number">1.5.</span> <span class="toc-text">Task ‘wrapper’ not found in project ‘:app’</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Could-not-get-unknown-property-%E2%80%98arm64-v8a%E2%80%99-for-object-of-type-com-android-build-gradle-internal-dsl-NdkOptions"><span class="toc-number">1.6.</span> <span class="toc-text">Could not get unknown property ‘arm64-v8a’ for object of type com.android.build.gradle.internal.dsl.NdkOptions</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -612,6 +644,10 @@
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Study</a>
+              </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Android</a>
@@ -966,14 +1002,6 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Hook</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Dobby</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">CTF</a>
               </li>
              
@@ -991,6 +1019,50 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Selenium</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">-Android</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Cmake</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Galgame</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Godot</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">LLVM</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Waydroid</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Anti-censorship</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">CSV</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">QEMU</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Wireshark</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Paper</a>
               </li>
             
             <div class="clearfix"></div>
