@@ -18,7 +18,7 @@
 <meta property="og:description" content="Docker Study">
 <meta property="og:locale">
 <meta property="article:published_time" content="2023-10-24T14:10:48.000Z">
-<meta property="article:modified_time" content="2023-10-24T14:21:43.928Z">
+<meta property="article:modified_time" content="2023-10-25T03:43:53.607Z">
 <meta property="article:author" content="Taardis">
 <meta property="article:tag" content="Taardis, Reverse Engineering, Software Analysis">
 <meta name="twitter:card" content="summary">
@@ -318,7 +318,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">723字</span>
+      <span class="post-count">756字</span>
     </span>
   </span>
 
@@ -340,7 +340,7 @@
     
     <!-- 
 <div id="toc">
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Docker"><span class="toc-number">1.</span> <span class="toc-text">Docker</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-number">1.1.</span> <span class="toc-text">安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Ubuntu%E5%AE%89%E8%A3%85Docker"><span class="toc-number">1.1.1.</span> <span class="toc-text">Ubuntu安装Docker</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%B9%E5%99%A8%E4%B8%8E%E5%AE%BF%E4%B8%BB%E6%9C%BA%E4%B9%8B%E9%97%B4%E4%BC%A0%E6%96%87%E4%BB%B6"><span class="toc-number">1.2.</span> <span class="toc-text">容器与宿主机之间传文件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9B%B4%E7%AE%80%E5%8D%95%E7%9A%84%E6%96%B9%E5%BC%8F"><span class="toc-number">1.2.1.</span> <span class="toc-text">更简单的方式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%87%8D%E6%96%B0attach%E5%90%AF%E5%8A%A8%E7%9D%80%E7%9A%84%E5%AE%B9%E5%99%A8"><span class="toc-number">1.3.</span> <span class="toc-text">重新attach启动着的容器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8%E3%80%81%E5%81%9C%E6%AD%A2%E3%80%81%E9%87%8D%E5%90%AF%E5%AE%B9%E5%99%A8"><span class="toc-number">1.4.</span> <span class="toc-text">启动、停止、重启容器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%A4%E4%BA%92%E6%A8%A1%E5%BC%8F%E8%BF%9B%E5%85%A5%E5%AE%B9%E5%99%A8"><span class="toc-number">1.5.</span> <span class="toc-text">交互模式进入容器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E7%AB%AF%E5%8F%A3%E6%98%A0%E5%B0%84"><span class="toc-number">1.6.</span> <span class="toc-text">修改端口映射</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%EF%BC%9Ariscv-emulator%E7%9A%84%E6%90%AD%E5%BB%BA"><span class="toc-number">1.7.</span> <span class="toc-text">实验：riscv-emulator的搭建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#REPO"><span class="toc-number">1.8.</span> <span class="toc-text">REPO</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8A%A5%E9%94%99%E8%A7%A3%E5%86%B3"><span class="toc-number">1.9.</span> <span class="toc-text">报错解决</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#unix-x2F-x2F-x2F-var-x2F-run-x2F-docker-sock"><span class="toc-number">1.9.1.</span> <span class="toc-text">unix:&#x2F;&#x2F;&#x2F;var&#x2F;run&#x2F;docker.sock</span></a></li></ol></li></ol></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Docker"><span class="toc-number">1.</span> <span class="toc-text">Docker</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-number">1.1.</span> <span class="toc-text">安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Ubuntu%E5%AE%89%E8%A3%85Docker"><span class="toc-number">1.1.1.</span> <span class="toc-text">Ubuntu安装Docker</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%B9%E5%99%A8%E4%B8%8E%E5%AE%BF%E4%B8%BB%E6%9C%BA%E4%B9%8B%E9%97%B4%E4%BC%A0%E6%96%87%E4%BB%B6"><span class="toc-number">1.2.</span> <span class="toc-text">容器与宿主机之间传文件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9B%B4%E7%AE%80%E5%8D%95%E7%9A%84%E6%96%B9%E5%BC%8F"><span class="toc-number">1.2.1.</span> <span class="toc-text">更简单的方式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%87%8D%E6%96%B0attach%E5%90%AF%E5%8A%A8%E7%9D%80%E7%9A%84%E5%AE%B9%E5%99%A8"><span class="toc-number">1.3.</span> <span class="toc-text">重新attach启动着的容器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8%E3%80%81%E5%81%9C%E6%AD%A2%E3%80%81%E9%87%8D%E5%90%AF%E5%AE%B9%E5%99%A8"><span class="toc-number">1.4.</span> <span class="toc-text">启动、停止、重启容器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%A4%E4%BA%92%E6%A8%A1%E5%BC%8F%E8%BF%9B%E5%85%A5%E5%AE%B9%E5%99%A8"><span class="toc-number">1.5.</span> <span class="toc-text">交互模式进入容器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E7%AB%AF%E5%8F%A3%E6%98%A0%E5%B0%84"><span class="toc-number">1.6.</span> <span class="toc-text">修改端口映射</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%EF%BC%9Ariscv-emulator%E7%9A%84%E6%90%AD%E5%BB%BA"><span class="toc-number">1.7.</span> <span class="toc-text">实验：riscv-emulator的搭建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#REPO"><span class="toc-number">1.8.</span> <span class="toc-text">REPO</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#compiler"><span class="toc-number">1.9.</span> <span class="toc-text">compiler</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8A%A5%E9%94%99%E8%A7%A3%E5%86%B3"><span class="toc-number">1.10.</span> <span class="toc-text">报错解决</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#unix-x2F-x2F-x2F-var-x2F-run-x2F-docker-sock"><span class="toc-number">1.10.1.</span> <span class="toc-text">unix:&#x2F;&#x2F;&#x2F;var&#x2F;run&#x2F;docker.sock</span></a></li></ol></li></ol></li></ol>
 </div>
  -->
     <p>Docker Study</p>
@@ -392,8 +392,7 @@
 <p> <a target="_blank" rel="noopener" href="https://blog.csdn.net/Bejpse/article/details/126327547">(116条消息) docker容器启动后修改或添加端口_Bejpse的博客-CSDN博客_docker 容器运行端口</a> </p>
 <h2 id="REPO"><a href="#REPO" class="headerlink" title="REPO"></a>REPO</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">REPOSITORY                      TAG        IMAGE ID       CREATED         SIZE</span><br><span class="line">riscv_rh                        version1   a18efdb50a98   14 months ago   7.51GB</span><br><span class="line">davidburela/riscv-emulator      latest     781ad8b1577f   14 months ago   2.13GB</span><br><span class="line">debian                          11         dd8bae8d259f   14 months ago   124MB</span><br><span class="line">archlinux                       latest     e433f486b31a   17 months ago   385MB</span><br><span class="line">balenalib/armv7hf-alpine-node   latest     288eedbba57f   18 months ago   181MB</span><br><span class="line">zhaoyunmuyu/nachos4.1           v1         80588a8cd9d1   21 months ago   1.01GB</span><br></pre></td></tr></table></figure>
 
-
-
+<h2 id="compiler"><a href="#compiler" class="headerlink" title="compiler"></a>compiler</h2><p><a target="_blank" rel="noopener" href="https://pku-minic.github.io/online-doc/#/lv0-env-config/docker">Lv0.1. 配置 Docker - 北京大学编译实践课程在线文档 | 北大编译实践在线文档 (pku-minic.github.io)</a></p>
 <h2 id="报错解决"><a href="#报错解决" class="headerlink" title="报错解决"></a>报错解决</h2><h3 id="unix-x2F-x2F-x2F-var-x2F-run-x2F-docker-sock"><a href="#unix-x2F-x2F-x2F-var-x2F-run-x2F-docker-sock" class="headerlink" title="unix:&#x2F;&#x2F;&#x2F;var&#x2F;run&#x2F;docker.sock"></a>unix:&#x2F;&#x2F;&#x2F;var&#x2F;run&#x2F;docker.sock</h3><p> <a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1553613">docker Cannot connect to the Docker daemon at unix:&#x2F;&#x2F;&#x2F;var&#x2F;run&#x2F;docker.sock. - 云+社区 - 腾讯云 (tencent.com)</a> </p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo service docker start</span><br></pre></td></tr></table></figure>
 
@@ -438,6 +437,15 @@
 
 <nav id="article-nav">
   
+    <a href="/2023/10/27/Android%E9%80%86%E5%90%91-LSPosed/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Android逆向-LSPosed
+        
+      </div>
+    </a>
+  
   
     <a href="/2023/10/24/Cmake/" id="article-nav-older" class="article-nav-link-wrap">
       <div class="article-nav-title">Cmake</div>
@@ -467,7 +475,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Docker"><span class="toc-number">1.</span> <span class="toc-text">Docker</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-number">1.1.</span> <span class="toc-text">安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Ubuntu%E5%AE%89%E8%A3%85Docker"><span class="toc-number">1.1.1.</span> <span class="toc-text">Ubuntu安装Docker</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%B9%E5%99%A8%E4%B8%8E%E5%AE%BF%E4%B8%BB%E6%9C%BA%E4%B9%8B%E9%97%B4%E4%BC%A0%E6%96%87%E4%BB%B6"><span class="toc-number">1.2.</span> <span class="toc-text">容器与宿主机之间传文件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9B%B4%E7%AE%80%E5%8D%95%E7%9A%84%E6%96%B9%E5%BC%8F"><span class="toc-number">1.2.1.</span> <span class="toc-text">更简单的方式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%87%8D%E6%96%B0attach%E5%90%AF%E5%8A%A8%E7%9D%80%E7%9A%84%E5%AE%B9%E5%99%A8"><span class="toc-number">1.3.</span> <span class="toc-text">重新attach启动着的容器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8%E3%80%81%E5%81%9C%E6%AD%A2%E3%80%81%E9%87%8D%E5%90%AF%E5%AE%B9%E5%99%A8"><span class="toc-number">1.4.</span> <span class="toc-text">启动、停止、重启容器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%A4%E4%BA%92%E6%A8%A1%E5%BC%8F%E8%BF%9B%E5%85%A5%E5%AE%B9%E5%99%A8"><span class="toc-number">1.5.</span> <span class="toc-text">交互模式进入容器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E7%AB%AF%E5%8F%A3%E6%98%A0%E5%B0%84"><span class="toc-number">1.6.</span> <span class="toc-text">修改端口映射</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%EF%BC%9Ariscv-emulator%E7%9A%84%E6%90%AD%E5%BB%BA"><span class="toc-number">1.7.</span> <span class="toc-text">实验：riscv-emulator的搭建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#REPO"><span class="toc-number">1.8.</span> <span class="toc-text">REPO</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8A%A5%E9%94%99%E8%A7%A3%E5%86%B3"><span class="toc-number">1.9.</span> <span class="toc-text">报错解决</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#unix-x2F-x2F-x2F-var-x2F-run-x2F-docker-sock"><span class="toc-number">1.9.1.</span> <span class="toc-text">unix:&#x2F;&#x2F;&#x2F;var&#x2F;run&#x2F;docker.sock</span></a></li></ol></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Docker"><span class="toc-number">1.</span> <span class="toc-text">Docker</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-number">1.1.</span> <span class="toc-text">安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Ubuntu%E5%AE%89%E8%A3%85Docker"><span class="toc-number">1.1.1.</span> <span class="toc-text">Ubuntu安装Docker</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%B9%E5%99%A8%E4%B8%8E%E5%AE%BF%E4%B8%BB%E6%9C%BA%E4%B9%8B%E9%97%B4%E4%BC%A0%E6%96%87%E4%BB%B6"><span class="toc-number">1.2.</span> <span class="toc-text">容器与宿主机之间传文件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9B%B4%E7%AE%80%E5%8D%95%E7%9A%84%E6%96%B9%E5%BC%8F"><span class="toc-number">1.2.1.</span> <span class="toc-text">更简单的方式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%87%8D%E6%96%B0attach%E5%90%AF%E5%8A%A8%E7%9D%80%E7%9A%84%E5%AE%B9%E5%99%A8"><span class="toc-number">1.3.</span> <span class="toc-text">重新attach启动着的容器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8%E3%80%81%E5%81%9C%E6%AD%A2%E3%80%81%E9%87%8D%E5%90%AF%E5%AE%B9%E5%99%A8"><span class="toc-number">1.4.</span> <span class="toc-text">启动、停止、重启容器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%A4%E4%BA%92%E6%A8%A1%E5%BC%8F%E8%BF%9B%E5%85%A5%E5%AE%B9%E5%99%A8"><span class="toc-number">1.5.</span> <span class="toc-text">交互模式进入容器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E7%AB%AF%E5%8F%A3%E6%98%A0%E5%B0%84"><span class="toc-number">1.6.</span> <span class="toc-text">修改端口映射</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%EF%BC%9Ariscv-emulator%E7%9A%84%E6%90%AD%E5%BB%BA"><span class="toc-number">1.7.</span> <span class="toc-text">实验：riscv-emulator的搭建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#REPO"><span class="toc-number">1.8.</span> <span class="toc-text">REPO</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#compiler"><span class="toc-number">1.9.</span> <span class="toc-text">compiler</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8A%A5%E9%94%99%E8%A7%A3%E5%86%B3"><span class="toc-number">1.10.</span> <span class="toc-text">报错解决</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#unix-x2F-x2F-x2F-var-x2F-run-x2F-docker-sock"><span class="toc-number">1.10.1.</span> <span class="toc-text">unix:&#x2F;&#x2F;&#x2F;var&#x2F;run&#x2F;docker.sock</span></a></li></ol></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -1041,6 +1049,22 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Paper</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">AOSP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Androguard</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">LSPosed</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Rust</a>
               </li>
             
             <div class="clearfix"></div>

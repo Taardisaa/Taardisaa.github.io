@@ -10,17 +10,17 @@
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="1com.example.ezandroid  “com.example.ezandroid.S2” “com.example.ezandroid.S” 1public native String Stringfjni();  1public native void onCreate(Bundle bundle);  1public native void onClick(View view);">
+  <meta name="description" content="Android逆向解题-羊城杯2023-ezAndroid">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android逆向解题-羊城杯2023-ezAndroid">
 <meta property="og:url" content="https://taardisaa.github.io/2023/10/11/Android%E9%80%86%E5%90%91%E8%A7%A3%E9%A2%98-%E7%BE%8A%E5%9F%8E%E6%9D%AF2023-ezAndroid/index.html">
 <meta property="og:site_name" content="Taardis&#39;s blog">
-<meta property="og:description" content="1com.example.ezandroid  “com.example.ezandroid.S2” “com.example.ezandroid.S” 1public native String Stringfjni();  1public native void onCreate(Bundle bundle);  1public native void onClick(View view);">
+<meta property="og:description" content="Android逆向解题-羊城杯2023-ezAndroid">
 <meta property="og:locale">
 <meta property="article:published_time" content="2023-10-11T15:55:15.000Z">
-<meta property="article:modified_time" content="2023-10-11T16:23:31.344Z">
+<meta property="article:modified_time" content="2023-11-22T09:53:27.589Z">
 <meta property="article:author" content="Taardis">
-<meta property="article:tag" content="Taardis, Reverse Engineering, Software Analysis">
+<meta property="article:tag" content="Android">
 <meta name="twitter:card" content="summary">
   
   
@@ -318,7 +318,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">27字</span>
+      <span class="post-count">376字</span>
     </span>
   </span>
 
@@ -327,7 +327,7 @@
     <span class="post-meta-item-icon">
       <i class="icon-book icon"></i>
       <span class="post-meta-item-text"> 阅读时长≈</span>
-      <span class="post-count">1分</span>
+      <span class="post-count">2分</span>
     </span>
   </span>
 </div>
@@ -340,18 +340,43 @@
     
     <!-- 
 <div id="toc">
-    
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Android%E9%80%86%E5%90%91%E8%A7%A3%E9%A2%98-%E7%BE%8A%E5%9F%8E%E6%9D%AF2023-ezAndroid"><span class="toc-number">1.</span> <span class="toc-text">Android逆向解题-羊城杯2023-ezAndroid</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Java"><span class="toc-number">1.1.</span> <span class="toc-text">Java</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Native"><span class="toc-number">1.2.</span> <span class="toc-text">Native</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#T1-%E6%89%BE%E5%87%BA%E5%AF%BC%E5%87%BA%E5%87%BD%E6%95%B0"><span class="toc-number">1.2.1.</span> <span class="toc-text">T1 找出导出函数</span></a></li></ol></li></ol></li></ol>
 </div>
  -->
-    <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">com.example.ezandroid</span><br></pre></td></tr></table></figure>
+    <p>Android逆向解题-羊城杯2023-ezAndroid</p>
+<span id="more"></span>
+
+<h1 id="Android逆向解题-羊城杯2023-ezAndroid"><a href="#Android逆向解题-羊城杯2023-ezAndroid" class="headerlink" title="Android逆向解题-羊城杯2023-ezAndroid"></a>Android逆向解题-羊城杯2023-ezAndroid</h1><h2 id="Java"><a href="#Java" class="headerlink" title="Java"></a>Java</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">com.example.ezandroid</span><br></pre></td></tr></table></figure>
 
 <p>“com.example.ezandroid.S2”</p>
 <p>“com.example.ezandroid.S”</p>
+<p>这是主界面</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">static &#123;</span><br><span class="line">    System.loadLibrary(&quot;android&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public native String Stringfjni();</span><br></pre></td></tr></table></figure>
 
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public native void onCreate(Bundle bundle);</span><br></pre></td></tr></table></figure>
 
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public native void onClick(View view);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">class AnonymousClass2 implements DialogInterface.OnClickListener &#123;</span><br><span class="line">    AnonymousClass2() &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override // android.content.DialogInterface.OnClickListener</span><br><span class="line">    public void onClick(DialogInterface dialogInterface, int i) &#123;</span><br><span class="line">        S.this.startActivity(new Intent(S.this, S2.class));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>还有个C类</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">/* loaded from: classes.dex */</span><br><span class="line">public class C &#123;</span><br><span class="line">    public static native boolean cf(String str, int i);</span><br><span class="line"></span><br><span class="line">    static &#123;</span><br><span class="line">        System.loadLibrary(&quot;ezandroid&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Native"><a href="#Native" class="headerlink" title="Native"></a>Native</h2><h3 id="T1-找出导出函数"><a href="#T1-找出导出函数" class="headerlink" title="T1 找出导出函数"></a>T1 找出导出函数</h3><ul>
+<li>Unidbg（报错）</li>
+<li>静态（有混淆）</li>
+<li>Frida<ul>
+<li>可以使用，没有反调试</li>
+</ul>
+</li>
+<li>动调</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">LABEL_64:</span><br><span class="line">  v82 = env[<span class="number">0</span>];</span><br><span class="line">  v83 = (*env[<span class="number">0</span>])-&gt;FindClass(env[<span class="number">0</span>], aComExampleEzan);<span class="comment">// com/example/ezandroid/S</span></span><br><span class="line">  <span class="keyword">if</span> ( !v83 )</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">  <span class="keyword">if</span> ( (((__int64 (__fastcall *)(JNIEnv *, jclass, <span class="type">char</span> **, __int64))(*v82)-&gt;RegisterNatives)(</span><br><span class="line">          v82,</span><br><span class="line">          v83,</span><br><span class="line">          &amp;off_7B7A0891D8,                      <span class="comment">// onCreate</span></span><br><span class="line">          <span class="number">1LL</span>) &amp; <span class="number">0x80000000</span>) != <span class="number">0</span> )</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">  v84 = (__int64)(*v82)-&gt;FindClass(v82, aComExampleEzan_0);<span class="comment">// com/example/ezandroid/S2</span></span><br><span class="line">  <span class="keyword">if</span> ( !v84 )</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">  <span class="keyword">if</span> ( (((__int64 (__fastcall *)(JNIEnv *, __int64, <span class="type">char</span> **, __int64))(*v82)-&gt;RegisterNatives)(</span><br><span class="line">          v82,</span><br><span class="line">          v84,</span><br><span class="line">          &amp;off_7B7A0891F0,                      <span class="comment">// onCreate</span></span><br><span class="line">          <span class="number">1LL</span>) &amp; <span class="number">0x80000000</span>) != <span class="number">0</span> )</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">  v85 = (__int64)(*v82)-&gt;FindClass(v82, aComExampleEzan_1);<span class="comment">// com/example/ezandroid/MU</span></span><br><span class="line">  <span class="keyword">if</span> ( !v85 )</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">  <span class="keyword">if</span> ( (((__int64 (__fastcall *)(JNIEnv *, __int64, <span class="type">char</span> **, __int64))(*v82)-&gt;RegisterNatives)(</span><br><span class="line">          v82,</span><br><span class="line">          v85,</span><br><span class="line">          &amp;off_7B7A089208,                      <span class="comment">// GMS</span></span><br><span class="line">          <span class="number">1LL</span>) &amp; <span class="number">0x80000000</span>) != <span class="number">0</span> )</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">  v86 = (__int64)(*v82)-&gt;FindClass(v82, aComExampleEzan_2);<span class="comment">// com/example/ezandroid/C</span></span><br><span class="line">  <span class="keyword">if</span> ( !v86 )</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">  <span class="keyword">if</span> ( (((__int64 (__fastcall *)(JNIEnv *, __int64, <span class="type">char</span> **, __int64))(*v82)-&gt;RegisterNatives)(</span><br><span class="line">          v82,</span><br><span class="line">          v86,</span><br><span class="line">          &amp;off_7B7A089220,                      <span class="comment">// cf</span></span><br><span class="line">          <span class="number">1LL</span>) &amp; <span class="number">0x80000000</span>) != <span class="number">0</span> )</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">  v87 = (__int64)(*v82)-&gt;FindClass(v82, aComExampleEzan_3);<span class="comment">// com/example/ezandroid/S$1</span></span><br><span class="line">  <span class="keyword">if</span> ( !v87 )</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">  <span class="keyword">if</span> ( (((__int64 (__fastcall *)(JNIEnv *, __int64, <span class="type">char</span> **, __int64))(*v82)-&gt;RegisterNatives)(</span><br><span class="line">          v82,</span><br><span class="line">          v87,</span><br><span class="line">          &amp;off_7B7A089238,                      <span class="comment">// onClick</span></span><br><span class="line">          <span class="number">1LL</span>) &amp; <span class="number">0x80000000</span>) != <span class="number">0</span> )</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">  v88 = (__int64)(*v82)-&gt;FindClass(v82, aComExampleEzan_4);<span class="comment">// com/example/ezandroid/S2$1</span></span><br><span class="line">  <span class="keyword">if</span> ( !v88</span><br><span class="line">    || (((__int64 (__fastcall *)(JNIEnv *, __int64, <span class="type">char</span> **, __int64))(*v82)-&gt;RegisterNatives)(</span><br><span class="line">          v82,</span><br><span class="line">          v88,</span><br><span class="line">          &amp;off_7B7A089250,                      <span class="comment">// onClick</span></span><br><span class="line">          <span class="number">1LL</span>) &amp; <span class="number">0x80000000</span>) != <span class="number">0</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> v2;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 
     
 
@@ -380,7 +405,30 @@
   <div class="article-info article-info-index">
     
     
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
     
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<!-- <a href="/categories/Study//" class="article-tag-list-link color1">Study</a> -->
+        			<a href="/categories/Study/" class="article-tag-list-link color1">Study</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
 
     
 
@@ -431,7 +479,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    Nothing found...
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Android%E9%80%86%E5%90%91%E8%A7%A3%E9%A2%98-%E7%BE%8A%E5%9F%8E%E6%9D%AF2023-ezAndroid"><span class="toc-number">1.</span> <span class="toc-text">Android逆向解题-羊城杯2023-ezAndroid</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Java"><span class="toc-number">1.1.</span> <span class="toc-text">Java</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Native"><span class="toc-number">1.2.</span> <span class="toc-text">Native</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#T1-%E6%89%BE%E5%87%BA%E5%AF%BC%E5%87%BA%E5%87%BD%E6%95%B0"><span class="toc-number">1.2.1.</span> <span class="toc-text">T1 找出导出函数</span></a></li></ol></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -1005,6 +1053,22 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Paper</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">AOSP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Androguard</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">LSPosed</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Rust</a>
               </li>
             
             <div class="clearfix"></div>
