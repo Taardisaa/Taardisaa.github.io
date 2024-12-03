@@ -1,0 +1,37 @@
+---
+layout: post
+title:  "LLM4Security"
+date:   2024-12-02 23:37:25 -0700
+categories: llm4sec
+---
+
+A list of interesting papers on LLM4security(binary analysis and reverse engineering).
+
+## Reverse Engineering
+
+### Papers
+
+- [(Arxiv pre-pub) LLM4Decompile: Decompiling Binary Code with Large Language Models](https://arxiv.org/abs/2403.05286): A finetuned LLM model for binary decompilation tasks. codes on github: [albertan017/LLM4Decompile: Reverse Engineering: Decompiling Binary Code with Large Language Models](https://github.com/albertan017/LLM4Decompile)
+- [(Arxiv pre-pub) WaDec: Decompiling WebAssembly Using Large Language Model](https://arxiv.org/abs/2406.11346)
+- [(CCS 24) ReSym: Harnessing LLMs to Recover Variable and Data Structure Symbols from Stripped Binaries](https://www.cs.purdue.edu/homes/lintan/publications/resym-ccs24.pdf): A hybrid technique that combines LLMs with program analysis for name&type recovery tasks. ACM CCS 24 accepted paper.
+- [(Arxiv pre-pub) Exploring the Efficacy of Large Language Models (GPT-4) in Binary Reverse Engineering](https://arxiv.org/abs/2406.06637): This study investigates the capabilities of Large Language Models (LLMs), specifically GPT-4, in the context of Binary Reverse Engineering (RE). 
+- [(Arxiv pre-pub) Self-Constructed Context Decompilation with Fined-grained Alignment Enhancement](https://arxiv.org/abs/2406.17233)
+- [(Arxiv pre-pub) Enhancing Reverse Engineering: Investigating and Benchmarking Large Language Models for Vulnerability Analysis in Decompiled Binaries](https://arxiv.org/abs/2411.04981)
+- [(Arxiv pre-pub) Refining Decompiled C Code with Large Language Models](https://arxiv.org/abs/2310.06530)
+- [(NDSS 24) DeGPT: Optimizing Decompiler Output with LLM]([2024-401-paper.pdf](https://www.ndss-symposium.org/wp-content/uploads/2024-401-paper.pdf))
+
+### Projects only
+
+- [arphanetx/Monocle: Tooling backed by an LLM for performing natural language searches against compiled target binaries. Search for encryption code, password strings, vulnerabilities, etc.](https://github.com/arphanetx/Monocle)
+- [fr0gger/IATelligence: IATelligence is a Python script that will extract the IAT of a PE file and request GPT to get more information about the API and the ATT&CK matrix related](https://github.com/fr0gger/IATelligence)
+- [moyix/gpt-wpre: Whole-Program Reverse Engineering with GPT-3](https://github.com/moyix/gpt-wpre)
+- [JusticeRage/Gepetto: IDA plugin which queries uses language models to speed up reverse-engineering](https://github.com/JusticeRage/Gepetto)
+- [G-3PO: A Protocol Droid for Ghidra | by Olivia Lucca Fraser | Tenable TechBlog | Medium](https://medium.com/tenable-techblog/g-3po-a-protocol-droid-for-ghidra-4b46fa72f1ff)
+- 
+
+## LLM Security
+
+### Papers
+
+- [[2302.12173\] Not what you've signed up for: Compromising Real-World LLM-Integrated Applications with Indirect Prompt Injection](https://arxiv.org/abs/2302.12173)
+
