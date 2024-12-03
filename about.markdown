@@ -19,7 +19,7 @@ You can find the source code for Jekyll at GitHub:
 
 ## About Me
 
-I am a PhD student in the [School of Computing](http://www.cs.utah.edu/) at the [University of Utah](http://www.utah.edu/).
+I am a PhD student in the [School of Computing](http://www.cs.utah.edu/) at the [University of Utah](http://www.utah.edu/), supervised by Prof. [Jun Xu](https://www.cs.utah.edu/xu-jun/).
 
 **Contact**: taardisaa AT gmail.com
 
