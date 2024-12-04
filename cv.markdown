@@ -1,7 +1,6 @@
 ---
 layout: page
 title: CV
-permalink: /cv/
+permalink: /HaoRen_CV_PhD.pdf
 ---
 
-CVCVCV
