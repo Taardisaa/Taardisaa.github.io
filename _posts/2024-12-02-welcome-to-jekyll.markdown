@@ -36,3 +36,11 @@ If I remember correctly, directly pushing this repo is enough, as it will automa
 ```
 git push -u origin/main
 ```
+
+## Upgrade with Mathjax
+
+1. `bundle show minima` to locate the `minima` theme that is currently using
+2. https://www.bodunhu.com/blog/posts/add-mathjax-support-to-jekyll-and-hugo/
+3. add `markdown: kramdown` in `_config.yml`
+4. add 
+
