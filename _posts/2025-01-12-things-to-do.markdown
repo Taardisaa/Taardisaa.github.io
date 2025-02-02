@@ -13,3 +13,5 @@ categories: "blog"
 6. keep reading papers.
 7. ~~Learn OCaml, or at least somehow understand the logic behind CBAT/wp.~~
 8. based on exploited dataset to build a "box-open" script.
+9. learn CUDA/PTX
+10. keep learning LLM related stuff: RAG, LLM, LoRA/QLoRA, Agent, etc.
