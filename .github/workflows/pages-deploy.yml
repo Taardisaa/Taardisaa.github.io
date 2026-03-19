@@ -44,8 +44,8 @@ jobs:
         with:
           node-version: 22
 
-      - name: Build JS
-        run: npm install && npm run build:js
+      - name: Build assets
+        run: npm install && npm run build
 
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
