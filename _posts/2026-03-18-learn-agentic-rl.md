@@ -3,8 +3,8 @@ title: "Learn Agentic RL"
 description: A brief introduction to Agentic Reinforcement Learning. And some of my thoughts.
 author: Taardisaa
 date: 2026-03-18 16:52 -0600
-categories: [AI, RL]
-tags: [Agentic RL, LLM, AI]
+categories: [Artificial Intelligence, Reinforcement Learning]
+tags: [Agentic RL, LLM, Reinforcement Learning, Artificial Intelligence]
 pin: true
 math: true
 mermaid: true

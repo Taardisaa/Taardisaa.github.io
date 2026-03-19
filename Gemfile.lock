@@ -96,6 +96,8 @@ GEM
       webrick (~> 1.7)
     jekyll-archives (2.3.0)
       jekyll (>= 3.6, < 5.0)
+    jekyll-compose (0.12.0)
+      jekyll (>= 3.7, < 5.0)
     jekyll-include-cache (0.2.1)
       jekyll (>= 3.7, < 5.0)
     jekyll-paginate (1.1.0)
@@ -178,6 +180,7 @@ PLATFORMS
 
 DEPENDENCIES
   html-proofer (~> 5.0)
+  jekyll-compose
   jekyll-theme-chirpy!
   tzinfo (>= 1, < 3)
   tzinfo-data
