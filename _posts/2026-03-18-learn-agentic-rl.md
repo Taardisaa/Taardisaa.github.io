@@ -1,7 +1,13 @@
 ---
-layout: post
-title: "[RL] Learn Agentic RL"
+title: "Learn Agentic RL"
+description: A brief introduction to Agentic Reinforcement Learning. And some of my thoughts.
+author: Taardisaa
 date: 2026-03-18 16:52 -0600
+categories: [AI, RL]
+tags: [Agentic RL, LLM, AI]
+pin: true
+math: true
+mermaid: true
 ---
 
 # What is Agentic RL?
