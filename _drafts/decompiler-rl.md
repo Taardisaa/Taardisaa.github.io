@@ -32,3 +32,5 @@ These papers split into two directions:
 
 Before 2025, the best-known LLM decompilation work (LLM4Decompile) was mostly supervised. By 2025–2026, papers are explicitly introducing **RL-based training objectives** for decompilation quality, structure recovery, readability, and backend refinement. The idea is valid and already emerging, but still early-stage rather than saturated.
 
+
+Therefore, I would like to ask whether it would be possible to share aggregated, anonymized module usage statistics, such as package names, versions, and load counts, for research purposes. I understand this may involve sensitive information, and I would be happy to discuss data handling, scope, or any concerns at your convenience.
