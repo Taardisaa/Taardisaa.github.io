@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Paper Reading: PS^3 — Patch Semantic Symbolic Signatures"
+description: Reading notes on PS^3 (ICSE '24), a binary-level patch presence test using semantic symbolic signatures and theorem proving for cross-compiler verification.
 date: 2026-03-18 17:14 -0600
 categories: [Patch Verification]
 tags: [Patch Verification, Binary Analysis, Software Security]

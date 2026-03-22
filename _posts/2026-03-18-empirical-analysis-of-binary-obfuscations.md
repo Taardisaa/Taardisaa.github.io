@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Empirical Analysis of Binary Obfuscations [Working]"
+description: Ad-hoc analysis of binary obfuscation techniques using Polaris Obfuscator, examining effectiveness against reverse engineering and interaction with compiler optimizations.
 date: 2026-03-18 22:01 -0600
 ---
 

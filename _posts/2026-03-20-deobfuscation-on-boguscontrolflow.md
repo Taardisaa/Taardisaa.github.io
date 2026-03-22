@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Deobfuscation on Polaris-Obfuscator/BogusControlFlow
+description: Analyzing and deobfuscating Polaris Obfuscator's BogusControlFlow pass, which inserts cloned basic blocks with opaque predicates and junk instructions.
 date: 2026-03-20 22:26 -0600
 math: true
 ---

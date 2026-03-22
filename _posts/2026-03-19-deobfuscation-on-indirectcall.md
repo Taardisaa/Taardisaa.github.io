@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Deobfuscation on Polaris-Obfuscator/IndirectCall
+description: Analyzing and deobfuscating Polaris Obfuscator's IndirectCall pass, which converts direct calls into indirect calls through computed addresses.
 date: 2026-03-19 19:49 -0600
 math: true
 ---

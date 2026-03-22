@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Behavioral Cloning and Interactive Imitation Learning"
+description: Course notes on behavioral cloning and interactive imitation learning, covering loss functions, distribution shift (DAgger), and key theoretical foundations.
 date: 2026-03-18 20:49 -0600
 categories: [Reinforcement Learning]
 math: true

@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "CHPC Security Assessment: Policies, Controls, and Gaps"
+description: Security assessment of the University of Utah CHPC, covering software package management, patching policies, and the Protected Environment.
 date: 2026-03-18 20:44 -0600
 categories: [Security]
 tags: [HPC, Security Policy, Software Supply Chain]
