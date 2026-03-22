@@ -2,6 +2,7 @@
 layout: post
 title: Anti Deobfuscation on IndirectCall
 date: 2026-03-19 19:49 -0600
+math: true
 ---
 
 ## IndirectCall 简要介绍
@@ -127,7 +128,7 @@ $$
 var = F(v_1, v_2, \dots, v_n, c_1, c_2, \dots, c_m), \quad \text{where } v_i \in V,\; c_j \in C
 $$
 
-其中 $V$ 是所有参与构造 `var` 的变量集合，$C$ 是所有参与构造的常量集合。函数 $F$ 是对构造 `var` 的数据流的一般性表示。以上面的例子为例，$F$ 可以表示为：
+其中 $$V$$ 是所有参与构造 `var` 的变量集合，$$C$$ 是所有参与构造的常量集合。函数 $$F$$ 是对构造 `var` 的数据流的一般性表示。以上面的例子为例，$$F$$ 可以表示为：
 
 $$
 F = GV - MaskValue
