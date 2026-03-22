@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Anti Deobfuscation on IndirectCall
+title: Deobfuscation on Polaris-Obfuscator/IndirectCall
 date: 2026-03-19 19:49 -0600
 math: true
 ---

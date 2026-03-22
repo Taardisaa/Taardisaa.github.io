@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Anti Deobfuscation on BogusControlFlow
+title: Deobfuscation on Polaris-Obfuscator/BogusControlFlow
 date: 2026-03-20 22:26 -0600
 math: true
 ---
