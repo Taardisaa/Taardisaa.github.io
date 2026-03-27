@@ -1,6 +1,9 @@
 ---
 layout: post
-title: Decompiler RL
+title: "Reinforcement Learning for LLM-Based Decompilation"
+date: 2026-03-27 00:06 -0600
+description: "A survey of emerging RL-based approaches to enhance LLM-based decompilation, covering D-LiFT, SK2Decompile, and RlDecompiler."
+tags: [decompilation, reinforcement-learning, LLM]
 ---
 
 This is a very wild idea: Use reinforcement learning to enhance the current LLM-based decompilation.
@@ -28,9 +31,29 @@ These papers split into two directions:
 1. **RL for improving decompiler outputs** after or around an existing decompiler pipeline (e.g., D-LiFT).
 2. **RL inside the decompilation model itself**, training the LLM's generation with RL objectives (e.g., SK2Decompile, RlDecompiler).
 
-### Takeaway
+## RlDecompiler
+
+The anonymous repo has expired, but the model is still available:
+
+- Original: [ri-char/rldecompile-1.3b](https://huggingface.co/ri-char/rldecompile-1.3b)
+- Static quants: [mradermacher/rldecompile-1.3b-GGUF](https://huggingface.co/mradermacher/rldecompile-1.3b-GGUF)
+
+This 1.3B model is basically useless. It cannot correctly decompile even the easiest assemblies.
+
+## D-LiFT
+
+Possibly still under peer review, so they have not released their model weights.
+
+They use GRPO to perform RL on the base models Qwen2.5-Coder and Llama3.2-3B.
+
+They propose a reward function called **D-SCORE**, which performs both syntax and semantic checks to ensure the correctness of decompiled code. They also assess readability if both accuracy checks pass. For readability metrics, see b&w + R2I.
+
+Their method is quite interesting, but I am not sure if symbolic-execution-based semantic checks would guarantee semantic correctness. I think it will lead to reward hacking if the design is poor.
+
+## SK2Decompile
+
+They did not use RL to enhance semantic correctness, but only used it to enhance structural recovery.
+
+## Takeaway
 
 Before 2025, the best-known LLM decompilation work (LLM4Decompile) was mostly supervised. By 2025–2026, papers are explicitly introducing **RL-based training objectives** for decompilation quality, structure recovery, readability, and backend refinement. The idea is valid and already emerging, but still early-stage rather than saturated.
-
-
-Therefore, I would like to ask whether it would be possible to share aggregated, anonymized module usage statistics, such as package names, versions, and load counts, for research purposes. I understand this may involve sensitive information, and I would be happy to discuss data handling, scope, or any concerns at your convenience.

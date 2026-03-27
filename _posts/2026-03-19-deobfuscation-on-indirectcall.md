@@ -344,6 +344,7 @@ if all_patches:
 
 用于研究的样本C文件（由Csmith生成）：
 
+{% raw %}
 ```c
 /*
  * This is a RANDOMLY GENERATED PROGRAM.
@@ -488,4 +489,5 @@ XXX total OOB instances added: 0
 ********************* end of statistics **********************/
 
 ```
+{% endraw %}
 
