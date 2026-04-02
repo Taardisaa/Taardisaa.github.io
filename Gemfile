@@ -4,7 +4,7 @@ source "https://rubygems.org"
 
 gemspec
 
-gem "html-proofer", "~> 5.0", group: :test
+gem "html-proofer", "~> 5.2", group: :test
 
 gem "jekyll-compose", group: [:jekyll_plugins]
 
