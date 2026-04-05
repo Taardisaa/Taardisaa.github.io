@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Setting up a Windows VM for Reverse Engineering [Work in Progress]"
+title: "Setting up a Windows VM for Reverse Engineering"
 date: 2026-03-22 20:47 -0600
 ---
 
@@ -30,13 +30,38 @@ date: 2026-03-22 20:47 -0600
 
 > VMWare Tools会使得host machine和guest machine之间的文件共享变得非常方便，但是也会带来一定安全隐患。若要进行真正的病毒测试，请确保虚拟机和主机之间没有共享文件夹，关闭VMware Tools的共享功能（或者不安装），并且在测试阶段关闭网络连接。
 
-## 关闭Windows Defender
+## 关闭安全防护机制
 
-因此我参考一下教程把把Windows Defender的定期扫描给关了：https://www.bilibili.com/read/cv17691615
+我参考了一下教程把Windows Defender的定期扫描给关了：https://www.bilibili.com/read/cv17691615
 
-``pwsh
+```pwsh
 Set-MpPreference -ScanScheduleDay 8
 Set-MpPreference -RemediationScheduleDay 8
 Set-MpPreference -ScanOnlyIfIdleEnabled $False
 ```
 
+其中还tweak了很多设置，这里暂且不赘述。
+
+## 逆向环境（持续更新）
+
+目前先准备了下面的软件：
+
+Debug 工具：
+
+- OllyDBG
+- x64dbg
+
+反编译工具：
+
+- IDA Pro 8.3
+- Ghidra 12.0.4
+
+查壳工具：
+
+- DIE
+
+Coding Agent:
+
+- OpenAI Codex
+
+目前的工具足够用来处理一些简单的PE文件逆向了。后面根据需求再跟进新的工具吧。
